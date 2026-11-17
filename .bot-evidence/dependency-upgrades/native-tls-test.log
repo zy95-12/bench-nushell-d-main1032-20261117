@@ -1,0 +1,23 @@
+$ cargo test -p nu-command --no-default-features --features os,network,native-tls --lib network::tls --locked
+   Compiling foreign-types-shared v0.1.1
+   Compiling openssl-macros v0.1.1
+   Compiling foreign-types v0.3.2
+   Compiling base64ct v1.8.0
+   Compiling pem-rfc7468 v0.7.0
+   Compiling openssl v0.10.72
+   Compiling webpki-root-certs v1.0.1
+   Compiling zeroize v1.8.1
+   Compiling der v0.7.10
+   Compiling webpki-root-certs v0.26.11
+   Compiling native-tls v0.2.12
+   Compiling ureq v3.0.3
+   Compiling update-informer v1.3.0
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/563f1efa661f4b50093768d31a2725c2bc4713c9dad14310/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 28.60s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_command-93764fcc842e7d46)
+
+running 1 test
+test network::tls::impl_tls::tests::tls_uses_platform_roots_and_explicit_insecure_option ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 443 filtered out; finished in 0.00s
+

@@ -75,7 +75,19 @@ impl Command for UMkdir {
         }
 
         for dir in directories {
-            if let Err(error) = mkdir(&dir, IS_RECURSIVE, get_mode(), is_verbose) {
+            if let Err(error) = crate::coreutils::with_localized("mkdir", || {
+                mkdir(
+                    &dir,
+                    &uu_mkdir::Config {
+                        recursive: IS_RECURSIVE,
+                        mode: get_mode(),
+                        verbose: is_verbose,
+                        set_selinux_context: false,
+                        context: None,
+                    },
+                )
+                .map_err(|error| error.to_string())
+            })? {
                 return Err(ShellError::GenericError {
                     error: format!("{error}"),
                     msg: format!("{error}"),

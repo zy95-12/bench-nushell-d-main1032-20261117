@@ -1,0 +1,8 @@
+{"name": "check", "command": ["cargo", "check", "-p", "nu", "--locked"], "exit_code": 0}
+{"name": "commands", "command": ["cargo", "test", "-p", "nu-command", "--test", "main", "commands::"], "exit_code": 101}
+{"name": "parser", "command": ["cargo", "test", "-p", "nu-parser"], "exit_code": 0}
+{"name": "cli", "command": ["cargo", "test", "-p", "nu-cli", "--features", "plugin", "--test", "main"], "exit_code": 101}
+{"name": "fmt", "command": ["cargo", "fmt", "--all", "--", "--check"], "exit_code": 0}
+{"name": "repl", "command": ["cargo", "test", "-p", "nu", "--test", "repl", "repl::test_config_path"], "exit_code": 101}
+{"name": "lsp-hover", "command": ["cargo", "test", "-p", "nu-lsp", "hover_on_external_command"], "exit_code": 101}
+{"name": "native-tls", "command": ["cargo", "check", "-p", "nu-command", "--no-default-features", "--features", "os,network,native-tls", "--locked"], "exit_code": 0}

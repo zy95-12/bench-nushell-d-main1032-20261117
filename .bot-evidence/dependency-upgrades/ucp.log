@@ -1,0 +1,86 @@
+$ cargo test -p nu-command --test main commands::ucp
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.69s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-7345e8ece8303ba9)
+
+running 52 tests
+test commands::ucp::copy_file_with_read_permission ... ignored
+test commands::ucp::copy_files_using_glob_two_parents_up_using_multiple_dots ... ignored, Behavior not supported by uutils cp
+test commands::ucp::copy_ignores_ansi ... ignored, File name in progress bar not on uutils impl
+test commands::ucp::test_cp_only_source_no_dest ... ok
+test commands::ucp::copies_files_with_glob_metachars::case_4 ... ok
+test commands::ucp::copies_files_with_glob_metachars::case_2 ... ok
+test commands::ucp::copies_files_with_glob_metachars::case_3 ... ok
+test commands::ucp::copies_files_with_glob_metachars::case_1 ... ok
+test commands::ucp::copies_files_with_glob_metachars_when_input_are_variables::case_4 ... ok
+test commands::ucp::test_cp_directory_to_itself_disallowed ... ok
+test commands::ucp::copies_files_with_glob_metachars_when_input_are_variables::case_1 ... ok
+test commands::ucp::copy_to_non_existing_dir ... ok
+test commands::ucp::copies_files_with_glob_metachars_when_input_are_variables::case_2 ... ok
+test commands::ucp::copies_files_with_glob_metachars_when_input_are_variables::case_3 ... ok
+test commands::ucp::error_if_attempting_to_copy_a_directory_to_another_directory ... ok
+test commands::ucp::copy_identical_file ... FAILED
+test commands::ucp::test_cp_debug_default ... FAILED
+test commands::ucp::test_cp_inside_glob_metachars_dir ... ok
+test commands::ucp::test_cp_verbose_default ... ok
+test commands::ucp::cp_with_cd ... ok
+test commands::ucp::test_cp_destination_after_cd ... ok
+test commands::ucp::test_cp_to_customized_home_directory ... ok
+test commands::ucp::test_cp_nested_directory_to_itself_disallowed ... ok
+test commands::ucp::test_cp_same_file_force ... ok
+test commands::ucp::test_cp_preserve_nothing ... ok
+test commands::ucp::test_cp_with_vars ... ok
+test commands::ucp::test_cp_preserve_timestamps ... ok
+test commands::ucp::test_cp_recurse ... ok
+test commands::ucp::copies_files_with_glob_metachars_nw::case_2 ... ok
+test commands::ucp::copy_file_not_exists_dst ... ok
+test commands::ucp::copy_dir_contains_symlink_ignored ... ok
+test commands::ucp::test_cp_arg_no_clobber_twice ... ok
+test commands::ucp::copy_file_and_dir_from_two_parents_up_using_multiple_dots_to_current_dir_recursive ... ok
+test commands::ucp::copies_files_with_glob_metachars_nw::case_1 ... ok
+test commands::ucp::copy_dir_contains_symlink ... ok
+test commands::ucp::copy_dir_symlink_file_body_not_changed ... ok
+test commands::ucp::test_cp_preserve_only_timestamps ... ok
+test commands::ucp::copies_the_directory_inside_directory_if_path_to_copy_is_directory_and_with_recursive_flag ... ok
+test commands::ucp::deep_copies_with_recursive_flag ... ok
+test commands::ucp::test_cp_arg_force ... ok
+test commands::ucp::test_cp_arg_no_clobber ... ok
+test commands::ucp::cp_with_tilde ... ok
+test commands::ucp::test_cp_cp ... ok
+test commands::ucp::copies_same_file_twice ... ok
+test commands::ucp::test_cp_existing_target ... ok
+test commands::ucp::test_cp_multiple_files ... ok
+test commands::ucp::test_cp_with_dirs ... ok
+test commands::ucp::copies_using_a_glob ... ok
+test commands::ucp::copies_using_path_with_wildcard ... ok
+test commands::ucp::copies_the_file_inside_directory_if_path_to_copy_is_directory ... ok
+test commands::ucp::copies_a_file ... ok
+test commands::ucp::copy_file_with_update_flag ... ok
+
+failures:
+
+---- commands::ucp::copy_identical_file stdout ----
+=== stderr
+/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/nu: cp-error-same-file
+
+
+thread 'commands::ucp::copy_identical_file' panicked at crates/nu-command/tests/commands/ucp.rs:522:13:
+stderr was: /home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/nu: cp-error-same-file
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- commands::ucp::test_cp_debug_default stdout ----
+=== stderr
+
+
+thread 'commands::ucp::test_cp_debug_default' panicked at crates/nu-command/tests/commands/ucp.rs:902:13:
+Failure: stdout was 
+cp-debug-copy-offload'/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/563f1efa661f4b50093768d31a2725c2bc4713c9dad14310/tests/fixtures/cp/hello_world.txt' -> '/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/tasks/910b286a3dc66d2bc7446148e670dfacfe9dc22cecf3cb6a/agent/tmp/.tmpdUylvO/ucp_test_30/copy_of_hello_world.txt'
+
+
+failures:
+    commands::ucp::copy_identical_file
+    commands::ucp::test_cp_debug_default
+
+test result: FAILED. 47 passed; 2 failed; 3 ignored; 0 measured; 1981 filtered out; finished in 3.48s
+
+error: test failed, to rerun pass `-p nu-command --test main`

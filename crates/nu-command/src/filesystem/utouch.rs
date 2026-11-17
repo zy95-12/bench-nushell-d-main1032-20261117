@@ -200,18 +200,19 @@ impl Command for UTouch {
             }
         }
 
-        if let Err(err) = uu_touch::touch(
-            &input_files,
-            &Options {
-                no_create,
-                no_deref,
-                source,
-                date: date_str,
-                change_times,
-                strict: true,
-            },
-        ) {
-            let nu_err = match err {
+        crate::coreutils::with_localized("touch", || {
+            uu_touch::touch(
+                &input_files,
+                &Options {
+                    no_create,
+                    no_deref,
+                    source,
+                    date: date_str,
+                    change_times,
+                    strict: true,
+                },
+            )
+            .map_err(|err| match err {
                 TouchError::TouchFileError { path, index, error } => ShellError::GenericError {
                     error: format!("Could not touch {}", path.display()),
                     msg: error.to_string(),
@@ -240,9 +241,8 @@ impl Command for UTouch {
                     help: None,
                     inner: Vec::new(),
                 },
-            };
-            return Err(nu_err);
-        }
+            })
+        })??;
 
         Ok(PipelineData::empty())
     }

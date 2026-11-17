@@ -1,0 +1,5 @@
+$ cargo test -p nu --test repl repl::test_config_path
+error: no test target named `repl` in `nu` package
+help: available test targets:
+    main
+    streaming
