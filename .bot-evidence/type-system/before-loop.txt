@@ -1,0 +1,91 @@
+   Compiling syn v2.0.90
+   Compiling rustix v0.38.42
+   Compiling log v0.4.22
+   Compiling serde_derive v1.0.216
+   Compiling lock_api v0.4.12
+   Compiling parking_lot_core v0.9.10
+   Compiling signal-hook v0.3.17
+   Compiling signal-hook-registry v1.4.2
+   Compiling scopeguard v1.2.0
+   Compiling smallvec v1.13.2
+   Compiling thiserror-impl v1.0.69
+   Compiling serde v1.0.216
+   Compiling mio v1.0.3
+   Compiling signal-hook-mio v0.2.4
+   Compiling thiserror v1.0.69
+   Compiling parking_lot v0.12.3
+   Compiling thiserror-impl v2.0.12
+   Compiling chrono v0.4.39
+   Compiling ref-cast-impl v1.0.23
+   Compiling unicode-xid v0.2.6
+   Compiling libc v0.2.174
+   Compiling procfs-core v0.17.0
+   Compiling const_format_proc_macros v0.2.34
+   Compiling proc-macro-error2 v2.0.1
+   Compiling ref-cast v1.0.23
+   Compiling thiserror v2.0.12
+   Compiling serde_json v1.0.133
+   Compiling procfs v0.17.0
+   Compiling erased-serde v0.4.5
+   Compiling crossterm v0.28.1
+   Compiling pwd v1.4.0
+   Compiling miette-derive v7.6.0
+   Compiling typetag-impl v0.2.18
+   Compiling terminal_size v0.4.1
+   Compiling powerfmt v0.2.0
+   Compiling tz-rs v0.7.0
+   Compiling nu-system v0.106.0 (/tmp/type-system-before/crates/nu-system)
+   Compiling tzdb_data v0.2.1
+   Compiling deranged v0.3.11
+   Compiling miette v7.6.0
+   Compiling nu-utils v0.106.0 (/tmp/type-system-before/crates/nu-utils)
+   Compiling typetag v0.2.18
+   Compiling nu-path v0.106.0 (/tmp/type-system-before/crates/nu-path)
+   Compiling nu-experimental v0.106.0 (/tmp/type-system-before/crates/nu-experimental)
+   Compiling nu-derive-value v0.106.0 (/tmp/type-system-before/crates/nu-derive-value)
+   Compiling const_format v0.2.34
+   Compiling strum_macros v0.26.4
+   Compiling chrono-humanize v0.2.3
+   Compiling os_pipe v1.2.1
+   Compiling time-core v0.1.2
+   Compiling num-conv v0.1.0
+   Compiling num_threads v0.1.7
+   Compiling time v0.3.37
+   Compiling nu-protocol v0.106.0 (/tmp/type-system-before/crates/nu-protocol)
+   Compiling tzdb v0.7.2
+   Compiling is_debug v1.1.0
+   Compiling shadow-rs v1.2.0
+   Compiling getrandom v0.2.15
+   Compiling rand_core v0.6.4
+   Compiling nu-cmd-lang v0.106.0 (/tmp/type-system-before/crates/nu-cmd-lang)
+   Compiling regex v1.11.1
+   Compiling env_logger v0.8.4
+   Compiling rand v0.8.5
+   Compiling quickcheck v1.0.3
+   Compiling quickcheck_macros v1.1.0
+   Compiling nu-engine v0.106.0 (/tmp/type-system-before/crates/nu-engine)
+   Compiling nu-parser v0.106.0 (/tmp/type-system-before/crates/nu-parser)
+   Compiling nu-cmd-base v0.106.0 (/tmp/type-system-before/crates/nu-cmd-base)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 34.54s
+     Running tests/type_system.rs (/tmp/type-system-before-target/debug/deps/type_system-7075381dd2e522c9)
+
+running 1 test
+test range_loop_infers_element_type_before_parsing_body ... FAILED
+
+failures:
+
+---- range_loop_infers_element_type_before_parsing_body stdout ----
+
+thread 'range_loop_infers_element_type_before_parsing_body' panicked at crates/nu-cmd-lang/tests/type_system.rs:21:9:
+assertion `left == right` failed
+  left: Range
+ right: Int
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    range_loop_infers_element_type_before_parsing_body
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p nu-cmd-lang --test type_system`

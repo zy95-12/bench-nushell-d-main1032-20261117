@@ -78,6 +78,7 @@ pub trait Eval {
                         ListItem::Item(expr) => output.push(Self::eval::<D>(state, mut_state, expr)?),
                         ListItem::Spread(_, expr) => match Self::eval::<D>(state, mut_state, expr)? {
                             Value::List { vals, .. } => output.extend(vals),
+                            Value::Nothing { .. } => {},
                             _ => return Err(ShellError::CannotSpreadAsList { span: expr_span }),
                         },
                     }
@@ -107,6 +108,7 @@ pub trait Eval {
                         RecordItem::Spread(_, inner) => {
                             let inner_span = inner.span(&state);
                             match Self::eval::<D>(state, mut_state, inner)? {
+                                Value::Nothing { .. } => {},
                                 Value::Record { val: inner_val, .. } => {
                                     for (col_name, val) in inner_val.into_owned() {
                                         if let Some(orig_span) = col_names.get(&col_name) {

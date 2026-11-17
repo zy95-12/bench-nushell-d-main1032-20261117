@@ -1,0 +1,76 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.20s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_cmd_lang-c86278ae48efbcc5)
+
+running 29 tests
+test core_commands::const_::test::test_command_type ... ok
+test core_commands::let_::test::test_command_type ... ok
+test core_commands::const_::test::test_examples ... ok
+test core_commands::for_::test::test_examples ... ok
+test core_commands::mut_::test::test_command_type ... ok
+test core_commands::let_::test::test_examples ... ok
+test core_commands::mut_::test::test_examples ... ok
+test core_commands::overlay::new::test::test_examples ... ok
+test core_commands::overlay::use_::test::test_examples ... ok
+test core_commands::echo::test::test_examples ... ok
+test core_commands::collect::test::test_examples ... ok
+test core_commands::scope::aliases::test::test_examples ... ok
+test core_commands::scope::engine_stats::test::test_examples ... ok
+test core_commands::scope::commands::test::test_examples ... ok
+test core_commands::ignore::test::test_examples ... ok
+test core_commands::scope::externs::test::test_examples ... ok
+test core_commands::scope::modules::test::test_examples ... ok
+test core_commands::scope::variables::test::test_examples ... ok
+test core_commands::version::test::test_examples ... ok
+test core_commands::while_::test::test_examples ... ok
+test core_commands::loop_::test::test_examples ... ok
+test core_commands::if_::test::test_examples ... ok
+test core_commands::try_::test::test_examples ... ok
+test core_commands::describe::test::test_examples ... ok
+test core_commands::export_module::test::test_examples ... ok
+test core_commands::do_::test::test_examples ... ok
+test core_commands::match_::test::test_examples ... ok
+test parse_const_test::quickcheck_parse ... ok
+test core_commands::use_::test::test_examples ... ok
+
+test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-241a9e6b2aea776a)
+
+running 3 tests
+test commands::attr::deprecated::test_deprecated_attribute_since_remove ... ok
+test commands::attr::deprecated::test_deprecated_attribute_flag ... ok
+test commands::attr::deprecated::test_deprecated_attribute ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/syntax_correctness.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/syntax_correctness-67508b84a85de532)
+
+running 9 tests
+test redefining_def_reports_a_diagnostic ... ok
+test external_subexpressions_keep_each_argument_intact ... ok
+test imported_function_cannot_borrow_the_callers_loop ... ok
+test power_is_right_associative ... ok
+test bare_interpolation_with_subexpressions_at_both_ends ... ok
+test export_def_does_not_leak_parameters ... ok
+test negated_string_operators_evaluate ... ok
+test branched_block_calls_with_redirected_output ... ok
+test loop_control_is_lexical ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/type_system.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/type_system-7075381dd2e522c9)
+
+running 2 tests
+test inferred_variables_are_distinct_from_annotated_variables ... ok
+test range_loop_infers_element_type_before_parsing_body ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nu_cmd_lang
+
+running 2 tests
+test crates/nu-cmd-lang/src/core_commands/version.rs - core_commands::version::VERSION_NU_FEATURES (line 23) ... ignored
+test crates/nu-cmd-lang/src/core_commands/version.rs - core_commands::version::VERSION_NU_FEATURES (line 33) ... ignored
+
+test result: ok. 0 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

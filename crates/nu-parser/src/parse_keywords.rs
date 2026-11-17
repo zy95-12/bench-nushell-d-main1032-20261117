@@ -260,6 +260,34 @@ pub fn parse_def_predecl(working_set: &mut StateWorkingSet, spans: &[Span]) {
     }
 }
 
+pub(crate) fn iterable_element_type(expr: &Expression) -> Type {
+    if let Expr::Keyword(keyword) = &expr.expr {
+        return iterable_element_type(&keyword.expr);
+    }
+    match &expr.ty {
+        Type::List(ty) => *ty.clone(),
+        Type::Table(fields) => Type::Record(fields.clone()),
+        Type::Range => {
+            if let Expr::Range(range) = &expr.expr {
+                let types = [&range.from, &range.next, &range.to]
+                    .into_iter()
+                    .filter_map(|expr| expr.as_ref().map(|expr| &expr.ty))
+                    .collect::<Vec<_>>();
+                if types.iter().any(|ty| **ty == Type::Float) {
+                    Type::Float
+                } else if types.iter().all(|ty| **ty == Type::Int) {
+                    Type::Int
+                } else {
+                    Type::Number
+                }
+            } else {
+                Type::Number
+            }
+        }
+        ty => ty.clone(),
+    }
+}
+
 pub fn parse_for(working_set: &mut StateWorkingSet, lite_command: &LiteCommand) -> Expression {
     let spans = &lite_command.parts;
     // Checking that the function is used with the correct name
@@ -337,14 +365,7 @@ pub fn parse_for(working_set: &mut StateWorkingSet, lite_command: &LiteCommand) 
     let iteration_expr = call.positional_nth(1).expect("for call already checked");
     let block = call.positional_nth(2).expect("for call already checked");
 
-    let iteration_expr_ty = iteration_expr.ty.clone();
-
-    // Figure out the type of the variable the `for` uses for iteration
-    let var_type = match iteration_expr_ty {
-        Type::List(x) => *x,
-        Type::Table(x) => Type::Record(x),
-        x => x,
-    };
+    let var_type = iterable_element_type(iteration_expr);
 
     if let (Some(var_id), Some(block_id)) = (&var_decl.as_var(), block.as_block()) {
         working_set.set_variable_type(*var_id, var_type.clone());

@@ -468,3 +468,5 @@ fn custom_command() {
         Eq("42pass[foo]30"),
     )
 }
+
+mod type_system;

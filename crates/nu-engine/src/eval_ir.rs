@@ -355,6 +355,7 @@ fn eval_instruction<D: DebugContext>(
         }
         Instruction::StoreVariable { var_id, src } => {
             let value = ctx.collect_reg(*src, *span)?;
+            ctx.engine_state.get_var(*var_id).check_value(&value)?;
             ctx.stack.add_var(*var_id, value);
             Ok(Continue)
         }
@@ -612,6 +613,11 @@ fn eval_instruction<D: DebugContext>(
             let list_span = list_value.span();
             let items_span = items.span();
             let mut list = list_value.into_list()?;
+            let items = if items.is_nothing() {
+                Value::list(vec![], items_span)
+            } else {
+                items
+            };
             list.extend(
                 items
                     .into_list()
@@ -648,6 +654,11 @@ fn eval_instruction<D: DebugContext>(
             let record_span = record_value.span();
             let items_span = items.span();
             let mut record = record_value.into_record()?;
+            let items = if items.is_nothing() {
+                Value::record(nu_protocol::Record::new(), items_span)
+            } else {
+                items
+            };
             // Not using .extend() here because it doesn't handle duplicates
             for (key, val) in items
                 .into_record()

@@ -1,0 +1,18 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.17s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_test_support-489fae0f06afcad9)
+
+running 3 tests
+test tests::constructs_a_pipeline ... ok
+test playground::tests::current_working_directory_back_to_root_from_anywhere ... ok
+test playground::tests::current_working_directory_in_sandbox_directory_created ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/get_system_locale.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/get_system_locale-3971a1f588ad9ba6)
+
+running 2 tests
+test test_get_system_locale_de ... ok
+test test_get_system_locale_en ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
