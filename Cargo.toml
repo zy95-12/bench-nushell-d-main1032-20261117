@@ -149,7 +149,7 @@ rmp-serde = "1.3"
 roxmltree = "0.20"
 rstest = { version = "0.23", default-features = false }
 rstest_reuse = "0.7"
-rusqlite = "0.31"
+rusqlite = "0.37"
 rust-embed = "8.7.0"
 rustls = { version = "0.23", default-features = false, features = ["std", "tls12"] }
 rustls-native-certs = "0.8"
@@ -222,7 +222,7 @@ nu-protocol = { path = "./crates/nu-protocol", version = "0.106.0" }
 nu-std = { path = "./crates/nu-std", version = "0.106.0" }
 nu-system = { path = "./crates/nu-system", version = "0.106.0" }
 nu-utils = { path = "./crates/nu-utils", version = "0.106.0" }
-reedline = { workspace = true, features = ["bashisms", "sqlite"] }
+reedline = { workspace = true, features = ["bashisms"] }
 
 crossterm = { workspace = true }
 ctrlc = { workspace = true }
@@ -347,3 +347,6 @@ bench = false
 [[bench]]
 name = "benchmarks"
 harness = false
+
+[patch.crates-io.reedline]
+path = "crates/reedline"

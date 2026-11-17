@@ -1,3 +1,4 @@
+use crate::SqliteBackedHistory;
 use crate::prompt_update::{
     POST_EXECUTION_MARKER_PREFIX, POST_EXECUTION_MARKER_SUFFIX, PRE_EXECUTION_MARKER,
     RESET_APPLICATION_MODE, VSCODE_COMMANDLINE_MARKER_PREFIX, VSCODE_COMMANDLINE_MARKER_SUFFIX,
@@ -36,7 +37,7 @@ use nu_utils::{
 };
 use reedline::{
     CursorConfig, CwdAwareHinter, DefaultCompleter, EditCommand, Emacs, FileBackedHistory,
-    HistorySessionId, Reedline, SqliteBackedHistory, Vi,
+    HistorySessionId, Reedline, Vi,
 };
 use std::sync::atomic::Ordering;
 use std::{

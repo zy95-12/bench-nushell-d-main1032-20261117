@@ -29,7 +29,10 @@ nu-protocol = { path = "../nu-protocol", version = "0.106.0", features = ["os"] 
 nu-utils = { path = "../nu-utils", version = "0.106.0" }
 nu-color-config = { path = "../nu-color-config", version = "0.106.0" }
 nu-ansi-term = { workspace = true }
-reedline = { workspace = true, features = ["bashisms", "sqlite"] }
+reedline = { workspace = true, features = ["bashisms"] }
+
+rusqlite = { workspace = true, features = ["bundled"] }
+serde_json = { workspace = true }
 
 chrono = { default-features = false, features = ["std"], workspace = true }
 crossterm = { workspace = true }

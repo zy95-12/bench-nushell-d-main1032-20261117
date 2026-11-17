@@ -7,8 +7,7 @@ use nu_protocol::{
     shell_error::io::IoError,
 };
 use rusqlite::{
-    Connection, DatabaseName, Error as SqliteError, OpenFlags, Row, Statement, ToSql,
-    types::ValueRef,
+    Connection, Error as SqliteError, OpenFlags, Row, Statement, ToSql, types::ValueRef,
 };
 use serde::{Deserialize, Serialize};
 use std::{
@@ -183,7 +182,7 @@ impl SQLiteDatabase {
         conn: &Connection,
         filename: String,
     ) -> Result<(), SqliteError> {
-        conn.backup(DatabaseName::Main, Path::new(&filename), None)?;
+        conn.backup(rusqlite::MAIN_DB, Path::new(&filename), None)?;
         Ok(())
     }
 
@@ -193,7 +192,7 @@ impl SQLiteDatabase {
         filename: String,
     ) -> Result<(), SqliteError> {
         conn.restore(
-            DatabaseName::Main,
+            rusqlite::MAIN_DB,
             Path::new(&filename),
             Some(|p: rusqlite::backup::Progress| {
                 let percent = if p.pagecount == 0 {
