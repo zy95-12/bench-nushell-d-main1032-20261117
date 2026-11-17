@@ -7,8 +7,7 @@ use nu_protocol::{
     shell_error::io::IoError,
 };
 use rusqlite::{
-    Connection, DatabaseName, Error as SqliteError, OpenFlags, Row, Statement, ToSql,
-    types::ValueRef,
+    Connection, Error as SqliteError, OpenFlags, Row, Statement, ToSql, types::ValueRef,
 };
 use serde::{Deserialize, Serialize};
 use std::{
@@ -183,7 +182,7 @@ impl SQLiteDatabase {
         conn: &Connection,
         filename: String,
     ) -> Result<(), SqliteError> {
-        conn.backup(DatabaseName::Main, Path::new(&filename), None)?;
+        conn.backup(rusqlite::MAIN_DB, Path::new(&filename), None)?;
         Ok(())
     }
 
@@ -193,7 +192,7 @@ impl SQLiteDatabase {
         filename: String,
     ) -> Result<(), SqliteError> {
         conn.restore(
-            DatabaseName::Main,
+            rusqlite::MAIN_DB,
             Path::new(&filename),
             Some(|p: rusqlite::backup::Progress| {
                 let percent = if p.pagecount == 0 {
@@ -442,6 +441,23 @@ pub fn value_to_sql(value: Value) -> Result<Box<dyn rusqlite::ToSql>, ShellError
         Value::String { val, .. } => Box::new(val),
         Value::Binary { val, .. } => Box::new(val),
         Value::Nothing { .. } => Box::new(rusqlite::types::Null),
+        value @ (Value::List { .. } | Value::Record { .. }) => {
+            let json = crate::value_to_json_value(
+                &nu_protocol::engine::EngineState::new(),
+                &value,
+                value.span(),
+                false,
+            )?;
+            Box::new(
+                nu_json::to_string(&json).map_err(|err| ShellError::GenericError {
+                    error: "Cannot encode SQLite JSON".into(),
+                    msg: err.to_string(),
+                    span: Some(value.span()),
+                    help: None,
+                    inner: vec![],
+                })?,
+            )
+        }
         val => {
             return Err(ShellError::OnlySupportsThisInputType {
                 exp_input_type:
@@ -657,12 +673,56 @@ pub fn convert_sqlite_row_to_nu_value(row: &Row, span: Span, column_names: &[Str
         .map(|(i, col)| {
             (
                 col.clone(),
-                convert_sqlite_value_to_nu_value(row.get_ref_unwrap(i), span),
+                match row
+                    .as_ref()
+                    .columns()
+                    .get(i)
+                    .and_then(|col| col.decl_type())
+                {
+                    Some(ty)
+                        if ty.eq_ignore_ascii_case("JSON") || ty.eq_ignore_ascii_case("JSONB") =>
+                    {
+                        convert_sqlite_json_to_nu_value(row.get_ref_unwrap(i), span)
+                    }
+                    _ => convert_sqlite_value_to_nu_value(row.get_ref_unwrap(i), span),
+                },
             )
         })
         .collect();
 
     Value::record(record, span)
+}
+
+fn convert_sqlite_json_to_nu_value(value: ValueRef, span: Span) -> Value {
+    if matches!(value, ValueRef::Null) {
+        return Value::nothing(span);
+    }
+    // SQLite owns the JSONB format; use its JSON function to decode it rather than
+    // relying on the binary representation.
+    let result = (|| -> Result<Value, Box<dyn std::error::Error>> {
+        let text = match value {
+            ValueRef::Blob(bytes) => {
+                Connection::open_in_memory()?
+                    .query_row("SELECT json(?1)", [bytes], |row| row.get::<_, String>(0))?
+            }
+            ValueRef::Text(bytes) => std::str::from_utf8(bytes)?.to_owned(),
+            _ => return Ok(convert_sqlite_value_to_nu_value(value, span)),
+        };
+        let json = nu_json::from_str(&text)?;
+        Ok(crate::convert_nujson_to_value(json, span))
+    })();
+    result.unwrap_or_else(|err| {
+        Value::error(
+            ShellError::GenericError {
+                error: "Cannot decode SQLite JSON".into(),
+                msg: err.to_string(),
+                span: Some(span),
+                help: None,
+                inner: vec![],
+            },
+            span,
+        )
+    })
 }
 
 pub fn convert_sqlite_value_to_nu_value(value: ValueRef, span: Span) -> Value {

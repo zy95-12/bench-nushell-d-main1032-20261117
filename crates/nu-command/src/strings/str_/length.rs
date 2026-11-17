@@ -7,6 +7,7 @@ use unicode_segmentation::UnicodeSegmentation;
 struct Arguments {
     cell_paths: Option<Vec<CellPath>>,
     graphemes: bool,
+    chars: bool,
 }
 
 impl CmdArgument for Arguments {
@@ -34,9 +35,10 @@ impl Command for StrLength {
             .allow_variants_without_examples(true)
             .switch(
                 "grapheme-clusters",
-                "count length using grapheme clusters (all visible chars have length 1)",
+                "count length using grapheme clusters (each extended grapheme cluster has length 1)",
                 Some('g'),
             )
+            .switch("chars", "count Unicode scalar values", Some('c'))
             .switch(
                 "utf-8-bytes",
                 "count length using UTF-8 bytes (default; all non-ASCII chars have length 2+)",
@@ -76,6 +78,7 @@ impl Command for StrLength {
             call,
             input,
             grapheme_flags(engine_state, stack, call)?,
+            call.has_flag(engine_state, stack, "chars")?,
         )
     }
 
@@ -92,6 +95,7 @@ impl Command for StrLength {
             call,
             input,
             grapheme_flags_const(working_set, call)?,
+            call.has_flag_const(working_set, "chars")?,
         )
     }
 
@@ -125,10 +129,18 @@ fn run(
     call: &Call,
     input: PipelineData,
     graphemes: bool,
+    chars: bool,
 ) -> Result<PipelineData, ShellError> {
+    if graphemes && chars {
+        return Err(ShellError::IncompatibleParametersSingle {
+            msg: "Incompatible flags: --chars (-c) and --grapheme-clusters (-g)".into(),
+            span: call.head,
+        });
+    }
     let args = Arguments {
         cell_paths: (!cell_paths.is_empty()).then_some(cell_paths),
         graphemes,
+        chars,
     };
     operate(action, args, input, call.head, engine_state.signals())
 }
@@ -138,6 +150,8 @@ fn action(input: &Value, arg: &Arguments, head: Span) -> Value {
         Value::String { val, .. } => Value::int(
             if arg.graphemes {
                 val.graphemes(true).count()
+            } else if arg.chars {
+                val.chars().count()
             } else {
                 val.len()
             } as i64,
@@ -167,6 +181,7 @@ mod test {
         let options = Arguments {
             cell_paths: None,
             graphemes: false,
+            chars: false,
         };
 
         let actual = action(&word, &options, Span::test_data());

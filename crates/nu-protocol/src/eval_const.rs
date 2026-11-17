@@ -249,6 +249,8 @@ pub(crate) fn create_nu_constant(engine_state: &EngineState, span: Span) -> Valu
         Value::bool(engine_state.is_interactive, span),
     );
 
+    record.push("is-lsp", Value::bool(engine_state.is_lsp, span));
+
     record.push("is-login", Value::bool(engine_state.is_login, span));
 
     record.push(
@@ -417,7 +419,7 @@ pub fn eval_constant_with_input(
             let block = working_set.get_block(*block_id);
             eval_const_subexpression(working_set, block, input, expr.span(&working_set))
         }
-        _ => eval_constant(working_set, expr).map(|v| PipelineData::Value(v, None)),
+        _ => eval_constant(working_set, expr).map(|v| PipelineData::value(v, None)),
     }
 }
 

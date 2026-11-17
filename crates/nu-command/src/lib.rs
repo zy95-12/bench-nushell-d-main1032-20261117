@@ -3,6 +3,8 @@
 mod bytes;
 mod charting;
 mod conversions;
+#[cfg(feature = "os")]
+mod coreutils;
 mod date;
 mod debug;
 mod default_context;

@@ -1,0 +1,17 @@
+$ cargo test -p nu-cli --features plugin --test main commands::history_import
+    Blocking waiting for file lock on build directory
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/563f1efa661f4b50093768d31a2725c2bc4713c9dad14310/crates/nu-command)
+   Compiling nu-cli v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/563f1efa661f4b50093768d31a2725c2bc4713c9dad14310/crates/nu-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 37.88s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-c10f610de5db11c5)
+
+running 6 tests
+test commands::history_import::history_import_pipe_string ... ok
+test commands::history_import::to_existing::case_1_plaintext ... ok
+test commands::history_import::to_empty_plaintext ... ok
+test commands::history_import::to_existing::case_2_sqlite ... ok
+test commands::history_import::history_import_pipe_record ... ok
+test commands::history_import::to_empty_sqlite ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 107 filtered out; finished in 0.07s
+

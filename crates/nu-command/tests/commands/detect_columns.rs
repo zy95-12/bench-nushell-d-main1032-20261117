@@ -94,3 +94,23 @@ drwxr-xr-x  4 root root 4.0K Mar 20 08:18 ~(char nl)
         assert_eq!(out.out, "true");
     })
 }
+
+#[test]
+fn streaming_duplicate_headers_are_unique() {
+    for flags in ["", "--guess"] {
+        let actual = nu!(format!(
+            r#""a  a  a_2\n1  2  3" | detect columns {flags} | get 0 | columns | to nuon"#
+        ));
+        assert!(actual.err.is_empty(), "{}", actual.err);
+        assert_eq!(actual.out, r#"[a, "a_3", "a_2"]"#);
+    }
+}
+
+#[test]
+fn streaming_overlapping_cells_do_not_duplicate_keys() {
+    let actual = nu!(
+        r#""wide_header        b\none two three      four extra" | detect columns | get 0 | columns | to nuon"#
+    );
+    assert!(actual.err.is_empty(), "{}", actual.err);
+    assert_eq!(actual.out, "[wide_header, b]");
+}

@@ -65,7 +65,8 @@ impl Command for Slice {
         input: PipelineData,
     ) -> Result<PipelineData, ShellError> {
         let head = call.head;
-        let metadata = input.metadata();
+        let metadata = input.metadata().map(|m| m.with_content_type(None));
+        let input = input.set_metadata(metadata.clone());
         let range: IntRange = call.req(engine_state, stack, 0)?;
 
         // only collect the input if we have any negative indices
@@ -81,7 +82,7 @@ impl Command for Slice {
             };
 
             if count == 0 {
-                Ok(PipelineData::Value(Value::list(vec![], head), None))
+                Ok(PipelineData::value(Value::list(vec![], head), None))
             } else {
                 let iter = v.into_iter().skip(from).take(count);
                 Ok(iter.into_pipeline_data(head, engine_state.signals().clone()))
@@ -102,7 +103,7 @@ impl Command for Slice {
             };
 
             if count == 0 {
-                Ok(PipelineData::Value(Value::list(vec![], head), None))
+                Ok(PipelineData::value(Value::list(vec![], head), None))
             } else {
                 let iter = input.into_iter().skip(from).take(count);
                 Ok(iter.into_pipeline_data(head, engine_state.signals().clone()))

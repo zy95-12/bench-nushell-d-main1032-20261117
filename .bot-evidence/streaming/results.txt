@@ -1,0 +1,20 @@
+build exit=0 command=cargo build -p nu --locked
+each exit=0 command=cargo test -p nu-command --test main commands::each
+overlay-command-filter exit=0 command=cargo test -p nu-command --test main commands::overlay
+detect-columns exit=101 command=cargo test -p nu-command --test main commands::detect_columns
+which exit=0 command=cargo test -p nu-command --test main commands::which
+root-streaming exit=0 command=cargo test -p nu --test main streaming
+overlays exit=0 command=cargo test -p nu --test main overlays
+cli exit=101 command=cargo test -p nu-cli
+config-path exit=101 command=cargo test -p nu --test main repl::test_config_path
+protocol exit=0 command=cargo test -p nu-protocol
+detect-columns-final exit=0 command=cargo test -p nu-command --test main commands::detect_columns
+each-final exit=0 command=cargo test -p nu-command --test main commands::each
+lang exit=0 command=cargo test -p nu-cmd-lang
+cli-plugin exit=0 command=cargo test -p nu-cli --features plugin
+inprocess exit=0 command=cargo test -p nu-command --test streaming
+namespace-context exit=0 command=cargo test -p nu --bin nu command_context
+engine exit=0 command=cargo test -p nu-engine
+check exit=0 command=cargo check -p nu --locked
+inprocess-final exit=0 command=cargo test -p nu-command --test streaming
+save exit=0 command=cargo test -p nu-command --test main commands::save

@@ -231,7 +231,8 @@ impl Command for Find {
             .get_flag(engine_state, stack, "columns")?
             .unwrap_or_default();
 
-        let input = split_string_if_multiline(input, call.head);
+        let metadata = input.metadata().map(|m| m.with_content_type(None));
+        let input = split_string_if_multiline(input.set_metadata(metadata), call.head);
 
         find_in_pipelinedata(pattern, columns_to_search, engine_state, stack, input)
     }
@@ -448,7 +449,7 @@ fn find_in_pipelinedata(
     let map_columns_to_search = columns_to_search.clone();
 
     match input {
-        PipelineData::Empty => Ok(PipelineData::Empty),
+        PipelineData::Empty => Ok(PipelineData::empty()),
         PipelineData::Value(_, _) => input
             .filter(
                 move |value| {
@@ -470,7 +471,7 @@ fn find_in_pipelinedata(
                 .map(move |x| highlight_matches_in_value(&map_pattern, x, &map_columns_to_search))
             });
 
-            Ok(PipelineData::ListStream(stream, metadata))
+            Ok(PipelineData::list_stream(stream, metadata))
         }
         PipelineData::ByteStream(stream, ..) => {
             let span = stream.span();
@@ -489,7 +490,7 @@ fn find_in_pipelinedata(
                 }
                 Ok(Value::list(output, span).into_pipeline_data())
             } else {
-                Ok(PipelineData::Empty)
+                Ok(PipelineData::empty())
             }
         }
     }

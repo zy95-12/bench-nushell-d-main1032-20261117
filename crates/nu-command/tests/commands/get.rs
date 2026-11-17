@@ -213,3 +213,34 @@ fn test_const() {
     let actual = nu!(r#"const x = [1 2 3] | get 1; $x"#);
     assert_eq!(actual.out, "2");
 }
+
+#[test]
+fn predictable_ignore_case_nested_and_optional() {
+    let actual = nu_test_support::nu!(r#"{Outer: {Name: 7}} | get --ignore-case outer.name"#);
+    assert_eq!(actual.out, "7", "{}", actual.err);
+}
+#[test]
+fn predictable_exact_case_default() {
+    let actual = nu_test_support::nu!(r#"{Name: 7} | get name"#);
+    assert!(!actual.err.is_empty());
+}
+
+#[test]
+fn predictable_optional_ignore_case() {
+    let actual =
+        nu_test_support::nu!(r#"{Name: 7} | get --ignore-case --optional missing | to nuon"#);
+    assert!(actual.err.is_empty(), "{}", actual.err);
+}
+
+#[test]
+fn predictable_const_case_and_optional() {
+    let actual = nu!(
+        r#"const x = ({Name: 7} | get --ignore-case name); const y = ({Name: 7} | get --optional missing); [$x $y] | to nuon"#
+    );
+    assert_eq!(actual.out, "[7, null]", "{}", actual.err);
+}
+#[test]
+fn predictable_stream_case() {
+    let actual = nu!(r#"[{Name: 1} {NAME: 2}] | each { $in } | get --ignore-case name | to nuon"#);
+    assert_eq!(actual.out, "[1, 2]", "{}", actual.err);
+}

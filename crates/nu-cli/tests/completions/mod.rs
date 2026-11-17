@@ -1883,7 +1883,7 @@ fn variables_completions() {
     // Test completions for $nu
     let suggestions = completer.complete("$nu.", 4);
 
-    assert_eq!(19, suggestions.len());
+    assert_eq!(20, suggestions.len());
 
     let expected: Vec<_> = vec![
         "cache-dir",
@@ -1897,6 +1897,7 @@ fn variables_completions() {
         "home-path",
         "is-interactive",
         "is-login",
+        "is-lsp",
         "loginshell-path",
         "os-info",
         "pid",
@@ -2137,7 +2138,8 @@ fn run_external_completion_within_pwd(
     assert!(engine_state.merge_delta(delta).is_ok());
 
     assert!(
-        eval_block::<WithoutDebug>(&engine_state, &mut stack, &block, PipelineData::Empty).is_ok()
+        eval_block::<WithoutDebug>(&engine_state, &mut stack, &block, PipelineData::empty())
+            .is_ok()
     );
 
     // Merge environment into the permanent state
@@ -2481,9 +2483,9 @@ fn operator_completions(mut custom_completer: NuCompleter) {
 
     let suggestions = custom_completer.complete("'str' ", 6);
     // == != > < >= <= in not-in
-    // has not-has starts-with ends-with
+    // has not-has starts-with ends-with not-starts-with not-ends-with
     // =~ !~ like not-like ++
-    assert_eq!(17, suggestions.len());
+    assert_eq!(19, suggestions.len());
     let suggestions = custom_completer.complete("'str' +", 7);
     let expected: Vec<_> = vec!["++"];
     match_suggestions(&expected, &suggestions);
@@ -2546,9 +2548,9 @@ fn cell_path_operator_completions(mut custom_completer: NuCompleter) {
 
     let suggestions = custom_completer.complete("const f = {'foo': [1, '1']}; $f.foo.1 ", 38);
     // == != > < >= <= in not-in
-    // has not-has starts-with ends-with
+    // has not-has starts-with ends-with not-starts-with not-ends-with
     // =~ !~ like not-like ++
-    assert_eq!(17, suggestions.len());
+    assert_eq!(19, suggestions.len());
     let suggestions = custom_completer.complete("const f = {'foo': [1, '1']}; $f.foo.1 ++", 40);
     let expected: Vec<_> = vec!["++"];
     match_suggestions(&expected, &suggestions);
@@ -2558,10 +2560,10 @@ fn cell_path_operator_completions(mut custom_completer: NuCompleter) {
 fn assignment_operator_completions(mut custom_completer: NuCompleter) {
     let suggestions = custom_completer.complete("mut foo = ''; $foo ", 19);
     // == != > < >= <= in not-in
-    // has not-has starts-with ends-with
+    // has not-has starts-with ends-with not-starts-with not-ends-with
     // =~ !~ like not-like ++
     // = ++=
-    assert_eq!(19, suggestions.len());
+    assert_eq!(21, suggestions.len());
     let suggestions = custom_completer.complete("mut foo = ''; $foo ++", 21);
     let expected: Vec<_> = vec!["++", "++="];
     match_suggestions(&expected, &suggestions);
@@ -2608,7 +2610,7 @@ fn assignment_operator_completions(mut custom_completer: NuCompleter) {
 
     // all operators for type any
     let suggestions = custom_completer.complete("ls | where name ", 16);
-    assert_eq!(30, suggestions.len());
+    assert_eq!(32, suggestions.len());
     let expected: Vec<_> = vec!["starts-with"];
     let suggestions = custom_completer.complete("ls | where name starts", 22);
     match_suggestions(&expected, &suggestions);
@@ -2624,10 +2626,10 @@ fn cellpath_assignment_operator_completions() {
     let completion_str = "$foo.foo.1 ";
     let suggestions = completer.complete(completion_str, completion_str.len());
     // == != > < >= <= in not-in
-    // has not-has starts-with ends-with
+    // has not-has starts-with ends-with not-starts-with not-ends-with
     // =~ !~ like not-like ++
     // = ++=
-    assert_eq!(19, suggestions.len());
+    assert_eq!(21, suggestions.len());
     let completion_str = "$foo.foo.1 ++";
     let suggestions = completer.complete(completion_str, completion_str.len());
     let expected: Vec<_> = vec!["++", "++="];
@@ -2655,9 +2657,9 @@ fn cellpath_assignment_operator_completions() {
 fn type_inferenced_operator_completions(mut custom_completer: NuCompleter) {
     let suggestions = custom_completer.complete("let f = {'foo': [1, '1']}; $f.foo.1 ", 36);
     // == != > < >= <= in not-in
-    // has not-has starts-with ends-with
+    // has not-has starts-with ends-with not-starts-with not-ends-with
     // =~ !~ like not-like ++
-    assert_eq!(17, suggestions.len());
+    assert_eq!(19, suggestions.len());
     let suggestions = custom_completer.complete("const f = {'foo': [1, '1']}; $f.foo.1 ++", 38);
     let expected: Vec<_> = vec!["++"];
     match_suggestions(&expected, &suggestions);
@@ -2669,4 +2671,247 @@ fn type_inferenced_operator_completions(mut custom_completer: NuCompleter) {
     let suggestions = custom_completer.complete("mut foo = [(date now)]; $foo.0 =", 32);
     let expected: Vec<_> = vec!["=", "=="];
     match_suggestions(&expected, &suggestions);
+}
+
+#[rstest]
+fn negated_string_operator_completions(mut custom_completer: NuCompleter) {
+    let input = "'str' not-";
+    let suggestions = custom_completer.complete(input, input.len());
+    match_suggestions(
+        &vec![
+            "not-ends-with",
+            "not-has",
+            "not-in",
+            "not-like",
+            "not-starts-with",
+        ],
+        &suggestions,
+    );
+    let input = "1 not-";
+    let suggestions = custom_completer.complete(input, input.len());
+    match_suggestions(&vec!["not-in"], &suggestions);
+}
+
+#[rstest]
+#[case("def demo [local_param: string] { $local_", "$local_param")]
+#[case("for local_loop in [1] { $local_", "$local_loop")]
+#[case("do { let local_let = 1; $local_", "$local_let")]
+#[case("match 1 { $local_pattern => { $local_", "$local_pattern")]
+fn unfinished_lexical_variables(#[case] line: &str, #[case] expected: &str) {
+    let (_, _, engine, stack) = new_engine();
+    let mut completer = NuCompleter::new(Arc::new(engine), Arc::new(stack));
+    let suggestions = completer.complete(line, line.len());
+    assert!(
+        suggestions.iter().any(|s| s.value == expected),
+        "{suggestions:?}"
+    );
+}
+
+#[rstest]
+#[case("do { let local_hidden = 1 }; $local_")]
+#[case("def demo [local_hidden: int] { }; $local_")]
+#[case("for local_hidden in [] { }; $local_")]
+#[case("match 1 { $local_hidden => {} }; $local_")]
+fn completed_scopes_do_not_leak(#[case] line: &str) {
+    let (_, _, engine, stack) = new_engine();
+    let mut completer = NuCompleter::new(Arc::new(engine), Arc::new(stack));
+    assert!(
+        !completer
+            .complete(line, line.len())
+            .iter()
+            .any(|s| s.value == "$local_hidden")
+    );
+}
+
+#[rstest]
+#[case("-")]
+#[case("--fl")]
+#[case("-f")]
+fn partial_flags_before_custom_values(#[case] suffix: &str) {
+    let (_, _, mut engine, mut stack) = new_engine();
+    support::merge_input(b"def values [] { [VALUE_ONLY] }; def demo [arg: string@values --flag(-f): string@values] {}", &mut engine, &mut stack).unwrap();
+    let mut completer = NuCompleter::new(Arc::new(engine), Arc::new(stack));
+    let line = format!("demo {suffix}");
+    let suggestions = completer.complete(&line, line.len());
+    assert!(
+        suggestions
+            .iter()
+            .any(|s| s.value == "--flag" || s.value == "-f"),
+        "{suggestions:?}"
+    );
+    assert!(!suggestions.iter().any(|s| s.value == "VALUE_ONLY"));
+    for line in ["demo ", "demo --flag ", "demo --flag="] {
+        let suggestions = completer.complete(line, line.len());
+        assert!(
+            suggestions.iter().any(|s| s.value == "VALUE_ONLY"),
+            "{line}: {suggestions:?}"
+        );
+    }
+}
+
+#[test]
+fn signature_static_value_lists() {
+    use nu_protocol::{Completion, Signature, SyntaxShape};
+    let (_, _, mut engine, stack) = new_engine();
+    let mut signature = Signature::build("static-values")
+        .required("value", SyntaxShape::String, "value")
+        .named("color", SyntaxShape::String, "color", Some('c'));
+    signature.required_positional[0].completion =
+        Some(Completion::List(vec!["red".into(), "blue".into()]));
+    signature
+        .named
+        .iter_mut()
+        .find(|flag| flag.long == "color")
+        .unwrap()
+        .completion = Some(Completion::List(vec!["green".into(), "gold".into()]));
+    let mut working_set = StateWorkingSet::new(&engine);
+    working_set.add_decl(signature.predeclare());
+    engine.merge_delta(working_set.render()).unwrap();
+    let mut completer = NuCompleter::new(Arc::new(engine), Arc::new(stack));
+    for (line, expected) in [
+        ("static-values r", vec!["red"]),
+        ("static-values --color g", vec!["gold", "green"]),
+        ("static-values --color=gr", vec!["green"]),
+    ] {
+        let mut actual: Vec<_> = completer
+            .complete(line, line.len())
+            .into_iter()
+            .map(|s| s.value)
+            .collect();
+        actual.sort();
+        assert_eq!(actual, expected, "{line}");
+    }
+}
+
+#[test]
+fn commandline_accept_modes() {
+    let (_, _, mut engine, mut stack) = new_engine();
+    engine = nu_cli::add_cli_context(engine);
+    for (mode, expected, cursor) in [
+        ("--replace", "XY", 2),
+        ("--insert", "aXYb", 3),
+        ("--append", "abXY", 1),
+    ] {
+        {
+            let mut repl = engine.repl_state.lock().unwrap();
+            repl.buffer = "ab".into();
+            repl.cursor_pos = 1;
+            repl.accept = false;
+        }
+        let command = format!("commandline edit {mode} -A XY");
+        support::merge_input(command.as_bytes(), &mut engine, &mut stack).unwrap();
+        let repl = engine.repl_state.lock().unwrap();
+        assert_eq!(repl.buffer, expected);
+        assert_eq!(repl.cursor_pos, cursor);
+        assert!(repl.accept);
+    }
+}
+
+#[test]
+fn missing_script_has_command_line_span() {
+    let (_, _, mut engine, mut stack) = new_engine();
+    let directory = tempfile::tempdir().unwrap();
+    let path = directory
+        .path()
+        .join("missing.nu")
+        .to_string_lossy()
+        .to_string();
+    let error = nu_cli::evaluate_file(
+        path.clone(),
+        &[],
+        &mut engine,
+        &mut stack,
+        PipelineData::empty(),
+    )
+    .unwrap_err();
+    if let nu_protocol::ShellError::Io(error) = error {
+        assert_eq!(engine.get_span_contents(error.span), path.as_bytes());
+        assert!(error.location.is_none());
+    } else {
+        panic!("unexpected error: {error:?}");
+    }
+}
+
+#[test]
+fn type_annotation_rejects_custom_completion() {
+    let (_, _, engine, _) = new_engine();
+    for annotation in ["let", "mut", "const"] {
+        let mut working_set = StateWorkingSet::new(&engine);
+        let source =
+            format!("def values [] {{ [one two] }}; {annotation} value: string@values = one");
+        parse(&mut working_set, None, source.as_bytes(), false);
+        assert!(
+            working_set
+                .parse_errors
+                .iter()
+                .any(|error| error.to_string().contains("Unexpected custom completer")),
+            "{:?}",
+            working_set.parse_errors
+        );
+    }
+}
+
+#[test]
+fn nu_schema_includes_lsp_mode() {
+    let (_, _, engine, _) = new_engine();
+    let value = engine
+        .get_var(nu_protocol::NU_VARIABLE_ID)
+        .const_val
+        .as_ref()
+        .unwrap();
+    assert_eq!(
+        value
+            .as_record()
+            .unwrap()
+            .get("is-lsp")
+            .unwrap()
+            .as_bool()
+            .unwrap(),
+        false
+    );
+}
+
+#[test]
+fn lsp_print_does_not_invoke_table_renderer() {
+    let (_, _, mut engine, mut stack) = new_engine();
+    engine.is_lsp = true;
+    let mut working_set = StateWorkingSet::new(&engine);
+    working_set.add_decl(Box::new(nu_cli::Print));
+    // Predeclared commands cannot execute. If print tries to render the table, evaluation fails.
+    let renderer =
+        working_set.add_decl(nu_protocol::Signature::build("forbidden-renderer").predeclare());
+    engine.merge_delta(working_set.render()).unwrap();
+    engine.table_decl_id = Some(renderer);
+    for source in [
+        "print text",
+        "[1 2] | print",
+        "print --raw text",
+        "print --stderr text",
+    ] {
+        support::merge_input(source.as_bytes(), &mut engine, &mut stack).unwrap();
+    }
+}
+
+#[test]
+fn signature_completion_shapes_are_plain() {
+    let (_, _, engine, _) = new_engine();
+    let mut working_set = StateWorkingSet::new(&engine);
+    parse(
+        &mut working_set,
+        None,
+        b"def values [] { [one two] }; def demo [arg: string@values --flag: string@values] {}",
+        false,
+    );
+    assert!(working_set.parse_errors.is_empty());
+    let signature = working_set
+        .get_decl(working_set.find_decl(b"demo").unwrap())
+        .signature();
+    assert_eq!(
+        signature.required_positional[0].shape,
+        nu_protocol::SyntaxShape::String
+    );
+    assert_eq!(
+        signature.get_long_flag("flag").unwrap().arg,
+        Some(nu_protocol::SyntaxShape::String)
+    );
 }

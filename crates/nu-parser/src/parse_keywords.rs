@@ -186,6 +186,15 @@ pub fn parse_def_predecl(working_set: &mut StateWorkingSet, spans: &[Span]) {
         return;
     };
 
+    if name == "def" {
+        working_set.error(ParseError::LabeledError(
+            "Cannot redefine the def keyword".into(),
+            "choose a different command name".into(),
+            spans[name_pos],
+        ));
+        return;
+    }
+
     if name.contains('#')
         || name.contains('^')
         || name.parse::<bytesize::ByteSize>().is_ok()
@@ -248,6 +257,34 @@ pub fn parse_def_predecl(working_set: &mut StateWorkingSet, spans: &[Span]) {
 
     if working_set.add_predecl(decl).is_some() {
         working_set.error(ParseError::DuplicateCommandDef(spans[name_pos]));
+    }
+}
+
+pub(crate) fn iterable_element_type(expr: &Expression) -> Type {
+    if let Expr::Keyword(keyword) = &expr.expr {
+        return iterable_element_type(&keyword.expr);
+    }
+    match &expr.ty {
+        Type::List(ty) => *ty.clone(),
+        Type::Table(fields) => Type::Record(fields.clone()),
+        Type::Range => {
+            if let Expr::Range(range) = &expr.expr {
+                let types = [&range.from, &range.next, &range.to]
+                    .into_iter()
+                    .filter_map(|expr| expr.as_ref().map(|expr| &expr.ty))
+                    .collect::<Vec<_>>();
+                if types.iter().any(|ty| **ty == Type::Float) {
+                    Type::Float
+                } else if types.iter().all(|ty| **ty == Type::Int) {
+                    Type::Int
+                } else {
+                    Type::Number
+                }
+            } else {
+                Type::Number
+            }
+        }
+        ty => ty.clone(),
     }
 }
 
@@ -328,14 +365,7 @@ pub fn parse_for(working_set: &mut StateWorkingSet, lite_command: &LiteCommand) 
     let iteration_expr = call.positional_nth(1).expect("for call already checked");
     let block = call.positional_nth(2).expect("for call already checked");
 
-    let iteration_expr_ty = iteration_expr.ty.clone();
-
-    // Figure out the type of the variable the `for` uses for iteration
-    let var_type = match iteration_expr_ty {
-        Type::List(x) => *x,
-        Type::Table(x) => Type::Record(x),
-        x => x,
-    };
+    let var_type = iterable_element_type(iteration_expr);
 
     if let (Some(var_id), Some(block_id)) = (&var_decl.as_var(), block.as_block()) {
         working_set.set_variable_type(*var_id, var_type.clone());
@@ -350,6 +380,7 @@ pub fn parse_for(working_set: &mut StateWorkingSet, lite_command: &LiteCommand) 
                 shape: var_type.to_shape(),
                 var_id: Some(*var_id),
                 default_value: None,
+                completion: None,
             },
         );
     }
@@ -4079,6 +4110,9 @@ pub fn find_in_dirs(
         cwd: &str,
         dirs_var_name: Option<&str>,
     ) -> Option<ParserPath> {
+        if nu_path::is_windows_device_path(filename) {
+            return Some(ParserPath::RealPath(filename.into()));
+        }
         // Choose whether to use file-relative or PWD-relative path
         let actual_cwd = working_set
             .files
@@ -4144,6 +4178,9 @@ pub fn find_in_dirs(
         cwd: &str,
         dirs_env: Option<&str>,
     ) -> Option<PathBuf> {
+        if nu_path::is_windows_device_path(filename) {
+            return Some(filename.into());
+        }
         // Choose whether to use file-relative or PWD-relative path
         let actual_cwd = working_set
             .files

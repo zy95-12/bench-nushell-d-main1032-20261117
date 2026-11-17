@@ -1,0 +1,29 @@
+$ cargo test -p nu-command --test main commands::reject
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.30s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-af0b020b004ce5a6)
+
+running 21 tests
+test commands::reject::predictable_exact_case_default ... ok
+test commands::reject::skip_cell_rejection ... ok
+test commands::reject::complex_nested_columns ... ok
+test commands::reject::reject_record_from_raw_eval ... ok
+test commands::reject::regular_columns ... ok
+test commands::reject::predictable_ignore_case_nested_and_optional ... ok
+test commands::reject::reject_multiple_rows_descending ... ok
+test commands::reject::reject_columns_with_list_spread ... ok
+test commands::reject::ignores_duplicate_columns_rejected ... ok
+test commands::reject::reject_nested_field ... ok
+test commands::reject::reject_rows_with_list_spread ... ok
+test commands::reject::test_works_with_integer_path_and_stream ... ok
+test commands::reject::reject_optional_row ... ok
+test commands::reject::test_ignore_errors_flag_var ... ok
+test commands::reject::ignores_duplicate_rows_rejected ... ok
+test commands::reject::predictable_optional_ignore_case ... ok
+test commands::reject::reject_multiple_rows_ascending ... ok
+test commands::reject::reject_mixed_with_list_spread ... ok
+test commands::reject::test_ignore_errors_flag ... ok
+test commands::reject::reject_table_from_raw_eval ... ok
+test commands::reject::reject_optional_column ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 2006 filtered out; finished in 0.10s
+

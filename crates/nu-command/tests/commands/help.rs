@@ -377,3 +377,12 @@ fn nothing_type_annotation() {
     ));
     assert_eq!(actual.out, "nothing");
 }
+
+#[test]
+fn help_lists_negated_string_operators() {
+    let actual = nu!(
+        r#"help operators | where operator in ['not-starts-with' 'not-ends-with'] | get operator | sort | to nuon"#
+    );
+    assert!(actual.err.is_empty(), "{}", actual.err);
+    assert_eq!(actual.out, "[not-ends-with, not-starts-with]");
+}

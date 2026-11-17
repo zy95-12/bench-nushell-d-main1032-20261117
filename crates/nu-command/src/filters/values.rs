@@ -135,9 +135,10 @@ fn values(
     input: PipelineData,
 ) -> Result<PipelineData, ShellError> {
     let signals = engine_state.signals().clone();
-    let metadata = input.metadata();
+    let metadata = input.metadata().map(|m| m.with_content_type(None));
+    let input = input.set_metadata(metadata.clone());
     match input {
-        PipelineData::Empty => Ok(PipelineData::Empty),
+        PipelineData::Empty => Ok(PipelineData::empty()),
         PipelineData::Value(v, ..) => {
             let span = v.span();
             match v {

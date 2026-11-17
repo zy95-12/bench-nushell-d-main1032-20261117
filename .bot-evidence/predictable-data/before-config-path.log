@@ -1,0 +1,78 @@
+Accepted-tree root main test binary: repl::test_config_path --nocapture
+
+running 15 tests
+=== stderr
+
+test repl::test_config_path::commandstring_populates_config_record ... ok
+
+thread 'repl::test_config_path::test_xdg_config_bad' panicked at tests/repl/test_config_path.rs:290:9:
+assertion failed: `(left == right)`
+
+[1mDiff[0m [31m< left[0m / [32mright >[0m :
+[31m</home/cdy/.config/nushell[0m
+[32m>/home/cdy/[0m[1;48;5;22;32mzhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/tasks/7b6e2c6ecfbd39949ad49fba161921b1fbbb351df268b8d1/cli-state/024e9e0844478cf75961933f3e1b5e50ba01661a567eb244/home/[0m[32m.config/nushell[0m
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'repl::test_config_path::test_xdg_config_empty' panicked at tests/repl/test_config_path.rs:275:9:
+assertion failed: `(left == right)`
+
+[1mDiff[0m [31m< left[0m / [32mright >[0m :
+[31m</home/cdy/.config/nushell[0m
+[32m>/home/cdy/[0m[1;48;5;22;32mzhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/tasks/7b6e2c6ecfbd39949ad49fba161921b1fbbb351df268b8d1/cli-state/024e9e0844478cf75961933f3e1b5e50ba01661a567eb244/home/[0m[32m.config/nushell[0m
+
+
+test repl::test_config_path::test_xdg_config_bad ... FAILED
+test repl::test_config_path::test_xdg_config_empty ... FAILED
+
+thread 'repl::test_config_path::test_default_config_path' panicked at tests/repl/test_config_path.rs:101:5:
+assertion failed: `(left == right)`
+
+[1mDiff[0m [31m< left[0m / [32mright >[0m :
+[31m</home/cdy/.config/nushell[0m
+[32m>/home/cdy/[0m[1;48;5;22;32mzhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/tasks/7b6e2c6ecfbd39949ad49fba161921b1fbbb351df268b8d1/cli-state/024e9e0844478cf75961933f3e1b5e50ba01661a567eb244/home/[0m[32m.config/nushell[0m
+
+
+test repl::test_config_path::test_default_config_path ... FAILED
+test repl::test_config_path::test_xdg_config_symlink ... ok
+=== stderr
+
+test repl::test_config_path::no_config_does_not_load_env_files ... ok
+=== stderr
+
+test repl::test_config_path::no_config_does_not_load_config_files ... ok
+=== stderr
+
+test repl::test_config_path::commandstring_loads_default_env ... ok
+=== stderr
+
+test repl::test_config_path::commandstring_does_not_load_config_files ... ok
+=== stderr
+
+test repl::test_config_path::commandstring_does_not_load_user_env ... ok
+=== stderr
+
+=== stderr
+
+=== stderr
+
+test repl::test_config_path::use_last_config_path ... ok
+=== stderr
+
+test repl::test_config_path::test_alternate_config_path ... ok
+test repl::test_config_path::test_default_symlink_config_path_broken_symlink_config_files ... ok
+test repl::test_config_path::test_default_symlinked_config_path_empty ... ok
+test repl::test_config_path::test_default_config_path_symlinked_config_files ... ok
+
+failures:
+
+failures:
+    repl::test_config_path::test_default_config_path
+    repl::test_config_path::test_xdg_config_bad
+    repl::test_config_path::test_xdg_config_empty
+
+test result: FAILED. 12 passed; 3 failed; 0 ignored; 0 measured; 1511 filtered out; finished in 0.22s
+
+
+exit_code=101

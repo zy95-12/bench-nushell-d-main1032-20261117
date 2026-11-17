@@ -1,0 +1,84 @@
+Source: https://static.crates.io/crates/reedline/reedline-0.42.0.crate
+License: MIT; Copyright (c) 2021 Nushell Project
+Crate SHA256: 0f9152b55a7af872d1ea9ac81c619fd02368d3e3b27ff195c56ab3fc300f4fd0
+crates/reedline/Cargo.toml: identical to crate
+crates/reedline/LICENSE: identical to crate
+crates/reedline/README.md: identical to crate
+crates/reedline/examples/basic.rs: identical to crate
+crates/reedline/examples/completions.rs: identical to crate
+crates/reedline/examples/custom_prompt.rs: identical to crate
+crates/reedline/examples/cwd_aware_hinter.rs: identical to crate
+crates/reedline/examples/demo.rs: identical to crate
+crates/reedline/examples/event_listener.rs: identical to crate
+crates/reedline/examples/event_listener_kitty_proto.rs: identical to crate
+crates/reedline/examples/external_printer.rs: identical to crate
+crates/reedline/examples/highlighter.rs: identical to crate
+crates/reedline/examples/hinter.rs: identical to crate
+crates/reedline/examples/history.rs: identical to crate
+crates/reedline/examples/ide_completions.rs: identical to crate
+crates/reedline/examples/list_bindings.rs: identical to crate
+crates/reedline/examples/transient_prompt.rs: identical to crate
+crates/reedline/examples/validator.rs: identical to crate
+crates/reedline/src/README.md: identical to crate
+crates/reedline/src/completion/base.rs: identical to crate
+crates/reedline/src/completion/default.rs: identical to crate
+crates/reedline/src/completion/history.rs: identical to crate
+crates/reedline/src/completion/mod.rs: identical to crate
+crates/reedline/src/core_editor/clip_buffer.rs: identical to crate
+crates/reedline/src/core_editor/edit_stack.rs: identical to crate
+crates/reedline/src/core_editor/editor.rs: identical to crate
+crates/reedline/src/core_editor/line_buffer.rs: identical to crate
+crates/reedline/src/core_editor/mod.rs: identical to crate
+crates/reedline/src/edit_mode/base.rs: identical to crate
+crates/reedline/src/edit_mode/cursors.rs: identical to crate
+crates/reedline/src/edit_mode/emacs.rs: identical to crate
+crates/reedline/src/edit_mode/keybindings.rs: identical to crate
+crates/reedline/src/edit_mode/mod.rs: identical to crate
+crates/reedline/src/edit_mode/vi/command.rs: identical to crate
+crates/reedline/src/edit_mode/vi/mod.rs: identical to crate
+crates/reedline/src/edit_mode/vi/motion.rs: identical to crate
+crates/reedline/src/edit_mode/vi/parser.rs: identical to crate
+crates/reedline/src/edit_mode/vi/vi_keybindings.rs: identical to crate
+crates/reedline/src/engine.rs: identical to crate
+crates/reedline/src/enums.rs: identical to crate
+crates/reedline/src/external_printer.rs: identical to crate
+crates/reedline/src/highlighter/example.rs: identical to crate
+crates/reedline/src/highlighter/mod.rs: identical to crate
+crates/reedline/src/highlighter/simple_match.rs: identical to crate
+crates/reedline/src/hinter/cwd_aware.rs: identical to crate
+crates/reedline/src/hinter/default.rs: identical to crate
+crates/reedline/src/hinter/mod.rs: identical to crate
+crates/reedline/src/history/base.rs: adapted (read-only SearchFilter accessor and its unit regression)
+crates/reedline/src/history/cursor.rs: identical to crate
+crates/reedline/src/history/file_backed.rs: identical to crate
+crates/reedline/src/history/item.rs: identical to crate
+crates/reedline/src/history/mod.rs: identical to crate
+crates/reedline/src/history/sqlite_backed.rs: identical to crate
+crates/reedline/src/lib.rs: identical to crate
+crates/reedline/src/menu/columnar_menu.rs: identical to crate
+crates/reedline/src/menu/description_menu.rs: identical to crate
+crates/reedline/src/menu/ide_menu.rs: identical to crate
+crates/reedline/src/menu/list_menu.rs: identical to crate
+crates/reedline/src/menu/menu_functions.rs: identical to crate
+crates/reedline/src/menu/mod.rs: identical to crate
+crates/reedline/src/painting/mod.rs: identical to crate
+crates/reedline/src/painting/painter.rs: identical to crate
+crates/reedline/src/painting/prompt_lines.rs: identical to crate
+crates/reedline/src/painting/styled_text.rs: identical to crate
+crates/reedline/src/painting/utils.rs: identical to crate
+crates/reedline/src/prompt/base.rs: identical to crate
+crates/reedline/src/prompt/default.rs: identical to crate
+crates/reedline/src/prompt/mod.rs: identical to crate
+crates/reedline/src/result.rs: identical to crate
+crates/reedline/src/terminal_extensions/bracketed_paste.rs: identical to crate
+crates/reedline/src/terminal_extensions/kitty.rs: identical to crate
+crates/reedline/src/terminal_extensions/mod.rs: identical to crate
+crates/reedline/src/utils/mod.rs: identical to crate
+crates/reedline/src/utils/query.rs: identical to crate
+crates/reedline/src/utils/text_manipulation.rs: identical to crate
+crates/reedline/src/validator/default.rs: identical to crate
+crates/reedline/src/validator/mod.rs: identical to crate
+Backend: crates/nu-cli/src/sqlite_history.rs adapted from the same crate history/sqlite_backed.rs. Preserves schema/pragmas/operations; uses public session-ID serialization, I/O error mapping, excluded-command accessor; corrects timestamp_start SQL typo to schema column start_timestamp and propagates prepare errors. New regressions authored in this trial.
+Only supplied baseline/accepted parent stack, this trial work and ordinary crates.io sources used; no later Nushell/reference implementation inspected or imported.
+Initial ff-only failed because HEAD was not an ancestor. Switched branch at e2582005532a3ec7b39e790a65ad5c09a1d4fe9c, repeated ff-only succeeded with tree ae4b119cb5612141ec8a86c496f4dc5e795fb597.
+Standalone accessor test: copied repository crates/reedline to /tmp/sqlite-migration-filter-test and ran cargo test --manifest-path /tmp/sqlite-migration-filter-test/Cargo.toml --lib duplicate_navigation_exclusion (1 passed). The patched dependency is not a workspace member; direct cargo test -p reedline was refused.

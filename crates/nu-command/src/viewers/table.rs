@@ -25,7 +25,6 @@ use nu_utils::{get_ls_colors, terminal_size};
 type ShellResult<T> = Result<T, ShellError>;
 type NuPathBuf = nu_path::PathBuf<Absolute>;
 
-const STREAM_PAGE_SIZE: usize = 1000;
 const DEFAULT_TABLE_WIDTH: usize = 80;
 
 #[derive(Clone)]
@@ -424,13 +423,13 @@ fn handle_table_command(mut input: CmdInput<'_>) -> ShellResult<PipelineData> {
     match input.data {
         // Binary streams should behave as if they really are `binary` data, and printed as hex
         PipelineData::ByteStream(stream, _) if stream.type_() == ByteStreamType::Binary => Ok(
-            PipelineData::ByteStream(pretty_hex_stream(stream, input.call.head), None),
+            PipelineData::byte_stream(pretty_hex_stream(stream, input.call.head), None),
         ),
         PipelineData::ByteStream(..) => Ok(input.data),
         PipelineData::Value(Value::Binary { val, .. }, ..) => {
             let signals = input.engine_state.signals().clone();
             let stream = ByteStream::read_binary(val, input.call.head, signals);
-            Ok(PipelineData::ByteStream(
+            Ok(PipelineData::byte_stream(
                 pretty_hex_stream(stream, input.call.head),
                 None,
             ))
@@ -439,16 +438,16 @@ fn handle_table_command(mut input: CmdInput<'_>) -> ShellResult<PipelineData> {
         PipelineData::Value(Value::List { vals, .. }, metadata) => {
             let signals = input.engine_state.signals().clone();
             let stream = ListStream::new(vals.into_iter(), span, signals);
-            input.data = PipelineData::Empty;
+            input.data = PipelineData::empty();
 
             handle_row_stream(input, stream, metadata)
         }
         PipelineData::ListStream(stream, metadata) => {
-            input.data = PipelineData::Empty;
+            input.data = PipelineData::empty();
             handle_row_stream(input, stream, metadata)
         }
         PipelineData::Value(Value::Record { val, .. }, ..) => {
-            input.data = PipelineData::Empty;
+            input.data = PipelineData::empty();
             handle_record(input, val.into_owned())
         }
         PipelineData::Value(Value::Error { error, .. }, ..) => {
@@ -464,7 +463,7 @@ fn handle_table_command(mut input: CmdInput<'_>) -> ShellResult<PipelineData> {
             let signals = input.engine_state.signals().clone();
             let stream =
                 ListStream::new(val.into_range_iter(span, Signals::empty()), span, signals);
-            input.data = PipelineData::Empty;
+            input.data = PipelineData::empty();
             handle_row_stream(input, stream, metadata)
         }
         x => Ok(x),
@@ -761,7 +760,7 @@ fn handle_row_stream(
         Signals::empty(),
         ByteStreamType::String,
     );
-    Ok(PipelineData::ByteStream(stream, None))
+    Ok(PipelineData::byte_stream(stream, None))
 }
 
 fn make_clickable_link(
@@ -878,7 +877,8 @@ impl Iterator for PagingTableCreator {
                 // Pull from stream until time runs out or we have enough items
                 (batch, end) = stream_collect(
                     &mut self.stream,
-                    STREAM_PAGE_SIZE,
+                    self.config.table.page_size,
+                    std::time::Duration::from_nanos(self.config.table.batch_duration as u64),
                     self.engine_state.signals(),
                 );
             }
@@ -931,6 +931,7 @@ impl Iterator for PagingTableCreator {
 fn stream_collect(
     stream: impl Iterator<Item = Value>,
     size: usize,
+    duration: std::time::Duration,
     signals: &Signals,
 ) -> (Vec<Value>, bool) {
     let start_time = Instant::now();
@@ -940,8 +941,8 @@ fn stream_collect(
     for (i, item) in stream.enumerate() {
         batch.push(item);
 
-        // If we've been buffering over a second, go ahead and send out what we have so far
-        if (Instant::now() - start_time).as_secs() >= 1 {
+        // Flush the current batch once the configured buffering duration has elapsed.
+        if start_time.elapsed() >= duration {
             end = false;
             break;
         }

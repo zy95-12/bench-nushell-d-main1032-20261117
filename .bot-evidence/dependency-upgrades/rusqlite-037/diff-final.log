@@ -1,0 +1,2 @@
+git diff --check EXIT STATUS: 0
+git diff --cached --check EXIT STATUS: 0

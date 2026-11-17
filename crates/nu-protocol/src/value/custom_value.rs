@@ -58,6 +58,30 @@ pub trait CustomValue: fmt::Debug + Send + Sync {
         })
     }
 
+    /// Follow an index while preserving the cell-path optional flag.
+    /// Existing implementations may continue to implement `follow_path_int`.
+    fn follow_path_int_with_options(
+        &self,
+        self_span: Span,
+        index: usize,
+        path_span: Span,
+        _optional: bool,
+    ) -> Result<Value, ShellError> {
+        self.follow_path_int(self_span, index, path_span)
+    }
+
+    /// Follow a key with the cell-path optional flag and casing policy.
+    fn follow_path_string_with_options(
+        &self,
+        self_span: Span,
+        column_name: String,
+        path_span: Span,
+        _optional: bool,
+        _casing: crate::casing::Casing,
+    ) -> Result<Value, ShellError> {
+        self.follow_path_string(self_span, column_name, path_span)
+    }
+
     /// ordering with other value (see [`std::cmp::PartialOrd`])
     fn partial_cmp(&self, _other: &Value) -> Option<Ordering> {
         None
@@ -94,5 +118,74 @@ pub trait CustomValue: fmt::Debug + Send + Sync {
     /// The default is `false`.
     fn notify_plugin_on_drop(&self) -> bool {
         false
+    }
+}
+
+#[cfg(test)]
+mod predictable_options_tests {
+    use super::*;
+    use crate::{ast::PathMember, casing::Casing};
+    use serde::{Deserialize, Serialize};
+
+    #[derive(Debug, Clone, Serialize, Deserialize)]
+    struct OptionsProbe;
+    #[typetag::serde]
+    impl CustomValue for OptionsProbe {
+        fn clone_value(&self, span: Span) -> Value {
+            Value::custom(Box::new(self.clone()), span)
+        }
+        fn type_name(&self) -> String {
+            "options probe".into()
+        }
+        fn to_base_value(&self, span: Span) -> Result<Value, ShellError> {
+            Ok(Value::nothing(span))
+        }
+        fn as_any(&self) -> &dyn std::any::Any {
+            self
+        }
+        fn as_mut_any(&mut self) -> &mut dyn std::any::Any {
+            self
+        }
+        fn follow_path_string_with_options(
+            &self,
+            _: Span,
+            _: String,
+            span: Span,
+            optional: bool,
+            casing: Casing,
+        ) -> Result<Value, ShellError> {
+            Ok(Value::bool(optional && casing == Casing::Insensitive, span))
+        }
+        fn follow_path_int_with_options(
+            &self,
+            _: Span,
+            _: usize,
+            span: Span,
+            optional: bool,
+        ) -> Result<Value, ShellError> {
+            Ok(Value::bool(optional, span))
+        }
+    }
+    #[test]
+    fn predictable_custom_cell_path_options() {
+        let value = Value::test_custom_value(Box::new(OptionsProbe));
+        assert_eq!(
+            value
+                .follow_cell_path(&[PathMember::test_string(
+                    "key".into(),
+                    true,
+                    Casing::Insensitive
+                )])
+                .unwrap()
+                .as_ref(),
+            &Value::test_bool(true)
+        );
+        assert_eq!(
+            value
+                .follow_cell_path(&[PathMember::test_int(0, true)])
+                .unwrap()
+                .as_ref(),
+            &Value::test_bool(true)
+        );
     }
 }

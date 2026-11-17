@@ -88,7 +88,8 @@ fn drop_cols(
     // `[{a: 1}, {b: 2}] | drop column`
     // This will drop the column "a" instead of "b" even though column "b"
     // is displayed farther to the right.
-    let metadata = input.metadata();
+    let metadata = input.metadata().map(|m| m.with_content_type(None));
+    let input = input.set_metadata(metadata.clone());
     match input {
         PipelineData::ListStream(stream, ..) => {
             let mut stream = stream.into_iter();
@@ -108,7 +109,7 @@ fn drop_cols(
                         metadata,
                     ))
             } else {
-                Ok(PipelineData::Empty)
+                Ok(PipelineData::empty())
             }
         }
         PipelineData::Value(mut v, ..) => {
@@ -136,7 +137,7 @@ fn drop_cols(
                 val => Err(unsupported_value_error(&val, head)),
             }
         }
-        PipelineData::Empty => Ok(PipelineData::Empty),
+        PipelineData::Empty => Ok(PipelineData::empty()),
         PipelineData::ByteStream(stream, ..) => Err(ShellError::OnlySupportsThisInputType {
             exp_input_type: "table or record".into(),
             wrong_type: stream.type_().describe().into(),

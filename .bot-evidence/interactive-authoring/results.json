@@ -1,0 +1,127 @@
+{
+  "source": {
+    "contract": "contract:revision:2",
+    "accepted_stack_head": "task_history:11284",
+    "candidate_checkpoint": "task_history:11283",
+    "final_code_diff_sha256": "89a0d14ab9f8b8417cef34ab429797b3c4bb2d0aff1e3f0def311da7b5d4f9a4",
+    "provenance": "Only supplied baseline, explicitly authorized accepted trial commit and this session work. Required merge succeeded after selecting authorized accepted commit branch (initial workspace had identical tree with divergent history). No later Nushell/project/reference implementation accessed. General gjson library README consulted solely to validate documentation link."
+  },
+  "candidate": [
+    {
+      "command": "cargo test -p nu-cli --features plugin",
+      "log": "cli-final.log",
+      "result": "pass: 56 unit, 109 integration; 4 existing ignored"
+    },
+    {
+      "command": "cargo test -p nu-parser",
+      "log": "parser.log",
+      "result": "pass"
+    },
+    {
+      "command": "cargo test -p nu-protocol",
+      "log": "protocol.log",
+      "result": "pass"
+    },
+    {
+      "command": "cargo test -p nu-lsp",
+      "log": "lsp-final.log",
+      "result": "63 pass; external-command hover fails on minimized man stub, also fails on accepted tree"
+    },
+    {
+      "command": "cargo test -p nu-command --test main commands::commandline",
+      "log": "commandline.log",
+      "result": "pass but selects zero tests; supplemented below"
+    },
+    {
+      "command": "cargo test -p nu-command --test main commands::help",
+      "log": "help.log",
+      "result": "20 pass"
+    },
+    {
+      "command": "cargo test --test main repl::test_commandline",
+      "log": "root-commandline.log",
+      "result": "13 pass"
+    },
+    {
+      "command": "cargo test -p nu-engine interactive_help_tests",
+      "log": "help-engine.log",
+      "result": "1 pass"
+    },
+    {
+      "command": "cargo test -p nu-command example_units_are_valid",
+      "log": "filesize.log",
+      "result": "1 pass"
+    },
+    {
+      "command": "cargo check -p nu --locked",
+      "log": "check-final.log",
+      "result": "pass"
+    },
+    {
+      "command": "cargo fmt --all -- --check",
+      "log": "fmt-final.log",
+      "result": "pass"
+    },
+    {
+      "command": "cargo test --test main repl::test_config_path",
+      "log": "config-path.log",
+      "result": "12 pass; exactly 3 reported HOME-dependent baseline failures"
+    },
+    {
+      "command": "cargo test -p nu-cli variables_completions",
+      "log": "default-completion.log",
+      "result": "expected baseline plugin-path-dependent failure without plugin: expected 20 vs actual 19 (added is-lsp field)"
+    }
+  ],
+  "accepted_before": [
+    {
+      "command": "cargo test -p nu-cli --features plugin --target-dir /tmp/nu-interactive-before-target",
+      "log": "before-cli.log",
+      "result": "99 pass; 8 regressions fail: 4 lexical scopes, accept flag, missing-script span, LSP schema, plain signature shapes. Flag/annotation behavior already passes accepted tree."
+    },
+    {
+      "command": "cargo test -p nu-parser unknown_flag_suggests_nearby_flag --target-dir /tmp/nu-interactive-before-target",
+      "log": "before-parser.log",
+      "result": "expected diagnostic regression fails"
+    },
+    {
+      "command": "cargo test -p nu-lsp --target-dir /tmp/nu-interactive-before-target",
+      "log": "before-lsp-full.log",
+      "result": "61 pass; 2 unsaved-document regressions fail plus same manpage failure"
+    },
+    {
+      "command": "cargo test -p nu-engine interactive_help_tests --target-dir /tmp/nu-interactive-before-target",
+      "log": "before-help-engine.log",
+      "result": "expected required-status ordering regression fails"
+    },
+    {
+      "command": "cargo test -p nu-command example_units_are_valid --target-dir /tmp/nu-interactive-before-target",
+      "log": "before-filesize.log",
+      "result": "expected KB unit regression fails"
+    },
+    {
+      "command": "cargo test --test main repl::test_config_path --target-dir /tmp/nu-interactive-before-target",
+      "log": "before-config-path.log",
+      "result": "12 pass; same 3 HOME-dependent failures"
+    },
+    {
+      "command": "cargo test -p nu-cli variables_completions --target-dir /tmp/nu-interactive-before-target",
+      "log": "before-default-completion.log",
+      "result": "same plugin-path-dependent failure without plugin: expected 19 vs actual 18"
+    },
+    {
+      "command": "cargo test -p nu-cli --features plugin signature_static_value_lists --target-dir /tmp/nu-interactive-before-target",
+      "log": "before-static-api.log",
+      "result": "expected compile failure: Completion enum and argument completion fields absent"
+    }
+  ],
+  "before_setup": "Detached accepted-stack worktree at /tmp/nu-interactive-before; only own tests/helpers/dev-dependency additions in before-tests.patch. Explicit --target-dir is required because environment cargo wrapper overrides CARGO_TARGET_DIR. Earlier shared-target attempts were superseded by these isolated runs. Static API probe temporarily appended the candidate static-list test and removed it after the expected compile failure.",
+  "coverage_notes": [
+    "Existing accepted tree already rejects variable custom-completer annotations and passes partial-flag regression cases; retained as regression protection, no fabricated before failure.",
+    "Eight existing goto fixture assertion sets consolidated without changing URI/range expectations. No behavioral before-failure expected from test-only refactoring.",
+    "Query JSON link now targets the gjson.rs README Path Syntax section, verified against general library documentation; prose-only verification, not an invented runtime test.",
+    "Existing completion wrapper input remains accepted by signature builders for compatibility; stored signature shapes are plain and completion metadata is Option<Completion> (Custom DeclId or List strings). Expression has no completion field.",
+    "No workflow edits, version upgrades, or PipelineData constructor migrations. nu-lsp only gains existing workspace test dependencies.",
+    "LSP full suite remains non-green only because man sleep prints a minimized-system notice; accepted-tree comparison and raw man output retained."
+  ]
+}

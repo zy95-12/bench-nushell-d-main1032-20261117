@@ -583,3 +583,22 @@ fn error_when_command_list_empty(#[case] prefix: &str) {
         assert!(actual.err.contains("missing parameter"));
     })
 }
+
+#[test]
+fn external_parenthesized_parts_preserve_values_and_argument_boundaries() {
+    use nu_test_support::fs::Stub::FileWithContent;
+    Playground::setup("external_parenthesized_parts", |dirs, sandbox| {
+        sandbox.with_files(&[FileWithContent(
+            "args.nu",
+            "def main [...args: string] { $args | to json -r }",
+        )]);
+        let actual = nu!(cwd: dirs.test(), r#"
+            ^nu --no-config-file --no-std-lib args.nu pre('two words')post ('left')-('right') 'tail' a('"quoted"')z
+        "#);
+        assert!(actual.err.is_empty(), "{}", actual.err);
+        assert_eq!(
+            actual.out,
+            r#"["pretwo wordspost","left-right","tail","a\"quoted\"z"]"#
+        );
+    });
+}

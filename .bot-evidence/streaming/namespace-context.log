@@ -1,0 +1,16 @@
+    Blocking waiting for file lock on build directory
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-command)
+   Compiling nu v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 35.23s
+     Running unittests src/main.rs (/tmp/nu-streaming-candidate-target/debug/deps/nu-814781f1edad9dc0)
+
+running 7 tests
+test command_context::tests::description_end_period ... ok
+test command_context::tests::description_start_uppercase ... ok
+test command_context::tests::arguments_end_period ... ok
+test command_context::tests::arguments_start_uppercase ... ok
+test command_context::tests::no_search_term_duplicates ... ok
+test command_context::tests::signature_name_matches_command_name ... ok
+test command_context::tests::commands_declare_input_output_types ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s

@@ -1,0 +1,14 @@
+$ cargo test -p nu-command --features sqlite --test main commands::query::db --locked
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.32s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-a0c16a89ba95e9e0)
+
+running 4 tests
+test commands::query::db::invalid_input_fails ... ok
+test commands::query::db::invalid_sql_fails ... ok
+test commands::query::db::can_query_single_table ... ok
+test commands::query::db::sqlite_storage_query_roundtrip ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 2049 filtered out; finished in 0.03s
+
+
+EXIT STATUS: 0

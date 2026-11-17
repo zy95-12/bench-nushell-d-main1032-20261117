@@ -46,7 +46,8 @@ impl Command for Take {
         let head = call.head;
         let rows_desired: usize = call.req(engine_state, stack, 0)?;
 
-        let metadata = input.metadata();
+        let metadata = input.metadata().map(|m| m.with_content_type(None));
+        let input = input.set_metadata(metadata.clone());
 
         match input {
             PipelineData::Value(val, _) => {
@@ -62,7 +63,7 @@ impl Command for Take {
                         )),
                     Value::Binary { val, .. } => {
                         let slice: Vec<u8> = val.into_iter().take(rows_desired).collect();
-                        Ok(PipelineData::Value(Value::binary(slice, span), metadata))
+                        Ok(PipelineData::value(Value::binary(slice, span), metadata))
                     }
                     Value::Range { val, .. } => Ok(val
                         .into_range_iter(span, Signals::empty())
@@ -82,14 +83,14 @@ impl Command for Take {
                     }),
                 }
             }
-            PipelineData::ListStream(stream, metadata) => Ok(PipelineData::ListStream(
+            PipelineData::ListStream(stream, metadata) => Ok(PipelineData::list_stream(
                 stream.modify(|iter| iter.take(rows_desired)),
                 metadata,
             )),
             PipelineData::ByteStream(stream, metadata) => {
                 if stream.type_().is_binary_coercible() {
                     let span = stream.span();
-                    Ok(PipelineData::ByteStream(
+                    Ok(PipelineData::byte_stream(
                         stream.take(span, rows_desired as u64)?,
                         metadata,
                     ))

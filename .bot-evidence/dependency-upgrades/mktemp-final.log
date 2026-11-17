@@ -1,0 +1,12 @@
+$ cargo test -p nu-command --test main commands::mktemp
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.30s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-7345e8ece8303ba9)
+
+running 4 tests
+test commands::mktemp::creates_temp_file ... ok
+test commands::mktemp::creates_temp_file_with_unicode_template_and_suffix ... ok
+test commands::mktemp::creates_temp_file_with_suffix ... ok
+test commands::mktemp::creates_temp_directory ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 2029 filtered out; finished in 0.03s
+

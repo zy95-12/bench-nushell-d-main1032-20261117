@@ -98,7 +98,8 @@ fn first_helper(
         1
     };
 
-    let metadata = input.metadata();
+    let metadata = input.metadata().map(|m| m.with_content_type(None));
+    let input = input.set_metadata(metadata.clone());
 
     // early exit for `first 0`
     if rows == 0 {
@@ -167,7 +168,7 @@ fn first_helper(
                     Err(ShellError::AccessEmptyContent { span: head })
                 }
             } else {
-                Ok(PipelineData::ListStream(
+                Ok(PipelineData::list_stream(
                     stream.modify(|iter| iter.take(rows)),
                     metadata,
                 ))
@@ -191,7 +192,7 @@ fn first_helper(
                         }
                     } else {
                         // Just take 'rows' bytes off the stream, mimicking the binary behavior
-                        Ok(PipelineData::ByteStream(
+                        Ok(PipelineData::byte_stream(
                             ByteStream::read(
                                 reader.take(rows as u64),
                                 head,
@@ -202,7 +203,7 @@ fn first_helper(
                         ))
                     }
                 } else {
-                    Ok(PipelineData::Empty)
+                    Ok(PipelineData::empty())
                 }
             } else {
                 Err(ShellError::OnlySupportsThisInputType {

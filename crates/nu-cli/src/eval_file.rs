@@ -26,11 +26,15 @@ pub fn evaluate_file(
 ) -> Result<(), ShellError> {
     let cwd = engine_state.cwd_as_string(Some(stack))?;
 
+    let mut working_set = StateWorkingSet::new(engine_state);
+    let file_id = working_set.add_file("command line".into(), path.as_bytes());
+    let path_span = working_set.get_span_for_file(file_id);
+    engine_state.merge_delta(working_set.render())?;
+
     let file_path = canonicalize_with(&path, cwd).map_err(|err| {
-        IoError::new_internal_with_path(
+        IoError::new(
             err.not_found_as(NotFound::File),
-            "Could not access file",
-            nu_protocol::location!(),
+            path_span,
             PathBuf::from(&path),
         )
     })?;
@@ -46,10 +50,9 @@ pub fn evaluate_file(
         })?;
 
     let file = std::fs::read(&file_path).map_err(|err| {
-        IoError::new_internal_with_path(
+        IoError::new(
             err.not_found_as(NotFound::File),
-            "Could not read file",
-            nu_protocol::location!(),
+            path_span,
             file_path.clone(),
         )
     })?;

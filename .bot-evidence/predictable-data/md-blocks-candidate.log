@@ -1,0 +1,13 @@
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 22.85s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-af0b020b004ce5a6)
+
+running 5 tests
+test commands::to_md::predictable_adjacent_record_tables_have_blank_line ... ok
+test commands::to_md::predictable_optional_markdown_escaping ... ok
+test commands::to_md::predictable_table_delimiters_and_escaping ... ok
+test commands::to_md::predictable_grouped_mixed_schema_tables_have_blank_line ... ok
+test commands::to_md::predictable_heading_blockquote_and_table_boundaries ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 2025 filtered out; finished in 0.04s
+

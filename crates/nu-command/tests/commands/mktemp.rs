@@ -42,3 +42,20 @@ fn creates_temp_directory() {
         assert!(loc.is_dir());
     })
 }
+
+#[test]
+fn creates_temp_file_with_unicode_template_and_suffix() {
+    Playground::setup("mktemp_unicode", |dirs, _| {
+        let output = nu!(cwd: dirs.test(), "mktemp --suffix .文本 '临时-XXX'");
+        assert!(output.err.is_empty(), "{}", output.err);
+        let loc = AbsolutePath::try_new(&output.out).unwrap();
+        assert!(loc.is_file());
+        assert!(
+            loc.file_name()
+                .unwrap()
+                .to_string_lossy()
+                .starts_with("临时")
+        );
+        assert!(output.out.ends_with(".文本"));
+    });
+}

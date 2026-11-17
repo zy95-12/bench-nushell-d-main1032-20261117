@@ -1,8 +1,8 @@
+use nu_cli::SqliteBackedHistory;
 use nu_protocol::HistoryFileFormat;
 use nu_test_support::{Outcome, nu};
 use reedline::{
     FileBackedHistory, History, HistoryItem, HistoryItemId, ReedlineError, SearchQuery,
-    SqliteBackedHistory,
 };
 use rstest::rstest;
 use tempfile::TempDir;
@@ -293,4 +293,51 @@ fn to_existing(#[case] dst_format: HistoryFileFormat) {
         ],
     }
     .run()
+}
+
+#[rstest]
+#[case::plaintext_to_sqlite("sqlite", HistoryFileFormat::Plaintext)]
+#[case::sqlite_to_plaintext("plaintext", HistoryFileFormat::Sqlite)]
+fn history_import_formats_reopen(#[case] dst: &'static str, #[case] src: HistoryFileFormat) {
+    let test = Test::new(dst);
+    {
+        let mut backend = test.open_backend(src).unwrap();
+        backend
+            .save(HistoryItem {
+                command_line: "echo persisted".into(),
+                ..EMPTY_ITEM
+            })
+            .unwrap();
+        backend.sync().unwrap();
+    }
+    let outcome = test.nu("history import; history | get command | to json --raw");
+    assert!(outcome.status.success(), "{}", outcome.err);
+    assert!(outcome.out.contains("echo persisted"));
+    let outcome = test.nu("history --clear; history | length");
+    assert!(outcome.status.success(), "{}", outcome.err);
+    assert_eq!(outcome.out, "0");
+}
+
+#[test]
+fn sqlite_history_long_preserves_metadata() {
+    let test = Test::new("sqlite");
+    {
+        let mut history = test.open_sqlite().unwrap();
+        history
+            .save(HistoryItem {
+                command_line: "echo metadata".into(),
+                cwd: Some("/work".into()),
+                hostname: Some("history-host".into()),
+                exit_status: Some(7),
+                ..EMPTY_ITEM
+            })
+            .unwrap();
+    }
+    let outcome = test.nu("history --long | to json --raw");
+    assert!(outcome.status.success(), "{}", outcome.err);
+    let rows: serde_json::Value = serde_json::from_str(&outcome.out).unwrap();
+    assert_eq!(rows[0]["command"], "echo metadata");
+    assert_eq!(rows[0]["cwd"], "/work");
+    assert_eq!(rows[0]["hostname"], "history-host");
+    assert_eq!(rows[0]["exit_status"], 7);
 }

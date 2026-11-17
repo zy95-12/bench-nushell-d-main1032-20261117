@@ -118,3 +118,11 @@ fn which_accepts_spread_list() {
 
     assert_eq!(actual.out, "ls");
 }
+
+#[test]
+fn streaming_which_without_arguments_lists_visible_commands() {
+    let actual =
+        nu!("def visible_command [] {}; which | where command == visible_command | get 0.type");
+    assert!(actual.err.is_empty(), "{}", actual.err);
+    assert_eq!(actual.out, "custom");
+}

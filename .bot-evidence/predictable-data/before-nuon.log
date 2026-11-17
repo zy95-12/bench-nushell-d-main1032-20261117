@@ -1,0 +1,38 @@
+   Compiling rustix v0.38.42
+   Compiling chrono v0.4.39
+   Compiling procfs-core v0.17.0
+   Compiling procfs v0.17.0
+   Compiling terminal_size v0.4.1
+   Compiling once_cell v1.20.2
+   Compiling typetag v0.2.18
+   Compiling nu-utils v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nu-utils)
+   Compiling miette v7.6.0
+   Compiling nu-system v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nu-system)
+   Compiling chrono-humanize v0.2.3
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nu-protocol)
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nu-engine)
+   Compiling nu-parser v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nu-parser)
+   Compiling nuon v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nuon)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 22.13s
+     Running unittests src/lib.rs (/tmp/nu-predictable-pre-target/debug/deps/nuon-7ea7005747fabdeb)
+
+running 1 test
+test predictable_equals_strings_are_quoted ... FAILED
+
+failures:
+
+---- predictable_equals_strings_are_quoted stdout ----
+
+thread 'predictable_equals_strings_are_quoted' panicked at crates/nuon/src/lib.rs:518:5:
+assertion `left == right` failed
+  left: "[a=b]"
+ right: "[\"a=b\"]"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    predictable_equals_strings_are_quoted
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 32 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p nuon --lib`

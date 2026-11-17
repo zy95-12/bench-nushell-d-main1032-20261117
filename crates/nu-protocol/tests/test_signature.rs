@@ -45,6 +45,7 @@ fn test_signature_chained() {
             shape: SyntaxShape::String,
             var_id: None,
             default_value: None,
+            completion: None,
         })
     );
     assert_eq!(
@@ -55,6 +56,7 @@ fn test_signature_chained() {
             shape: SyntaxShape::String,
             var_id: None,
             default_value: None,
+            completion: None,
         })
     );
     assert_eq!(
@@ -65,6 +67,7 @@ fn test_signature_chained() {
             shape: SyntaxShape::String,
             var_id: None,
             default_value: None,
+            completion: None,
         })
     );
 
@@ -78,6 +81,7 @@ fn test_signature_chained() {
             desc: "required named description".to_string(),
             var_id: None,
             default_value: None,
+            completion: None,
         })
     );
 
@@ -91,6 +95,7 @@ fn test_signature_chained() {
             desc: "required named description".to_string(),
             var_id: None,
             default_value: None,
+            completion: None,
         })
     );
 }
@@ -169,4 +174,54 @@ fn test_signature_round_trip() {
         .for_each(|(lhs, rhs)| assert_eq!(lhs, rhs));
 
     assert_eq!(signature.rest_positional, returned.rest_positional,);
+}
+
+#[test]
+fn completion_metadata_belongs_to_signature_arguments() {
+    use nu_protocol::{Completion, DeclId};
+    let id = DeclId::new(7);
+    let shape = SyntaxShape::CompleterWrapper(Box::new(SyntaxShape::String), id);
+    let signature = Signature::build("complete")
+        .required("req", shape.clone(), "required")
+        .optional("opt", shape.clone(), "optional")
+        .rest("rest", shape.clone(), "rest")
+        .named("named", shape, "named", None);
+    for arg in signature
+        .required_positional
+        .iter()
+        .chain(&signature.optional_positional)
+        .chain(signature.rest_positional.iter())
+    {
+        assert_eq!(arg.shape, SyntaxShape::String);
+        assert_eq!(arg.completion, Some(Completion::Custom(id)));
+    }
+    assert_eq!(
+        signature.get_long_flag("named").unwrap().arg,
+        Some(SyntaxShape::String)
+    );
+    assert_eq!(
+        signature.get_long_flag("named").unwrap().completion,
+        Some(Completion::Custom(id))
+    );
+}
+
+#[test]
+fn nu_constant_reports_lsp_mode() {
+    use nu_protocol::{NU_VARIABLE_ID, engine::EngineState};
+    let mut engine = EngineState::new();
+    for mode in [false, true] {
+        engine.is_lsp = mode;
+        engine.generate_nu_constant();
+        let value = engine.get_var(NU_VARIABLE_ID).const_val.as_ref().unwrap();
+        assert_eq!(
+            value
+                .as_record()
+                .unwrap()
+                .get("is-lsp")
+                .unwrap()
+                .as_bool()
+                .unwrap(),
+            mode
+        );
+    }
 }

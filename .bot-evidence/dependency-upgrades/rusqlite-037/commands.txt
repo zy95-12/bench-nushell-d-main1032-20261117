@@ -1,0 +1,24 @@
+Required successful commands (raw log filenames):
+cargo check -p nu --locked                           check-nu-final.log
+cargo check -p nu-cli --locked                       check-cli.log
+cargo check -p nu-command --features sqlite --locked  check-command.log
+cargo build -p nu --locked                           build-nu.log
+cargo test -p nu-cli --lib history --locked           unit-history-repaired.log
+cargo test -p nu-cli --lib are_session_ids_in_sync --locked  repl-session.log
+cargo test -p nu-cli --features plugin --test main history --locked  history-final.log
+cargo test -p nu-command --features sqlite --test main commands::open --locked  command-open.log
+cargo test -p nu-command --features sqlite --test main sqlite --locked  sqlite-final.log
+cargo test -p nu-command --features sqlite --test main commands::query::db --locked  query-final.log
+cargo test -p nu-command --features sqlite --test main commands::stor --locked  command-stor.log
+cargo test -p nu-command --features sqlite --lib sqlite --locked  command-sqlite-unit.log
+cargo fmt --all -- --check                           fmt-final.log
+git diff --check; git diff --cached --check           diff-final.log
+cargo metadata --locked --format-version 1           resolved-graph.json (selected package/version/features from actual output)
+
+No outstanding environment failures. Initial root compile failure (DatabaseName API) was repaired.
+New test failures were test construction errors, repaired without weakening existing tests:
+private cursor access replaced with accessor regression in vendored crate; multiline harness
+requires pipeline(...); SQLite fixture uses an absolute DB path like existing tests.
+Historical failing outputs are gzip-compressed losslessly to retain raw diagnostics without
+introducing diagnostic trailing whitespace into the source diff.
+Standalone accessor test setup and command are recorded in provenance.txt.

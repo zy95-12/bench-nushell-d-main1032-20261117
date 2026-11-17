@@ -1,3 +1,4 @@
+pub use nu_utils::MultiLife;
 mod custom_value;
 mod duration;
 mod filesize;
@@ -36,7 +37,7 @@ use std::{
     borrow::Cow,
     cmp::Ordering,
     fmt::{Debug, Display, Write},
-    ops::{Bound, ControlFlow, Deref},
+    ops::{Bound, ControlFlow},
     path::PathBuf,
 };
 
@@ -377,6 +378,7 @@ impl Value {
     /// - `Glob`
     /// - `Binary` (only if valid utf-8)
     /// - `Date`
+    /// - `CellPath`
     ///
     /// ```
     /// # use nu_protocol::Value;
@@ -391,6 +393,7 @@ impl Value {
     ///                 | Value::Glob { .. }
     ///                 | Value::Binary { .. }
     ///                 | Value::Date { .. }
+    ///                 | Value::CellPath { .. }
     ///         ),
     ///         val.coerce_str().is_ok(),
     ///     );
@@ -398,6 +401,7 @@ impl Value {
     /// ```
     pub fn coerce_str(&self) -> Result<Cow<str>, ShellError> {
         match self {
+            Value::CellPath { val, .. } => Ok(Cow::Owned(val.to_string())),
             Value::Bool { val, .. } => Ok(Cow::Owned(val.to_string())),
             Value::Int { val, .. } => Ok(Cow::Owned(val.to_string())),
             Value::Float { val, .. } => Ok(Cow::Owned(val.to_string())),
@@ -433,6 +437,7 @@ impl Value {
     /// - `Glob`
     /// - `Binary` (only if valid utf-8)
     /// - `Date`
+    /// - `CellPath`
     ///
     /// ```
     /// # use nu_protocol::Value;
@@ -447,6 +452,7 @@ impl Value {
     ///                 | Value::Glob { .. }
     ///                 | Value::Binary { .. }
     ///                 | Value::Date { .. }
+    ///                 | Value::CellPath { .. }
     ///         ),
     ///         val.coerce_string().is_ok(),
     ///     );
@@ -466,6 +472,7 @@ impl Value {
     /// - `Glob`
     /// - `Binary` (only if valid utf-8)
     /// - `Date`
+    /// - `CellPath`
     ///
     /// ```
     /// # use nu_protocol::Value;
@@ -480,6 +487,7 @@ impl Value {
     ///                 | Value::Glob { .. }
     ///                 | Value::Binary { .. }
     ///                 | Value::Date { .. }
+    ///                 | Value::CellPath { .. }
     ///         ),
     ///         val.coerce_into_string().is_ok(),
     ///     );
@@ -488,6 +496,7 @@ impl Value {
     pub fn coerce_into_string(self) -> Result<String, ShellError> {
         let span = self.span();
         match self {
+            Value::CellPath { val, .. } => Ok(val.to_string()),
             Value::Bool { val, .. } => Ok(val.to_string()),
             Value::Int { val, .. } => Ok(val.to_string()),
             Value::Float { val, .. } => Ok(val.to_string()),
@@ -1082,30 +1091,6 @@ impl Value {
         &'out self,
         cell_path: &[PathMember],
     ) -> Result<Cow<'out, Value>, ShellError> {
-        enum MultiLife<'out, 'local, T>
-        where
-            'out: 'local,
-            T: ?Sized,
-        {
-            Out(&'out T),
-            Local(&'local T),
-        }
-
-        impl<'out, 'local, T> Deref for MultiLife<'out, 'local, T>
-        where
-            'out: 'local,
-            T: ?Sized,
-        {
-            type Target = T;
-
-            fn deref(&self) -> &Self::Target {
-                match *self {
-                    MultiLife::Out(x) => x,
-                    MultiLife::Local(x) => x,
-                }
-            }
-        }
-
         // A dummy value is required, otherwise rust doesn't allow references, which we need for
         // the `std::ptr::eq` comparison
         let mut store: Value = Value::test_nothing();
@@ -2124,7 +2109,7 @@ fn get_value_member<'a>(
                     }
                 }
                 Value::Custom { val, .. } => {
-                    match val.follow_path_int(current.span(), *count, *origin_span)
+                    match val.follow_path_int_with_options(current.span(), *count, *origin_span, *optional)
                     {
                         Ok(val) => Ok(ControlFlow::Continue(Cow::Owned(val))),
                         Err(err) => {
@@ -2221,8 +2206,13 @@ fn get_value_member<'a>(
                     Ok(ControlFlow::Continue(Cow::Owned(Value::list(list, span))))
                 }
                 Value::Custom { val, .. } => {
-                    match val.follow_path_string(current.span(), column_name.clone(), *origin_span)
-                    {
+                    match val.follow_path_string_with_options(
+                        current.span(),
+                        column_name.clone(),
+                        *origin_span,
+                        *optional,
+                        *casing,
+                    ) {
                         Ok(val) => Ok(ControlFlow::Continue(Cow::Owned(val))),
                         Err(err) => {
                             if *optional {
@@ -2258,7 +2248,7 @@ impl PartialOrd for Value {
         // Compare two floating point numbers. The decision interval for equality is dynamically
         // scaled as the value being compared increases in magnitude.
         fn compare_floats(val: f64, other: f64) -> Option<Ordering> {
-            let prec = f64::EPSILON.max(val.abs() * f64::EPSILON);
+            let prec = f64::EPSILON.max(val.abs().max(other.abs()) * f64::EPSILON);
 
             if (other - val).abs() < prec {
                 return Some(Ordering::Equal);
@@ -3905,6 +3895,48 @@ impl Value {
             ),
             _ => Err(operator_type_error(
                 Operator::Comparison(Comparison::EndsWith),
+                op,
+                self,
+                rhs,
+                |val| matches!(val, Value::String { .. }),
+            )),
+        }
+    }
+
+    pub fn not_starts_with(&self, op: Span, rhs: &Value, span: Span) -> Result<Value, ShellError> {
+        match (self, rhs) {
+            (Value::String { val: lhs, .. }, Value::String { val: rhs, .. }) => {
+                Ok(Value::bool(!lhs.starts_with(rhs), span))
+            }
+            (Value::Custom { val: lhs, .. }, rhs) => lhs.operation(
+                self.span(),
+                Operator::Comparison(Comparison::NotStartsWith),
+                op,
+                rhs,
+            ),
+            _ => Err(operator_type_error(
+                Operator::Comparison(Comparison::NotStartsWith),
+                op,
+                self,
+                rhs,
+                |val| matches!(val, Value::String { .. }),
+            )),
+        }
+    }
+
+    pub fn not_ends_with(&self, op: Span, rhs: &Value, span: Span) -> Result<Value, ShellError> {
+        match (self, rhs) {
+            (Value::String { val: lhs, .. }, Value::String { val: rhs, .. }) => {
+                Ok(Value::bool(!lhs.ends_with(rhs), span))
+            }
+            (Value::Custom { val: lhs, .. }, rhs) => lhs.operation(
+                self.span(),
+                Operator::Comparison(Comparison::NotEndsWith),
+                op,
+                rhs,
+            ),
+            _ => Err(operator_type_error(
+                Operator::Comparison(Comparison::NotEndsWith),
                 op,
                 self,
                 rhs,

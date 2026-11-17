@@ -1,0 +1,18 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.16s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_experimental-cdcd4b8822fb60f0)
+
+running 4 tests
+test options::enforce_typed_variables::tests::option_is_opt_in_and_can_be_parsed_and_disabled ... ok
+test options::tests::assert_description_not_empty ... ok
+test options::tests::assert_identifiers_are_unique ... ok
+test options::tests::assert_identifiers_are_valid ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nu_experimental
+
+running 1 test
+test crates/nu-experimental/src/lib.rs - (line 16) ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

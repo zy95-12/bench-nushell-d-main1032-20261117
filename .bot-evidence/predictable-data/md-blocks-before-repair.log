@@ -1,0 +1,50 @@
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.46s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-af0b020b004ce5a6)
+
+running 5 tests
+test commands::to_md::predictable_heading_blockquote_and_table_boundaries ... FAILED
+test commands::to_md::predictable_optional_markdown_escaping ... ok
+test commands::to_md::predictable_table_delimiters_and_escaping ... ok
+test commands::to_md::predictable_adjacent_record_tables_have_blank_line ... FAILED
+test commands::to_md::predictable_grouped_mixed_schema_tables_have_blank_line ... FAILED
+
+failures:
+
+---- commands::to_md::predictable_heading_blockquote_and_table_boundaries stdout ----
+=== stderr
+
+
+thread 'commands::to_md::predictable_heading_blockquote_and_table_boundaries' panicked at crates/nu-command/tests/commands/to_md.rs:28:5:
+assertion `left == right` failed
+  left: "\"# Title\\n> Quote\\n|a|\\n|---|\\n|1|\""
+ right: "\"# Title\\n> Quote\\n\\n|a|\\n|---|\\n|1|\""
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- commands::to_md::predictable_adjacent_record_tables_have_blank_line stdout ----
+=== stderr
+
+
+thread 'commands::to_md::predictable_adjacent_record_tables_have_blank_line' panicked at crates/nu-command/tests/commands/to_md.rs:16:5:
+assertion `left == right` failed
+  left: "\"|a|\\n|---|\\n|1||b|\\n|---|\\n|2|\""
+ right: "\"|a|\\n|---|\\n|1|\\n\\n|b|\\n|---|\\n|2|\""
+
+---- commands::to_md::predictable_grouped_mixed_schema_tables_have_blank_line stdout ----
+=== stderr
+
+
+thread 'commands::to_md::predictable_grouped_mixed_schema_tables_have_blank_line' panicked at crates/nu-command/tests/commands/to_md.rs:22:5:
+assertion `left == right` failed
+  left: "\"|a|\\n|---|\\n|1|\\n|2|\\n|b|\\n|---|\\n|3|\\n|4|\""
+ right: "\"|a|\\n|---|\\n|1|\\n|2|\\n\\n|b|\\n|---|\\n|3|\\n|4|\""
+
+
+failures:
+    commands::to_md::predictable_adjacent_record_tables_have_blank_line
+    commands::to_md::predictable_grouped_mixed_schema_tables_have_blank_line
+    commands::to_md::predictable_heading_blockquote_and_table_boundaries
+
+test result: FAILED. 2 passed; 3 failed; 0 ignored; 0 measured; 2025 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p nu-command --test main`

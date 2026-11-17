@@ -337,3 +337,58 @@ fn http_get_timeout() {
     assert!(&actual.err.contains("nu::shell::io::timed_out"));
     assert!(&actual.err.contains("Timed out"));
 }
+
+// ureq 3 status errors do not carry a response body. Keep the response available
+// until Nushell has applied --allow-errors and --full.
+#[test]
+fn http_get_server_error_preserves_body_headers_and_status() {
+    let mut server = Server::new();
+    let response = server
+        .mock("GET", "/")
+        .with_status(503)
+        .with_header("content-type", "application/json")
+        .with_header("x-retry", "later")
+        .with_body(r#"{"message":"unavailable"}"#)
+        .expect(2)
+        .create();
+    let actual = nu!(format!(
+        "http get --allow-errors --full {} | to json",
+        server.url()
+    ));
+    assert!(actual.err.is_empty(), "{}", actual.err);
+    let value: serde_json::Value = serde_json::from_str(&actual.out).unwrap();
+    assert_eq!(value["status"], 503);
+    assert_eq!(value["body"]["message"], "unavailable");
+    assert!(
+        value["headers"]["response"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|header| header["name"] == "x-retry" && header["value"] == "later")
+    );
+    let rejected = nu!(format!("http get {}", server.url()));
+    assert!(rejected.err.contains("network_failure"), "{}", rejected.err);
+    response.assert();
+}
+
+#[test]
+fn http_get_manual_redirect_preserves_full_response() {
+    let mut server = Server::new();
+    let redirect = server
+        .mock("GET", "/")
+        .with_status(302)
+        .with_header("location", "/destination")
+        .with_body("redirect body")
+        .create();
+    let destination = server.mock("GET", "/destination").expect(0).create();
+    let actual = nu!(format!(
+        "http get --redirect-mode manual --full {} | to json",
+        server.url()
+    ));
+    assert!(actual.err.is_empty(), "{}", actual.err);
+    let value: serde_json::Value = serde_json::from_str(&actual.out).unwrap();
+    assert_eq!(value["status"], 302);
+    assert_eq!(value["body"], "redirect body");
+    redirect.assert();
+    destination.assert();
+}

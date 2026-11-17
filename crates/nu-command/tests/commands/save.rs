@@ -577,3 +577,10 @@ fn force_save_to_dir() {
 
     assert!(actual.err.contains("nu::shell::io::is_a_directory"));
 }
+
+#[cfg(windows)]
+#[test]
+fn predictable_device_save_append() {
+    let actual = nu_test_support::nu!(r#"'hello' | save --append '\\.\NUL'; print done"#);
+    assert_eq!(actual.out, "done", "{}", actual.err);
+}

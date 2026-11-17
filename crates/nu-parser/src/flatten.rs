@@ -183,11 +183,6 @@ fn flatten_expression_into(
     expr: &Expression,
     output: &mut Vec<(Span, FlatShape)>,
 ) {
-    if let Some(custom_completion) = &expr.custom_completion {
-        output.push((expr.span, FlatShape::Custom(*custom_completion)));
-        return;
-    }
-
     match &expr.expr {
         Expr::AttributeBlock(ab) => {
             for attr in &ab.attributes {
@@ -287,8 +282,14 @@ fn flatten_expression_into(
                 match arg {
                     Argument::Positional(positional) => {
                         let positional_arg = positional_args.next();
+                        let positional_arg = positional_arg.or(signature.rest_positional.as_ref());
+                        if let Some(nu_protocol::Completion::Custom(id)) =
+                            positional_arg.and_then(|arg| arg.completion.as_ref())
+                        {
+                            output.push((positional.span, FlatShape::Custom(*id)));
+                            continue;
+                        }
                         let shape = positional_arg
-                            .or(signature.rest_positional.as_ref())
                             .map(|arg| &arg.shape)
                             .unwrap_or(&SyntaxShape::Any);
 
@@ -309,7 +310,16 @@ fn flatten_expression_into(
                             output.push((named.0.span, FlatShape::Flag));
                         }
                         if let Some(expr) = &named.2 {
-                            flatten_expression_into(working_set, expr, output);
+                            if let Some(nu_protocol::Completion::Custom(id)) = signature
+                                .named
+                                .iter()
+                                .find(|flag| flag.long == named.0.item)
+                                .and_then(|flag| flag.completion.as_ref())
+                            {
+                                output.push((expr.span, FlatShape::Custom(*id)));
+                            } else {
+                                flatten_expression_into(working_set, expr, output);
+                            }
                         }
                     }
                     Argument::Spread(expr) => {

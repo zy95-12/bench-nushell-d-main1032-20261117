@@ -1,0 +1,21 @@
+    Blocking waiting for file lock on build directory
+   Compiling nu-utils v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/5d1bccf6e0f15d4f7ab9d47859dbb7bf4535bd703acbd90e/crates/nu-utils)
+   Compiling nu-cmd-lang v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/5d1bccf6e0f15d4f7ab9d47859dbb7bf4535bd703acbd90e/crates/nu-cmd-lang)
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/5d1bccf6e0f15d4f7ab9d47859dbb7bf4535bd703acbd90e/crates/nu-protocol)
+   Compiling nu-json v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/5d1bccf6e0f15d4f7ab9d47859dbb7bf4535bd703acbd90e/crates/nu-json)
+   Compiling nu-term-grid v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/5d1bccf6e0f15d4f7ab9d47859dbb7bf4535bd703acbd90e/crates/nu-term-grid)
+   Compiling nu-test-support v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/5d1bccf6e0f15d4f7ab9d47859dbb7bf4535bd703acbd90e/crates/nu-test-support)
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/5d1bccf6e0f15d4f7ab9d47859dbb7bf4535bd703acbd90e/crates/nu-engine)
+   Compiling nu-parser v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/5d1bccf6e0f15d4f7ab9d47859dbb7bf4535bd703acbd90e/crates/nu-parser)
+   Compiling nu-cmd-base v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/5d1bccf6e0f15d4f7ab9d47859dbb7bf4535bd703acbd90e/crates/nu-cmd-base)
+   Compiling nu-color-config v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/5d1bccf6e0f15d4f7ab9d47859dbb7bf4535bd703acbd90e/crates/nu-color-config)
+   Compiling nu-table v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/5d1bccf6e0f15d4f7ab9d47859dbb7bf4535bd703acbd90e/crates/nu-table)
+   Compiling nuon v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/5d1bccf6e0f15d4f7ab9d47859dbb7bf4535bd703acbd90e/crates/nuon)
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/5d1bccf6e0f15d4f7ab9d47859dbb7bf4535bd703acbd90e/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 53.60s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-af0b020b004ce5a6)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2030 filtered out; finished in 0.00s
+

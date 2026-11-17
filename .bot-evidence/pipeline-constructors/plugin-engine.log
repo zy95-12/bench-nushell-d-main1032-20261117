@@ -1,0 +1,69 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-engine)
+   Compiling nu-plugin-core v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-plugin-core)
+   Compiling nu-plugin-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-plugin-engine)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 18.27s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_plugin_engine-f4fd66a4721a2164)
+
+running 52 tests
+test gc::tests::no_timeout_if_disabled_by_config ... ok
+test gc::tests::adding_locks_changes_last_update ... ok
+test gc::tests::no_timeout_if_disabled_by_plugin ... ok
+test gc::tests::no_timeout_if_locks_count_over_zero ... ok
+test gc::tests::timeout_configured_as_zero ... ok
+test gc::tests::timeout_past_deadline ... ok
+test gc::tests::timeout_with_deadline_in_future ... ok
+test interface::tests::interface_goodbye ... ok
+test interface::tests::interface_prepare_pipeline_data_accepts_normal_values ... ok
+test interface::tests::interface_prepare_pipeline_data_accepts_normal_streams ... ok
+test interface::tests::interface_get_signature ... ok
+test interface::tests::interface_hello_sends_protocol_info ... ok
+test interface::tests::interface_get_metadata ... ok
+test interface::tests::interface_custom_value_to_base_value ... ok
+test interface::tests::interface_prepare_pipeline_data_rejects_bad_custom_value ... ok
+test interface::tests::interface_prepare_pipeline_data_rejects_bad_custom_value_in_a_stream ... ok
+test interface::tests::interface_receive_plugin_call_receives_error ... ok
+test interface::tests::interface_receive_plugin_call_receives_response ... ok
+test interface::tests::interface_receive_plugin_call_handles_engine_call ... ok
+test interface::tests::interface_write_plugin_call_registers_subscription ... ok
+test interface::tests::interface_run ... ok
+test interface::tests::interface_write_plugin_call_writes_custom_value_op ... ok
+test interface::tests::interface_write_plugin_call_writes_run_with_stream_input ... ok
+test interface::tests::interface_write_plugin_call_writes_run_with_value_input ... ok
+test interface::tests::interface_write_plugin_call_writes_signature ... ok
+test interface::tests::manager_consume_all_consumes_messages ... ok
+test interface::tests::manager_consume_all_exits_after_streams_and_interfaces_are_dropped ... ok
+test interface::tests::manager_consume_all_propagates_io_error_to_plugin_calls ... ok
+test interface::tests::manager_consume_all_propagates_message_error_to_plugin_calls ... ok
+test interface::tests::manager_consume_all_propagates_io_error_to_readers ... ok
+test interface::tests::manager_consume_all_propagates_message_error_to_readers ... ok
+test interface::tests::manager_consume_call_response_registers_streams ... ok
+test interface::tests::manager_consume_call_response_forwards_to_subscriber_with_pipeline_data ... ok
+test interface::tests::manager_consume_engine_call_forwards_to_subscriber_with_pipeline_data ... ok
+test interface::tests::manager_consume_errors_on_sending_other_messages_before_hello ... ok
+test interface::tests::manager_consume_errors_on_wrong_nushell_version ... ok
+test interface::tests::manager_consume_sets_protocol_info_on_hello ... ok
+test interface::tests::manager_consume_stream_end_removes_context_only_if_last_stream ... ok
+test interface::tests::manager_prepare_pipeline_data_adds_source_to_list_streams ... ok
+test interface::tests::manager_send_plugin_call_response_removes_context_only_if_no_streams_to_read ... ok
+test interface::tests::manager_prepare_pipeline_data_adds_source_to_values ... ok
+test interface::tests::prepare_custom_value_sends_to_keep_channel_if_drop_notify ... ok
+test interface::tests::prepare_custom_value_verifies_source ... ok
+test interface::tests::predictable_plugin_cell_path_options_transport ... ok
+test interface::tests::prepare_plugin_call_custom_value_op ... ok
+test interface::tests::prepare_plugin_call_run ... ok
+test plugin_custom_value_with_source::tests::add_source_in_at_root ... ok
+test plugin_custom_value_with_source::tests::add_source_in_nested_closure ... ok
+test plugin_custom_value_with_source::tests::add_source_in_nested_list ... ok
+test plugin_custom_value_with_source::tests::add_source_in_nested_record ... ok
+test plugin_custom_value_with_source::tests::verify_source_error_message ... ok
+test interface::tests::manager_handle_engine_call_after_response_received ... ok
+
+test result: ok. 52 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nu_plugin_engine
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

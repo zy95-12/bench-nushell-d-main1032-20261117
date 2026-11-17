@@ -1,0 +1,70 @@
+   Compiling nu-parser v0.106.0 (/tmp/type-system-before/crates/nu-parser)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.82s
+     Running tests/type_system.rs (/tmp/type-system-before-target/debug/deps/type_system-1168075d1d3f82c1)
+
+running 7 tests
+test pipeline_preserves_alternative_outputs ... FAILED
+test list_records_widen_fields_recursively ... FAILED
+test mixed_literal_types_widen ... FAILED
+test table_columns_never_narrow_after_mixed_rows ... FAILED
+test string_glob_compatibility_is_symmetric ... FAILED
+test row_conditions_reject_known_non_boolean_results ... FAILED
+test row_condition_checks_pipeline_types ... FAILED
+
+failures:
+
+---- pipeline_preserves_alternative_outputs stdout ----
+
+thread 'pipeline_preserves_alternative_outputs' panicked at crates/nu-parser/tests/type_system.rs:64:5:
+assertion failed: pipeline_errors("null | multi | text").is_empty()
+
+---- list_records_widen_fields_recursively stdout ----
+
+thread 'list_records_widen_fields_recursively' panicked at crates/nu-parser/tests/type_system.rs:113:5:
+assertion `left == right` failed
+  left: List(Any)
+ right: List(Record([("a", List(Number))]))
+
+---- mixed_literal_types_widen stdout ----
+
+thread 'mixed_literal_types_widen' panicked at crates/nu-parser/tests/type_system.rs:17:5:
+assertion `left == right` failed
+  left: List(Any)
+ right: List(Number)
+
+---- table_columns_never_narrow_after_mixed_rows stdout ----
+
+thread 'table_columns_never_narrow_after_mixed_rows' panicked at crates/nu-parser/tests/type_system.rs:101:5:
+assertion `left == right` failed
+  left: Table([("a", Int)])
+ right: Table([("a", Any)])
+
+---- string_glob_compatibility_is_symmetric stdout ----
+
+thread 'string_glob_compatibility_is_symmetric' panicked at crates/nu-parser/tests/type_system.rs:96:5:
+[TypeMismatch(String, Glob, Span { start: 5, end: 7 })]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- row_conditions_reject_known_non_boolean_results stdout ----
+
+thread 'row_conditions_reject_known_non_boolean_results' panicked at crates/nu-parser/tests/type_system.rs:123:5:
+assertion failed: !pipeline_errors("condition 42").is_empty()
+
+---- row_condition_checks_pipeline_types stdout ----
+
+thread 'row_condition_checks_pipeline_types' panicked at crates/nu-parser/tests/type_system.rs:77:5:
+assertion failed: !pipeline_errors("condition (multi | flag)").is_empty()
+
+
+failures:
+    list_records_widen_fields_recursively
+    mixed_literal_types_widen
+    pipeline_preserves_alternative_outputs
+    row_condition_checks_pipeline_types
+    row_conditions_reject_known_non_boolean_results
+    string_glob_compatibility_is_symmetric
+    table_columns_never_narrow_after_mixed_rows
+
+test result: FAILED. 0 passed; 7 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p nu-parser --test type_system`

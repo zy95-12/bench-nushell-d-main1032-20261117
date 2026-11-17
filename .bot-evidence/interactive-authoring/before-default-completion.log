@@ -1,0 +1,30 @@
+   Compiling nu-cli v0.106.0 (/tmp/nu-interactive-before/crates/nu-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 16.15s
+     Running unittests src/lib.rs (/tmp/nu-interactive-before-target/debug/deps/nu_cli-6c30e442fa21b1b1)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 53 filtered out; finished in 0.00s
+
+     Running tests/main.rs (/tmp/nu-interactive-before-target/debug/deps/main-58048c1fcbd9ea07)
+
+running 1 test
+test completions::variables_completions ... FAILED
+
+failures:
+
+---- completions::variables_completions stdout ----
+
+thread 'completions::variables_completions' panicked at crates/nu-cli/tests/completions/mod.rs:1886:5:
+assertion `left == right` failed
+  left: 19
+ right: 18
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    completions::variables_completions
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 110 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p nu-cli --test main`

@@ -210,6 +210,8 @@ fn main() -> Result<()> {
             && parsed_nu_cli_args.commands.is_none()
             && script_name.is_empty());
 
+    engine_state.is_lsp = parsed_nu_cli_args.lsp;
+
     engine_state.is_login = parsed_nu_cli_args.login_shell.is_some();
 
     engine_state.history_enabled = parsed_nu_cli_args.no_history.is_none();
@@ -403,7 +405,7 @@ fn main() -> Result<()> {
     start_time = std::time::Instant::now();
     let input = if let Some(redirect_stdin) = &parsed_nu_cli_args.redirect_stdin {
         trace!("redirecting stdin");
-        PipelineData::ByteStream(ByteStream::stdin(redirect_stdin.span)?, None)
+        PipelineData::byte_stream(ByteStream::stdin(redirect_stdin.span)?, None)
     } else {
         trace!("not redirecting stdin");
         PipelineData::empty()

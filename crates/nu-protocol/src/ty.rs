@@ -73,6 +73,7 @@ impl Type {
 
         match (self, other) {
             (t, u) if t == u => true,
+            (Type::String, Type::Glob) | (Type::Glob, Type::String) => true,
             (Type::Float, Type::Number) => true,
             (Type::Int, Type::Number) => true,
             (_, Type::Any) => true,
@@ -82,6 +83,33 @@ impl Type {
             }
             (Type::Table(_), Type::List(_)) => true,
             _ => false,
+        }
+    }
+
+    /// A common supertype for literal elements. Unlike compatibility checks, `any`
+    /// must be absorbing here: a later element cannot narrow an earlier unknown.
+    pub fn widen(&self, other: &Type) -> Type {
+        match (self, other) {
+            (a, b) if a == b => a.clone(),
+            (a, b) if a.is_numeric() && b.is_numeric() => Type::Number,
+            (Type::List(a), Type::List(b)) => Type::List(Box::new(a.widen(b))),
+            (Type::Record(a), Type::Record(b)) | (Type::Table(a), Type::Table(b)) => {
+                let fields = a
+                    .iter()
+                    .filter_map(|(name, ty)| {
+                        b.iter()
+                            .find(|(key, _)| key == name)
+                            .map(|(_, other)| (name.clone(), ty.widen(other)))
+                    })
+                    .collect();
+                if matches!(self, Type::Record(_)) {
+                    Type::Record(fields)
+                } else {
+                    Type::Table(fields)
+                }
+            }
+            (Type::String, Type::Glob) | (Type::Glob, Type::String) => Type::String,
+            _ => Type::Any,
         }
     }
 

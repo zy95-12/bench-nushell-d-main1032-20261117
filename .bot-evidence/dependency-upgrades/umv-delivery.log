@@ -1,0 +1,47 @@
+$ cargo test -p nu-command --test main commands::move_::umv
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.31s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-7345e8ece8303ba9)
+
+running 39 tests
+test commands::move_::umv::error_if_moving_to_existing_file_without_force ... ignored, GNU/uutils overwrites rather than error out
+test commands::move_::umv::errors_if_multiple_sources_but_destination_not_a_directory ... ignored, GNU/uutils doesnt expand, rather cannot stat 'file?.txt'
+test commands::move_::umv::mv_with_update_flag ... ignored, Update not supported..remove later
+test commands::move_::umv::errors_if_source_doesnt_exist ... ok
+test commands::move_::umv::errors_if_moving_to_itself ... ok
+test commands::move_::umv::errors_if_renaming_directory_to_an_existing_file ... ok
+test commands::move_::umv::moves_the_directory_inside_directory_if_path_to_move_is_existing_directory ... ok
+test commands::move_::umv::move_file_from_two_parents_up_using_multiple_dots_to_current_dir ... ok
+test commands::move_::umv::mv_files_with_glob_metachars_when_input_are_variables::case_4 ... ok
+test commands::move_::umv::moves_the_file_inside_directory_if_path_to_move_is_existing_directory ... ok
+test commands::move_::umv::mv_files_with_glob_metachars_when_input_are_variables::case_2 ... ok
+test commands::move_::umv::moves_a_file ... ok
+test commands::move_::umv::mv_with_no_target ... ok
+test commands::move_::umv::mv_directory_with_same_name ... ok
+test commands::move_::umv::mv_change_case_of_directory ... ok
+test commands::move_::umv::moves_using_a_glob ... ok
+test commands::move_::umv::mv_with_no_arguments ... ok
+test commands::move_::umv::moves_a_directory_with_files ... ok
+test commands::move_::umv::mv_files_with_glob_metachars::case_4 ... ok
+test commands::move_::umv::errors_if_destination_doesnt_exist ... ok
+test commands::move_::umv::does_not_error_when_some_file_is_moving_into_itself ... ok
+test commands::move_::umv::mv_files_with_glob_metachars::case_1 ... ok
+test commands::move_::umv::mv_files_with_glob_metachars::case_3 ... ok
+test commands::move_::umv::mv_files_with_glob_metachars::case_2 ... ok
+test commands::move_::umv::move_files_using_glob_two_parents_up_using_multiple_dots ... ok
+test commands::move_::umv::does_not_error_on_relative_parent_path ... ok
+test commands::move_::umv::moves_using_path_with_wildcard ... ok
+test commands::move_::umv::moves_a_directory ... ok
+test commands::move_::umv::mv_change_case_of_file ... ok
+test commands::move_::umv::mv_with_cd ... ok
+test commands::move_::umv::mv_ignores_ansi ... ok
+test commands::move_::umv::mv_files_with_glob_metachars_when_input_are_variables::case_1 ... ok
+test commands::move_::umv::overwrites_if_moving_to_existing_file_and_force_provided ... ok
+test commands::move_::umv::test_cp_inside_glob_metachars_dir ... ok
+test commands::move_::umv::mv_files_with_glob_metachars_when_input_are_variables::case_3 ... ok
+test commands::move_::umv::mv_files_with_glob_metachars_nw::case_2 ... ok
+test commands::move_::umv::mv_files_with_glob_metachars_nw::case_1 ... ok
+test commands::move_::umv::test_mv_no_clobber ... ok
+test commands::move_::umv::mv_with_tilde ... ok
+
+test result: ok. 36 passed; 0 failed; 3 ignored; 0 measured; 1994 filtered out; finished in 0.12s
+

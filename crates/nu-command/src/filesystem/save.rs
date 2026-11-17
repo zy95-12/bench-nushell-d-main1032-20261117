@@ -191,7 +191,7 @@ impl Command for Save {
                     }
                 }
 
-                Ok(PipelineData::Empty)
+                Ok(PipelineData::empty())
             }
             PipelineData::ListStream(ls, pipeline_metadata)
                 if raw || prepare_path(&path, append, force)?.0.extension().is_none() =>
@@ -381,12 +381,18 @@ fn convert_to_extension(
 /// Propagates [`Value::Error`] and creates error otherwise
 fn value_to_bytes(value: Value) -> Result<Vec<u8>, ShellError> {
     match value {
+        Value::Custom { val, internal_span } => value_to_bytes(val.to_base_value(internal_span)?),
         Value::String { val, .. } => Ok(val.into_bytes()),
         Value::Binary { val, .. } => Ok(val),
         Value::List { vals, .. } => {
             let val = vals
                 .into_iter()
-                .map(Value::coerce_into_string)
+                .map(|value| match value {
+                    Value::Custom { val, internal_span } => {
+                        val.to_base_value(internal_span)?.coerce_into_string()
+                    }
+                    value => value.coerce_into_string(),
+                })
                 .collect::<Result<Vec<String>, ShellError>>()?
                 .join("\n")
                 + "\n";
@@ -431,7 +437,10 @@ fn open_file(
     span: Span,
     append: bool,
 ) -> Result<File, ShellError> {
-    let file: std::io::Result<File> = match (append, path.exists()) {
+    let file: std::io::Result<File> = match (
+        append,
+        path.exists() || nu_path::is_windows_device_path(path),
+    ) {
         (true, true) => std::fs::OpenOptions::new().append(true).open(path),
         _ => {
             // This is a temporary solution until `std::fs::File::create` is fixed on Windows (rust-lang/rust#134893)

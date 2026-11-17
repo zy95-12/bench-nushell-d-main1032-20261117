@@ -137,3 +137,10 @@ mod while_;
 mod with_env;
 mod wrap;
 mod zip;
+
+mod into_binary;
+mod predictable_formats;
+mod relative_to;
+mod source;
+mod str_length;
+mod to_md;

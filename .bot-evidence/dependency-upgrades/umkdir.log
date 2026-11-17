@@ -1,0 +1,34 @@
+$ cargo test -p nu-command --test main commands::umkdir
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.33s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-7345e8ece8303ba9)
+
+running 11 tests
+test commands::umkdir::creates_directory ... ok
+test commands::umkdir::accepts_and_creates_directories ... ok
+test commands::umkdir::mkdir_umask_permission ... ok
+test commands::umkdir::creates_directory_three_dots ... ok
+test commands::umkdir::respects_cwd ... ok
+test commands::umkdir::creates_directory_three_dots_quotation_marks ... ok
+test commands::umkdir::print_created_paths ... FAILED
+test commands::umkdir::creates_intermediary_directories ... ok
+test commands::umkdir::creates_directory_four_dots ... ok
+test commands::umkdir::create_directory_two_parents_up_using_multiple_dots ... ok
+test commands::umkdir::mkdir_with_tilde ... ok
+
+failures:
+
+---- commands::umkdir::print_created_paths stdout ----
+=== stderr
+
+
+thread 'commands::umkdir::print_created_paths' panicked at crates/nu-command/tests/commands/umkdir.rs:74:9:
+assertion failed: actual.out.contains("dir_1")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    commands::umkdir::print_created_paths
+
+test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measured; 2022 filtered out; finished in 0.06s
+
+error: test failed, to rerun pass `-p nu-command --test main`

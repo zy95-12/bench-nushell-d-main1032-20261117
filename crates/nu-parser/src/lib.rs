@@ -1,4 +1,5 @@
 #![doc = include_str!("../README.md")]
+mod control_flow;
 mod deparse;
 mod exportable;
 mod flatten;

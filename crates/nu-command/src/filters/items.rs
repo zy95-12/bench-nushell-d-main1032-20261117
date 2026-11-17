@@ -40,9 +40,10 @@ impl Command for Items {
         let head = call.head;
         let closure: Closure = call.req(engine_state, stack, 0)?;
 
-        let metadata = input.metadata();
+        let metadata = input.metadata().map(|m| m.with_content_type(None));
+        let input = input.set_metadata(metadata.clone());
         match input {
-            PipelineData::Empty => Ok(PipelineData::Empty),
+            PipelineData::Empty => Ok(PipelineData::empty()),
             PipelineData::Value(value, ..) => {
                 let span = value.span();
                 match value {
@@ -55,7 +56,7 @@ impl Command for Items {
                                 let result = closure
                                     .add_arg(Value::string(col, span))
                                     .add_arg(val)
-                                    .run_with_input(PipelineData::Empty)
+                                    .run_with_input(PipelineData::empty())
                                     .and_then(|data| data.into_value(head));
 
                                 match result {

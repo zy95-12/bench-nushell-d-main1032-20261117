@@ -5,6 +5,7 @@
 
 use crate::*;
 
+mod enforce_typed_variables;
 mod example;
 mod reorder_cell_paths;
 
@@ -40,6 +41,7 @@ pub(crate) trait ExperimentalOptionMarker {
 
 // Export only the static values.
 // The marker structs are not relevant and needlessly clutter the generated docs.
+pub use enforce_typed_variables::ENFORCE_TYPED_VARIABLES;
 pub use example::EXAMPLE;
 pub use reorder_cell_paths::REORDER_CELL_PATHS;
 
@@ -50,7 +52,7 @@ pub use reorder_cell_paths::REORDER_CELL_PATHS;
 ///
 /// Use this to show users every experimental option, including their descriptions,
 /// identifiers, and current state.
-pub static ALL: &[&ExperimentalOption] = &[&EXAMPLE, &REORDER_CELL_PATHS];
+pub static ALL: &[&ExperimentalOption] = &[&EXAMPLE, &REORDER_CELL_PATHS, &ENFORCE_TYPED_VARIABLES];
 
 #[cfg(test)]
 mod tests {

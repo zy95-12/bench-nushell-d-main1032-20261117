@@ -1,0 +1,16 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.33s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-31d17ad7e8517ec0)
+
+running 9 tests
+test eval::type_system::range_loop_variable_is_numeric ... ok
+test eval::type_system::runtime_enforcement_checks_list_elements_and_reports_value_span ... ok
+test eval::type_system::variable_headers_are_converted_to_strings ... ok
+test eval::type_system::ordinary_mode_preserves_dynamic_assignment ... ok
+test eval::type_system::table_headers_can_be_variables ... ok
+test eval::type_system::explicit_option_disable_and_multiple_options_work ... ok
+test eval::type_system::annotated_variables_are_checked_at_runtime_when_enabled ... ok
+test eval::type_system::null_spreads_are_empty_in_literals_and_constants ... ok
+test eval::type_system::runtime_enforcement_accepts_compatible_values_and_inferred_changes ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 1509 filtered out; finished in 0.11s
+

@@ -1,0 +1,23 @@
+protocol-final	0	cargo test -p nu-protocol
+engine-final	0	cargo test -p nu-engine
+build	0	cargo build -p nu --locked
+command-tested-binary	101	cargo test -p nu-command --test main commands::
+cli-tested-binary	0	cargo test -p nu-cli --features plugin --test main
+cli-unit	0	cargo test -p nu-cli --features plugin --lib
+plugin-protocol	101	cargo test -p nu_plugin_protocol
+plugin-protocol-final	0	cargo test -p nu-plugin-protocol
+plugin-core	0	cargo test -p nu-plugin-core
+plugin-engine	0	cargo test -p nu-plugin-engine
+check	0	cargo check -p nu --locked
+fmt-final	0	cargo fmt --all -- --check
+lsp	101	cargo test -p nu-lsp --lib
+config-path-tested-binary	101	cargo test --test main repl::test_config_path
+default-completion	101	cargo test -p nu-cli variables_completions
+isolated-prechange	101	/tmp/cargo-pipeline-baseline test -p nu-protocol --test test_pipeline_data
+isolated-baseline-build	0	/tmp/cargo-pipeline-baseline build -p nu --locked
+isolated-baseline-command	101	/tmp/cargo-pipeline-baseline test -p nu-command --test main commands::
+repair-engine	0	cargo test -p nu-engine
+repair-plugin-protocol	0	cargo test -p nu-plugin-protocol
+repair-check	0	cargo check -p nu --locked
+repair-fmt	0	cargo fmt --all -- --check
+repair-protocol	0	cargo test -p nu-protocol

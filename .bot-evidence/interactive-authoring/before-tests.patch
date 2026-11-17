@@ -1,0 +1,318 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index ff01bbf43..9098b1284 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -3999,8 +3999,10 @@ dependencies = [
+  "nu-test-support",
+  "nu-utils",
+  "nucleo-matcher",
++ "rstest",
+  "serde",
+  "serde_json",
++ "tempfile",
+  "url",
+ ]
+ 
+diff --git a/crates/nu-cli/tests/completions/mod.rs b/crates/nu-cli/tests/completions/mod.rs
+index 6dd3cb591..eb0172d64 100644
+--- a/crates/nu-cli/tests/completions/mod.rs
++++ b/crates/nu-cli/tests/completions/mod.rs
+@@ -2689,3 +2689,157 @@ fn negated_string_operator_completions(mut custom_completer: NuCompleter) {
+     let suggestions = custom_completer.complete(input, input.len());
+     match_suggestions(&vec!["not-in"], &suggestions);
+ }
++
++#[rstest]
++#[case("def demo [local_param: string] { $local_", "$local_param")]
++#[case("for local_loop in [1] { $local_", "$local_loop")]
++#[case("do { let local_let = 1; $local_", "$local_let")]
++#[case("match 1 { $local_pattern => { $local_", "$local_pattern")]
++fn unfinished_lexical_variables(#[case] line: &str, #[case] expected: &str) {
++    let (_, _, engine, stack) = new_engine();
++    let mut completer = NuCompleter::new(Arc::new(engine), Arc::new(stack));
++    let suggestions = completer.complete(line, line.len());
++    assert!(
++        suggestions.iter().any(|s| s.value == expected),
++        "{suggestions:?}"
++    );
++}
++
++#[rstest]
++#[case("do { let local_hidden = 1 }; $local_")]
++#[case("def demo [local_hidden: int] { }; $local_")]
++#[case("for local_hidden in [] { }; $local_")]
++#[case("match 1 { $local_hidden => {} }; $local_")]
++fn completed_scopes_do_not_leak(#[case] line: &str) {
++    let (_, _, engine, stack) = new_engine();
++    let mut completer = NuCompleter::new(Arc::new(engine), Arc::new(stack));
++    assert!(
++        !completer
++            .complete(line, line.len())
++            .iter()
++            .any(|s| s.value == "$local_hidden")
++    );
++}
++
++#[rstest]
++#[case("-")]
++#[case("--fl")]
++#[case("-f")]
++fn partial_flags_before_custom_values(#[case] suffix: &str) {
++    let (_, _, mut engine, mut stack) = new_engine();
++    support::merge_input(b"def values [] { [VALUE_ONLY] }; def demo [arg: string@values --flag(-f): string@values] {}", &mut engine, &mut stack).unwrap();
++    let mut completer = NuCompleter::new(Arc::new(engine), Arc::new(stack));
++    let line = format!("demo {suffix}");
++    let suggestions = completer.complete(&line, line.len());
++    assert!(
++        suggestions
++            .iter()
++            .any(|s| s.value == "--flag" || s.value == "-f"),
++        "{suggestions:?}"
++    );
++    assert!(!suggestions.iter().any(|s| s.value == "VALUE_ONLY"));
++    for line in ["demo ", "demo --flag ", "demo --flag="] {
++        let suggestions = completer.complete(line, line.len());
++        assert!(
++            suggestions.iter().any(|s| s.value == "VALUE_ONLY"),
++            "{line}: {suggestions:?}"
++        );
++    }
++}
++
++#[test]
++fn missing_script_has_command_line_span() {
++    let (_, _, mut engine, mut stack) = new_engine();
++    let directory = tempfile::tempdir().unwrap();
++    let path = directory
++        .path()
++        .join("missing.nu")
++        .to_string_lossy()
++        .to_string();
++    let error = nu_cli::evaluate_file(
++        path.clone(),
++        &[],
++        &mut engine,
++        &mut stack,
++        PipelineData::Empty,
++    )
++    .unwrap_err();
++    if let nu_protocol::ShellError::Io(error) = error {
++        assert_eq!(engine.get_span_contents(error.span), path.as_bytes());
++        assert!(error.location.is_none());
++    } else {
++        panic!("unexpected error: {error:?}");
++    }
++}
++
++#[test]
++fn type_annotation_rejects_custom_completion() {
++    let (_, _, engine, _) = new_engine();
++    for annotation in ["let", "mut", "const"] {
++        let mut working_set = StateWorkingSet::new(&engine);
++        let source =
++            format!("def values [] {{ [one two] }}; {annotation} value: string@values = one");
++        parse(&mut working_set, None, source.as_bytes(), false);
++        assert!(
++            working_set
++                .parse_errors
++                .iter()
++                .any(|error| error.to_string().contains("Unexpected custom completer")),
++            "{:?}",
++            working_set.parse_errors
++        );
++    }
++}
++
++#[test]
++fn nu_schema_includes_lsp_mode() {
++    let (_, _, engine, _) = new_engine();
++    let value = engine
++        .get_var(nu_protocol::NU_VARIABLE_ID)
++        .const_val
++        .as_ref()
++        .unwrap();
++    assert_eq!(
++        value
++            .as_record()
++            .unwrap()
++            .get("is-lsp")
++            .unwrap()
++            .as_bool()
++            .unwrap(),
++        false
++    );
++}
++
++#[test]
++fn signature_completion_shapes_are_plain() {
++    let (_, _, engine, _) = new_engine();
++    let mut working_set = StateWorkingSet::new(&engine);
++    parse(&mut working_set, None, b"def values [] { [one two] }; def demo [arg: string@values --flag: string@values] {}", false);
++    assert!(working_set.parse_errors.is_empty());
++    let signature = working_set.get_decl(working_set.find_decl(b"demo").unwrap()).signature();
++    assert_eq!(signature.required_positional[0].shape, nu_protocol::SyntaxShape::String);
++    assert_eq!(signature.get_long_flag("flag").unwrap().arg, Some(nu_protocol::SyntaxShape::String));
++}
++
++#[test]
++fn commandline_accept_modes() {
++    let (_, _, mut engine, mut stack) = new_engine();
++    engine = nu_cli::add_cli_context(engine);
++    for (mode, expected, cursor) in [
++        ("--replace", "XY", 2),
++        ("--insert", "aXYb", 3),
++        ("--append", "abXY", 1),
++    ] {
++        {
++            let mut repl = engine.repl_state.lock().unwrap();
++            repl.buffer = "ab".into();
++            repl.cursor_pos = 1;
++        }
++        let command = format!("commandline edit {mode} -A XY");
++        support::merge_input(command.as_bytes(), &mut engine, &mut stack).unwrap();
++        let repl = engine.repl_state.lock().unwrap();
++        assert_eq!(repl.buffer, expected);
++        assert_eq!(repl.cursor_pos, cursor);
++    }
++}
+diff --git a/crates/nu-command/src/strings/format/filesize.rs b/crates/nu-command/src/strings/format/filesize.rs
+index b98bc4aa0..6f8298281 100644
+--- a/crates/nu-command/src/strings/format/filesize.rs
++++ b/crates/nu-command/src/strings/format/filesize.rs
+@@ -148,6 +148,14 @@ fn format_value_impl(val: &Value, arg: &Arguments, span: Span) -> Value {
+ mod tests {
+     use super::*;
+ 
++    #[test]
++    fn example_units_are_valid() {
++        for example in FormatFilesize.examples() {
++            let unit = example.example.split("format filesize ").nth(1).unwrap().split_whitespace().next().unwrap();
++            assert!(unit.parse::<FilesizeUnit>().is_ok(), "invalid example unit: {unit}");
++        }
++    }
++
+     #[test]
+     fn test_examples() {
+         use crate::test_examples;
+diff --git a/crates/nu-engine/src/documentation.rs b/crates/nu-engine/src/documentation.rs
+index a1cd3942b..fd3e9e1c7 100644
+--- a/crates/nu-engine/src/documentation.rs
++++ b/crates/nu-engine/src/documentation.rs
+@@ -871,3 +871,25 @@ mod tests {
+         ));
+     }
+ }
++
++#[cfg(test)]
++mod interactive_help_tests {
++    use super::*;
++
++    #[test]
++    fn required_flag_marker_follows_value_type() {
++        let signature = Signature::build("demo")
++            .required_named("required", SyntaxShape::String, "required flag", Some('r'))
++            .named("optional", SyntaxShape::Int, "optional flag", None);
++        let help = nu_utils::strip_ansi_string_unlikely(get_flags_section(
++            &signature,
++            &HelpStyle::default(),
++            |_| String::new(),
++        ));
++        assert!(
++            help.contains("--required <string> (required parameter)"),
++            "{help}"
++        );
++        assert!(help.contains("--optional <int>:"), "{help}");
++    }
++}
+diff --git a/crates/nu-lsp/Cargo.toml b/crates/nu-lsp/Cargo.toml
+index e24e65117..7391d1ab2 100644
+--- a/crates/nu-lsp/Cargo.toml
++++ b/crates/nu-lsp/Cargo.toml
+@@ -26,6 +26,8 @@ serde_json = { workspace = true }
+ url = { workspace = true }
+ 
+ [dev-dependencies]
++rstest = { workspace = true, default-features = false }
++tempfile = { workspace = true }
+ nu-cmd-lang = { path = "../nu-cmd-lang", version = "0.106.0" }
+ nu-command = { path = "../nu-command", version = "0.106.0" }
+ nu-engine = { path = "../nu-engine", version = "0.106.0" }
+diff --git a/crates/nu-lsp/src/goto.rs b/crates/nu-lsp/src/goto.rs
+index abf651c87..8aecd45aa 100644
+--- a/crates/nu-lsp/src/goto.rs
++++ b/crates/nu-lsp/src/goto.rs
+@@ -152,6 +152,32 @@ mod tests {
+         assert_json_eq!(result_from_message(resp), serde_json::json!(null));
+     }
+ 
++    #[rstest::rstest]
++    #[case("let local = 42\n$local", 1, 3, 4, 9)]
++    #[case("let café = 42\n$café", 1, 3, 4, 8)]
++    fn goto_definition_in_unsaved_document(
++        #[case] text: &str,
++        #[case] line: u32,
++        #[case] character: u32,
++        #[case] start: u32,
++        #[case] end: u32,
++    ) {
++        let (client_connection, _recv) = initialize_language_server(None, None);
++        let directory = tempfile::tempdir().unwrap();
++        let path = directory.path().join("unsaved.nu");
++        assert!(!path.exists());
++        let uri = path_to_uri(&path);
++        crate::tests::open_text(&client_connection, uri.clone(), text.into()).unwrap();
++        let response = send_goto_definition_request(&client_connection, uri.clone(), line, character);
++        assert_json_eq!(result_from_message(response), serde_json::json!({
++            "uri": uri,
++            "range": {
++                "start": { "line": 0, "character": start },
++                "end": { "line": 0, "character": end }
++            }
++        }));
++    }
++
+     #[test]
+     fn goto_definition_of_variable() {
+         let (client_connection, _recv) = initialize_language_server(None, None);
+diff --git a/crates/nu-lsp/src/lib.rs b/crates/nu-lsp/src/lib.rs
+index 33e63a10a..4da0d54f3 100644
+--- a/crates/nu-lsp/src/lib.rs
++++ b/crates/nu-lsp/src/lib.rs
+@@ -576,6 +576,14 @@ mod tests {
+     ) -> Result<lsp_server::Notification, String> {
+         let text = std::fs::read_to_string(uri_to_path(&uri)).map_err(|e| e.to_string())?;
+ 
++        open_text(client_connection, uri, text)
++    }
++
++    pub(crate) fn open_text(
++        client_connection: &Connection,
++        uri: Uri,
++        text: String,
++    ) -> Result<lsp_server::Notification, String> {
+         client_connection
+             .sender
+             .send(Message::Notification(lsp_server::Notification {
+diff --git a/crates/nu-parser/tests/test_parser.rs b/crates/nu-parser/tests/test_parser.rs
+index 610186aa9..18cd391be 100644
+--- a/crates/nu-parser/tests/test_parser.rs
++++ b/crates/nu-parser/tests/test_parser.rs
+@@ -3149,3 +3149,18 @@ fn predictable_find_device_path_without_canonicalization() {
+     let found = nu_parser::find_in_dirs(r"\\.\NUL", &working_set, ".", None);
+     assert!(found.is_some());
+ }
++
++#[test]
++fn unknown_flag_suggests_nearby_flag() {
++    let engine = EngineState::new();
++    let mut working_set = StateWorkingSet::new(&engine);
++    working_set.add_decl(
++        Signature::build("demo")
++            .switch("verbose", "details", Some('v'))
++            .predeclare(),
++    );
++    parse(&mut working_set, None, b"demo --verbos", false);
++    assert!(
++        matches!(working_set.parse_errors.first(), Some(ParseError::UnknownFlag(_, _, _, help)) if help.contains("Did you mean `--verbose`?"))
++    );
++}

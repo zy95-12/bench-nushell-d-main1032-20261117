@@ -412,7 +412,7 @@ fn get_command_documentation(
                     ))],
                     parser_info: HashMap::new(),
                 },
-                PipelineData::Value(Value::list(vals, span), None),
+                PipelineData::value(Value::list(vals, span), None),
             ) {
                 if let Ok((str, ..)) = result.collect_string_strict(span) {
                     let _ = writeln!(long_desc, "\n{help_section_name}Input/output types{RESET}:");
@@ -487,7 +487,7 @@ fn get_command_documentation(
                             engine_state,
                             stack,
                             &(&table_call).into(),
-                            PipelineData::Value(result.clone(), None),
+                            PipelineData::value(result.clone(), None),
                         )
                         .ok()
                 });
@@ -532,7 +532,7 @@ fn update_ansi_from_config(
                         arguments: vec![argument],
                         parser_info: HashMap::new(),
                     },
-                    PipelineData::Empty,
+                    PipelineData::empty(),
                 ) {
                     if let Ok((str, ..)) = result.collect_string_strict(span) {
                         *ansi_code = str;
@@ -762,9 +762,6 @@ where
         if !flag.long.is_empty() {
             let _ = write!(long_desc, "{help_subcolor_one}--{}{RESET}", flag.long);
         }
-        if flag.required {
-            long_desc.push_str(" (required parameter)")
-        }
         // Type/Syntax shape info
         if let Some(arg) = &flag.arg {
             let _ = write!(
@@ -772,6 +769,9 @@ where
                 " <{help_subcolor_two}{}{RESET}>",
                 document_shape(arg)
             );
+        }
+        if flag.required {
+            long_desc.push_str(" (required parameter)")
         }
         if !flag.desc.is_empty() {
             let _ = write!(
@@ -869,5 +869,27 @@ mod tests {
             highlight_code(haystack, &engine_state, &mut stack),
             Cow::Borrowed(_)
         ));
+    }
+}
+
+#[cfg(test)]
+mod interactive_help_tests {
+    use super::*;
+
+    #[test]
+    fn required_flag_marker_follows_value_type() {
+        let signature = Signature::build("demo")
+            .required_named("required", SyntaxShape::String, "required flag", Some('r'))
+            .named("optional", SyntaxShape::Int, "optional flag", None);
+        let help = nu_utils::strip_ansi_string_unlikely(get_flags_section(
+            &signature,
+            &HelpStyle::default(),
+            |_| String::new(),
+        ));
+        assert!(
+            help.contains("--required <string> (required parameter)"),
+            "{help}"
+        );
+        assert!(help.contains("--optional <int>:"), "{help}");
     }
 }

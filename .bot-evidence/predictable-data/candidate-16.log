@@ -1,0 +1,9 @@
+$ cargo test -p nu-command --lib predictable_insensitive
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.29s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_command-be47c9922de50ddc)
+
+running 1 test
+test path::relative_to::predictable_prefix_tests::predictable_insensitive_components_preserve_suffix ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 440 filtered out; finished in 0.00s
+

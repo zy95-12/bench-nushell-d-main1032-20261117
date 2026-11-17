@@ -91,6 +91,7 @@ roxmltree = { workspace = true }
 rusqlite = { workspace = true, features = [
 	"bundled",
 	"backup",
+	"column_decltype",
 	"chrono",
 ], optional = true }
 rustls = { workspace = true, optional = true, features = ["ring"] }
@@ -219,7 +220,7 @@ rustls-tls = [
 	"dep:rustls-native-certs",
 	"dep:webpki-roots",
 	"update-informer/rustls-tls",
-	"ureq/tls", # ureq 3 will has the feature rustls instead
+	"ureq/rustls",
 ]
 
 plugin = ["nu-parser/plugin", "os"]
@@ -227,6 +228,7 @@ sqlite = ["rusqlite"]
 trash-support = ["trash"]
 
 [dev-dependencies]
+typetag = "0.2"
 nu-cmd-lang = { path = "../nu-cmd-lang", version = "0.106.0" }
 nu-test-support = { path = "../nu-test-support", version = "0.106.0" }
 

@@ -16,6 +16,11 @@ impl Command for ToMd {
         Signature::build("to md")
             .input_output_types(vec![(Type::Any, Type::String)])
             .switch(
+                "escape",
+                "escape Markdown formatting characters and HTML in table cells",
+                None,
+            )
+            .switch(
                 "pretty",
                 "Formats the Markdown table to vertically align items",
                 Some('p'),
@@ -43,7 +48,7 @@ impl Command for ToMd {
             Example {
                 description: "Outputs an MD string representing the contents of this table",
                 example: "[[foo bar]; [1 2]] | to md",
-                result: Some(Value::test_string("|foo|bar|\n|-|-|\n|1|2|")),
+                result: Some(Value::test_string("|foo|bar|\n|---|---|\n|1|2|")),
             },
             Example {
                 description: "Optionally, output a formatted markdown string",
@@ -56,7 +61,7 @@ impl Command for ToMd {
                 description: "Treat each row as a markdown element",
                 example: r#"[{"H1": "Welcome to Nushell" } [[foo bar]; [1 2]]] | to md --per-element --pretty"#,
                 result: Some(Value::test_string(
-                    "# Welcome to Nushell\n| foo | bar |\n| --- | --- |\n| 1   | 2   |",
+                    "# Welcome to Nushell\n\n| foo | bar |\n| --- | --- |\n| 1   | 2   |",
                 )),
             },
             Example {
@@ -68,7 +73,7 @@ impl Command for ToMd {
                 description: "Separate list into markdown tables",
                 example: "[ {foo: 1, bar: 2} {foo: 3, bar: 4} {foo: 5}] | to md --per-element",
                 result: Some(Value::test_string(
-                    "|foo|bar|\n|-|-|\n|1|2|\n|3|4|\n|foo|\n|-|\n|5|",
+                    "|foo|bar|\n|---|---|\n|1|2|\n|3|4|\n\n|foo|\n|---|\n|5|",
                 )),
             },
             Example {
@@ -93,7 +98,15 @@ impl Command for ToMd {
         let per_element = call.has_flag(engine_state, stack, "per-element")?;
         let center: Option<Vec<CellPath>> = call.get_flag(engine_state, stack, "center")?;
         let config = stack.get_config(engine_state);
-        to_md(input, pretty, per_element, &center, &config, head)
+        to_md(
+            input,
+            pretty,
+            per_element,
+            &center,
+            &config,
+            head,
+            call.has_flag(engine_state, stack, "escape")?,
+        )
     }
 }
 
@@ -104,6 +117,7 @@ fn to_md(
     center: &Option<Vec<CellPath>>,
     config: &Config,
     head: Span,
+    escape: bool,
 ) -> Result<PipelineData, ShellError> {
     // text/markdown became a valid mimetype with rfc7763
     let metadata = input
@@ -113,32 +127,69 @@ fn to_md(
 
     let (grouped_input, single_list) = group_by(input, head, config);
     if per_element || single_list {
-        return Ok(Value::string(
-            grouped_input
-                .into_iter()
-                .map(move |val| match val {
-                    Value::List { .. } => {
-                        format!(
-                            "{}\n",
-                            table(val.into_pipeline_data(), pretty, center, config)
-                        )
-                    }
-                    other => fragment(other, pretty, center, config),
-                })
-                .collect::<Vec<String>>()
-                .join("")
-                .trim(),
-            head,
-        )
-        .into_pipeline_data_with_metadata(Some(metadata)));
+        let mut output = String::new();
+        let mut previous_was_table = false;
+        for val in grouped_input {
+            let is_table = match &val {
+                Value::Record { val, .. } => {
+                    !(val.len() == 1
+                        && val.columns().next().is_some_and(|name| {
+                            matches!(
+                                name.to_ascii_lowercase().as_str(),
+                                "h1" | "h2" | "h3" | "blockquote"
+                            )
+                        }))
+                }
+                Value::List { vals, .. } => {
+                    vals.iter().any(|val| matches!(val, Value::Record { .. }))
+                }
+                _ => false,
+            };
+            let fragment = match val {
+                Value::List { .. } => {
+                    table_with_escape(val.into_pipeline_data(), pretty, center, config, escape)
+                }
+                other => fragment_with_escape(other, pretty, center, config, escape),
+            };
+            if fragment.is_empty() {
+                continue;
+            }
+            if !output.is_empty() {
+                if !output.ends_with('\n') {
+                    output.push('\n');
+                }
+                // Tables need their own blocks, including when the previous
+                // fragment is a table's last row or a blockquote.
+                if (previous_was_table || is_table) && !output.ends_with("\n\n") {
+                    output.push('\n');
+                }
+            }
+            output.push_str(&fragment);
+            previous_was_table = is_table;
+        }
+        return Ok(
+            Value::string(output.trim(), head).into_pipeline_data_with_metadata(Some(metadata))
+        );
     }
-    Ok(
-        Value::string(table(grouped_input, pretty, center, config), head)
-            .into_pipeline_data_with_metadata(Some(metadata)),
+    Ok(Value::string(
+        table_with_escape(grouped_input, pretty, center, config, escape),
+        head,
     )
+    .into_pipeline_data_with_metadata(Some(metadata)))
 }
 
+#[cfg(test)]
 fn fragment(input: Value, pretty: bool, center: &Option<Vec<CellPath>>, config: &Config) -> String {
+    fragment_with_escape(input, pretty, center, config, false)
+}
+
+fn fragment_with_escape(
+    input: Value,
+    pretty: bool,
+    center: &Option<Vec<CellPath>>,
+    config: &Config,
+    escape: bool,
+) -> String {
     let mut out = String::new();
 
     if let Value::Record { val, .. } = &input {
@@ -149,13 +200,23 @@ fn fragment(input: Value, pretty: bool, center: &Option<Vec<CellPath>>, config: 
                     "h2" => "## ".to_string(),
                     "h3" => "### ".to_string(),
                     "blockquote" => "> ".to_string(),
-                    _ => return table(input.into_pipeline_data(), pretty, center, config),
+                    _ => {
+                        return table_with_escape(
+                            input.into_pipeline_data(),
+                            pretty,
+                            center,
+                            config,
+                            escape,
+                        );
+                    }
                 };
 
                 out.push_str(&markup);
                 out.push_str(&data.to_expanded_string("|", config));
             }
-            _ => out = table(input.into_pipeline_data(), pretty, center, config),
+            _ => {
+                out = table_with_escape(input.into_pipeline_data(), pretty, center, config, escape)
+            }
         }
     } else {
         out = input.to_expanded_string("|", config)
@@ -165,28 +226,63 @@ fn fragment(input: Value, pretty: bool, center: &Option<Vec<CellPath>>, config: 
     out
 }
 
-fn collect_headers(headers: &[String]) -> (Vec<String>, Vec<usize>) {
+fn collect_headers(headers: &[String], escape: bool) -> (Vec<String>, Vec<usize>) {
     let mut escaped_headers: Vec<String> = Vec::new();
     let mut column_widths: Vec<usize> = Vec::new();
 
-    if !headers.is_empty() && (headers.len() > 1 || !headers[0].is_empty()) {
+    if !headers.is_empty() {
         for header in headers {
-            let escaped_header_string = v_htmlescape::escape(header).to_string();
-            column_widths.push(escaped_header_string.len());
+            let escaped_header_string =
+                escape_cell(&v_htmlescape::escape(header).to_string(), escape, false);
+            column_widths.push(escaped_header_string.len().max(3));
             escaped_headers.push(escaped_header_string);
         }
     } else {
-        column_widths = vec![0; headers.len()]
+        column_widths = vec![3; headers.len()]
     }
 
     (escaped_headers, column_widths)
 }
 
+#[cfg(test)]
 fn table(
     input: PipelineData,
     pretty: bool,
     center: &Option<Vec<CellPath>>,
     config: &Config,
+) -> String {
+    table_with_escape(input, pretty, center, config, false)
+}
+
+fn escape_cell(text: &str, escape: bool, html: bool) -> String {
+    let text = if escape && html {
+        v_htmlescape::escape(text).to_string()
+    } else {
+        text.to_owned()
+    };
+    let mut out = String::new();
+    for c in text.chars() {
+        match c {
+            '\r' => {}
+            '\n' => out.push_str("<br>"),
+            '|' => out.push_str("\\|"),
+            '\\' => out.push_str("\\\\"),
+            '*' | '_' | '[' | ']' | '`' if escape => {
+                out.push('\\');
+                out.push(c);
+            }
+            _ => out.push(c),
+        }
+    }
+    out
+}
+
+fn table_with_escape(
+    input: PipelineData,
+    pretty: bool,
+    center: &Option<Vec<CellPath>>,
+    config: &Config,
+    escape: bool,
 ) -> String {
     let vec_of_values = input
         .into_iter()
@@ -211,7 +307,7 @@ fn table(
         }
     }
 
-    let (escaped_headers, mut column_widths) = collect_headers(&headers);
+    let (escaped_headers, mut column_widths) = collect_headers(&headers, escape);
 
     let mut escaped_rows: Vec<Vec<String>> = Vec::new();
 
@@ -227,6 +323,7 @@ fn table(
                         .cloned()
                         .unwrap_or_else(|| Value::nothing(span))
                         .to_expanded_string(", ", config);
+                    let value_string = escape_cell(&value_string, escape, true);
                     let new_column_width = value_string.len();
 
                     escaped_row.push(value_string);
@@ -360,10 +457,10 @@ fn get_output_string(
                 output_string.push(border_char);
             } else if centered_column {
                 output_string.push(':');
-                output_string.push('-');
+                output_string.push_str("---");
                 output_string.push(':');
             } else {
-                output_string.push('-');
+                output_string.push_str("---");
             }
 
             output_string.push('|');
@@ -538,7 +635,7 @@ mod tests {
             ),
             one(r#"
             |country|
-            |-|
+            |---|
             |Ecuador|
             |New Zealand|
             |USA|
@@ -579,7 +676,7 @@ mod tests {
             ),
             one(r#"
             ||foo|
-            |-|-|
+            |---|---|
             |1|2|
             |3|4|
         "#)
@@ -612,7 +709,7 @@ mod tests {
             ),
             one(r#"
             |foo|bar|
-            |-|-|
+            |---|---|
             |1|2|
             |3|4|
             |5||
@@ -681,7 +778,7 @@ mod tests {
             ),
             one(r#"
             |foo|bar|
-            |-|:-:|
+            |---|:---:|
             |1|2|
             |3|4|
             |5|6|

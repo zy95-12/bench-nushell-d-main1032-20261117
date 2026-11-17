@@ -294,7 +294,7 @@ pub fn eval_block_with_early_return<D: DebugContext>(
     input: PipelineData,
 ) -> Result<PipelineData, ShellError> {
     match eval_block::<D>(engine_state, stack, block, input) {
-        Err(ShellError::Return { span: _, value }) => Ok(PipelineData::Value(*value, None)),
+        Err(ShellError::Return { span: _, value }) => Ok(PipelineData::value(*value, None)),
         x => x,
     }
 }
@@ -507,6 +507,7 @@ impl Eval for EvalRuntime {
             Expr::Var(var_id) | Expr::VarDecl(var_id) => {
                 let var_info = engine_state.get_var(*var_id);
                 if var_info.mutable {
+                    var_info.check_value(&rhs)?;
                     stack.add_var(*var_id, rhs);
                     Ok(Value::nothing(lhs.span(&engine_state)))
                 } else {
@@ -576,6 +577,7 @@ impl Eval for EvalRuntime {
                                 }
                             } else {
                                 lhs.upsert_data_at_cell_path(&cell_path.tail, rhs)?;
+                                engine_state.get_var(*var_id).check_value(&lhs)?;
                                 stack.add_var(*var_id, lhs);
                             }
                             Ok(Value::nothing(cell_path.head.span(&engine_state)))

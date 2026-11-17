@@ -1,0 +1,10 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 17.22s
+     Running tests/main.rs (/tmp/nu-streaming-candidate-target/debug/deps/main-af0b020b004ce5a6)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2002 filtered out; finished in 0.00s

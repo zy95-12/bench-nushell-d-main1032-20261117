@@ -1,0 +1,189 @@
+    Blocking waiting for file lock on build directory
+   Compiling log v0.4.22
+   Compiling gimli v0.31.1
+   Compiling mio v1.0.3
+   Compiling signal-hook-mio v0.2.4
+   Compiling crossterm v0.28.1
+   Compiling addr2line v0.24.2
+   Compiling nu-utils v0.106.0 (/tmp/nu-interactive-before/crates/nu-utils)
+   Compiling object v0.36.5
+   Compiling rustc-demangle v0.1.24
+   Compiling strum v0.26.3
+   Compiling nu-system v0.106.0 (/tmp/nu-interactive-before/crates/nu-system)
+   Compiling clap_derive v4.5.18
+   Compiling backtrace v0.3.74
+   Compiling backtrace-ext v0.2.1
+   Compiling miette v7.6.0
+   Compiling getrandom v0.2.15
+   Compiling nu-protocol v0.106.0 (/tmp/nu-interactive-before/crates/nu-protocol)
+   Compiling clap v4.5.23
+   Compiling uucore v0.0.30
+   Compiling time-core v0.1.2
+   Compiling num-conv v0.1.0
+   Compiling powerfmt v0.2.0
+   Compiling deranged v0.3.11
+   Compiling nu-json v0.106.0 (/tmp/nu-interactive-before/crates/nu-json)
+   Compiling futures-sink v0.3.31
+   Compiling num_threads v0.1.7
+   Compiling ring v0.17.13
+   Compiling futures-channel v0.3.31
+   Compiling ident_case v1.0.1
+   Compiling futures-io v0.3.31
+   Compiling futures-util v0.3.31
+   Compiling darling_core v0.20.10
+   Compiling nu-engine v0.106.0 (/tmp/nu-interactive-before/crates/nu-engine)
+   Compiling nu-plugin-protocol v0.106.0 (/tmp/nu-interactive-before/crates/nu-plugin-protocol)
+   Compiling nu-plugin-core v0.106.0 (/tmp/nu-interactive-before/crates/nu-plugin-core)
+   Compiling nu-plugin-engine v0.106.0 (/tmp/nu-interactive-before/crates/nu-plugin-engine)
+   Compiling nu-parser v0.106.0 (/tmp/nu-interactive-before/crates/nu-parser)
+   Compiling nu-cmd-base v0.106.0 (/tmp/nu-interactive-before/crates/nu-cmd-base)
+   Compiling nu-color-config v0.106.0 (/tmp/nu-interactive-before/crates/nu-color-config)
+   Compiling rustls-webpki v0.102.8
+   Compiling rusqlite v0.31.0
+   Compiling rustls v0.23.20
+   Compiling time v0.3.37
+   Compiling darling_macro v0.20.10
+   Compiling anyhow v1.0.94
+   Compiling zopfli v0.8.1
+   Compiling shadow-rs v1.2.0
+   Compiling reedline v0.41.0
+   Compiling ureq-proto v0.3.5
+   Compiling darling v0.20.10
+   Compiling rust-embed-utils v8.7.0
+   Compiling mio v0.8.11
+   Compiling indoc v2.0.5
+   Compiling static_assertions v1.1.0
+   Compiling ureq v3.0.3
+   Compiling compact_str v0.8.0
+   Compiling instability v0.3.7
+   Compiling notify v6.1.1
+   Compiling rust-embed-impl v8.7.0
+   Compiling nu-table v0.106.0 (/tmp/nu-interactive-before/crates/nu-table)
+   Compiling nu-cmd-lang v0.106.0 (/tmp/nu-interactive-before/crates/nu-cmd-lang)
+   Compiling zip v4.1.0
+   Compiling unicode-truncate v1.1.0
+   Compiling time-macros v0.2.19
+   Compiling rand_core v0.6.4
+   Compiling alloca v0.4.0
+   Compiling scroll_derive v0.11.1
+   Compiling cassowary v0.3.0
+   Compiling doc-comment v0.3.3
+   Compiling urlencoding v2.1.3
+   Compiling predicates-core v1.0.8
+   Compiling notify-debouncer-full v0.3.2
+   Compiling trash v5.2.1
+   Compiling uu_cp v0.0.30
+   Compiling calamine v0.28.0
+   Compiling ratatui v0.29.0
+   Compiling uu_mv v0.0.30
+   Compiling scroll v0.11.0
+   Compiling nu-cli v0.106.0 (/tmp/nu-interactive-before/crates/nu-cli)
+   Compiling uu_uname v0.0.30
+   Compiling ureq v2.12.1
+   Compiling rand_chacha v0.3.1
+   Compiling uu_mktemp v0.0.30
+   Compiling rust-embed v8.7.0
+   Compiling uu_touch v0.0.30
+   Compiling update-informer v1.3.0
+   Compiling multipart-rs v0.1.13
+   Compiling lsp-server v0.7.8
+   Compiling nuon v0.106.0 (/tmp/nu-interactive-before/crates/nuon)
+   Compiling futures-executor v0.3.31
+   Compiling uu_whoami v0.0.30
+   Compiling uu_mkdir v0.0.30
+   Compiling nu-term-grid v0.106.0 (/tmp/nu-interactive-before/crates/nu-term-grid)
+   Compiling sdd v3.0.7
+   Compiling difflib v0.4.0
+   Compiling tango-bench v0.6.0
+   Compiling termtree v0.4.1
+   Compiling nu v0.106.0 (/tmp/nu-interactive-before)
+   Compiling assert_cmd v2.0.16
+   Compiling termcolor v1.4.1
+   Compiling plain v0.2.3
+   Compiling goblin v0.7.1
+   Compiling simplelog v0.12.2
+   Compiling nu-command v0.106.0 (/tmp/nu-interactive-before/crates/nu-command)
+   Compiling predicates-tree v1.0.11
+   Compiling predicates v3.1.2
+   Compiling scc v2.3.3
+   Compiling futures v0.3.31
+   Compiling nu-lsp v0.106.0 (/tmp/nu-interactive-before/crates/nu-lsp)
+   Compiling nu-cmd-extra v0.106.0 (/tmp/nu-interactive-before/crates/nu-cmd-extra)
+   Compiling rand v0.8.5
+   Compiling nu-explore v0.106.0 (/tmp/nu-interactive-before/crates/nu-explore)
+   Compiling nu-std v0.106.0 (/tmp/nu-interactive-before/crates/nu-std)
+   Compiling nu-cmd-plugin v0.106.0 (/tmp/nu-interactive-before/crates/nu-cmd-plugin)
+   Compiling colorz v1.1.4
+   Compiling bstr v1.11.1
+   Compiling ctrlc v3.4.5
+   Compiling wait-timeout v0.2.0
+   Compiling serial_test_derive v3.2.0
+   Compiling libloading v0.8.6
+   Compiling glob-match v0.2.1
+   Compiling serial_test v3.2.0
+   Compiling nu-test-support v0.106.0 (/tmp/nu-interactive-before/crates/nu-test-support)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2m 51s
+     Running tests/main.rs (/tmp/nu-interactive-before-target/debug/deps/main-45fc3390a59e4101)
+
+running 15 tests
+test repl::test_config_path::test_xdg_config_empty ... FAILED
+test repl::test_config_path::test_xdg_config_bad ... FAILED
+test repl::test_config_path::test_default_config_path ... FAILED
+test repl::test_config_path::commandstring_populates_config_record ... ok
+test repl::test_config_path::test_xdg_config_symlink ... ok
+test repl::test_config_path::no_config_does_not_load_env_files ... ok
+test repl::test_config_path::no_config_does_not_load_config_files ... ok
+test repl::test_config_path::commandstring_does_not_load_config_files ... ok
+test repl::test_config_path::commandstring_loads_default_env ... ok
+test repl::test_config_path::commandstring_does_not_load_user_env ... ok
+test repl::test_config_path::test_alternate_config_path ... ok
+test repl::test_config_path::use_last_config_path ... ok
+test repl::test_config_path::test_default_symlinked_config_path_empty ... ok
+test repl::test_config_path::test_default_config_path_symlinked_config_files ... ok
+test repl::test_config_path::test_default_symlink_config_path_broken_symlink_config_files ... ok
+
+failures:
+
+---- repl::test_config_path::test_xdg_config_empty stdout ----
+
+thread 'repl::test_config_path::test_xdg_config_empty' panicked at tests/repl/test_config_path.rs:275:9:
+assertion failed: `(left == right)`
+
+[1mDiff[0m [31m< left[0m / [32mright >[0m :
+[31m</home/cdy/.config/nushell[0m
+[32m>/home/cdy/[0m[1;48;5;22;32mzhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/tasks/a5ec0576786f3c4b7bbb01db5d0a694de82faddf98c5fc01/cli-state/48c6ccc8b57a0712d6353372d35ce402160856ebe8d66bb9/home/[0m[32m.config/nushell[0m
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- repl::test_config_path::test_xdg_config_bad stdout ----
+
+thread 'repl::test_config_path::test_xdg_config_bad' panicked at tests/repl/test_config_path.rs:290:9:
+assertion failed: `(left == right)`
+
+[1mDiff[0m [31m< left[0m / [32mright >[0m :
+[31m</home/cdy/.config/nushell[0m
+[32m>/home/cdy/[0m[1;48;5;22;32mzhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/tasks/a5ec0576786f3c4b7bbb01db5d0a694de82faddf98c5fc01/cli-state/48c6ccc8b57a0712d6353372d35ce402160856ebe8d66bb9/home/[0m[32m.config/nushell[0m
+
+
+
+---- repl::test_config_path::test_default_config_path stdout ----
+
+thread 'repl::test_config_path::test_default_config_path' panicked at tests/repl/test_config_path.rs:101:5:
+assertion failed: `(left == right)`
+
+[1mDiff[0m [31m< left[0m / [32mright >[0m :
+[31m</home/cdy/.config/nushell[0m
+[32m>/home/cdy/[0m[1;48;5;22;32mzhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/tasks/a5ec0576786f3c4b7bbb01db5d0a694de82faddf98c5fc01/cli-state/48c6ccc8b57a0712d6353372d35ce402160856ebe8d66bb9/home/[0m[32m.config/nushell[0m
+
+
+
+
+failures:
+    repl::test_config_path::test_default_config_path
+    repl::test_config_path::test_xdg_config_bad
+    repl::test_config_path::test_xdg_config_empty
+
+test result: FAILED. 12 passed; 3 failed; 0 ignored; 0 measured; 1511 filtered out; finished in 0.22s
+
+error: test failed, to rerun pass `--test main`

@@ -153,7 +153,7 @@ fn helper(
     let redirect_mode = http_parse_redirect_mode(args.redirect)?;
 
     let client = http_client(args.insecure, redirect_mode, engine_state, stack)?;
-    let mut request = client.head(&requested_url);
+    let mut request = super::client::Request::new(client, "HEAD", &requested_url);
 
     request = request_set_timeout(args.timeout, request)?;
     request = request_add_authorization_header(args.user, args.password, request);

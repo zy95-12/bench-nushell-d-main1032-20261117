@@ -1,0 +1,10 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.30s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-23ff2abe0f519b5f)
+
+running 3 tests
+test commands::for_::for_doesnt_auto_print_in_each_iteration ... ok
+test commands::for_::for_break_on_external_failed ... ok
+test commands::for_::failed_for_should_break_running ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 1991 filtered out; finished in 0.08s
+

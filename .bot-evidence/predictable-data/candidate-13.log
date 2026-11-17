@@ -1,0 +1,15 @@
+$ cargo test -p nu-command --test main --features sqlite commands::database::into_sqlite
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.31s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-9359b9bf87e3282c)
+
+running 7 tests
+test commands::database::into_sqlite::into_sqlite_empty ... ok
+test commands::database::into_sqlite::into_sqlite_values ... ok
+test commands::database::into_sqlite::into_sqlite_values_first_column_null ... ok
+test commands::database::into_sqlite::into_sqlite_schema ... ok
+test commands::database::into_sqlite::into_sqlite_values_first_column_null_preexisting_db ... ok
+test commands::database::into_sqlite::into_sqlite_existing_db_append ... ok
+test commands::database::into_sqlite::into_sqlite_big_insert ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 2039 filtered out; finished in 2.80s
+

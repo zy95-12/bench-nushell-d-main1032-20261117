@@ -26,6 +26,8 @@ serde_json = { workspace = true }
 url = { workspace = true }
 
 [dev-dependencies]
+rstest = { workspace = true, default-features = false }
+tempfile = { workspace = true }
 nu-cmd-lang = { path = "../nu-cmd-lang", version = "0.106.0" }
 nu-command = { path = "../nu-command", version = "0.106.0" }
 nu-engine = { path = "../nu-engine", version = "0.106.0" }

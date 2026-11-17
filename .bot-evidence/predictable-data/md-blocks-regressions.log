@@ -1,0 +1,38 @@
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 21.85s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-9359b9bf87e3282c)
+
+running 30 tests
+test commands::source::predictable_source_keeps_normal_paths ... ok
+test commands::select::predictable_exact_case_default ... ok
+test commands::get::predictable_exact_case_default ... ok
+test commands::into_binary::predictable_endian_rejects_unknown ... ok
+test commands::reject::predictable_exact_case_default ... ok
+test commands::relative_to::predictable_platform_casing ... ok
+test commands::to_md::predictable_grouped_mixed_schema_tables_have_blank_line ... ok
+test commands::str_length::predictable_const_scalar_counts ... ok
+test commands::str_length::predictable_incompatible_modes ... ok
+test commands::get::predictable_optional_ignore_case ... ok
+test commands::select::predictable_optional_ignore_case ... ok
+test commands::get::predictable_const_case_and_optional ... ok
+test commands::predictable_formats::predictable_sqlite_jsonb_roundtrip ... ok
+test commands::reject::predictable_optional_ignore_case ... ok
+test commands::get::predictable_ignore_case_nested_and_optional ... ok
+test commands::to_md::predictable_adjacent_record_tables_have_blank_line ... ok
+test commands::predictable_formats::predictable_nuon_equals ... ok
+test commands::predictable_formats::predictable_cellpath_string ... ok
+test commands::into_binary::predictable_endian_and_compact ... ok
+test commands::to_md::predictable_optional_markdown_escaping ... ok
+test commands::into_binary::predictable_endian_numeric_types_and_paths ... ok
+test commands::get::predictable_stream_case ... ok
+test commands::reject::predictable_ignore_case_nested_and_optional ... ok
+test commands::predictable_formats::predictable_cellpath_interpolation ... ok
+test commands::select::predictable_ignore_case_nested_and_optional ... ok
+test commands::str_length::predictable_scalar_counts ... ok
+test commands::to_md::predictable_table_delimiters_and_escaping ... ok
+test commands::predictable_formats::predictable_sqlite_json_roundtrip ... ok
+test commands::relative_to::predictable_component_boundaries ... ok
+test commands::to_md::predictable_heading_blockquote_and_table_boundaries ... ok
+
+test result: ok. 30 passed; 0 failed; 0 ignored; 0 measured; 2019 filtered out; finished in 0.10s
+
