@@ -1,0 +1,83 @@
+   Compiling nu-plugin-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-plugin-protocol)
+   Compiling nu-plugin-core v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-plugin-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 16.65s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_plugin_core-b8ee84d5ed142497)
+
+running 69 tests
+test communication_mode::local_socket::tests::local_socket_path_contains_provided_name ... ok
+test communication_mode::local_socket::tests::local_socket_path_contains_pid ... ok
+test interface::stream::tests::reader_drop ... ok
+test interface::stream::tests::reader_recv_end_of_stream ... ok
+test interface::stream::tests::reader_recv_list_messages ... ok
+test interface::stream::tests::reader_recv_raw_messages ... ok
+test interface::stream::tests::signal_notify_sent_false_if_unacknowledged ... ok
+test interface::stream::tests::signal_notify_sent_never_false_if_flowing ... ok
+test interface::stream::tests::signal_set_dropped ... ok
+test interface::stream::tests::reader_recv_acknowledge ... ok
+test interface::stream::tests::list_reader_recv_wrong_type ... ok
+test interface::stream::tests::raw_reader_recv_wrong_type ... ok
+test interface::stream::tests::reader_iter_fuse_on_error ... ok
+test interface::stream::tests::stream_manager_drop_writers_on_drop ... ok
+test interface::stream::tests::stream_manager_broadcast_read_error ... ok
+test interface::stream::tests::stream_manager_single_stream_read_scenario ... ok
+test interface::stream::tests::stream_manager_write_scenario ... ok
+test interface::stream::tests::writer_end ... ok
+test interface::stream::tests::writer_write_all_stops_if_dropped ... ok
+test interface::tests::read_pipeline_data_empty ... ok
+test interface::stream::tests::stream_manager_multi_stream_read_scenario ... ok
+test interface::tests::read_pipeline_data_prepared_properly ... ok
+test interface::tests::read_pipeline_data_value ... ok
+test interface::tests::read_pipeline_data_byte_stream ... ok
+test interface::tests::write_pipeline_data_empty ... ok
+test interface::tests::write_pipeline_data_byte_stream ... ok
+test interface::tests::read_pipeline_data_list_stream ... ok
+test interface::tests::write_pipeline_data_list_stream ... ok
+test interface::tests::write_pipeline_data_prepared_properly ... ok
+test interface::tests::write_pipeline_data_value ... ok
+test serializers::json::tests::decode_eof ... ok
+test serializers::json::tests::call_round_trip_signature ... ok
+test serializers::json::tests::decode_io_error ... ok
+test serializers::json::tests::decode_gibberish ... ok
+test serializers::json::tests::input_round_trip_stream_data_raw ... ok
+test serializers::json::tests::input_round_trip_stream_data_list ... ok
+test serializers::json::tests::call_round_trip_customvalueop ... ok
+test serializers::json::tests::call_round_trip_run ... ok
+test serializers::json::tests::json_has_no_other_newlines ... ok
+test serializers::json::tests::json_ends_in_newline ... ok
+test serializers::json::tests::output_round_trip_option ... ok
+test serializers::json::tests::output_round_trip_stream_data_list ... ok
+test serializers::json::tests::output_round_trip_stream_data_raw ... ok
+test serializers::json::tests::response_round_trip_error_none ... ok
+test serializers::json::tests::response_round_trip_error ... ok
+test serializers::json::tests::response_round_trip_value ... ok
+test serializers::json::tests::response_round_trip_plugin_custom_value ... ok
+test serializers::msgpack::tests::decode_eof ... ok
+test serializers::msgpack::tests::call_round_trip_signature ... ok
+test serializers::json::tests::response_round_trip_signature ... ok
+test serializers::msgpack::tests::decode_gibberish ... ok
+test serializers::msgpack::tests::input_round_trip_stream_data_list ... ok
+test serializers::msgpack::tests::call_round_trip_customvalueop ... ok
+test serializers::msgpack::tests::output_round_trip_option ... ok
+test serializers::msgpack::tests::input_round_trip_stream_data_raw ... ok
+test serializers::msgpack::tests::output_round_trip_stream_data_raw ... ok
+test serializers::msgpack::tests::decode_io_error ... ok
+test serializers::msgpack::tests::output_round_trip_stream_data_list ... ok
+test serializers::msgpack::tests::call_round_trip_run ... ok
+test serializers::msgpack::tests::response_round_trip_error_none ... ok
+test serializers::msgpack::tests::response_round_trip_error ... ok
+test serializers::msgpack::tests::response_round_trip_plugin_custom_value ... ok
+test serializers::msgpack::tests::response_round_trip_value ... ok
+test util::waitable::dont_deadlock_if_waiting_without_writer ... ok
+test util::with_custom_values_in::find_custom_values ... ok
+test util::waitable::set_from_other_thread ... ok
+test serializers::msgpack::tests::response_round_trip_signature ... ok
+test interface::stream::tests::signal_wait_for_drain_blocks_on_unacknowledged ... ok
+test interface::stream::tests::signal_wait_for_drain_unblocks_on_dropped ... ok
+
+test result: ok. 69 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+   Doc-tests nu_plugin_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

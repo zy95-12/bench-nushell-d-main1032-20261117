@@ -138,7 +138,7 @@ fn values(
     let metadata = input.metadata().map(|m| m.with_content_type(None));
     let input = input.set_metadata(metadata.clone());
     match input {
-        PipelineData::Empty => Ok(PipelineData::Empty),
+        PipelineData::Empty => Ok(PipelineData::empty()),
         PipelineData::Value(v, ..) => {
             let span = v.span();
             match v {

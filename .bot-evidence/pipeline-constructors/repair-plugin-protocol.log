@@ -1,0 +1,43 @@
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-protocol)
+   Compiling nu-plugin-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-plugin-protocol)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.26s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_plugin_protocol-141e7abe2d0b6e15)
+
+running 14 tests
+test evaluated_call::test::call_to_value ... ok
+test plugin_custom_value::tests::deserialize_in_list ... ok
+test plugin_custom_value::tests::deserialize_in_closure ... ok
+test plugin_custom_value::tests::deserialize_in_root ... ok
+test plugin_custom_value::tests::deserialize_in_record ... ok
+test plugin_custom_value::tests::expected_serialize_output ... ok
+test plugin_custom_value::tests::serialize_deserialize ... ok
+test plugin_custom_value::tests::serialize_in_closure ... ok
+test plugin_custom_value::tests::serialize_in_list ... ok
+test plugin_custom_value::tests::serialize_in_record ... ok
+test plugin_custom_value::tests::serialize_in_root ... ok
+test tests::protocol_info_compatible ... ok
+test tests::protocol_info_compatible_with_nightly ... ok
+test tests::protocol_info_incompatible ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nu_plugin_protocol
+
+running 15 tests
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::add_named (line 60) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::add_positional (line 44) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::get_flag (line 384) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::get_flag (line 367) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::add_flag (line 77) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::get_flag_value (line 286) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::get_flag (line 401) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::get_flag_value (line 307) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::has_flag (line 191) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::has_flag (line 175) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::has_flag (line 207) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::has_flag (line 239) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::rest (line 428) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::has_flag (line 223) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::nth (line 337) ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

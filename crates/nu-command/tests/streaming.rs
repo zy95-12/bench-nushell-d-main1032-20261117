@@ -171,7 +171,7 @@ fn streaming_partial_binary_results_clear_content_type() {
     for command in ["first 1", "skip 1", "take 1"] {
         for streamed in [false, true] {
             let input = if streamed {
-                PipelineData::ByteStream(
+                PipelineData::byte_stream(
                     nu_protocol::ByteStream::read_binary(
                         vec![1, 2, 3],
                         Span::test_data(),
@@ -256,7 +256,7 @@ fn streaming_flatten_pulls_closure_results_on_demand() {
         &engine,
         &mut Stack::new(),
         &block,
-        PipelineData::Empty,
+        PipelineData::empty(),
     )
     .unwrap();
     assert_eq!(pulls.load(std::sync::atomic::Ordering::SeqCst), 0);

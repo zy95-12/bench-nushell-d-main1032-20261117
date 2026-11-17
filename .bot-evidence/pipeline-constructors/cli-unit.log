@@ -1,0 +1,63 @@
+   Compiling nu-cli v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 16.78s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_cli-3ce12353144c1953)
+
+running 56 tests
+test commands::history::history_import::tests::test_find_backup_path::case_1_no_backup ... ok
+test commands::history::history_import::tests::test_find_backup_path::case_2_backup_exists ... ok
+test commands::history::history_import::tests::test_item_from_value_record_bad_type ... ok
+test commands::history::history_import::tests::test_backup_no_file ... ok
+test commands::history::history_import::tests::test_backup ... ok
+test commands::history::history_import::tests::test_find_backup_path::case_3_multiple_backups_exists ... ok
+test commands::history::history_import::tests::test_item_from_value_record ... ok
+test commands::history::history_import::tests::test_item_from_value_record_extra_field ... ok
+test commands::history::history_import::tests::test_item_from_value_string ... ok
+test completions::completion_options::test::match_algorithm_simple::case_02 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_01 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_03 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_04 ... ok
+test completions::completion_options::test::match_algorithm_fuzzy_sort_strip ... ok
+test completions::completion_options::test::match_algorithm_fuzzy_sort_score ... ok
+test completions::completion_options::test::match_algorithm_simple::case_05 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_07 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_08 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_09 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_10 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_06 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_11 ... ok
+test reedline_config::test::test_edit_event ... ok
+test reedline_config::test::test_error ... ok
+test reedline_config::test::test_move_with_select_false ... ok
+test reedline_config::test::test_move_with_select_true ... ok
+test reedline_config::test::test_move_without_optional_select ... ok
+test reedline_config::test::test_send_menu ... ok
+test reedline_config::test::test_multiple_event ... ok
+test reedline_config::test::test_send_event ... ok
+test reedline_config::test::test_until_event ... ok
+test repl::test_auto_cd::auto_cd_dot ... ok
+test repl::test_auto_cd::auto_cd_double_dot ... ok
+test repl::test_auto_cd::auto_cd_relative ... ok
+test repl::test_auto_cd::escape_vscode_backslash_test ... ok
+test repl::test_auto_cd::escape_vscode_linefeed_test ... ok
+test repl::test_auto_cd::escape_vscode_multibyte_ok ... ok
+test repl::test_auto_cd::escape_vscode_tab_null_cr_test ... ok
+test repl::are_session_ids_in_sync ... ok
+test repl::test_auto_cd::auto_cd_root ... ok
+test repl::test_auto_cd::auto_cd_symlink ... ok
+test repl::test_auto_cd::escape_vscode_semicolon_test ... ok
+test repl::test_auto_cd::auto_cd_tilde ... ok
+test repl::test_auto_cd::auto_cd_nonexistent_directory - should panic ... ok
+test repl::test_auto_cd::auto_cd_trailing_slash ... ok
+test util::test::test_gather_env_vars ... ok
+test repl::trailing_slash_looks_like_path ... ok
+test repl::test_auto_cd::auto_cd_triple_dot ... ok
+test repl::accept_tests::accepted_edits_execute_once::case_2 ... ok
+test repl::accept_tests::accepted_edits_execute_once::case_1 ... ok
+test repl::accept_tests::accepted_edits_execute_once::case_3 ... ok
+test menus::help_completions::test::test_help_completer::case_4 ... ok
+test menus::help_completions::test::test_help_completer::case_1 ... ok
+test menus::help_completions::test::test_help_completer::case_3 ... ok
+test menus::help_completions::test::test_help_completer::case_2 ... ok
+test completions::completer::completer_tests::test_completion_helper ... ok
+
+test result: ok. 56 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s

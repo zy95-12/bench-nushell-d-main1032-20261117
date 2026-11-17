@@ -2138,7 +2138,8 @@ fn run_external_completion_within_pwd(
     assert!(engine_state.merge_delta(delta).is_ok());
 
     assert!(
-        eval_block::<WithoutDebug>(&engine_state, &mut stack, &block, PipelineData::Empty).is_ok()
+        eval_block::<WithoutDebug>(&engine_state, &mut stack, &block, PipelineData::empty())
+            .is_ok()
     );
 
     // Merge environment into the permanent state
@@ -2820,7 +2821,7 @@ fn missing_script_has_command_line_span() {
         &[],
         &mut engine,
         &mut stack,
-        PipelineData::Empty,
+        PipelineData::empty(),
     )
     .unwrap_err();
     if let nu_protocol::ShellError::Io(error) = error {

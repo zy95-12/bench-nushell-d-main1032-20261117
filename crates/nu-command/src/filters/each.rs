@@ -113,7 +113,7 @@ with 'transpose' first."#
         let flatten = call.has_flag(engine_state, stack, "flatten")?;
         match input {
             PipelineData::Empty | PipelineData::Value(Value::Nothing { .. }, _) => {
-                Ok(PipelineData::Empty)
+                Ok(PipelineData::empty())
             }
             PipelineData::Value(Value::Range { .. }, ..)
             | PipelineData::Value(Value::List { .. }, ..)
@@ -131,12 +131,12 @@ with 'transpose' first."#
                         .flat_map(move |value| match value {
                             Ok(value) => each_result(&mut closure, value, head, flatten),
                             Err(err) => {
-                                PipelineData::Value(Value::error(err, head), None).into_iter()
+                                PipelineData::value(Value::error(err, head), None).into_iter()
                             }
                         })
                         .into_pipeline_data(head, engine_state.signals().clone()))
                 } else {
-                    Ok(PipelineData::Empty)
+                    Ok(PipelineData::empty())
                 }
             }
             // This match allows non-iterables to be accepted,
@@ -166,7 +166,7 @@ fn each_result(
 ) -> nu_protocol::PipelineIterator {
     let span = value.span();
     if value.is_error() {
-        return PipelineData::Value(value, None).into_iter();
+        return PipelineData::value(value, None).into_iter();
     }
     let result = match closure.run_with_value(value) {
         Ok(data) if flatten => return data.into_iter(),
@@ -174,7 +174,7 @@ fn each_result(
             let mut values = Vec::new();
             for value in stream {
                 if value.is_error() {
-                    return PipelineData::Value(value, None).into_iter();
+                    return PipelineData::value(value, None).into_iter();
                 }
                 values.push(value);
             }

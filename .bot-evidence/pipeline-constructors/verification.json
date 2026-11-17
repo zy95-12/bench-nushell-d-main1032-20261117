@@ -1,0 +1,241 @@
+{
+  "contract": "contract:revision:2",
+  "source_digest_sha256": "6d994d95ab8a08ce250cfcebeb6ef70357e372d2fd4f4d0efce0d534808ebcb0",
+  "provenance": "Only supplied baseline, user-authorized accepted trial stack and this session work. No target/reference implementation accessed. No workflows or dependency versions changed.",
+  "stacking": "Required ff-only merge was attempted and refused because histories diverged. Trees were identical. A normal merge preserved both histories and accepted-stack ancestry.",
+  "commands": [
+    {
+      "log": "protocol-final.log",
+      "exit_code": 0,
+      "command": "cargo test -p nu-protocol",
+      "test_results": [
+        "test result: ok. 120 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s",
+        "test result: ok. 7 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 0.07s",
+        "test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "test result: ok. 45 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s"
+      ]
+    },
+    {
+      "log": "engine-final.log",
+      "exit_code": 0,
+      "command": "cargo test -p nu-engine",
+      "test_results": [
+        "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ]
+    },
+    {
+      "log": "build.log",
+      "exit_code": 0,
+      "command": "cargo build -p nu --locked",
+      "test_results": []
+    },
+    {
+      "log": "command-tested-binary.log",
+      "exit_code": 101,
+      "command": "cargo test -p nu-command --test main commands::",
+      "test_results": [
+        "test result: FAILED. 1823 passed; 16 failed; 27 ignored; 0 measured; 164 filtered out; finished in 13.97s"
+      ]
+    },
+    {
+      "log": "cli-tested-binary.log",
+      "exit_code": 0,
+      "command": "cargo test -p nu-cli --features plugin --test main",
+      "test_results": [
+        "test result: ok. 109 passed; 0 failed; 4 ignored; 0 measured; 0 filtered out; finished in 0.22s"
+      ]
+    },
+    {
+      "log": "cli-unit.log",
+      "exit_code": 0,
+      "command": "cargo test -p nu-cli --features plugin --lib",
+      "test_results": [
+        "test result: ok. 56 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s"
+      ]
+    },
+    {
+      "log": "plugin-protocol.log",
+      "exit_code": 101,
+      "command": "cargo test -p nu_plugin_protocol",
+      "test_results": []
+    },
+    {
+      "log": "plugin-protocol-final.log",
+      "exit_code": 0,
+      "command": "cargo test -p nu-plugin-protocol",
+      "test_results": [
+        "test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s"
+      ]
+    },
+    {
+      "log": "plugin-core.log",
+      "exit_code": 0,
+      "command": "cargo test -p nu-plugin-core",
+      "test_results": [
+        "test result: ok. 69 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s",
+        "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ]
+    },
+    {
+      "log": "plugin-engine.log",
+      "exit_code": 0,
+      "command": "cargo test -p nu-plugin-engine",
+      "test_results": [
+        "test result: ok. 52 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ]
+    },
+    {
+      "log": "check.log",
+      "exit_code": 0,
+      "command": "cargo check -p nu --locked",
+      "test_results": []
+    },
+    {
+      "log": "fmt-final.log",
+      "exit_code": 0,
+      "command": "cargo fmt --all -- --check",
+      "test_results": []
+    },
+    {
+      "log": "lsp.log",
+      "exit_code": 101,
+      "command": "cargo test -p nu-lsp --lib",
+      "test_results": [
+        "test result: FAILED. 63 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.11s"
+      ]
+    },
+    {
+      "log": "config-path-tested-binary.log",
+      "exit_code": 101,
+      "command": "cargo test --test main repl::test_config_path",
+      "test_results": [
+        "test result: FAILED. 12 passed; 3 failed; 0 ignored; 0 measured; 1511 filtered out; finished in 0.27s"
+      ]
+    },
+    {
+      "log": "default-completion.log",
+      "exit_code": 101,
+      "command": "cargo test -p nu-cli variables_completions",
+      "test_results": [
+        "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 56 filtered out; finished in 0.00s",
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 112 filtered out; finished in 0.00s"
+      ]
+    },
+    {
+      "log": "isolated-prechange.log",
+      "exit_code": 101,
+      "command": "/tmp/cargo-pipeline-baseline test -p nu-protocol --test test_pipeline_data",
+      "test_results": []
+    },
+    {
+      "log": "isolated-baseline-build.log",
+      "exit_code": 0,
+      "command": "/tmp/cargo-pipeline-baseline build -p nu --locked",
+      "test_results": []
+    },
+    {
+      "log": "isolated-baseline-command.log",
+      "exit_code": 101,
+      "command": "/tmp/cargo-pipeline-baseline test -p nu-command --test main commands::",
+      "test_results": [
+        "test result: FAILED. 1823 passed; 16 failed; 27 ignored; 0 measured; 164 filtered out; finished in 7.29s"
+      ]
+    }
+  ],
+  "baseline_runner": "baseline-cargo.sh is a copy of the supplied Cargo wrapper with only CARGO_TARGET_DIR changed to /tmp/pipeline-baseline-target. It was run as /tmp/cargo-pipeline-baseline in /tmp/pipeline-prechange, detached at the accepted stack. Only test_pipeline_data.rs was overlaid with this candidate regression tests. Earlier shared-target comparison attempts were discarded because the supplied wrapper overrides CARGO_TARGET_DIR and Cargo reused artifacts across worktrees.",
+  "command_baseline_comparison": {
+    "identical_failing_tests": [
+      "commands::find::find_and_highlight_in_nested_list",
+      "commands::find::find_with_bytestream_search_with_char",
+      "commands::find::find_with_filepath_search_with_multiple_patterns",
+      "commands::find::find_with_filepath_search_with_string",
+      "commands::find::find_with_list_search_with_char",
+      "commands::find::find_with_list_search_with_string",
+      "commands::find::find_with_regex_in_table_keeps_row_if_one_column_matches",
+      "commands::find::find_with_string_search_with_special_char_1",
+      "commands::find::find_with_string_search_with_special_char_2",
+      "commands::find::find_with_string_search_with_special_char_3",
+      "commands::find::find_with_string_search_with_special_char_4",
+      "commands::find::find_with_string_search_with_special_char_5",
+      "commands::find::find_with_string_search_with_special_char_6",
+      "commands::find::find_with_string_search_with_string",
+      "commands::table::table_colors",
+      "commands::table::table_empty_colors"
+    ],
+    "candidate_and_accepted_baseline": "1823 passed; 16 failed; 27 ignored; 164 filtered out",
+    "reason": "Existing ANSI expectations use 37 (white), while unchanged accepted style defaults produce 39 (default). Tests were not modified."
+  },
+  "known_environment_failures": {
+    "config": "Same three HOME-dependent config path failures as accepted .bot-evidence/interactive-authoring/config-path.log; 12 pass, 3 fail.",
+    "completion": "Same plugin-feature-dependent variables_completions failure as accepted .bot-evidence/interactive-authoring/default-completion.log. Plugin-enabled suite passes.",
+    "lsp": "Same hover_on_external_command assertion for SLEEP as accepted baseline evidence .bot-evidence/interactive-authoring/before-lsp-full.log; 63 pass, 1 fail."
+  },
+  "migration_audit": "Corrected after QA return: initial audit missed Self:: variant expressions in From<ByteStream> and From<ListStream> implementations outside pipeline_data.rs. Both now call Self::byte_stream / Self::list_stream with unchanged None metadata. Re-audited all implementations for PipelineData, Self:: variant references in all pipeline modules, explicit PipelineData:: references and macro construction inputs; no aliases or imported variants found. Remaining variant references are patterns, documentation/comments and constructor bodies. No incomplete construction sites remain.",
+  "coverage": "Tests cover empty/value metadata and spans, IntoPipelineData metadata construction, list/byte laziness, byte type/known size/caller spans, and both streams retaining interrupt sources. Migrated plugin interface regression suites also pass.",
+  "original_candidate_source_digest_sha256": "dce6de37b495437b34c71281e666aa9d39f8a73f5b5cb355c6796c27079b918a",
+  "original_commands_version": "task_history:13241 (returned candidate). Existing baseline/environment comparisons retained as applicable historical evidence; acceptance found required evidence complete and behavior preserved.",
+  "repair": {
+    "finding": "Acceptance return task_history:13224, supplied in current assignment",
+    "source_version": "task_history:13343 (code unchanged since this snapshot)",
+    "paths": [
+      "crates/nu-protocol/src/pipeline/byte_stream.rs",
+      "crates/nu-protocol/src/pipeline/list_stream.rs",
+      "crates/nu-protocol/tests/test_pipeline_data.rs"
+    ],
+    "coverage": "New From/Into test covers absent metadata, lazy list and byte reads, list contents, spans, byte type and known size. Conversion behavior is intentionally preserved, so the new preservation test also applies before repair. Existing missing-constructor red evidence remains applicable to the API addition.",
+    "commands": [
+      {
+        "command": "cargo test -p nu-protocol",
+        "exit_code": 0,
+        "log": "repair-protocol.log",
+        "test_results": [
+          "test result: ok. 120 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s",
+          "test result: ok. 7 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 0.07s",
+          "test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+          "test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s",
+          "test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+          "test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+          "test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+          "test result: ok. 45 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s"
+        ]
+      },
+      {
+        "command": "cargo test -p nu-engine",
+        "exit_code": 0,
+        "log": "repair-engine.log",
+        "test_results": [
+          "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s",
+          "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+        ]
+      },
+      {
+        "command": "cargo test -p nu-plugin-protocol",
+        "exit_code": 0,
+        "log": "repair-plugin-protocol.log",
+        "test_results": [
+          "test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+          "test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+        ]
+      },
+      {
+        "command": "cargo check -p nu --locked",
+        "exit_code": 0,
+        "log": "repair-check.log",
+        "test_results": []
+      },
+      {
+        "command": "cargo fmt --all -- --check",
+        "exit_code": 0,
+        "log": "repair-fmt.log",
+        "test_results": []
+      }
+    ]
+  }
+}

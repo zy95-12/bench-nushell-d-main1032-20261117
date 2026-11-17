@@ -1,0 +1,92 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on shared package cache
+   Compiling nu-utils v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-utils)
+   Compiling nu-system v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-system)
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-protocol)
+   Compiling nu-json v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-json)
+   Compiling nu-term-grid v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-term-grid)
+   Compiling nu-test-support v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-test-support)
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-engine)
+   Compiling nu-plugin-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-plugin-protocol)
+   Compiling nu-plugin-core v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-plugin-core)
+   Compiling nu-plugin-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-plugin-engine)
+   Compiling nu-parser v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-parser)
+   Compiling nu-cmd-base v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-cmd-base)
+   Compiling nu-color-config v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-color-config)
+   Compiling nu-table v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-table)
+   Compiling nu-cli v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-cli)
+   Compiling nuon v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nuon)
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-command)
+   Compiling nu-lsp v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-lsp)
+   Compiling nu-explore v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-explore)
+   Compiling nu-cmd-lang v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-cmd-lang)
+   Compiling nu-cmd-extra v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-cmd-extra)
+   Compiling nu-std v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-std)
+   Compiling nu-cmd-plugin v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d/crates/nu-cmd-plugin)
+   Compiling nu v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b6ad0200a3ee079a4c8fdd06db3c4531b847e627006f8a9d)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 25s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-45fc3390a59e4101)
+
+running 15 tests
+test repl::test_config_path::test_default_config_path ... FAILED
+test repl::test_config_path::test_xdg_config_empty ... FAILED
+test repl::test_config_path::test_xdg_config_bad ... FAILED
+test repl::test_config_path::commandstring_populates_config_record ... ok
+test repl::test_config_path::no_config_does_not_load_config_files ... ok
+test repl::test_config_path::no_config_does_not_load_env_files ... ok
+test repl::test_config_path::test_xdg_config_symlink ... ok
+test repl::test_config_path::commandstring_does_not_load_user_env ... ok
+test repl::test_config_path::commandstring_does_not_load_config_files ... ok
+test repl::test_config_path::commandstring_loads_default_env ... ok
+test repl::test_config_path::test_alternate_config_path ... ok
+test repl::test_config_path::use_last_config_path ... ok
+test repl::test_config_path::test_default_symlinked_config_path_empty ... ok
+test repl::test_config_path::test_default_symlink_config_path_broken_symlink_config_files ... ok
+test repl::test_config_path::test_default_config_path_symlinked_config_files ... ok
+
+failures:
+
+---- repl::test_config_path::test_default_config_path stdout ----
+
+thread 'repl::test_config_path::test_default_config_path' panicked at tests/repl/test_config_path.rs:101:5:
+assertion failed: `(left == right)`
+
+[1mDiff[0m [31m< left[0m / [32mright >[0m :
+[31m</home/cdy/.config/nushell[0m
+[32m>/home/cdy/[0m[1;48;5;22;32mzhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/tasks/c640cff2f7cb101acfb3ace5c690d3d347aa5b88d3103ba3/cli-state/208bd539b78e83eeae1df353b386eccbf785f0fae7325960/home/[0m[32m.config/nushell[0m
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- repl::test_config_path::test_xdg_config_empty stdout ----
+
+thread 'repl::test_config_path::test_xdg_config_empty' panicked at tests/repl/test_config_path.rs:275:9:
+assertion failed: `(left == right)`
+
+[1mDiff[0m [31m< left[0m / [32mright >[0m :
+[31m</home/cdy/.config/nushell[0m
+[32m>/home/cdy/[0m[1;48;5;22;32mzhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/tasks/c640cff2f7cb101acfb3ace5c690d3d347aa5b88d3103ba3/cli-state/208bd539b78e83eeae1df353b386eccbf785f0fae7325960/home/[0m[32m.config/nushell[0m
+
+
+
+---- repl::test_config_path::test_xdg_config_bad stdout ----
+
+thread 'repl::test_config_path::test_xdg_config_bad' panicked at tests/repl/test_config_path.rs:290:9:
+assertion failed: `(left == right)`
+
+[1mDiff[0m [31m< left[0m / [32mright >[0m :
+[31m</home/cdy/.config/nushell[0m
+[32m>/home/cdy/[0m[1;48;5;22;32mzhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/tasks/c640cff2f7cb101acfb3ace5c690d3d347aa5b88d3103ba3/cli-state/208bd539b78e83eeae1df353b386eccbf785f0fae7325960/home/[0m[32m.config/nushell[0m
+
+
+
+
+failures:
+    repl::test_config_path::test_default_config_path
+    repl::test_config_path::test_xdg_config_bad
+    repl::test_config_path::test_xdg_config_empty
+
+test result: FAILED. 12 passed; 3 failed; 0 ignored; 0 measured; 1511 filtered out; finished in 0.27s
+
+error: test failed, to rerun pass `--test main`
