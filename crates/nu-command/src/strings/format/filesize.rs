@@ -98,8 +98,8 @@ impl Command for FormatFilesize {
     fn examples(&self) -> Vec<Example> {
         vec![
             Example {
-                description: "Convert the size column to KB",
-                example: "ls | format filesize KB size",
+                description: "Convert the size column to kB",
+                example: "ls | format filesize kB size",
                 result: None,
             },
             Example {
@@ -147,6 +147,24 @@ fn format_value_impl(val: &Value, arg: &Arguments, span: Span) -> Value {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn example_units_are_valid() {
+        for example in FormatFilesize.examples() {
+            let unit = example
+                .example
+                .split("format filesize ")
+                .nth(1)
+                .unwrap()
+                .split_whitespace()
+                .next()
+                .unwrap();
+            assert!(
+                unit.parse::<FilesizeUnit>().is_ok(),
+                "invalid example unit: {unit}"
+            );
+        }
+    }
 
     #[test]
     fn test_examples() {

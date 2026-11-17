@@ -1,0 +1,632 @@
+   Compiling proc-macro2 v1.0.92
+   Compiling unicode-ident v1.0.14
+   Compiling memchr v2.7.4
+   Compiling quote v1.0.37
+   Compiling cfg-if v1.0.0
+   Compiling syn v2.0.90
+   Compiling libc v0.2.174
+   Compiling serde v1.0.216
+   Compiling autocfg v1.4.0
+   Compiling once_cell v1.20.2
+   Compiling regex-syntax v0.8.5
+   Compiling serde_derive v1.0.216
+   Compiling num-traits v0.2.19
+   Compiling rustix v0.38.42
+   Compiling itoa v1.0.14
+   Compiling iana-time-zone v0.1.61
+   Compiling linux-raw-sys v0.4.14
+   Compiling byteorder v1.5.0
+   Compiling log v0.4.22
+   Compiling pure-rust-locales v0.8.1
+   Compiling bitflags v2.6.0
+   Compiling chrono v0.4.39
+   Compiling equivalent v1.0.1
+   Compiling foldhash v0.1.5
+   Compiling allocator-api2 v0.2.21
+   Compiling ryu v1.0.18
+   Compiling hashbrown v0.15.2
+   Compiling zerocopy-derive v0.7.35
+   Compiling cfg_aliases v0.2.1
+   Compiling nix v0.29.0
+   Compiling zerocopy v0.7.35
+   Compiling smallvec v1.13.2
+   Compiling indexmap v2.10.0
+   Compiling arrayvec v0.7.6
+   Compiling unicode-width v0.1.11
+   Compiling thiserror v2.0.12
+   Compiling thiserror-impl v2.0.12
+   Compiling aho-corasick v1.1.3
+   Compiling terminal_size v0.4.1
+   Compiling vte v0.14.1
+   Compiling lock_api v0.4.12
+   Compiling serde_json v1.0.133
+   Compiling regex-automata v0.4.9
+   Compiling parking_lot_core v0.9.10
+   Compiling rustversion v1.0.18
+   Compiling crc32fast v1.4.2
+   Compiling adler2 v2.0.0
+   Compiling scopeguard v1.2.0
+   Compiling thiserror v1.0.69
+   Compiling signal-hook v0.3.17
+   Compiling zlib-rs v0.5.1
+   Compiling miniz_oxide v0.8.9
+   Compiling libz-rs-sys v0.5.1
+   Compiling thiserror-impl v1.0.69
+   Compiling signal-hook-registry v1.4.2
+   Compiling either v1.15.0
+   Compiling parking_lot v0.12.3
+   Compiling flate2 v1.1.2
+   Compiling mio v1.0.3
+   Compiling nu-ansi-term v0.50.1
+   Compiling unicase v2.8.0
+   Compiling siphasher v0.3.11
+   Compiling signal-hook-mio v0.2.4
+   Compiling bit-vec v0.8.0
+   Compiling crossterm v0.28.1
+   Compiling bit-set v0.8.0
+   Compiling castaway v0.2.3
+   Compiling strip-ansi-escapes v0.2.1
+   Compiling buf-trait v0.4.1
+   Compiling bytes v1.10.0
+   Compiling version_check v0.9.5
+   Compiling rand_core v0.6.4
+   Compiling byteyarn v0.5.1
+   Compiling rand v0.8.5
+   Compiling lean_string v0.4.0
+   Compiling fancy-regex v0.14.0
+   Compiling phf_shared v0.11.2
+   Compiling lscolors v0.20.0
+   Compiling num-format v0.4.4
+   Compiling option-ext v0.2.0
+   Compiling ref-cast v1.0.23
+   Compiling paste v1.0.15
+   Compiling sys-locale v0.3.2
+   Compiling typeid v1.0.2
+   Compiling nu-utils v0.106.0 (/tmp/nu-interactive-before/crates/nu-utils)
+   Compiling dirs-sys v0.4.1
+   Compiling phf_generator v0.11.2
+   Compiling ref-cast-impl v1.0.23
+   Compiling synstructure v0.13.1
+   Compiling hex v0.4.3
+   Compiling owo-colors v4.1.0
+   Compiling procfs v0.17.0
+   Compiling heck v0.5.0
+   Compiling shlex v1.3.0
+   Compiling alloc-no-stdlib v2.0.4
+   Compiling cc v1.2.16
+   Compiling alloc-stdlib v0.2.2
+   Compiling procfs-core v0.17.0
+   Compiling regex v1.11.1
+   Compiling phf_codegen v0.11.2
+   Compiling dirs v5.0.1
+   Compiling pwd v1.4.0
+   Compiling itertools v0.14.0
+   Compiling proc-macro-error-attr2 v2.0.0
+   Compiling unicode-linebreak v0.1.5
+   Compiling is_ci v1.2.0
+   Compiling supports-color v3.0.2
+   Compiling textwrap v0.16.1
+   Compiling proc-macro-error2 v2.0.1
+   Compiling nu-path v0.106.0 (/tmp/nu-interactive-before/crates/nu-path)
+   Compiling erased-serde v0.4.5
+   Compiling rmp v0.8.14
+   Compiling brotli-decompressor v4.0.1
+   Compiling strum_macros v0.26.4
+   Compiling zerofrom-derive v0.1.5
+   Compiling typetag-impl v0.2.18
+   Compiling miette-derive v7.6.0
+   Compiling sysinfo v0.36.0
+   Compiling strum v0.26.3
+   Compiling nu-glob v0.106.0 (/tmp/nu-interactive-before/crates/nu-glob)
+   Compiling supports-hyperlinks v3.1.0
+   Compiling inventory v0.3.15
+   Compiling supports-unicode v3.0.0
+   Compiling web-time v1.1.0
+   Compiling nu-system v0.106.0 (/tmp/nu-interactive-before/crates/nu-system)
+   Compiling miette v7.6.0
+   Compiling typetag v0.2.18
+   Compiling zerofrom v0.1.5
+   Compiling brotli v7.0.0
+   Compiling rmp-serde v1.3.0
+   Compiling nu-derive-value v0.106.0 (/tmp/nu-interactive-before/crates/nu-derive-value)
+   Compiling nu-experimental v0.106.0 (/tmp/nu-interactive-before/crates/nu-experimental)
+   Compiling yoke-derive v0.7.5
+   Compiling lru v0.12.5
+   Compiling chrono-humanize v0.2.3
+   Compiling os_pipe v1.2.1
+   Compiling stable_deref_trait v1.2.0
+   Compiling nu-protocol v0.106.0 (/tmp/nu-interactive-before/crates/nu-protocol)
+   Compiling yoke v0.7.5
+   Compiling parse-zoneinfo v0.3.1
+   Compiling zerovec-derive v0.10.3
+   Compiling same-file v1.0.6
+   Compiling semver v1.0.23
+   Compiling utf8parse v0.2.2
+   Compiling anstyle-parse v0.2.6
+   Compiling walkdir v2.5.0
+   Compiling zerovec v0.10.4
+   Compiling chrono-tz-build v0.4.0
+   Compiling displaydoc v0.2.5
+   Compiling anstyle-query v1.1.2
+   Compiling is_terminal_polyfill v1.70.1
+   Compiling typenum v1.17.0
+   Compiling anstyle v1.0.10
+   Compiling getrandom v0.3.1
+   Compiling colorchoice v1.0.3
+   Compiling anstream v0.6.18
+   Compiling phf v0.11.2
+   Compiling chrono-tz v0.10.0
+   Compiling generic-array v0.14.7
+   Compiling clap_lex v0.7.4
+   Compiling glob v0.3.1
+   Compiling strsim v0.11.1
+   Compiling clap_builder v4.5.23
+   Compiling nu-engine v0.106.0 (/tmp/nu-interactive-before/crates/nu-engine)
+   Compiling tinystr v0.7.6
+   Compiling number_prefix v0.4.0
+   Compiling uuhelp_parser v0.0.30
+   Compiling unicode-width v0.2.0
+   Compiling crossbeam-utils v0.8.21
+   Compiling litemap v0.7.4
+   Compiling rustls-pki-types v1.10.0
+   Compiling unicode-xid v0.2.6
+   Compiling writeable v0.5.5
+   Compiling icu_locid v1.5.0
+   Compiling const_format_proc_macros v0.2.34
+   Compiling uucore_procs v0.0.30
+   Compiling clap v4.5.23
+   Compiling ring v0.17.13
+   Compiling os_display v0.1.3
+   Compiling xattr v1.3.1
+   Compiling icu_provider_macros v1.5.0
+   Compiling wild v2.2.1
+   Compiling dunce v1.0.5
+   Compiling minimal-lexical v0.2.1
+   Compiling nom v7.1.3
+   Compiling icu_provider v1.5.0
+   Compiling uucore v0.0.30
+   Compiling ahash v0.8.11
+   Compiling rustix v1.0.7
+   Compiling lazy_static v1.5.0
+   Compiling fnv v1.0.7
+   Compiling percent-encoding v2.3.1
+   Compiling icu_locid_transform_data v1.5.0
+   Compiling icu_locid_transform v1.5.0
+   Compiling crypto-common v0.1.6
+   Compiling block-buffer v0.10.4
+   Compiling icu_collections v1.5.0
+   Compiling getrandom v0.2.15
+   Compiling ucd-trie v0.1.7
+   Compiling vcpkg v0.2.15
+   Compiling icu_properties_data v1.5.0
+   Compiling untrusted v0.9.0
+   Compiling pkg-config v0.3.31
+   Compiling linux-raw-sys v0.9.4
+   Compiling bytesize v1.3.3
+   Compiling nu-parser v0.106.0 (/tmp/nu-interactive-before/crates/nu-parser)
+   Compiling libsqlite3-sys v0.28.0
+   Compiling icu_properties v1.5.1
+   Compiling pest v2.7.15
+   Compiling digest v0.10.7
+   Compiling encoding_rs v0.8.35
+   Compiling utf8_iter v1.0.4
+   Compiling icu_normalizer_data v1.5.0
+   Compiling utf16_iter v1.0.5
+   Compiling portable-atomic v1.10.0
+   Compiling write16 v1.0.0
+   Compiling httparse v1.9.5
+   Compiling syn v1.0.109
+   Compiling powerfmt v0.2.0
+   Compiling rustls v0.23.20
+   Compiling tz-rs v0.7.0
+   Compiling deranged v0.3.11
+   Compiling tzdb_data v0.2.1
+   Compiling icu_normalizer v1.5.0
+   Compiling hashbrown v0.14.5
+   Compiling pest_meta v2.7.15
+   Compiling rustls-webpki v0.102.8
+   Compiling console v0.15.8
+   Compiling ansitok v0.3.0
+   Compiling linked-hash-map v0.5.6
+   Compiling slab v0.4.9
+   Compiling filetime v0.2.25
+   Compiling unicode-segmentation v1.12.0
+   Compiling time-core v0.1.2
+   Compiling bytemuck v1.23.0
+   Compiling zerocopy v0.8.23
+   Compiling num-conv v0.1.0
+   Compiling zeroize v1.8.1
+   Compiling num_threads v0.1.7
+   Compiling base64 v0.22.1
+   Compiling subtle v2.6.1
+   Compiling time v0.3.37
+   Compiling atomic v0.6.0
+   Compiling nu-json v0.106.0 (/tmp/nu-interactive-before/crates/nu-json)
+   Compiling ansi-str v0.9.0
+   Compiling pest_generator v2.7.15
+   Compiling tzdb v0.7.2
+   Compiling hashlink v0.9.1
+   Compiling idna_adapter v1.2.0
+   Compiling md-5 v0.10.6
+   Compiling form_urlencoded v1.2.1
+   Compiling http v1.2.0
+   Compiling crossbeam-epoch v0.9.18
+   Compiling const_format v0.2.34
+   Compiling webpki-roots v0.26.8
+   Compiling rand_core v0.9.3
+   Compiling rustc_version v0.4.1
+   Compiling ppv-lite86 v0.2.20
+   Compiling inotify-sys v0.1.5
+   Compiling rust_decimal v1.36.0
+   Compiling fastrand v2.3.0
+   Compiling fallible-streaming-iterator v0.1.9
+   Compiling bumpalo v3.16.0
+   Compiling bytecount v0.6.8
+   Compiling env_home v0.1.0
+   Compiling bitflags v1.3.2
+   Compiling simd-adler32 v0.3.7
+   Compiling fallible-iterator v0.3.0
+   Compiling lockfree-object-pool v0.1.6
+   Compiling rayon-core v1.12.1
+   Compiling is_debug v1.1.0
+   Compiling sha1_smol v1.0.1
+   Compiling doctest-file v1.0.0
+   Compiling uuid v1.16.0
+   Compiling interprocess v2.2.2
+   Compiling shadow-rs v1.2.0
+   Compiling zopfli v0.8.1
+   Compiling rusqlite v0.31.0
+   Compiling inotify v0.9.6
+   Compiling which v8.0.0
+   Compiling papergrid v0.17.0
+   Compiling pest_consume_macros v1.1.0
+   Compiling tempfile v3.20.0
+   Compiling rand_chacha v0.9.0
+   Compiling rstest_macros v0.23.0
+   Compiling crossbeam-deque v0.8.5
+   Compiling ureq-proto v0.3.5
+   Compiling indicatif v0.17.11
+   Compiling idna v1.0.3
+   Compiling pest_derive v2.7.15
+   Compiling oem_cp v2.0.0
+   Compiling nu-color-config v0.106.0 (/tmp/nu-interactive-before/crates/nu-color-config)
+   Compiling nu-cmd-base v0.106.0 (/tmp/nu-interactive-before/crates/nu-cmd-base)
+   Compiling crossbeam-channel v0.5.15
+   Compiling rustls-pemfile v2.2.0
+   Compiling nu-plugin-protocol v0.106.0 (/tmp/nu-interactive-before/crates/nu-plugin-protocol)
+   Compiling mime_guess v2.0.5
+   Compiling itertools v0.13.0
+   Compiling fd-lock v4.0.2
+   Compiling toml_datetime v0.6.8
+   Compiling serde_spanned v0.6.8
+   Compiling mio v0.8.11
+   Compiling futures-macro v0.3.31
+   Compiling thread_local v1.1.8
+   Compiling is-docker v0.2.0
+   Compiling nom v8.0.0
+   Compiling utf-8 v0.7.6
+   Compiling v_htmlescape v0.15.8
+   Compiling pin-utils v0.1.0
+   Compiling futures-core v0.3.31
+   Compiling pin-project-lite v0.2.15
+   Compiling mime v0.3.17
+   Compiling home v0.5.9
+   Compiling futures-task v0.3.31
+   Compiling winnow v0.6.20
+   Compiling parse_datetime v0.8.0
+   Compiling toml_edit v0.22.22
+   Compiling futures-util v0.3.31
+   Compiling etcetera v0.10.0
+   Compiling ureq v3.0.3
+   Compiling is-wsl v0.4.0
+   Compiling fuzzy-matcher v0.3.7
+   Compiling notify v6.1.1
+   Compiling reedline v0.41.0
+   Compiling nu-plugin-core v0.106.0 (/tmp/nu-interactive-before/crates/nu-plugin-core)
+   Compiling rand v0.9.0
+   Compiling pest_consume v1.1.3
+   Compiling url v2.5.4
+   Compiling tabled v0.20.0
+   Compiling zip v4.1.0
+   Compiling nu-cmd-lang v0.106.0 (/tmp/nu-interactive-before/crates/nu-cmd-lang)
+   Compiling codepage v0.1.2
+   Compiling quick-xml v0.37.5
+   Compiling pori v0.0.0
+   Compiling itertools v0.11.0
+   Compiling socks v0.3.4
+   Compiling platform-info v2.0.4
+   Compiling csv-core v0.1.11
+   Compiling shell-words v1.1.0
+   Compiling quick-error v2.0.1
+   Compiling fast-float2 v0.2.3
+   Compiling pathdiff v0.2.3
+   Compiling file-id v0.2.2
+   Compiling unsafe-libyaml v0.2.11
+   Compiling openssl-probe v0.1.5
+   Compiling relative-path v1.9.3
+   Compiling atoi_simd v0.16.0
+   Compiling cpufeatures v0.2.16
+   Compiling fs_extra v1.3.0
+   Compiling uu_mv v0.0.30
+   Compiling serde_yaml v0.9.34+deprecated
+   Compiling sha2 v0.10.8
+   Compiling calamine v0.28.0
+   Compiling rustls-native-certs v0.8.1
+   Compiling notify-debouncer-full v0.3.2
+   Compiling open v5.3.1
+   Compiling uu_cp v0.0.30
+   Compiling dialoguer v0.11.0
+   Compiling wax v0.6.0
+   Compiling csv v1.3.1
+   Compiling uu_uname v0.0.30
+   Compiling ureq v2.12.1
+   Compiling nu-table v0.106.0 (/tmp/nu-interactive-before/crates/nu-table)
+   Compiling dtparse v2.0.1
+   Compiling rayon v1.10.0
+   Compiling human-date-parser v0.3.1
+   Compiling uu_mktemp v0.0.30
+   Compiling nu-plugin-engine v0.106.0 (/tmp/nu-interactive-before/crates/nu-plugin-engine)
+   Compiling update-informer v1.3.0
+   Compiling toml v0.8.19
+   Compiling multipart-rs v0.1.13
+   Compiling uu_touch v0.0.30
+   Compiling serde_urlencoded v0.7.1
+   Compiling print-positions v0.6.1
+   Compiling nucleo-matcher v0.3.1
+   Compiling titlecase v3.6.0
+   Compiling chardetng v0.1.17
+   Compiling nuon v0.106.0 (/tmp/nu-interactive-before/crates/nuon)
+   Compiling devicons v0.6.12
+   Compiling uu_whoami v0.0.30
+   Compiling uu_mkdir v0.0.30
+   Compiling webpki-roots v1.0.0
+   Compiling nu-term-grid v0.106.0 (/tmp/nu-interactive-before/crates/nu-term-grid)
+   Compiling nu-pretty-hex v0.106.0 (/tmp/nu-interactive-before/crates/nu-pretty-hex)
+   Compiling umask v2.1.0
+   Compiling is_executable v1.0.4
+   Compiling alphanumeric-sort v1.5.3
+   Compiling data-encoding v2.9.0
+   Compiling bracoxide v0.1.6
+   Compiling filesize v0.2.0
+   Compiling roxmltree v0.20.0
+   Compiling nu-command v0.106.0 (/tmp/nu-interactive-before/crates/nu-command)
+   Compiling rstest v0.23.0
+   Compiling nu-test-support v0.106.0 (/tmp/nu-interactive-before/crates/nu-test-support)
+   Compiling nu-std v0.106.0 (/tmp/nu-interactive-before/crates/nu-std)
+   Compiling nu-cli v0.106.0 (/tmp/nu-interactive-before/crates/nu-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2m 35s
+     Running unittests src/lib.rs (/tmp/nu-interactive-before-target/debug/deps/nu_cli-3ce12353144c1953)
+
+running 53 tests
+test commands::history::history_import::tests::test_find_backup_path::case_1_no_backup ... ok
+test commands::history::history_import::tests::test_find_backup_path::case_2_backup_exists ... ok
+test commands::history::history_import::tests::test_item_from_value_string ... ok
+test commands::history::history_import::tests::test_backup_no_file ... ok
+test commands::history::history_import::tests::test_backup ... ok
+test commands::history::history_import::tests::test_item_from_value_record ... ok
+test commands::history::history_import::tests::test_item_from_value_record_bad_type ... ok
+test commands::history::history_import::tests::test_item_from_value_record_extra_field ... ok
+test completions::completion_options::test::match_algorithm_simple::case_01 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_02 ... ok
+test commands::history::history_import::tests::test_find_backup_path::case_3_multiple_backups_exists ... ok
+test completions::completion_options::test::match_algorithm_simple::case_03 ... ok
+test completions::completion_options::test::match_algorithm_fuzzy_sort_score ... ok
+test completions::completion_options::test::match_algorithm_simple::case_04 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_05 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_06 ... ok
+test completions::completion_options::test::match_algorithm_fuzzy_sort_strip ... ok
+test completions::completion_options::test::match_algorithm_simple::case_07 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_08 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_09 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_10 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_11 ... ok
+test reedline_config::test::test_error ... ok
+test reedline_config::test::test_edit_event ... ok
+test reedline_config::test::test_move_with_select_false ... ok
+test reedline_config::test::test_move_with_select_true ... ok
+test reedline_config::test::test_move_without_optional_select ... ok
+test reedline_config::test::test_multiple_event ... ok
+test reedline_config::test::test_send_event ... ok
+test reedline_config::test::test_send_menu ... ok
+test reedline_config::test::test_until_event ... ok
+test repl::are_session_ids_in_sync ... ok
+test repl::test_auto_cd::auto_cd_dot ... ok
+test repl::test_auto_cd::auto_cd_double_dot ... ok
+test repl::test_auto_cd::escape_vscode_backslash_test ... ok
+test repl::test_auto_cd::escape_vscode_linefeed_test ... ok
+test repl::test_auto_cd::auto_cd_root ... ok
+test repl::test_auto_cd::escape_vscode_multibyte_ok ... ok
+test repl::test_auto_cd::escape_vscode_semicolon_test ... ok
+test repl::test_auto_cd::auto_cd_nonexistent_directory - should panic ... ok
+test repl::test_auto_cd::auto_cd_relative ... ok
+test repl::test_auto_cd::escape_vscode_tab_null_cr_test ... ok
+test repl::trailing_slash_looks_like_path ... ok
+test repl::test_auto_cd::auto_cd_tilde ... ok
+test repl::test_auto_cd::auto_cd_trailing_slash ... ok
+test util::test::test_gather_env_vars ... ok
+test repl::test_auto_cd::auto_cd_triple_dot ... ok
+test repl::test_auto_cd::auto_cd_symlink ... ok
+test menus::help_completions::test::test_help_completer::case_4 ... ok
+test menus::help_completions::test::test_help_completer::case_3 ... ok
+test menus::help_completions::test::test_help_completer::case_1 ... ok
+test menus::help_completions::test::test_help_completer::case_2 ... ok
+test completions::completer::completer_tests::test_completion_helper ... ok
+
+test result: ok. 53 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/main.rs (/tmp/nu-interactive-before-target/debug/deps/main-034b67d28f77b41b)
+
+running 111 tests
+test completions::alias_offset_bug_7648 ... ignored, was reverted, still needs fixing
+test completions::alias_offset_bug_7754 ... ignored, was reverted, still needs fixing
+test completions::external_commands_disabled ... ok
+test completions::external_commands ... ok
+test completions::completed_scopes_do_not_leak::case_4 ... ok
+test completions::external_completer_trailing_space ... ignored
+test completions::custom_arguments_and_subcommands ... ok
+test completions::custom_arguments_vs_subcommands ... ok
+test completions::completed_scopes_do_not_leak::case_2 ... ok
+test completions::dont_use_dotnu_completions ... ok
+test completions::extern_custom_completion_long_flag_1 ... ok
+test completions::extern_custom_completion_positional ... ok
+test completions::extern_custom_completion_long_flag_short ... ok
+test completions::extern_custom_completion_long_flag_2 ... ok
+test completions::customcompletions_no_sort ... ok
+test completions::external_completer_no_trailing_space ... ok
+test completions::attributable_completions ... ok
+test completions::completed_scopes_do_not_leak::case_3 ... ok
+test completions::external_completer_invalid ... ok
+test completions::extern_custom_completion_short_flag ... ok
+test completions::deeply_nested_block ... ok
+test completions::customcompletions_inherit_options ... ok
+test completions::extern_complete_flags ... ok
+test completions::custom_completer_triggers_cursor_before_word ... ok
+test completions::customcompletion_triggers_after_cursor ... ok
+test completions::command_touch_with_filecompletion ... ok
+test completions::custom_completer_triggers_cursor_after_word ... ok
+test completions::custom_completer_triggers_cursor_next_to_word ... ok
+test completions::completed_scopes_do_not_leak::case_1 ... ok
+test completions::command_watch_with_filecompletion ... ok
+test completions::commandline_accept_modes ... FAILED
+test completions::alias_of_another_alias ... ok
+test completions::command_cp_with_globcompletion ... ok
+test completions::alias_of_basic_command ... ok
+test completions::custom_flags_and_subcommands ... ok
+test completions::custom_completer_triggers_cursor_on_word_left_boundary ... ok
+test completions::customcompletions_fallback ... ok
+test completions::type_inferenced_operator_completions ... ignored
+test completions::command_ls_with_filecompletion ... ok
+test completions::command_open_with_filecompletion ... ok
+test completions::command_save_with_filecompletion ... ok
+test completions::cell_path_operator_completions ... ok
+test completions::custom_completions_defined_inline ... ok
+test completions::customcompletions_invalid ... ok
+test completions::alias_of_command_and_flags ... ok
+test completions::customcompletion_triggers_after_cursor_piped ... ok
+test completions::command_rm_with_globcompletion ... ok
+test completions::dotnu_completions_const_nu_lib_dirs ... ok
+test completions::customcompletions_override_options ... ok
+test completions::external_completer_fallback ... ok
+test completions::assignment_operator_completions ... ok
+test completions::dotnu_completions ... ok
+test completions::attribute_completions ... ok
+test completions::external_completer_pass_flags ... ok
+test completions::external_completer_sudo ... ok
+test completions::which_command_completions ... ok
+test completions::flagcompletion_triggers_after_cursor ... ok
+test completions::flagcompletion_triggers_after_cursor_piped ... ok
+test completions::nu_schema_includes_lsp_mode ... FAILED
+test completions::flag_completions ... ok
+test completions::incomplete_nested_block ... ok
+test completions::filecompletions_triggers_after_cursor ... ok
+test completions::quoted_cell_path_completions ... ok
+test completions::unfinished_lexical_variables::case_1 ... FAILED
+test completions::negated_string_operator_completions ... ok
+test completions::missing_script_has_command_line_span ... FAILED
+test completions::table_cell_path_completions ... ok
+test completions::unfinished_lexical_variables::case_3 ... FAILED
+test completions::file_completion_quoted ... ok
+test completions::sort_fuzzy_completions_in_alphabetical_order ... ok
+test completions::signature_completion_shapes_are_plain ... FAILED
+test completions::partial_flags_before_custom_values::case_2 ... ok
+test completions::unfinished_lexical_variables::case_4 ... FAILED
+test completions::cellpath_assignment_operator_completions ... ok
+test completions::type_annotation_rejects_custom_completion ... ok
+test completions::variables_completions ... ok
+test completions::partial_flags_before_custom_values::case_1 ... ok
+test completions::unknown_command_completion ... ok
+test completions::variables_command_with_commandcompletion ... ok
+test completions::variables_single_dash_argument_with_flagcompletion ... ok
+test completions::partial_flags_before_custom_values::case_3 ... ok
+test completions::unfinished_lexical_variables::case_2 ... FAILED
+test completions::subcommand_vs_external_completer ... ok
+test completions::variables_dollar_sign_with_variablecompletion ... ok
+test completions::exact_match_case_insensitive ... ok
+test completions::record_cell_path_completions ... ok
+test completions::variables_subcommands_with_customcompletion ... ok
+test completions::variables_double_dash_argument_with_flagcompletion ... ok
+test completions::variables_customcompletion_subcommands_with_customcompletion_2 ... ok
+test completions::nested_block ... ok
+test completions::operator_completions ... ok
+test commands::keybindings_list::not_empty ... ok
+test commands::nu_highlight::nu_highlight_not_expr ... ok
+test commands::nu_highlight::nu_highlight_where_row_condition ... ok
+test completions::dotnu_stdlib_completions ... ok
+test commands::history_import::history_import_pipe_string ... ok
+test commands::history_import::to_empty_plaintext ... ok
+test commands::history_import::to_existing::case_1_plaintext ... ok
+test commands::history_import::to_existing::case_2_sqlite ... ok
+test commands::history_import::history_import_pipe_record ... ok
+test commands::history_import::to_empty_sqlite ... ok
+test completions::exportable_completions ... ok
+test completions::folder_with_directorycompletions_with_dots ... ok
+test completions::folder_with_directorycompletions ... ok
+test completions::folder_with_directorycompletions_do_not_collapse_dots ... ok
+test completions::folder_with_directorycompletions_with_three_trailing_dots ... ok
+test completions::partial_completion_with_dot_expansions ... ok
+test completions::file_completions ... ok
+test completions::exact_match ... ok
+test completions::custom_command_rest_any_args_file_completions ... ok
+test completions::partial_completions ... ok
+
+failures:
+
+---- completions::commandline_accept_modes stdout ----
+
+thread 'completions::commandline_accept_modes' panicked at crates/nu-cli/tests/completions/support/completions_helpers.rs:190:9:
+assertion failed: working_set.parse_errors.is_empty()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- completions::nu_schema_includes_lsp_mode stdout ----
+
+thread 'completions::nu_schema_includes_lsp_mode' panicked at crates/nu-cli/tests/completions/mod.rs:2807:14:
+called `Option::unwrap()` on a `None` value
+
+---- completions::unfinished_lexical_variables::case_1 stdout ----
+
+thread 'completions::unfinished_lexical_variables::case_1' panicked at crates/nu-cli/tests/completions/mod.rs:2702:5:
+[]
+
+---- completions::missing_script_has_command_line_span stdout ----
+
+thread 'completions::missing_script_has_command_line_span' panicked at crates/nu-cli/tests/completions/mod.rs:2768:9:
+assertion `left == right` failed
+  left: []
+ right: [47, 104, 111, 109, 101, 47, 99, 100, 121, 47, 122, 104, 97, 110, 103, 121, 105, 47, 98, 111, 116, 45, 98, 101, 110, 99, 104, 109, 97, 114, 107, 47, 114, 117, 110, 115, 47, 110, 117, 115, 104, 101, 108, 108, 45, 68, 45, 109, 97, 105, 110, 49, 48, 51, 50, 45, 50, 48, 50, 54, 49, 49, 49, 55, 47, 98, 111, 116, 45, 68, 47, 99, 111, 109, 112, 117, 116, 101, 114, 47, 116, 97, 115, 107, 115, 47, 102, 100, 48, 97, 52, 98, 53, 101, 51, 57, 101, 53, 56, 54, 57, 99, 102, 53, 50, 97, 102, 52, 102, 97, 49, 51, 99, 49, 52, 50, 102, 99, 54, 102, 100, 51, 102, 55, 50, 49, 100, 102, 51, 57, 57, 100, 49, 51, 47, 97, 103, 101, 110, 116, 47, 116, 109, 112, 47, 46, 116, 109, 112, 66, 113, 68, 106, 111, 105, 47, 109, 105, 115, 115, 105, 110, 103, 46, 110, 117]
+
+---- completions::unfinished_lexical_variables::case_3 stdout ----
+
+thread 'completions::unfinished_lexical_variables::case_3' panicked at crates/nu-cli/tests/completions/mod.rs:2702:5:
+[]
+
+---- completions::signature_completion_shapes_are_plain stdout ----
+
+thread 'completions::signature_completion_shapes_are_plain' panicked at crates/nu-cli/tests/completions/mod.rs:2821:5:
+assertion `left == right` failed
+  left: CompleterWrapper(String, DeclId(373))
+ right: String
+
+---- completions::unfinished_lexical_variables::case_4 stdout ----
+
+thread 'completions::unfinished_lexical_variables::case_4' panicked at crates/nu-cli/tests/completions/mod.rs:2702:5:
+[]
+
+---- completions::unfinished_lexical_variables::case_2 stdout ----
+
+thread 'completions::unfinished_lexical_variables::case_2' panicked at crates/nu-cli/tests/completions/mod.rs:2702:5:
+[]
+
+
+failures:
+    completions::commandline_accept_modes
+    completions::missing_script_has_command_line_span
+    completions::nu_schema_includes_lsp_mode
+    completions::signature_completion_shapes_are_plain
+    completions::unfinished_lexical_variables::case_1
+    completions::unfinished_lexical_variables::case_2
+    completions::unfinished_lexical_variables::case_3
+    completions::unfinished_lexical_variables::case_4
+
+test result: FAILED. 99 passed; 8 failed; 4 ignored; 0 measured; 0 filtered out; finished in 1.75s
+
+error: test failed, to rerun pass `-p nu-cli --test main`

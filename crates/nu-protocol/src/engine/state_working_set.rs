@@ -32,6 +32,9 @@ pub struct StateWorkingSet<'a> {
     pub parse_errors: Vec<ParseError>,
     pub parse_warnings: Vec<ParseWarning>,
     pub compile_errors: Vec<CompileError>,
+    /// Cursor at which the parser should preserve the visible lexical variables.
+    pub completion_cursor: Option<usize>,
+    pub completion_variables: Option<Vec<(Vec<u8>, VarId)>>,
 }
 
 impl<'a> StateWorkingSet<'a> {
@@ -51,7 +54,38 @@ impl<'a> StateWorkingSet<'a> {
             parse_errors: vec![],
             parse_warnings: vec![],
             compile_errors: vec![],
+            completion_cursor: None,
+            completion_variables: None,
         }
+    }
+
+    pub fn capture_completion_variables(&mut self, span: Span) {
+        if !self
+            .completion_cursor
+            .is_some_and(|cursor| span.contains(cursor))
+        {
+            return;
+        }
+        let mut removed = vec![];
+        let mut names = HashSet::new();
+        let mut variables = vec![];
+        for frame in self.delta.scope.iter().rev() {
+            for overlay in frame.active_overlays(&mut removed).rev() {
+                for (name, id) in &overlay.vars {
+                    if names.insert(name.clone()) {
+                        variables.push((name.clone(), *id));
+                    }
+                }
+            }
+        }
+        for overlay in self.permanent_state.active_overlays(&removed).rev() {
+            for (name, id) in &overlay.vars {
+                if names.insert(name.clone()) {
+                    variables.push((name.clone(), *id));
+                }
+            }
+        }
+        self.completion_variables = Some(variables);
     }
 
     pub fn permanent(&self) -> &EngineState {

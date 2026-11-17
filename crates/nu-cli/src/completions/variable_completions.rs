@@ -51,6 +51,13 @@ impl Completer for VariableCompletion {
             })
         };
 
+        if let Some(variables) = &working_set.completion_variables {
+            for (name, id) in variables {
+                add_candidate(name, id);
+            }
+            return matcher.results();
+        }
+
         // TODO: The following can be refactored (see find_commands_by_predicate() used in
         // command_completions).
         let mut removed_overlays = vec![];

@@ -484,7 +484,11 @@ fn loop_iteration(ctx: LoopContext) -> (bool, Stack, Reedline) {
 
     start_time = std::time::Instant::now();
     line_editor = line_editor.with_transient_prompt(transient_prompt);
-    let input = line_editor.read_line(nu_prompt);
+    let input = if let Some(signal) = take_accepted_buffer(engine_state, &mut line_editor) {
+        Ok(signal)
+    } else {
+        line_editor.read_line(nu_prompt)
+    };
     // we got our inputs, we can now drop our stack references
     // This lists all of the stack references that we have cleaned up
     line_editor = line_editor
@@ -1123,9 +1127,21 @@ fn run_shell_integration_reset_application_mode() {
     run_ansi_sequence(RESET_APPLICATION_MODE);
 }
 
-///
-/// Clear the screen and output anything remaining in the EngineState buffer.
-///
+/// Consume an accepted edit once, using the normal successful-input execution path.
+fn take_accepted_buffer(
+    engine_state: &EngineState,
+    line_editor: &mut Reedline,
+) -> Option<reedline::Signal> {
+    let mut repl = engine_state.repl_state.lock().expect("repl state mutex");
+    if !std::mem::take(&mut repl.accept) {
+        return None;
+    }
+    let buffer = line_editor.current_buffer_contents().to_string();
+    line_editor.run_edit_commands(&[EditCommand::Clear]);
+    Some(reedline::Signal::Success(buffer))
+}
+
+/// Copy the pending edit into Reedline and clear the pending buffer.
 fn flush_engine_state_repl_buffer(engine_state: &mut EngineState, line_editor: &mut Reedline) {
     let mut repl = engine_state.repl_state.lock().expect("repl state mutex");
     line_editor.run_edit_commands(&[
@@ -1643,5 +1659,77 @@ mod test_auto_cd {
         let input = "now🍪is";
         let actual = escape_special_vscode_bytes(input).unwrap();
         assert_eq!(input, actual);
+    }
+}
+
+#[cfg(test)]
+mod accept_tests {
+    use super::*;
+
+    #[rstest::rstest]
+    #[case("--replace", "discard", 0, "$env.accept_result = 42", "--accept")]
+    #[case("--insert", "$env.accept_result = ", 21, "42", "-A")]
+    #[case("--append", "$env.accept_result = ", 0, "42", "--accept")]
+    fn accepted_edits_execute_once(
+        #[case] mode: &str,
+        #[case] initial: &str,
+        #[case] cursor: usize,
+        #[case] edit: &str,
+        #[case] accept: &str,
+    ) {
+        let mut engine = crate::add_cli_context(nu_cmd_lang::create_default_context());
+        engine.add_env_var(
+            "PWD".into(),
+            Value::test_string(std::env::current_dir().unwrap().to_string_lossy()),
+        );
+        let mut config = engine.get_config().as_ref().clone();
+        config.hooks.display_output = None;
+        engine.set_config(config);
+        let mut stack = Stack::new();
+        let mut editor = Reedline::create();
+        {
+            let mut repl = engine.repl_state.lock().unwrap();
+            repl.buffer = initial.into();
+            repl.cursor_pos = cursor;
+        }
+        let command = format!("commandline edit {mode} {accept} '{edit}'");
+        assert_eq!(
+            eval_source(
+                &mut engine,
+                &mut stack,
+                command.as_bytes(),
+                "edit",
+                PipelineData::Empty,
+                false
+            ),
+            0
+        );
+        flush_engine_state_repl_buffer(&mut engine, &mut editor);
+        let Some(reedline::Signal::Success(text)) = take_accepted_buffer(&engine, &mut editor)
+        else {
+            panic!("accepted edit did not produce executable input");
+        };
+        assert_eq!(
+            eval_source(
+                &mut engine,
+                &mut stack,
+                text.as_bytes(),
+                "accepted",
+                PipelineData::Empty,
+                false
+            ),
+            0
+        );
+        assert_eq!(
+            stack
+                .get_env_var(&engine, "accept_result")
+                .unwrap()
+                .as_int()
+                .unwrap(),
+            42
+        );
+        assert!(!engine.repl_state.lock().unwrap().accept);
+        assert!(editor.current_buffer_contents().is_empty());
+        assert!(take_accepted_buffer(&engine, &mut editor).is_none());
     }
 }

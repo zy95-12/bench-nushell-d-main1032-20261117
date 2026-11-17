@@ -170,6 +170,7 @@ impl NuCompleter {
     pub fn fetch_completions_at(&self, line: &str, pos: usize) -> Vec<SemanticSuggestion> {
         let mut working_set = StateWorkingSet::new(&self.engine_state);
         let offset = working_set.next_span_start();
+        working_set.completion_cursor = Some(offset + pos);
         // TODO: Callers should be trimming the line themselves
         let line = if line.len() > pos { &line[..pos] } else { line };
         let block = parse(
@@ -195,6 +196,7 @@ impl NuCompleter {
         contents: &str,
     ) -> Vec<SemanticSuggestion> {
         let mut working_set = StateWorkingSet::new(&self.engine_state);
+        working_set.completion_cursor = Some(working_set.next_span_start() + pos.saturating_sub(1));
         let block = parse(&mut working_set, Some(filename), contents.as_bytes(), false);
         let Some(file_span) = working_set.get_span_for_filename(filename) else {
             return vec![];
@@ -348,30 +350,60 @@ impl NuCompleter {
                 for (arg_idx, arg) in call.arguments.iter().enumerate() {
                     let span = arg.span();
                     if span.contains(pos) {
-                        // if customized completion specified, it has highest priority
-                        if let Some(decl_id) = arg.expr().and_then(|e| e.custom_completion) {
-                            // for `--foo <tab>` and `--foo=<tab>`, the arg span should be trimmed
-                            let (new_span, prefix) = if matches!(arg, Argument::Named(_)) {
-                                strip_placeholder_with_rsplit(
-                                    working_set,
-                                    &span,
-                                    |b| *b == b'=' || *b == b' ',
-                                    strip,
-                                )
-                            } else {
-                                strip_placeholder_if_any(working_set, &span, strip)
-                            };
+                        let signature = working_set.get_decl(call.decl_id).signature();
+                        let completion = match arg {
+                            Argument::Named((name, _, Some(value))) if value.span.contains(pos) => {
+                                signature
+                                    .named
+                                    .iter()
+                                    .find(|flag| flag.long == name.item)
+                                    .and_then(|flag| flag.completion.as_ref())
+                            }
+                            Argument::Positional(_) | Argument::Unknown(_)
+                                if !working_set.get_span_contents(span).starts_with(b"-") =>
+                            {
+                                signature
+                                    .get_positional(positional_arg_indices.len())
+                                    .and_then(|arg| arg.completion.as_ref())
+                            }
+                            _ => None,
+                        };
+                        if let Some(completion) = completion {
+                            let value_span = arg.expr().map(|expr| expr.span).unwrap_or(span);
+                            let (new_span, prefix) =
+                                strip_placeholder_if_any(working_set, &value_span, strip);
                             let ctx = Context::new(working_set, new_span, prefix, offset);
-
-                            let mut completer = CustomCompletion::new(
-                                decl_id,
-                                prefix_str.into(),
-                                pos - offset,
-                                FileCompletion,
-                            );
-
-                            // Prioritize argument completions over (sub)commands
-                            suggestions.splice(0..0, self.process_completion(&mut completer, &ctx));
+                            let values = match completion {
+                                nu_protocol::Completion::Custom(decl_id) => {
+                                    let mut completer = CustomCompletion::new(
+                                        *decl_id,
+                                        prefix_str.into(),
+                                        pos - offset,
+                                        FileCompletion,
+                                    );
+                                    self.process_completion(&mut completer, &ctx)
+                                }
+                                nu_protocol::Completion::List(values) => {
+                                    let prefix = String::from_utf8_lossy(prefix);
+                                    values
+                                        .iter()
+                                        .filter(|value| value.starts_with(prefix.as_ref()))
+                                        .map(|value| SemanticSuggestion {
+                                            suggestion: Suggestion {
+                                                value: value.clone(),
+                                                span: reedline::Span {
+                                                    start: new_span.start - offset,
+                                                    end: new_span.end - offset,
+                                                },
+                                                append_whitespace: true,
+                                                ..Suggestion::default()
+                                            },
+                                            kind: None,
+                                        })
+                                        .collect()
+                                }
+                            };
+                            suggestions.splice(0..0, values);
                             break;
                         }
 
@@ -396,7 +428,7 @@ impl NuCompleter {
                                     flag_completion_helper()
                                 }
                                 // only when `strip` == false
-                                Argument::Positional(_) if prefix == b"-" => {
+                                Argument::Positional(_) if prefix.starts_with(b"-") => {
                                     flag_completion_helper()
                                 }
                                 // complete according to expression type and command head
