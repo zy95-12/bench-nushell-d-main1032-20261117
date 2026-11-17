@@ -246,6 +246,7 @@ use tempfile::tempdir;
 pub struct NuOpts {
     pub cwd: Option<AbsolutePathBuf>,
     pub locale: Option<String>,
+    pub experimental: Option<Vec<String>>,
     pub envs: Option<Vec<(String, String)>>,
     pub collapse_output: Option<bool>,
     // Note: At the time this was added, passing in a file path was more convenient. However,
@@ -277,6 +278,10 @@ pub fn nu_run_test(opts: NuOpts, commands: impl AsRef<str>, with_std: bool) -> O
     command
         .env(nu_utils::locale::LOCALE_OVERRIDE_ENV_VAR, locale)
         .env(NATIVE_PATH_ENV_VAR, paths_joined);
+
+    if let Some(options) = opts.experimental {
+        command.arg(format!("--experimental-options=[{}]", options.join(",")));
+    }
 
     if let Some(envs) = opts.envs {
         command.envs(envs);

@@ -668,6 +668,11 @@ impl<'a> StateWorkingSet<'a> {
         }
     }
 
+    pub fn mark_variable_type_annotated(&mut self, var_id: VarId) {
+        let index = var_id.get() - self.permanent_state.num_vars();
+        self.delta.vars[index].type_annotated = true;
+    }
+
     pub fn set_variable_const_val(&mut self, var_id: VarId, val: Value) {
         let num_permanent_vars = self.permanent_state.num_vars();
         if var_id.get() < num_permanent_vars {

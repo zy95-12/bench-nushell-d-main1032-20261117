@@ -1,0 +1,264 @@
+
+running 9 tests
+test eval::type_system::variable_headers_are_converted_to_strings ... FAILED
+test eval::type_system::table_headers_can_be_variables ... FAILED
+test eval::type_system::range_loop_variable_is_numeric ... ok
+test eval::type_system::null_spreads_are_empty_in_literals_and_constants ... FAILED
+test eval::type_system::annotated_variables_are_checked_at_runtime_when_enabled ... FAILED
+test eval::type_system::ordinary_mode_preserves_dynamic_assignment ... ok
+test eval::type_system::runtime_enforcement_checks_list_elements_and_reports_value_span ... FAILED
+test eval::type_system::explicit_option_disable_and_multiple_options_work ... FAILED
+test eval::type_system::runtime_enforcement_accepts_compatible_values_and_inferred_changes ... FAILED
+
+failures:
+
+---- eval::type_system::variable_headers_are_converted_to_strings stdout ----
+=== stderr
+Error: Table column name not string
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: let h = 42; [[$h]; [7]] | columns | first
+    label at line 1, columns 15 to 16: must be a string
+diagnostic help: Table column names should be able to be converted into strings
+diagnostic code: nu::parser::error
+
+
+
+thread 'eval::type_system::variable_headers_are_converted_to_strings' panicked at tests/eval/type_system.rs:97:5:
+Error: Table column name not string
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: let h = 42; [[$h]; [7]] | columns | first
+    label at line 1, columns 15 to 16: must be a string
+diagnostic help: Table column names should be able to be converted into strings
+diagnostic code: nu::parser::error
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- eval::type_system::table_headers_can_be_variables stdout ----
+=== stderr
+Error: Table column name not string
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: let h = 'name'; [[$h]; [42]] | get name.0
+    label at line 1, columns 19 to 20: must be a string
+diagnostic help: Table column names should be able to be converted into strings
+diagnostic code: nu::parser::error
+
+
+
+thread 'eval::type_system::table_headers_can_be_variables' panicked at tests/eval/type_system.rs:26:5:
+Error: Table column name not string
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: let h = 'name'; [[$h]; [42]] | get name.0
+    label at line 1, columns 19 to 20: must be a string
+diagnostic help: Table column names should be able to be converted into strings
+diagnostic code: nu::parser::error
+
+
+
+---- eval::type_system::null_spreads_are_empty_in_literals_and_constants stdout ----
+=== stderr
+Error: Not a list
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: let n = null; [1 ...$n 2] | to nuon
+    label at line 1, columns 21 to 22: cannot spread value
+diagnostic help: Only lists can be spread inside lists and command calls. Try converting the value to a list before spreading.
+diagnostic code: nu::shell::cannot_spread_as_list
+
+
+
+thread 'eval::type_system::null_spreads_are_empty_in_literals_and_constants' panicked at tests/eval/type_system.rs:10:9:
+Error: Not a list
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: let n = null; [1 ...$n 2] | to nuon
+    label at line 1, columns 21 to 22: cannot spread value
+diagnostic help: Only lists can be spread inside lists and command calls. Try converting the value to a list before spreading.
+diagnostic code: nu::shell::cannot_spread_as_list
+
+
+
+---- eval::type_system::annotated_variables_are_checked_at_runtime_when_enabled stdout ----
+=== stderr
+Warning: nu::experimental_option::unknown
+
+  ! Unknown experimental option `enforce-typed-variables`
+   ,-[source:1:28]
+ 1 | nu --experimental-options=[enforce-typed-variables] --no-config-file --no-std-lib --error-style "plain" -c "def dynamic []: nothing -> any { 'wrong' }; let x: int = dynamic; $x"
+   :                            ^^^^^^^^^^^^^^^^^^^^^^^
+   `----
+  help: Known experimental options are: example, reorder-cell-paths
+
+
+
+thread 'eval::type_system::annotated_variables_are_checked_at_runtime_when_enabled' panicked at tests/eval/type_system.rs:49:9:
+wrong
+
+---- eval::type_system::runtime_enforcement_checks_list_elements_and_reports_value_span stdout ----
+=== stderr
+Warning: nu::experimental_option::unknown
+
+  ! Unknown experimental option `enforce-typed-variables`
+   ,-[source:1:28]
+ 1 | nu --experimental-options=[enforce-typed-variables] --no-config-file --no-std-lib --error-style "plain" -c "def dynamic []: nothing -> any { [1 'bad'] }; let x: list<int> = dynamic; $x"
+   :                            ^^^^^^^^^^^^^^^^^^^^^^^
+   `----
+  help: Known experimental options are: example, reorder-cell-paths
+
+
+
+thread 'eval::type_system::runtime_enforcement_checks_list_elements_and_reports_value_span' panicked at tests/eval/type_system.rs:90:5:
+Warning: nu::experimental_option::unknown
+
+  ! Unknown experimental option `enforce-typed-variables`
+   ,-[source:1:28]
+ 1 | nu --experimental-options=[enforce-typed-variables] --no-config-file --no-std-lib --error-style "plain" -c "def dynamic []: nothing -> any { [1 'bad'] }; let x: list<int> = dynamic; $x"
+   :                            ^^^^^^^^^^^^^^^^^^^^^^^
+   `----
+  help: Known experimental options are: example, reorder-cell-paths
+
+
+
+---- eval::type_system::explicit_option_disable_and_multiple_options_work stdout ----
+=== stderr
+Warning: nu::experimental_option::unknown
+
+  ! Unknown experimental option `enforce-typed-variables`
+   ,-[source:1:28]
+ 1 | nu --experimental-options=[enforce-typed-variables=false] --no-config-file --no-std-lib --error-style "plain" -c "def dynamic []: nothing -> any { 'wrong' }; let x: int = dynamic; $x"
+   :                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   `----
+  help: Known experimental options are: example, reorder-cell-paths
+
+
+=== stderr
+Warning: nu::experimental_option::unknown
+
+  ! Unknown experimental option `enforce-typed-variables`
+   ,-[source:1:53]
+ 1 | nu --experimental-options=[reorder-cell-paths=false,enforce-typed-variables] --no-config-file --no-std-lib --error-style "plain" -c "def dynamic []: nothing -> any { 'wrong' }; let x: int = dynamic; $x"
+   :                                                     ^^^^^^^^^^^^^^^^^^^^^^^
+   `----
+  help: Known experimental options are: example, reorder-cell-paths
+
+
+
+thread 'eval::type_system::explicit_option_disable_and_multiple_options_work' panicked at tests/eval/type_system.rs:69:5:
+Warning: nu::experimental_option::unknown
+
+  ! Unknown experimental option `enforce-typed-variables`
+   ,-[source:1:53]
+ 1 | nu --experimental-options=[reorder-cell-paths=false,enforce-typed-variables] --no-config-file --no-std-lib --error-style "plain" -c "def dynamic []: nothing -> any { 'wrong' }; let x: int = dynamic; $x"
+   :                                                     ^^^^^^^^^^^^^^^^^^^^^^^
+   `----
+  help: Known experimental options are: example, reorder-cell-paths
+
+
+
+---- eval::type_system::runtime_enforcement_accepts_compatible_values_and_inferred_changes stdout ----
+=== stderr
+Warning: nu::experimental_option::unknown
+
+  ! Unknown experimental option `enforce-typed-variables`
+   ,-[source:1:28]
+ 1 | nu --experimental-options=[enforce-typed-variables] --no-config-file --no-std-lib --error-style "plain" -c "def dynamic []: nothing -> any { 2 }; mut x: int = dynamic; $x = dynamic; $x"
+   :                            ^^^^^^^^^^^^^^^^^^^^^^^
+   `----
+  help: Known experimental options are: example, reorder-cell-paths
+
+
+=== stderr
+Warning: nu::experimental_option::unknown
+
+  ! Unknown experimental option `enforce-typed-variables`
+   ,-[source:1:28]
+ 1 | nu --experimental-options=[enforce-typed-variables] --no-config-file --no-std-lib --error-style "plain" -c "def dynamic []: nothing -> any { 'ok' }; mut x = 1; $x = dynamic; $x"
+   :                            ^^^^^^^^^^^^^^^^^^^^^^^
+   `----
+  help: Known experimental options are: example, reorder-cell-paths
+
+
+=== stderr
+Warning: nu::experimental_option::unknown
+
+  ! Unknown experimental option `enforce-typed-variables`
+   ,-[source:1:28]
+ 1 | nu --experimental-options=[enforce-typed-variables] --no-config-file --no-std-lib --error-style "plain" -c "def dynamic []: nothing -> any { 2.5 }; let x: number = dynamic; $x"
+   :                            ^^^^^^^^^^^^^^^^^^^^^^^
+   `----
+  help: Known experimental options are: example, reorder-cell-paths
+
+
+=== stderr
+Warning: nu::experimental_option::unknown
+
+  ! Unknown experimental option `enforce-typed-variables`
+   ,-[source:1:28]
+ 1 | nu --experimental-options=[enforce-typed-variables] --no-config-file --no-std-lib --error-style "plain" -c "def dynamic []: nothing -> any { [1 2] }; let x: list<int> = dynamic; $x | length"
+   :                            ^^^^^^^^^^^^^^^^^^^^^^^
+   `----
+  help: Known experimental options are: example, reorder-cell-paths
+
+
+=== stderr
+Warning: nu::experimental_option::unknown
+
+  ! Unknown experimental option `enforce-typed-variables`
+   ,-[source:1:28]
+ 1 | nu --experimental-options=[enforce-typed-variables] --no-config-file --no-std-lib --error-style "plain" -c "let g: glob = '*.txt'; let s: string = $g; $s"
+   :                            ^^^^^^^^^^^^^^^^^^^^^^^
+   `----
+  help: Known experimental options are: example, reorder-cell-paths
+
+Error: Type mismatch.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: let g: glob = '*.txt'; let s: string = $g; $s
+    label at line 1, columns 40 to 41: expected string, found glob
+diagnostic code: nu::parser::type_mismatch
+
+
+
+thread 'eval::type_system::runtime_enforcement_accepts_compatible_values_and_inferred_changes' panicked at tests/eval/type_system.rs:82:9:
+let g: glob = '*.txt'; let s: string = $g; $s: Warning: nu::experimental_option::unknown
+
+  ! Unknown experimental option `enforce-typed-variables`
+   ,-[source:1:28]
+ 1 | nu --experimental-options=[enforce-typed-variables] --no-config-file --no-std-lib --error-style "plain" -c "let g: glob = '*.txt'; let s: string = $g; $s"
+   :                            ^^^^^^^^^^^^^^^^^^^^^^^
+   `----
+  help: Known experimental options are: example, reorder-cell-paths
+
+Error: Type mismatch.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: let g: glob = '*.txt'; let s: string = $g; $s
+    label at line 1, columns 40 to 41: expected string, found glob
+diagnostic code: nu::parser::type_mismatch
+
+
+
+
+failures:
+    eval::type_system::annotated_variables_are_checked_at_runtime_when_enabled
+    eval::type_system::explicit_option_disable_and_multiple_options_work
+    eval::type_system::null_spreads_are_empty_in_literals_and_constants
+    eval::type_system::runtime_enforcement_accepts_compatible_values_and_inferred_changes
+    eval::type_system::runtime_enforcement_checks_list_elements_and_reports_value_span
+    eval::type_system::table_headers_can_be_variables
+    eval::type_system::variable_headers_are_converted_to_strings
+
+test result: FAILED. 2 passed; 7 failed; 0 ignored; 0 measured; 1509 filtered out; finished in 0.07s
+

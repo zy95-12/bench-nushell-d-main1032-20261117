@@ -1,0 +1,23 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.30s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-23ff2abe0f519b5f)
+
+running 16 tests
+test commands::where_::fail_on_non_iterator ... ok
+test commands::where_::filters_with_1_arity_block ... ok
+test commands::where_::nested_stored_condition ... ok
+test commands::where_::where_inside_block_works ... ok
+test commands::where_::it_inside_complex_subexpression ... ok
+test commands::where_::where_not_in_table ... ok
+test commands::where_::stored_condition ... ok
+test commands::where_::filters_with_nothing_comparison ... ok
+test commands::where_::where_in_table ... ok
+test commands::where_::filters_by_unit_size_comparison ... ok
+test commands::where_::where_gt_null ... ok
+test commands::where_::where_uses_enumerate_index ... ok
+test commands::where_::filters_with_0_arity_block ... ok
+test commands::where_::unique_env_each_iteration ... ok
+test commands::where_::negated_string_operators_work_in_row_conditions ... ok
+test commands::where_::has_operator ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 1978 filtered out; finished in 0.10s
+

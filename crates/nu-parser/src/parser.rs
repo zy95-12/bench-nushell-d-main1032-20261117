@@ -1042,6 +1042,7 @@ pub fn parse_internal_call(
 
     let decl = working_set.get_decl(decl_id);
     let signature = working_set.get_signature(decl);
+    let is_for_keyword = decl.name() == "for" && decl.is_keyword();
     let output = signature.get_output_type();
 
     let deprecation = decl.deprecation_info();
@@ -1323,6 +1324,11 @@ pub fn parse_internal_call(
             } else {
                 arg
             };
+            if is_for_keyword && positional_idx == 1 {
+                if let Some(var_id) = call.positional_nth(0).and_then(Expression::as_var) {
+                    working_set.set_variable_type(var_id, iterable_element_type(&arg));
+                }
+            }
             call.add_positional(arg);
             positional_idx += 1;
         } else if signature.allows_unknown_args {
@@ -3601,6 +3607,7 @@ pub fn parse_var_with_opt_type(
             }
 
             let id = working_set.add_variable(var_name, spans[*spans_idx - 1], ty.clone(), mutable);
+            working_set.mark_variable_type_annotated(id);
 
             (
                 Expression::new(working_set, Expr::VarDecl(id), name_span, ty.clone()),
@@ -3849,6 +3856,13 @@ pub fn parse_row_condition(working_set: &mut StateWorkingSet, spans: &[Span]) ->
             working_set.add_block(Arc::new(block))
         }
     };
+
+    // A row condition promises a boolean result, including when the user
+    // supplies an explicit block or closure. Unknown results remain dynamic.
+    let mut condition = working_set.get_block(block_id).as_ref().clone();
+    condition.signature.input_output_types = vec![(Type::Any, Type::Bool)];
+    let errors = type_check::check_block_input_output(working_set, &condition);
+    working_set.parse_errors.extend(errors);
 
     Expression::new(working_set, Expr::RowCondition(block_id), span, Type::Bool)
 }
@@ -4585,9 +4599,7 @@ pub fn parse_list_expression(
                 };
 
                 if let Some(ref ctype) = contained_type {
-                    if *ctype != ty {
-                        contained_type = Some(Type::Any);
-                    }
+                    contained_type = Some(ctype.widen(&ty));
                 } else {
                     contained_type = Some(ty);
                 }
@@ -4770,13 +4782,7 @@ fn table_type(head: &[Expression], rows: &[Vec<Expression>]) -> (Type, Vec<Parse
     let mut mk_ty = || -> Type {
         rows.iter_mut()
             .map(|row| row.pop().map(|x| x.ty).unwrap_or_default())
-            .reduce(|acc, ty| -> Type {
-                if type_compatible(&acc, &ty) {
-                    ty
-                } else {
-                    Type::Any
-                }
-            })
+            .reduce(|acc, ty| -> Type { acc.widen(&ty) })
             .unwrap_or_default()
     };
 
@@ -4794,7 +4800,13 @@ fn table_type(head: &[Expression], rows: &[Vec<Expression>]) -> (Type, Vec<Parse
             if let Some(str) = expr.as_string() {
                 str
             } else {
-                errors.push(mk_error(expr.span));
+                // Dynamic column names are evaluated when the table is constructed.
+                // Their names cannot be represented in a static table schema.
+                if !matches!(expr.expr, Expr::Var(_) | Expr::FullCellPath(_))
+                    && !type_compatible(&Type::String, &expr.ty)
+                {
+                    errors.push(mk_error(expr.span));
+                }
                 String::from("{ column }")
             }
         })
@@ -4802,6 +4814,9 @@ fn table_type(head: &[Expression], rows: &[Vec<Expression>]) -> (Type, Vec<Parse
         .collect_vec();
 
     ty.reverse();
+    if head.iter().any(|expr| expr.as_string().is_none()) {
+        ty.clear();
+    }
 
     (Type::Table(ty.into()), errors)
 }
