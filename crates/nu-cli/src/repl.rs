@@ -1699,7 +1699,7 @@ mod accept_tests {
                 &mut stack,
                 command.as_bytes(),
                 "edit",
-                PipelineData::Empty,
+                PipelineData::empty(),
                 false
             ),
             0
@@ -1715,7 +1715,7 @@ mod accept_tests {
                 &mut stack,
                 text.as_bytes(),
                 "accepted",
-                PipelineData::Empty,
+                PipelineData::empty(),
                 false
             ),
             0

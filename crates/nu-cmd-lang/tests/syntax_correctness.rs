@@ -26,7 +26,7 @@ fn eval(source: &str) -> Value {
     );
     let delta = ws.render();
     engine.merge_delta(delta).unwrap();
-    nu_engine::eval_block::<WithoutDebug>(&engine, &mut Stack::new(), &block, PipelineData::Empty)
+    nu_engine::eval_block::<WithoutDebug>(&engine, &mut Stack::new(), &block, PipelineData::empty())
         .unwrap()
         .into_value(Span::test_data())
         .unwrap()
