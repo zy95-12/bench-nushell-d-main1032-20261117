@@ -3149,3 +3149,18 @@ fn predictable_find_device_path_without_canonicalization() {
     let found = nu_parser::find_in_dirs(r"\\.\NUL", &working_set, ".", None);
     assert!(found.is_some());
 }
+
+#[test]
+fn unknown_flag_suggests_nearby_flag() {
+    let engine = EngineState::new();
+    let mut working_set = StateWorkingSet::new(&engine);
+    working_set.add_decl(
+        Signature::build("demo")
+            .switch("verbose", "details", Some('v'))
+            .predeclare(),
+    );
+    parse(&mut working_set, None, b"demo --verbos", false);
+    assert!(
+        matches!(working_set.parse_errors.first(), Some(ParseError::UnknownFlag(_, _, _, help)) if help.contains("Did you mean `--verbose`?"))
+    );
+}

@@ -1,0 +1,37 @@
+   Compiling nu-engine v0.106.0 (/tmp/nu-interactive-before/crates/nu-engine)
+   Compiling nu-parser v0.106.0 (/tmp/nu-interactive-before/crates/nu-parser)
+   Compiling nu-color-config v0.106.0 (/tmp/nu-interactive-before/crates/nu-color-config)
+   Compiling nu-table v0.106.0 (/tmp/nu-interactive-before/crates/nu-table)
+   Compiling nu-cmd-base v0.106.0 (/tmp/nu-interactive-before/crates/nu-cmd-base)
+   Compiling nuon v0.106.0 (/tmp/nu-interactive-before/crates/nuon)
+   Compiling nu-plugin-engine v0.106.0 (/tmp/nu-interactive-before/crates/nu-plugin-engine)
+   Compiling nu-command v0.106.0 (/tmp/nu-interactive-before/crates/nu-command)
+   Compiling nu-cmd-lang v0.106.0 (/tmp/nu-interactive-before/crates/nu-cmd-lang)
+   Compiling nu-std v0.106.0 (/tmp/nu-interactive-before/crates/nu-std)
+   Compiling nu-cli v0.106.0 (/tmp/nu-interactive-before/crates/nu-cli)
+error[E0432]: unresolved import `nu_protocol::Completion`
+    --> crates/nu-cli/tests/completions/mod.rs:2851:23
+     |
+2851 |     use nu_protocol::{Completion, Signature, SyntaxShape};
+     |                       ^^^^^^^^^^ no `Completion` in the root
+
+error[E0609]: no field `completion` on type `PositionalArg`
+    --> crates/nu-cli/tests/completions/mod.rs:2856:38
+     |
+2856 |     signature.required_positional[0].completion =
+     |                                      ^^^^^^^^^^ unknown field
+     |
+     = note: available fields are: `name`, `desc`, `shape`, `var_id`, `default_value`
+
+error[E0609]: no field `completion` on type `&mut nu_protocol::Flag`
+    --> crates/nu-cli/tests/completions/mod.rs:2863:10
+     |
+2863 |         .completion = Some(Completion::List(vec!["green".into(), "gold".into()]));
+     |          ^^^^^^^^^^ unknown field
+     |
+     = note: available fields are: `long`, `short`, `arg`, `required`, `desc` ... and 2 others
+
+Some errors have detailed explanations: E0432, E0609.
+For more information about an error, try `rustc --explain E0432`.
+error: could not compile `nu-cli` (test "main") due to 3 previous errors
+warning: build failed, waiting for other jobs to finish...

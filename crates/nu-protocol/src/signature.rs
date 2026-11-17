@@ -12,6 +12,23 @@ use std::fmt::Write;
 // The `FromValue` derive macro fully qualifies paths to "nu_protocol".
 use crate as nu_protocol;
 
+/// Value completion associated with a signature argument.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub enum Completion {
+    Custom(crate::DeclId),
+    List(Vec<String>),
+}
+
+impl Completion {
+    /// Preserve compatibility with shapes accepted by existing signature builders.
+    pub fn from_shape(shape: SyntaxShape) -> (SyntaxShape, Option<Self>) {
+        match shape {
+            SyntaxShape::CompleterWrapper(shape, id) => (*shape, Some(Self::Custom(id))),
+            shape => (shape, None),
+        }
+    }
+}
+
 /// The signature definition of a named flag that either accepts a value or acts as a toggle flag
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Flag {
@@ -24,6 +41,8 @@ pub struct Flag {
     // For custom commands
     pub var_id: Option<VarId>,
     pub default_value: Option<Value>,
+    #[serde(default)]
+    pub completion: Option<Completion>,
 }
 
 /// The signature definition for a positional argument
@@ -36,6 +55,8 @@ pub struct PositionalArg {
     // For custom commands
     pub var_id: Option<VarId>,
     pub default_value: Option<Value>,
+    #[serde(default)]
+    pub completion: Option<Completion>,
 }
 
 /// Command categories
@@ -255,6 +276,7 @@ impl Signature {
             required: false,
             var_id: None,
             default_value: None,
+            completion: None,
         };
         self.named.push(flag);
         self
@@ -313,12 +335,14 @@ impl Signature {
         shape: impl Into<SyntaxShape>,
         desc: impl Into<String>,
     ) -> Signature {
+        let (shape, completion) = Completion::from_shape(shape.into());
         self.required_positional.push(PositionalArg {
             name: name.into(),
             desc: desc.into(),
             shape: shape.into(),
             var_id: None,
             default_value: None,
+            completion,
         });
 
         self
@@ -331,12 +355,14 @@ impl Signature {
         shape: impl Into<SyntaxShape>,
         desc: impl Into<String>,
     ) -> Signature {
+        let (shape, completion) = Completion::from_shape(shape.into());
         self.optional_positional.push(PositionalArg {
             name: name.into(),
             desc: desc.into(),
             shape: shape.into(),
             var_id: None,
             default_value: None,
+            completion,
         });
 
         self
@@ -348,12 +374,14 @@ impl Signature {
         shape: impl Into<SyntaxShape>,
         desc: impl Into<String>,
     ) -> Signature {
+        let (shape, completion) = Completion::from_shape(shape.into());
         self.rest_positional = Some(PositionalArg {
             name: name.into(),
             desc: desc.into(),
             shape: shape.into(),
             var_id: None,
             default_value: None,
+            completion,
         });
 
         self
@@ -385,6 +413,7 @@ impl Signature {
     ) -> Signature {
         let (name, s) = self.check_names(name, short);
 
+        let (shape, completion) = Completion::from_shape(shape.into());
         self.named.push(Flag {
             long: name,
             short: s,
@@ -393,6 +422,7 @@ impl Signature {
             desc: desc.into(),
             var_id: None,
             default_value: None,
+            completion,
         });
 
         self
@@ -408,6 +438,7 @@ impl Signature {
     ) -> Signature {
         let (name, s) = self.check_names(name, short);
 
+        let (shape, completion) = Completion::from_shape(shape.into());
         self.named.push(Flag {
             long: name,
             short: s,
@@ -416,6 +447,7 @@ impl Signature {
             desc: desc.into(),
             var_id: None,
             default_value: None,
+            completion,
         });
 
         self
@@ -438,6 +470,7 @@ impl Signature {
             desc: desc.into(),
             var_id: None,
             default_value: None,
+            completion: None,
         });
 
         self

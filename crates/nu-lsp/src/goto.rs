@@ -15,16 +15,13 @@ impl LanguageServer {
         for cached_file in files.into_iter() {
             if cached_file.covered_span.contains(span.start) {
                 let path = Path::new(&*cached_file.name);
-                if !path.is_file() {
-                    return None;
-                }
                 let target_uri = path_to_uri(path);
                 if let Some(file) = self.docs.lock().ok()?.get_document(&target_uri) {
                     return Some(Location {
                         uri: target_uri,
                         range: span_to_range(span, file, cached_file.covered_span.start),
                     });
-                } else {
+                } else if path.is_file() {
                     // in case where the document is not opened yet,
                     // typically included by the `use/source` command
                     let temp_doc = FullTextDocument::new(
@@ -152,26 +149,31 @@ mod tests {
         assert_json_eq!(result_from_message(resp), serde_json::json!(null));
     }
 
-    #[test]
-    fn goto_definition_of_variable() {
+    #[rstest::rstest]
+    #[case("let local = 42\n$local", 1, 3, 4, 9)]
+    #[case("let café = 42\n$café", 1, 3, 4, 8)]
+    fn goto_definition_in_unsaved_document(
+        #[case] text: &str,
+        #[case] line: u32,
+        #[case] character: u32,
+        #[case] start: u32,
+        #[case] end: u32,
+    ) {
         let (client_connection, _recv) = initialize_language_server(None, None);
-
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("goto");
-        script.push("var.nu");
-        let script = path_to_uri(&script);
-
-        open_unchecked(&client_connection, script.clone());
-        let resp = send_goto_definition_request(&client_connection, script.clone(), 2, 12);
-
+        let directory = tempfile::tempdir().unwrap();
+        let path = directory.path().join("unsaved.nu");
+        assert!(!path.exists());
+        let uri = path_to_uri(&path);
+        crate::tests::open_text(&client_connection, uri.clone(), text.into()).unwrap();
+        let response =
+            send_goto_definition_request(&client_connection, uri.clone(), line, character);
         assert_json_eq!(
-            result_from_message(resp),
+            result_from_message(response),
             serde_json::json!({
-                "uri": script,
+                "uri": uri,
                 "range": {
-                    "start": { "line": 0, "character": 4 },
-                    "end": { "line": 0, "character": 12 }
+                    "start": { "line": 0, "character": start },
+                    "end": { "line": 0, "character": end }
                 }
             })
         );
@@ -199,181 +201,6 @@ mod tests {
         assert_json_eq!(
             result_from_message(resp).pointer("/range/start").unwrap(),
             serde_json::json!({ "line": 1, "character": 17 })
-        );
-    }
-
-    #[test]
-    fn goto_definition_of_command() {
-        let (client_connection, _recv) = initialize_language_server(None, None);
-
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("goto");
-        script.push("command.nu");
-        let script = path_to_uri(&script);
-
-        open_unchecked(&client_connection, script.clone());
-        let resp = send_goto_definition_request(&client_connection, script.clone(), 4, 1);
-
-        assert_json_eq!(
-            result_from_message(resp),
-            serde_json::json!({
-                "uri": script,
-                "range": {
-                "start": { "line": 0, "character": 17 },
-                "end": { "line": 2, "character": 1 }
-            }
-            })
-        );
-    }
-
-    #[test]
-    fn goto_definition_of_command_unicode() {
-        let (client_connection, _recv) = initialize_language_server(None, None);
-
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("goto");
-        script.push("command_unicode.nu");
-        let script = path_to_uri(&script);
-
-        open_unchecked(&client_connection, script.clone());
-        let resp = send_goto_definition_request(&client_connection, script.clone(), 4, 2);
-
-        assert_json_eq!(
-            result_from_message(resp),
-            serde_json::json!({
-                "uri": script,
-                "range": {
-                "start": { "line": 0, "character": 19 },
-                "end": { "line": 2, "character": 1 }
-            }
-            })
-        );
-    }
-
-    #[test]
-    fn goto_definition_of_command_parameter() {
-        let (client_connection, _recv) = initialize_language_server(None, None);
-
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("goto");
-        script.push("command.nu");
-        let script = path_to_uri(&script);
-
-        open_unchecked(&client_connection, script.clone());
-        let resp = send_goto_definition_request(&client_connection, script.clone(), 1, 14);
-
-        assert_json_eq!(
-            result_from_message(resp),
-            serde_json::json!({
-                "uri": script,
-                "range": {
-                "start": { "line": 0, "character": 11 },
-                "end": { "line": 0, "character": 15 }
-            }
-            })
-        );
-    }
-
-    #[test]
-    fn goto_definition_of_variable_in_else_block() {
-        let (client_connection, _recv) = initialize_language_server(None, None);
-
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("goto");
-        script.push("else.nu");
-        let script = path_to_uri(&script);
-
-        open_unchecked(&client_connection, script.clone());
-        let resp = send_goto_definition_request(&client_connection, script.clone(), 1, 21);
-
-        assert_json_eq!(
-            result_from_message(resp),
-            serde_json::json!({
-                "uri": script,
-                "range": {
-                    "start": { "line": 0, "character": 4 },
-                    "end": { "line": 0, "character": 7 }
-                }
-            })
-        );
-    }
-
-    #[test]
-    fn goto_definition_of_variable_in_match_guard() {
-        let (client_connection, _recv) = initialize_language_server(None, None);
-
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("goto");
-        script.push("match.nu");
-        let script = path_to_uri(&script);
-
-        open_unchecked(&client_connection, script.clone());
-        let resp = send_goto_definition_request(&client_connection, script.clone(), 2, 9);
-
-        assert_json_eq!(
-            result_from_message(resp),
-            serde_json::json!({
-                "uri": script,
-                "range": {
-                    "start": { "line": 0, "character": 4 },
-                    "end": { "line": 0, "character": 7 }
-                }
-            })
-        );
-    }
-
-    #[test]
-    fn goto_definition_of_variable_in_each() {
-        let (client_connection, _recv) = initialize_language_server(None, None);
-
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("goto");
-        script.push("collect.nu");
-        let script = path_to_uri(&script);
-
-        open_unchecked(&client_connection, script.clone());
-        let resp = send_goto_definition_request(&client_connection, script.clone(), 1, 16);
-
-        assert_json_eq!(
-            result_from_message(resp),
-            serde_json::json!({
-                "uri": script,
-                "range": {
-                    "start": { "line": 0, "character": 4 },
-                    "end": { "line": 0, "character": 7 }
-                }
-            })
-        );
-    }
-
-    #[test]
-    fn goto_definition_of_module() {
-        let (client_connection, _recv) = initialize_language_server(None, None);
-
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("goto");
-        script.push("module.nu");
-        let script = path_to_uri(&script);
-
-        open_unchecked(&client_connection, script.clone());
-        let resp = send_goto_definition_request(&client_connection, script.clone(), 3, 15);
-
-        assert_json_eq!(
-            result_from_message(resp),
-            serde_json::json!({
-                "uri": script,
-                "range": {
-                    "start": { "line": 1, "character": 29 },
-                    "end": { "line": 1, "character": 30 }
-                }
-            })
         );
     }
 
@@ -455,6 +282,37 @@ mod tests {
         assert_json_eq!(
             result_from_message(resp).pointer("/range/start").unwrap(),
             serde_json::json!({ "line": 0, "character": 0 })
+        );
+    }
+    #[rstest::rstest]
+    #[case::goto_definition_of_variable("var.nu", (2, 12), (0, 4), (0, 12))]
+    #[case::goto_definition_of_command("command.nu", (4, 1), (0, 17), (2, 1))]
+    #[case::goto_definition_of_command_unicode("command_unicode.nu", (4, 2), (0, 19), (2, 1))]
+    #[case::goto_definition_of_command_parameter("command.nu", (1, 14), (0, 11), (0, 15))]
+    #[case::goto_definition_of_variable_in_else_block("else.nu", (1, 21), (0, 4), (0, 7))]
+    #[case::goto_definition_of_variable_in_match_guard("match.nu", (2, 9), (0, 4), (0, 7))]
+    #[case::goto_definition_of_variable_in_each("collect.nu", (1, 16), (0, 4), (0, 7))]
+    #[case::goto_definition_of_module("module.nu", (3, 15), (1, 29), (1, 30))]
+    fn goto_definition_from_fixture(
+        #[case] file: &str,
+        #[case] position: (u32, u32),
+        #[case] start: (u32, u32),
+        #[case] end: (u32, u32),
+    ) {
+        let (connection, _recv) = initialize_language_server(None, None);
+        let script = path_to_uri(&fixtures().join("lsp").join("goto").join(file));
+        open_unchecked(&connection, script.clone());
+        let response =
+            send_goto_definition_request(&connection, script.clone(), position.0, position.1);
+        assert_json_eq!(
+            result_from_message(response),
+            serde_json::json!({
+                "uri": script,
+                "range": {
+                    "start": { "line": start.0, "character": start.1 },
+                    "end": { "line": end.0, "character": end.1 }
+                }
+            })
         );
     }
 }

@@ -1,0 +1,93 @@
+    Blocking waiting for file lock on build directory
+   Compiling smallvec v1.13.2
+   Compiling byteorder v1.5.0
+   Compiling zerocopy v0.7.35
+   Compiling getrandom v0.2.15
+   Compiling rand_core v0.6.4
+   Compiling parking_lot_core v0.9.10
+   Compiling ppv-lite86 v0.2.20
+   Compiling parking_lot v0.12.3
+   Compiling rand_chacha v0.3.1
+   Compiling crossterm v0.28.1
+   Compiling rand v0.8.5
+   Compiling phf_generator v0.11.2
+   Compiling phf_codegen v0.11.2
+   Compiling nu-utils v0.106.0 (/tmp/nu-interactive-before/crates/nu-utils)
+   Compiling chrono-tz-build v0.4.0
+   Compiling chrono-tz v0.10.0
+   Compiling http v1.2.0
+   Compiling httparse v1.9.5
+   Compiling nu-protocol v0.106.0 (/tmp/nu-interactive-before/crates/nu-protocol)
+   Compiling uucore v0.0.30
+   Compiling socket2 v0.5.8
+   Compiling icu_normalizer v1.5.0
+   Compiling tokio v1.45.0
+   Compiling nu-engine v0.106.0 (/tmp/nu-interactive-before/crates/nu-engine)
+   Compiling tracing-core v0.1.33
+   Compiling futures-sink v0.3.31
+   Compiling tokio-util v0.7.13
+   Compiling nu-parser v0.106.0 (/tmp/nu-interactive-before/crates/nu-parser)
+   Compiling tracing v0.1.41
+   Compiling rand_chacha v0.9.0
+   Compiling idna_adapter v1.2.0
+   Compiling http-body v1.0.1
+   Compiling atomic-waker v1.1.2
+   Compiling h2 v0.4.7
+   Compiling nu-json v0.106.0 (/tmp/nu-interactive-before/crates/nu-json)
+   Compiling idna v1.0.3
+   Compiling rand v0.9.0
+   Compiling oem_cp v2.0.0
+   Compiling ureq-proto v0.3.5
+   Compiling futures-channel v0.3.31
+   Compiling httpdate v1.0.3
+   Compiling ureq v3.0.3
+   Compiling hyper v1.5.1
+   Compiling url v2.5.4
+   Compiling nu-color-config v0.106.0 (/tmp/nu-interactive-before/crates/nu-color-config)
+   Compiling nu-cmd-base v0.106.0 (/tmp/nu-interactive-before/crates/nu-cmd-base)
+   Compiling notify-debouncer-full v0.3.2
+   Compiling uu_mv v0.0.30
+   Compiling uu_cp v0.0.30
+   Compiling uu_uname v0.0.30
+   Compiling reedline v0.41.0
+   Compiling ureq v2.12.1
+   Compiling nu-table v0.106.0 (/tmp/nu-interactive-before/crates/nu-table)
+   Compiling uu_touch v0.0.30
+   Compiling hyper-util v0.1.10
+   Compiling update-informer v1.3.0
+   Compiling uu_mktemp v0.0.30
+   Compiling nuon v0.106.0 (/tmp/nu-interactive-before/crates/nuon)
+   Compiling http-body-util v0.1.2
+   Compiling uu_whoami v0.0.30
+   Compiling uu_mkdir v0.0.30
+   Compiling nu-term-grid v0.106.0 (/tmp/nu-interactive-before/crates/nu-term-grid)
+   Compiling similar v2.7.0
+   Compiling yansi v1.0.1
+   Compiling diff v0.1.13
+   Compiling pretty_assertions v1.4.1
+   Compiling mockito v1.7.0
+   Compiling nu-cmd-lang v0.106.0 (/tmp/nu-interactive-before/crates/nu-cmd-lang)
+   Compiling nu-test-support v0.106.0 (/tmp/nu-interactive-before/crates/nu-test-support)
+   Compiling rstest_reuse v0.7.0
+   Compiling nu-command v0.106.0 (/tmp/nu-interactive-before/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 48s
+     Running unittests src/lib.rs (/tmp/nu-interactive-before-target/debug/deps/nu_command-be47c9922de50ddc)
+
+running 1 test
+test strings::format::filesize::tests::example_units_are_valid ... FAILED
+
+failures:
+
+---- strings::format::filesize::tests::example_units_are_valid stdout ----
+
+thread 'strings::format::filesize::tests::example_units_are_valid' panicked at crates/nu-command/src/strings/format/filesize.rs:155:13:
+invalid example unit: KB
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    strings::format::filesize::tests::example_units_are_valid
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 441 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p nu-command --lib`

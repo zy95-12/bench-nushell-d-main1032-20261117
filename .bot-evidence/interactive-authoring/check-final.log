@@ -1,0 +1,4 @@
+    Checking nu-cli v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/5d1bccf6e0f15d4f7ab9d47859dbb7bf4535bd703acbd90e/crates/nu-cli)
+    Checking nu-lsp v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/5d1bccf6e0f15d4f7ab9d47859dbb7bf4535bd703acbd90e/crates/nu-lsp)
+    Checking nu v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/5d1bccf6e0f15d4f7ab9d47859dbb7bf4535bd703acbd90e)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.93s

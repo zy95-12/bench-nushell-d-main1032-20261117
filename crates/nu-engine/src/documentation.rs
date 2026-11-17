@@ -762,9 +762,6 @@ where
         if !flag.long.is_empty() {
             let _ = write!(long_desc, "{help_subcolor_one}--{}{RESET}", flag.long);
         }
-        if flag.required {
-            long_desc.push_str(" (required parameter)")
-        }
         // Type/Syntax shape info
         if let Some(arg) = &flag.arg {
             let _ = write!(
@@ -772,6 +769,9 @@ where
                 " <{help_subcolor_two}{}{RESET}>",
                 document_shape(arg)
             );
+        }
+        if flag.required {
+            long_desc.push_str(" (required parameter)")
         }
         if !flag.desc.is_empty() {
             let _ = write!(
@@ -869,5 +869,27 @@ mod tests {
             highlight_code(haystack, &engine_state, &mut stack),
             Cow::Borrowed(_)
         ));
+    }
+}
+
+#[cfg(test)]
+mod interactive_help_tests {
+    use super::*;
+
+    #[test]
+    fn required_flag_marker_follows_value_type() {
+        let signature = Signature::build("demo")
+            .required_named("required", SyntaxShape::String, "required flag", Some('r'))
+            .named("optional", SyntaxShape::Int, "optional flag", None);
+        let help = nu_utils::strip_ansi_string_unlikely(get_flags_section(
+            &signature,
+            &HelpStyle::default(),
+            |_| String::new(),
+        ));
+        assert!(
+            help.contains("--required <string> (required parameter)"),
+            "{help}"
+        );
+        assert!(help.contains("--optional <int>:"), "{help}");
     }
 }

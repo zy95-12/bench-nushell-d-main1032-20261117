@@ -43,6 +43,7 @@ pub enum VirtualPath {
 }
 
 pub struct ReplState {
+    pub accept: bool,
     pub buffer: String,
     // A byte position, as `EditCommand::MoveToPosition` is also a byte position
     pub cursor_pos: usize,
@@ -113,6 +114,7 @@ pub struct EngineState {
     pub regex_cache: Arc<Mutex<LruCache<String, Regex>>>,
     pub is_interactive: bool,
     pub is_login: bool,
+    pub is_lsp: bool,
     startup_time: i64,
     is_debugging: IsDebugging,
     pub debugger: Arc<Mutex<Box<dyn Debugger>>>,
@@ -183,6 +185,7 @@ impl EngineState {
             config: Arc::new(Config::default()),
             pipeline_externals_state: Arc::new((AtomicU32::new(0), AtomicU32::new(0))),
             repl_state: Arc::new(Mutex::new(ReplState {
+                accept: false,
                 buffer: "".to_string(),
                 cursor_pos: 0,
             })),
@@ -200,6 +203,7 @@ impl EngineState {
             ))),
             is_interactive: false,
             is_login: false,
+            is_lsp: false,
             startup_time: -1,
             is_debugging: IsDebugging::new(false),
             debugger: Arc::new(Mutex::new(Box::new(NoopDebugger))),
@@ -1076,6 +1080,7 @@ impl EngineState {
     pub fn recover_from_panic(&mut self) {
         if Mutex::is_poisoned(&self.repl_state) {
             self.repl_state = Arc::new(Mutex::new(ReplState {
+                accept: false,
                 buffer: "".to_string(),
                 cursor_pos: 0,
             }));

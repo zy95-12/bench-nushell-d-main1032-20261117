@@ -100,8 +100,10 @@ impl LanguageServer {
     fn initialize_connection(
         connection: Connection,
         io_threads: Option<IoThreads>,
-        engine_state: EngineState,
+        mut engine_state: EngineState,
     ) -> Result<Self> {
+        engine_state.is_lsp = true;
+        engine_state.generate_nu_constant();
         Ok(Self {
             connection,
             io_threads,
@@ -576,6 +578,14 @@ mod tests {
     ) -> Result<lsp_server::Notification, String> {
         let text = std::fs::read_to_string(uri_to_path(&uri)).map_err(|e| e.to_string())?;
 
+        open_text(client_connection, uri, text)
+    }
+
+    pub(crate) fn open_text(
+        client_connection: &Connection,
+        uri: Uri,
+        text: String,
+    ) -> Result<lsp_server::Notification, String> {
         client_connection
             .sender
             .send(Message::Notification(lsp_server::Notification {

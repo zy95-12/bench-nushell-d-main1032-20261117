@@ -1,0 +1,64 @@
+    Blocking waiting for file lock on build directory
+   Compiling syn v2.0.90
+   Compiling rustix v0.38.42
+   Compiling smallvec v1.13.2
+   Compiling scopeguard v1.2.0
+   Compiling lock_api v0.4.12
+   Compiling parking_lot_core v0.9.10
+   Compiling serde_derive v1.0.216
+   Compiling thiserror-impl v1.0.69
+   Compiling thiserror v1.0.69
+   Compiling parking_lot v0.12.3
+   Compiling ref-cast-impl v1.0.23
+   Compiling thiserror-impl v2.0.12
+   Compiling serde v1.0.216
+   Compiling proc-macro-error2 v2.0.1
+   Compiling thiserror v2.0.12
+   Compiling ref-cast v1.0.23
+   Compiling crossterm v0.28.1
+   Compiling pwd v1.4.0
+   Compiling miette-derive v7.6.0
+   Compiling chrono v0.4.39
+   Compiling erased-serde v0.4.5
+   Compiling procfs-core v0.17.0
+   Compiling serde_json v1.0.133
+   Compiling typetag-impl v0.2.18
+   Compiling procfs v0.17.0
+   Compiling terminal_size v0.4.1
+   Compiling typetag v0.2.18
+   Compiling nu-utils v0.106.0 (/tmp/nu-interactive-before/crates/nu-utils)
+   Compiling nu-system v0.106.0 (/tmp/nu-interactive-before/crates/nu-system)
+   Compiling miette v7.6.0
+   Compiling chrono-humanize v0.2.3
+   Compiling nu-path v0.106.0 (/tmp/nu-interactive-before/crates/nu-path)
+   Compiling nu-experimental v0.106.0 (/tmp/nu-interactive-before/crates/nu-experimental)
+   Compiling nu-derive-value v0.106.0 (/tmp/nu-interactive-before/crates/nu-derive-value)
+   Compiling strum_macros v0.26.4
+   Compiling nu-protocol v0.106.0 (/tmp/nu-interactive-before/crates/nu-protocol)
+   Compiling nu-engine v0.106.0 (/tmp/nu-interactive-before/crates/nu-engine)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 49.45s
+     Running unittests src/lib.rs (/tmp/nu-interactive-before-target/debug/deps/nu_engine-9f8aae14a0d37486)
+
+running 1 test
+test documentation::interactive_help_tests::required_flag_marker_follows_value_type ... FAILED
+
+failures:
+
+---- documentation::interactive_help_tests::required_flag_marker_follows_value_type stdout ----
+
+thread 'documentation::interactive_help_tests::required_flag_marker_follows_value_type' panicked at crates/nu-engine/src/documentation.rs:889:9:
+
+Flags:
+  -h, --help: 
+  -r, --required (required parameter) <string>: 
+  --optional <int>: 
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    documentation::interactive_help_tests::required_flag_marker_follows_value_type
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p nu-engine --lib`

@@ -58,6 +58,11 @@ Since this command has no output, there is no point in piping it with other comm
         let to_stderr = call.has_flag(engine_state, stack, "stderr")?;
         let raw = call.has_flag(engine_state, stack, "raw")?;
 
+        if engine_state.is_lsp {
+            input.drain()?;
+            return Ok(PipelineData::empty());
+        }
+
         // This will allow for easy printing of pipelines as well
         if !args.is_empty() {
             for arg in args {

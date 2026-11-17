@@ -690,7 +690,11 @@ fn parse_long_flag(
                     sig.name.clone(),
                     long_name.clone(),
                     arg_span,
-                    sig.clone().formatted_flags(),
+                    nu_protocol::did_you_mean(sig.named.iter().map(|flag| &flag.long), &long_name)
+                        .map(|name| {
+                            format!("Did you mean `--{name}`? Use `--help` for more information.")
+                        })
+                        .unwrap_or_else(|| sig.clone().formatted_flags()),
                 ));
                 (
                     Some(Spanned {
@@ -1145,6 +1149,7 @@ pub fn parse_internal_call(
                     desc: "".to_string(),
                     var_id: None,
                     default_value: None,
+                    completion: None,
                 })
             }
 
@@ -1406,7 +1411,6 @@ pub fn parse_call(working_set: &mut StateWorkingSet, spans: &[Span], head: Span)
                 span: _,
                 span_id: _,
                 ty,
-                custom_completion,
             } = &alias.clone().wrapped_call
             {
                 trace!("parsing: alias of external call");
@@ -1420,14 +1424,13 @@ pub fn parse_call(working_set: &mut StateWorkingSet, spans: &[Span], head: Span)
                     final_args.push(arg);
                 }
 
-                let mut expression = Expression::new(
+                let expression = Expression::new(
                     working_set,
                     Expr::ExternalCall(head, final_args.into()),
                     Span::concat(spans),
                     ty.clone(),
                 );
 
-                expression.custom_completion = *custom_completion;
                 return expression;
             } else {
                 trace!("parsing: alias of internal call");
@@ -2352,6 +2355,7 @@ pub fn parse_string_interpolation(working_set: &mut StateWorkingSet, span: Span)
 }
 
 pub fn parse_variable_expr(working_set: &mut StateWorkingSet, span: Span) -> Expression {
+    working_set.capture_completion_variables(span);
     let contents = working_set.get_span_contents(span);
 
     if contents == b"$nu" {
@@ -3849,6 +3853,7 @@ pub fn parse_row_condition(working_set: &mut StateWorkingSet, spans: &[Span]) ->
                 shape: SyntaxShape::Any,
                 var_id: Some(var_id),
                 default_value: None,
+                completion: None,
             });
 
             compile_block(working_set, &mut block);
@@ -4043,6 +4048,7 @@ pub fn parse_signature_helper(working_set: &mut StateWorkingSet, span: Span) -> 
                                             required: false,
                                             var_id: Some(var_id),
                                             default_value: None,
+                                            completion: None,
                                         },
                                         type_annotated: false,
                                     });
@@ -4104,6 +4110,7 @@ pub fn parse_signature_helper(working_set: &mut StateWorkingSet, span: Span) -> 
                                                 required: false,
                                                 var_id: Some(var_id),
                                                 default_value: None,
+                                                completion: None,
                                             },
                                             type_annotated: false,
                                         });
@@ -4146,6 +4153,7 @@ pub fn parse_signature_helper(working_set: &mut StateWorkingSet, span: Span) -> 
                                         required: false,
                                         var_id: Some(var_id),
                                         default_value: None,
+                                        completion: None,
                                     },
                                     type_annotated: false,
                                 });
@@ -4213,6 +4221,7 @@ pub fn parse_signature_helper(working_set: &mut StateWorkingSet, span: Span) -> 
                                         shape: SyntaxShape::Any,
                                         var_id: Some(var_id),
                                         default_value: None,
+                                        completion: None,
                                     },
                                     required: false,
                                     type_annotated: false,
@@ -4240,6 +4249,7 @@ pub fn parse_signature_helper(working_set: &mut StateWorkingSet, span: Span) -> 
                                     shape: SyntaxShape::Any,
                                     var_id: Some(var_id),
                                     default_value: None,
+                                    completion: None,
                                 }));
                                 parse_mode = ParseMode::Arg;
                             }
@@ -4266,6 +4276,7 @@ pub fn parse_signature_helper(working_set: &mut StateWorkingSet, span: Span) -> 
                                         shape: SyntaxShape::Any,
                                         var_id: Some(var_id),
                                         default_value: None,
+                                        completion: None,
                                     },
                                     required: true,
                                     type_annotated: false,
@@ -4281,25 +4292,44 @@ pub fn parse_signature_helper(working_set: &mut StateWorkingSet, span: Span) -> 
                                     span,
                                     ShapeDescriptorUse::Argument,
                                 );
-                                //TODO check if we're replacing a custom parameter already
+                                let (syntax_shape, parsed_completion) =
+                                    nu_protocol::Completion::from_shape(syntax_shape);
+                                // Store completion on the parameter, independently of its syntax shape.
                                 match last {
                                     Arg::Positional {
-                                        arg: PositionalArg { shape, var_id, .. },
+                                        arg:
+                                            PositionalArg {
+                                                shape,
+                                                var_id,
+                                                completion,
+                                                ..
+                                            },
                                         required: _,
                                         type_annotated,
                                     } => {
                                         working_set.set_variable_type(var_id.expect("internal error: all custom parameters must have var_ids"), syntax_shape.to_type());
+                                        *completion = parsed_completion;
                                         *shape = syntax_shape;
                                         *type_annotated = true;
                                     }
                                     Arg::RestPositional(PositionalArg {
-                                        shape, var_id, ..
+                                        shape,
+                                        var_id,
+                                        completion,
+                                        ..
                                     }) => {
                                         working_set.set_variable_type(var_id.expect("internal error: all custom parameters must have var_ids"), Type::List(Box::new(syntax_shape.to_type())));
+                                        *completion = parsed_completion;
                                         *shape = syntax_shape;
                                     }
                                     Arg::Flag {
-                                        flag: Flag { arg, var_id, .. },
+                                        flag:
+                                            Flag {
+                                                arg,
+                                                var_id,
+                                                completion,
+                                                ..
+                                            },
                                         type_annotated,
                                     } => {
                                         working_set.set_variable_type(var_id.expect("internal error: all custom parameters must have var_ids"), syntax_shape.to_type());
@@ -4310,6 +4340,7 @@ pub fn parse_signature_helper(working_set: &mut StateWorkingSet, span: Span) -> 
                                                 span,
                                             ));
                                         }
+                                        *completion = parsed_completion;
                                         *arg = Some(syntax_shape);
                                         *type_annotated = true;
                                     }
@@ -4321,7 +4352,7 @@ pub fn parse_signature_helper(working_set: &mut StateWorkingSet, span: Span) -> 
                             if let Some(last) = args.last_mut() {
                                 let expression = parse_value(working_set, span, &SyntaxShape::Any);
 
-                                //TODO check if we're replacing a custom parameter already
+                                // Store completion on the parameter, independently of its syntax shape.
                                 match last {
                                     Arg::Positional {
                                         arg:
@@ -5285,11 +5316,7 @@ pub fn parse_value(
     }
 
     match shape {
-        SyntaxShape::CompleterWrapper(shape, custom_completion) => {
-            let mut expression = parse_value(working_set, span, shape);
-            expression.custom_completion = Some(*custom_completion);
-            expression
-        }
+        SyntaxShape::CompleterWrapper(shape, _) => parse_value(working_set, span, shape),
         SyntaxShape::Number => parse_number(working_set, span),
         SyntaxShape::Float => parse_float(working_set, span),
         SyntaxShape::Int => parse_int(working_set, span),
@@ -5740,7 +5767,6 @@ pub fn parse_math_expression(
         //     expr: Expr::UnaryNot(Box::new(lhs)),
         //     span: Span::new(*not_start_span, spans[idx].end),
         //     ty: Type::Bool,
-        //     custom_completion: None,
         // };
         lhs = Expression::new(
             working_set,
@@ -5813,7 +5839,6 @@ pub fn parse_math_expression(
             //     expr: Expr::UnaryNot(Box::new(rhs)),
             //     span: Span::new(*not_start_span, spans[idx].end),
             //     ty: Type::Bool,
-            //     custom_completion: None,
             // };
             rhs = Expression::new(
                 working_set,
