@@ -73,3 +73,62 @@ fn test_case_insensitive_env_var() {
     assert_eq!(stack_path_lower, stack_path_upper);
     assert_eq!(stack_path_lower, stack_path_mixed);
 }
+
+#[test]
+fn float_equality_is_symmetric_at_scaled_epsilon_boundary() {
+    for lhs in [2.0_f64, -2.0, 4.0, -4.0] {
+        let rhs = f64::from_bits(lhs.to_bits() + 1);
+        let a = Value::test_float(lhs);
+        let b = Value::test_float(rhs);
+        assert_eq!(a == b, b == a, "{lhs:?}, {rhs:?}");
+        assert_eq!(
+            a.partial_cmp(&b),
+            b.partial_cmp(&a).map(std::cmp::Ordering::reverse)
+        );
+        assert_eq!(
+            a.eq(Span::test_data(), &b, Span::test_data()).unwrap(),
+            b.eq(Span::test_data(), &a, Span::test_data()).unwrap()
+        );
+    }
+    assert_ne!(Value::test_float(2.0), Value::test_float(2.001));
+}
+
+#[test]
+fn negated_prefix_and_suffix_are_string_only() {
+    let span = Span::test_data();
+    for (lhs, rhs) in [
+        ("abc", "a"),
+        ("abc", "c"),
+        ("abc", ""),
+        ("", "abc"),
+        ("αβ", "β"),
+    ] {
+        let lhs = Value::test_string(lhs);
+        let rhs = Value::test_string(rhs);
+        assert_eq!(
+            lhs.not_starts_with(span, &rhs, span)
+                .unwrap()
+                .as_bool()
+                .unwrap(),
+            !lhs.starts_with(span, &rhs, span)
+                .unwrap()
+                .as_bool()
+                .unwrap()
+        );
+        assert_eq!(
+            lhs.not_ends_with(span, &rhs, span)
+                .unwrap()
+                .as_bool()
+                .unwrap(),
+            !lhs.ends_with(span, &rhs, span).unwrap().as_bool().unwrap()
+        );
+    }
+    for (lhs, rhs) in [
+        (Value::test_int(1), Value::test_string("1")),
+        (Value::test_string("1"), Value::test_int(1)),
+        (Value::test_list(vec![]), Value::test_list(vec![])),
+    ] {
+        assert!(lhs.not_starts_with(span, &rhs, span).is_err());
+        assert!(lhs.not_ends_with(span, &rhs, span).is_err());
+    }
+}

@@ -2481,9 +2481,9 @@ fn operator_completions(mut custom_completer: NuCompleter) {
 
     let suggestions = custom_completer.complete("'str' ", 6);
     // == != > < >= <= in not-in
-    // has not-has starts-with ends-with
+    // has not-has starts-with ends-with not-starts-with not-ends-with
     // =~ !~ like not-like ++
-    assert_eq!(17, suggestions.len());
+    assert_eq!(19, suggestions.len());
     let suggestions = custom_completer.complete("'str' +", 7);
     let expected: Vec<_> = vec!["++"];
     match_suggestions(&expected, &suggestions);
@@ -2546,9 +2546,9 @@ fn cell_path_operator_completions(mut custom_completer: NuCompleter) {
 
     let suggestions = custom_completer.complete("const f = {'foo': [1, '1']}; $f.foo.1 ", 38);
     // == != > < >= <= in not-in
-    // has not-has starts-with ends-with
+    // has not-has starts-with ends-with not-starts-with not-ends-with
     // =~ !~ like not-like ++
-    assert_eq!(17, suggestions.len());
+    assert_eq!(19, suggestions.len());
     let suggestions = custom_completer.complete("const f = {'foo': [1, '1']}; $f.foo.1 ++", 40);
     let expected: Vec<_> = vec!["++"];
     match_suggestions(&expected, &suggestions);
@@ -2558,10 +2558,10 @@ fn cell_path_operator_completions(mut custom_completer: NuCompleter) {
 fn assignment_operator_completions(mut custom_completer: NuCompleter) {
     let suggestions = custom_completer.complete("mut foo = ''; $foo ", 19);
     // == != > < >= <= in not-in
-    // has not-has starts-with ends-with
+    // has not-has starts-with ends-with not-starts-with not-ends-with
     // =~ !~ like not-like ++
     // = ++=
-    assert_eq!(19, suggestions.len());
+    assert_eq!(21, suggestions.len());
     let suggestions = custom_completer.complete("mut foo = ''; $foo ++", 21);
     let expected: Vec<_> = vec!["++", "++="];
     match_suggestions(&expected, &suggestions);
@@ -2608,7 +2608,7 @@ fn assignment_operator_completions(mut custom_completer: NuCompleter) {
 
     // all operators for type any
     let suggestions = custom_completer.complete("ls | where name ", 16);
-    assert_eq!(30, suggestions.len());
+    assert_eq!(32, suggestions.len());
     let expected: Vec<_> = vec!["starts-with"];
     let suggestions = custom_completer.complete("ls | where name starts", 22);
     match_suggestions(&expected, &suggestions);
@@ -2624,10 +2624,10 @@ fn cellpath_assignment_operator_completions() {
     let completion_str = "$foo.foo.1 ";
     let suggestions = completer.complete(completion_str, completion_str.len());
     // == != > < >= <= in not-in
-    // has not-has starts-with ends-with
+    // has not-has starts-with ends-with not-starts-with not-ends-with
     // =~ !~ like not-like ++
     // = ++=
-    assert_eq!(19, suggestions.len());
+    assert_eq!(21, suggestions.len());
     let completion_str = "$foo.foo.1 ++";
     let suggestions = completer.complete(completion_str, completion_str.len());
     let expected: Vec<_> = vec!["++", "++="];
@@ -2655,9 +2655,9 @@ fn cellpath_assignment_operator_completions() {
 fn type_inferenced_operator_completions(mut custom_completer: NuCompleter) {
     let suggestions = custom_completer.complete("let f = {'foo': [1, '1']}; $f.foo.1 ", 36);
     // == != > < >= <= in not-in
-    // has not-has starts-with ends-with
+    // has not-has starts-with ends-with not-starts-with not-ends-with
     // =~ !~ like not-like ++
-    assert_eq!(17, suggestions.len());
+    assert_eq!(19, suggestions.len());
     let suggestions = custom_completer.complete("const f = {'foo': [1, '1']}; $f.foo.1 ++", 38);
     let expected: Vec<_> = vec!["++"];
     match_suggestions(&expected, &suggestions);
@@ -2669,4 +2669,23 @@ fn type_inferenced_operator_completions(mut custom_completer: NuCompleter) {
     let suggestions = custom_completer.complete("mut foo = [(date now)]; $foo.0 =", 32);
     let expected: Vec<_> = vec!["=", "=="];
     match_suggestions(&expected, &suggestions);
+}
+
+#[rstest]
+fn negated_string_operator_completions(mut custom_completer: NuCompleter) {
+    let input = "'str' not-";
+    let suggestions = custom_completer.complete(input, input.len());
+    match_suggestions(
+        &vec![
+            "not-ends-with",
+            "not-has",
+            "not-in",
+            "not-like",
+            "not-starts-with",
+        ],
+        &suggestions,
+    );
+    let input = "1 not-";
+    let suggestions = custom_completer.complete(input, input.len());
+    match_suggestions(&vec!["not-in"], &suggestions);
 }

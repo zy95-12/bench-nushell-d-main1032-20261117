@@ -3072,3 +3072,71 @@ mod record {
         );
     }
 }
+
+#[test]
+fn missing_batched_short_flag_value_has_the_flag_span() {
+    let engine = EngineState::new();
+    let mut ws = StateWorkingSet::new(&engine);
+    ws.add_decl(
+        Signature::build("foo")
+            .switch("verbose", "verbose", Some('v'))
+            .named("number", SyntaxShape::Int, "number", Some('n'))
+            .predeclare(),
+    );
+    parse(&mut ws, None, b"foo -vn", false);
+    let Some(ParseError::MissingFlagParam(_, span)) = ws.parse_errors.first() else {
+        panic!("{:?}", ws.parse_errors);
+    };
+    assert_eq!(ws.get_span_contents(*span), b"n");
+}
+
+#[test]
+fn env_shorthand_ignores_equals_inside_escaped_quotations() {
+    for source in [
+        br#""foo\"=bar""#.as_slice(),
+        br#""foo=bar""#,
+        br#"'foo=bar'"#,
+    ] {
+        let engine = EngineState::new();
+        let mut ws = StateWorkingSet::new(&engine);
+        let block = parse(&mut ws, None, source, false);
+        assert!(ws.parse_errors.is_empty(), "{:?}", ws.parse_errors);
+        assert!(matches!(
+            block.pipelines[0].elements[0].expr.expr,
+            Expr::String(_)
+        ));
+    }
+}
+
+#[test]
+fn incomplete_binary_expression_retains_operator_and_relevant_spans() {
+    let engine = EngineState::new();
+    let mut ws = StateWorkingSet::new(&engine);
+    let block = parse(&mut ws, None, b"1 +", false);
+    let Expr::BinaryOp(lhs, op, rhs) = &block.pipelines[0].elements[0].expr.expr else {
+        panic!("{block:?}")
+    };
+    assert_eq!(ws.get_span_contents(lhs.span), b"1");
+    assert!(matches!(op.expr, Expr::Operator(_)));
+    assert_eq!(ws.get_span_contents(op.span), b"+");
+    assert_eq!(rhs.span, op.span);
+    assert!(
+        matches!(ws.parse_errors.first(), Some(ParseError::IncompleteMathExpression(span)) if *span == op.span)
+    );
+}
+
+#[test]
+fn unclosed_delimiters_have_nonempty_source_spans() {
+    for source in [b"(".as_slice(), b"[1", b"{ 1", b"(1 +", b"[[a]; [1]"] {
+        let engine = EngineState::new();
+        let mut ws = StateWorkingSet::new(&engine);
+        parse(&mut ws, None, source, false);
+        assert!(!ws.parse_errors.is_empty());
+        for error in &ws.parse_errors {
+            if let ParseError::Unclosed(_, span) = error {
+                assert!(span.start < span.end, "{source:?}: {error:?}");
+                assert!(!ws.get_span_contents(*span).is_empty());
+            }
+        }
+    }
+}
