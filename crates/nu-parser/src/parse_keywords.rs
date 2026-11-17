@@ -186,6 +186,15 @@ pub fn parse_def_predecl(working_set: &mut StateWorkingSet, spans: &[Span]) {
         return;
     };
 
+    if name == "def" {
+        working_set.error(ParseError::LabeledError(
+            "Cannot redefine the def keyword".into(),
+            "choose a different command name".into(),
+            spans[name_pos],
+        ));
+        return;
+    }
+
     if name.contains('#')
         || name.contains('^')
         || name.parse::<bytesize::ByteSize>().is_ok()

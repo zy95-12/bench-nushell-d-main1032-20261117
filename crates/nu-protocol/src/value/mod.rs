@@ -2235,7 +2235,7 @@ impl PartialOrd for Value {
         // Compare two floating point numbers. The decision interval for equality is dynamically
         // scaled as the value being compared increases in magnitude.
         fn compare_floats(val: f64, other: f64) -> Option<Ordering> {
-            let prec = f64::EPSILON.max(val.abs() * f64::EPSILON);
+            let prec = f64::EPSILON.max(val.abs().max(other.abs()) * f64::EPSILON);
 
             if (other - val).abs() < prec {
                 return Some(Ordering::Equal);
@@ -3882,6 +3882,48 @@ impl Value {
             ),
             _ => Err(operator_type_error(
                 Operator::Comparison(Comparison::EndsWith),
+                op,
+                self,
+                rhs,
+                |val| matches!(val, Value::String { .. }),
+            )),
+        }
+    }
+
+    pub fn not_starts_with(&self, op: Span, rhs: &Value, span: Span) -> Result<Value, ShellError> {
+        match (self, rhs) {
+            (Value::String { val: lhs, .. }, Value::String { val: rhs, .. }) => {
+                Ok(Value::bool(!lhs.starts_with(rhs), span))
+            }
+            (Value::Custom { val: lhs, .. }, rhs) => lhs.operation(
+                self.span(),
+                Operator::Comparison(Comparison::NotStartsWith),
+                op,
+                rhs,
+            ),
+            _ => Err(operator_type_error(
+                Operator::Comparison(Comparison::NotStartsWith),
+                op,
+                self,
+                rhs,
+                |val| matches!(val, Value::String { .. }),
+            )),
+        }
+    }
+
+    pub fn not_ends_with(&self, op: Span, rhs: &Value, span: Span) -> Result<Value, ShellError> {
+        match (self, rhs) {
+            (Value::String { val: lhs, .. }, Value::String { val: rhs, .. }) => {
+                Ok(Value::bool(!lhs.ends_with(rhs), span))
+            }
+            (Value::Custom { val: lhs, .. }, rhs) => lhs.operation(
+                self.span(),
+                Operator::Comparison(Comparison::NotEndsWith),
+                op,
+                rhs,
+            ),
+            _ => Err(operator_type_error(
+                Operator::Comparison(Comparison::NotEndsWith),
                 op,
                 self,
                 rhs,

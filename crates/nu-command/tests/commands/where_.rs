@@ -228,3 +228,17 @@ fn nested_stored_condition() {
         nu!(r#"let nested = {cond: { $in mod 2 == 0 }}; 1..10 | where $nested.cond | to nuon"#);
     assert_eq!(actual.out, r#"[2, 4, 6, 8, 10]"#)
 }
+
+#[test]
+fn negated_string_operators_work_in_row_conditions() {
+    let actual = nu!(r#"[apple banana apricot] | where $it not-starts-with 'a' | to nuon"#);
+    assert!(actual.err.is_empty(), "{}", actual.err);
+    assert_eq!(actual.out, "[banana]");
+    let actual = nu!(
+        r#"[[name]; [apple] [banana] [apricot]] | where name not-ends-with 'a' | get name | to nuon"#
+    );
+    assert!(actual.err.is_empty(), "{}", actual.err);
+    assert_eq!(actual.out, "[apple, apricot]");
+    let actual = nu!(r#"'a' not-starts-with 1"#);
+    assert!(actual.err.contains("operator"), "{}", actual.err);
+}

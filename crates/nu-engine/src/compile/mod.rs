@@ -1,6 +1,6 @@
 use nu_protocol::{
     CompileError, IntoSpanned, RegId, Span,
-    ast::{Block, Expr, Pipeline, PipelineRedirection, RedirectionSource, RedirectionTarget},
+    ast::{Block, Pipeline, PipelineRedirection, RedirectionSource, RedirectionTarget},
     engine::StateWorkingSet,
     ir::{Instruction, IrBlock, RedirectMode},
 };
@@ -181,8 +181,8 @@ fn compile_pipeline(
         };
 
         let redirect_modes = RedirectModes {
-            out: spec_redirect_modes.out.or(next_redirect_modes.out),
-            err: spec_redirect_modes.err.or(next_redirect_modes.err),
+            out: spec_redirect_modes.out.clone().or(next_redirect_modes.out),
+            err: spec_redirect_modes.err.clone().or(next_redirect_modes.err),
         };
 
         compile_expression(
@@ -194,25 +194,12 @@ fn compile_pipeline(
             out_reg,
         )?;
 
-        // only clean up the redirection if current element is not
-        // a subexpression.  The subexpression itself already clean it.
-        if !is_subexpression(&element.expr.expr) {
-            // Clean up the redirection
-            finish_redirection(builder, redirect_modes, out_reg)?;
-        }
+        // Only the expression that opened a file owns its cleanup. Inherited
+        // redirections may be shared by multiple branches or nested blocks.
+        finish_redirection(builder, spec_redirect_modes, out_reg)?;
 
         // The next pipeline element takes input from this output
         in_reg = Some(out_reg);
     }
     Ok(())
-}
-
-fn is_subexpression(expr: &Expr) -> bool {
-    match expr {
-        Expr::FullCellPath(inner) => {
-            matches!(&inner.head.expr, &Expr::Subexpression(..))
-        }
-        Expr::Subexpression(..) => true,
-        _ => false,
-    }
 }
