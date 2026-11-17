@@ -154,7 +154,7 @@ fn helper(
     let (requested_url, _) = http_parse_url(call, span, args.url)?;
 
     let client = http_client(args.insecure, RedirectMode::Follow, engine_state, stack)?;
-    let mut request = client.request("OPTIONS", &requested_url);
+    let mut request = super::client::Request::new(client, "OPTIONS", &requested_url);
 
     request = request_set_timeout(args.timeout, request)?;
     request = request_add_authorization_header(args.user, args.password, request);

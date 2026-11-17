@@ -119,9 +119,9 @@ impl Command for UCp {
     ) -> Result<PipelineData, ShellError> {
         let interactive = call.has_flag(engine_state, stack, "interactive")?;
         let (update, copy_mode) = if call.has_flag(engine_state, stack, "update")? {
-            (UpdateMode::ReplaceIfOlder, CopyMode::Update)
+            (UpdateMode::IfOlder, CopyMode::Update)
         } else {
-            (UpdateMode::ReplaceAll, CopyMode::Copy)
+            (UpdateMode::All, CopyMode::Copy)
         };
 
         let force = call.has_flag(engine_state, stack, "force")?;
@@ -252,7 +252,9 @@ impl Command for UCp {
             dereference: !recursive,
             progress_bar: progress,
             attributes_only: false,
-            backup: BackupMode::NoBackup,
+            backup: BackupMode::None,
+            context: None,
+            set_selinux_context: false,
             copy_contents: false,
             cli_dereference: false,
             copy_mode,
@@ -266,23 +268,19 @@ impl Command for UCp {
             update,
         };
 
-        if let Err(error) = uu_cp::copy(&sources, &target_path, &options) {
-            match error {
-                // code should still be EXIT_ERR as does GNU cp
-                uu_cp::Error::NotAllFilesCopied => {}
-                _ => {
-                    return Err(ShellError::GenericError {
-                        error: format!("{error}"),
-                        msg: format!("{error}"),
-                        span: None,
-                        help: None,
-                        inner: vec![],
-                    });
-                }
-            };
-            // TODO: What should we do in place of set_exit_code?
-            // uucore::error::set_exit_code(EXIT_ERR);
-        }
+        crate::coreutils::with_localized("cp", || {
+            match uu_cp::copy(&sources, &target_path, &options) {
+                // Individual non-fatal errors have already been printed by cp.
+                Ok(()) | Err(uu_cp::CpError::NotAllFilesCopied) => Ok(()),
+                Err(error) => Err(ShellError::GenericError {
+                    error: error.to_string(),
+                    msg: error.to_string(),
+                    span: None,
+                    help: None,
+                    inner: vec![],
+                }),
+            }
+        })??;
         Ok(PipelineData::empty())
     }
 }

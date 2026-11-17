@@ -44,7 +44,10 @@ impl Command for UName {
             hardware_platform: false,
             os: false,
         };
-        let output = uu_uname::UNameOutput::new(&opts).map_err(|e| ShellError::GenericError {
+        let output = crate::coreutils::with_localized("uname", || {
+            uu_uname::UNameOutput::new(&opts).map_err(|error| error.to_string())
+        })?
+        .map_err(|e| ShellError::GenericError {
             error: format!("{e}"),
             msg: format!("{e}"),
             span: None,

@@ -1,0 +1,75 @@
+$ cargo test -p nu-command --test main commands::network::http
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.31s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-7345e8ece8303ba9)
+
+running 67 tests
+test commands::network::http::get::http_get_expired_cert_fails ... ignored, unreliable test
+test commands::network::http::get::http_get_expired_cert_override ... ignored, unreliable test
+test commands::network::http::get::http_get_self_signed_fails ... ignored, unreliable test
+test commands::network::http::get::http_get_self_signed_override ... ignored, unreliable test
+test commands::network::http::delete::http_delete_is_success_pipeline ... ok
+test commands::network::http::patch::http_patch_failed_due_to_missing_body ... ok
+test commands::network::http::post::http_post_failed_due_to_missing_body ... ok
+test commands::network::http::put::http_put_failed_due_to_missing_body ... ok
+test commands::network::http::post::http_post_failed_due_to_unexpected_body ... ok
+test commands::network::http::put::http_put_redirect_mode_error ... ok
+test commands::network::http::delete::http_delete_failed_due_to_server_error ... ok
+test commands::network::http::delete::http_delete_redirect_mode_error ... ok
+test commands::network::http::delete::http_delete_redirect_mode_manual ... ok
+test commands::network::http::post::http_post_json_list_is_success ... ok
+test commands::network::http::put::http_put_redirect_mode_manual ... ok
+test commands::network::http::patch::http_patch_follows_redirect ... ok
+test commands::network::http::get::http_get_redirect_mode_error ... ok
+test commands::network::http::put::http_put_failed_due_to_server_error ... ok
+test commands::network::http::post::http_post_failed_due_to_server_error ... ok
+test commands::network::http::delete::http_delete_timeout ... ok
+test commands::network::http::get::http_get_failed_due_to_server_error ... ok
+test commands::network::http::options::http_options_failed_due_to_server_error ... ok
+test commands::network::http::put::http_put_failed_due_to_unexpected_body ... ok
+test commands::network::http::head::http_head_redirect_mode_error ... ok
+test commands::network::http::patch::http_patch_failed_due_to_unexpected_body ... ok
+test commands::network::http::patch::http_patch_redirect_mode_error ... ok
+test commands::network::http::patch::http_patch_failed_due_to_server_error ... ok
+test commands::network::http::post::http_post_redirect_mode_error ... ok
+test commands::network::http::head::http_head_failed_due_to_server_error ... ok
+test commands::network::http::put::http_put_timeout ... ok
+test commands::network::http::get::http_get_follows_redirect ... ok
+test commands::network::http::put::http_put_is_success_pipeline ... ok
+test commands::network::http::patch::http_patch_is_success ... ok
+test commands::network::http::get::http_get_full_response ... ok
+test commands::network::http::delete::http_delete_is_success ... ok
+test commands::network::http::put::http_put_is_success ... ok
+test commands::network::http::delete::http_delete_follows_redirect ... ok
+test commands::network::http::head::http_head_follows_redirect ... ok
+test commands::network::http::post::http_post_is_success_pipeline ... ok
+test commands::network::http::get::http_get_is_success ... ok
+test commands::network::http::patch::http_patch_is_success_pipeline ... ok
+test commands::network::http::head::http_head_redirect_mode_manual ... ok
+test commands::network::http::post::http_post_json_raw_string_is_success ... ok
+test commands::network::http::get::http_get_manual_redirect_preserves_full_response ... ok
+test commands::network::http::post::http_post_multipart_is_success ... ok
+test commands::network::http::post::http_post_follows_redirect ... ok
+test commands::network::http::get::http_get_redirect_mode_manual ... ok
+test commands::network::http::options::http_options_is_success ... ok
+test commands::network::http::post::http_post_json_string_is_success ... ok
+test commands::network::http::get::http_get_with_invalid_mime_type ... ok
+test commands::network::http::post::http_post_is_success ... ok
+test commands::network::http::post::http_post_redirect_mode_manual ... ok
+test commands::network::http::get::http_get_with_accept_errors_and_full_json_response ... ok
+test commands::network::http::post::http_post_json_int_is_success ... ok
+test commands::network::http::get::http_get_with_accept_errors ... ok
+test commands::network::http::put::http_put_follows_redirect ... ok
+test commands::network::http::patch::http_patch_redirect_mode_manual ... ok
+test commands::network::http::head::http_head_is_success ... ok
+test commands::network::http::post::http_post_json_is_success ... ok
+test commands::network::http::get::http_get_with_accept_errors_and_full_raw_response ... ok
+test commands::network::http::get::http_get_with_unknown_mime_type ... ok
+test commands::network::http::get::http_get_server_error_preserves_body_headers_and_status ... ok
+test commands::network::http::get::http_get_with_custom_headers_as_records ... ok
+test commands::network::http::options::http_options_timeout ... ok
+test commands::network::http::patch::http_patch_timeout ... ok
+test commands::network::http::post::http_post_timeout ... ok
+test commands::network::http::get::http_get_timeout ... ok
+
+test result: ok. 63 passed; 0 failed; 4 ignored; 0 measured; 1966 filtered out; finished in 0.35s
+

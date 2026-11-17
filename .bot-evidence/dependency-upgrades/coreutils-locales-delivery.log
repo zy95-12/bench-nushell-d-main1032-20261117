@@ -1,0 +1,9 @@
+$ cargo test -p nu-command --lib coreutils::tests
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.32s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_command-3f17af2681ac13ec)
+
+running 1 test
+test coreutils::tests::consecutive_utilities_have_their_own_catalogs ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 443 filtered out; finished in 0.00s
+

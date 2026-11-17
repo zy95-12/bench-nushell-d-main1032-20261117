@@ -1,0 +1,69 @@
+[
+  {
+    "baseline_evidence": ".bot-evidence/pipeline-constructors/command-tested-binary.log",
+    "candidate_evidence": ".bot-evidence/dependency-upgrades/commands-delivery.log",
+    "baseline_failures": [
+      "commands::find::find_and_highlight_in_nested_list",
+      "commands::find::find_with_bytestream_search_with_char",
+      "commands::find::find_with_filepath_search_with_multiple_patterns",
+      "commands::find::find_with_filepath_search_with_string",
+      "commands::find::find_with_list_search_with_char",
+      "commands::find::find_with_list_search_with_string",
+      "commands::find::find_with_regex_in_table_keeps_row_if_one_column_matches",
+      "commands::find::find_with_string_search_with_special_char_1",
+      "commands::find::find_with_string_search_with_special_char_2",
+      "commands::find::find_with_string_search_with_special_char_3",
+      "commands::find::find_with_string_search_with_special_char_4",
+      "commands::find::find_with_string_search_with_special_char_5",
+      "commands::find::find_with_string_search_with_special_char_6",
+      "commands::find::find_with_string_search_with_string",
+      "commands::table::table_colors",
+      "commands::table::table_empty_colors"
+    ],
+    "candidate_failures": [
+      "commands::find::find_and_highlight_in_nested_list",
+      "commands::find::find_with_bytestream_search_with_char",
+      "commands::find::find_with_filepath_search_with_multiple_patterns",
+      "commands::find::find_with_filepath_search_with_string",
+      "commands::find::find_with_list_search_with_char",
+      "commands::find::find_with_list_search_with_string",
+      "commands::find::find_with_regex_in_table_keeps_row_if_one_column_matches",
+      "commands::find::find_with_string_search_with_special_char_1",
+      "commands::find::find_with_string_search_with_special_char_2",
+      "commands::find::find_with_string_search_with_special_char_3",
+      "commands::find::find_with_string_search_with_special_char_4",
+      "commands::find::find_with_string_search_with_special_char_5",
+      "commands::find::find_with_string_search_with_special_char_6",
+      "commands::find::find_with_string_search_with_string",
+      "commands::table::table_colors",
+      "commands::table::table_empty_colors"
+    ],
+    "same_failures": true
+  },
+  {
+    "baseline_evidence": ".bot-evidence/interactive-authoring/config-path.log",
+    "candidate_evidence": ".bot-evidence/dependency-upgrades/config-path.log",
+    "baseline_failures": [
+      "repl::test_config_path::test_default_config_path",
+      "repl::test_config_path::test_xdg_config_bad",
+      "repl::test_config_path::test_xdg_config_empty"
+    ],
+    "candidate_failures": [
+      "repl::test_config_path::test_default_config_path",
+      "repl::test_config_path::test_xdg_config_bad",
+      "repl::test_config_path::test_xdg_config_empty"
+    ],
+    "same_failures": true
+  },
+  {
+    "baseline_evidence": ".bot-evidence/interactive-authoring/lsp-final.log",
+    "candidate_evidence": ".bot-evidence/dependency-upgrades/lsp-hover.log",
+    "baseline_failures": [
+      "hover::hover_tests::hover_on_external_command"
+    ],
+    "candidate_failures": [
+      "hover::hover_tests::hover_on_external_command"
+    ],
+    "same_failures": true
+  }
+]

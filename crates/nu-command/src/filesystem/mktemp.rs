@@ -100,12 +100,14 @@ impl Command for Mktemp {
             dry_run: false,
             quiet: false,
             suffix,
-            template,
+            template: template.into(),
             tmpdir,
             treat_as_template: true,
         };
 
-        let res = match uu_mktemp::mktemp(&options) {
+        let res = match crate::coreutils::with_localized("mktemp", || {
+            uu_mktemp::mktemp(&options).map_err(|error| error.to_string())
+        })? {
             Ok(res) => res
                 .into_os_string()
                 .into_string()

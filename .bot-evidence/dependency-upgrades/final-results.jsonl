@@ -1,0 +1,14 @@
+{"name": "build-final", "command": ["cargo", "build", "-p", "nu", "--locked"], "exit_code": 0}
+{"name": "check-final", "command": ["cargo", "check", "-p", "nu", "--locked"], "exit_code": 0}
+{"name": "commands-final", "command": ["cargo", "test", "-p", "nu-command", "--test", "main", "commands::"], "exit_code": 101}
+{"name": "http-final", "command": ["cargo", "test", "-p", "nu-command", "--test", "main", "commands::network::http"], "exit_code": 0}
+{"name": "ucp-final", "command": ["cargo", "test", "-p", "nu-command", "--test", "main", "commands::ucp"], "exit_code": 0}
+{"name": "umv-final", "command": ["cargo", "test", "-p", "nu-command", "--test", "main", "commands::move_::umv"], "exit_code": 101}
+{"name": "umkdir-final", "command": ["cargo", "test", "-p", "nu-command", "--test", "main", "commands::umkdir"], "exit_code": 0}
+{"name": "mktemp-final", "command": ["cargo", "test", "-p", "nu-command", "--test", "main", "commands::mktemp"], "exit_code": 0}
+{"name": "utouch-final", "command": ["cargo", "test", "-p", "nu-command", "--test", "main", "commands::utouch"], "exit_code": 0}
+{"name": "uname-final", "command": ["cargo", "test", "-p", "nu-command", "--test", "main", "commands::uname"], "exit_code": 0}
+{"name": "coreutils-locales", "command": ["cargo", "test", "-p", "nu-command", "--lib", "coreutils::tests"], "exit_code": 0}
+{"name": "cli-final", "command": ["cargo", "test", "-p", "nu-cli", "--features", "plugin", "--test", "main"], "exit_code": 0}
+{"name": "fmt-final", "command": ["cargo", "fmt", "--all", "--", "--check"], "exit_code": 0}
+{"name": "native-tls-test", "command": ["cargo", "test", "-p", "nu-command", "--no-default-features", "--features", "os,network,native-tls", "--lib", "network::tls", "--locked"], "exit_code": 0}

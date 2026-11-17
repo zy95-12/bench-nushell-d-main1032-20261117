@@ -30,7 +30,9 @@ impl Command for Whoami {
         call: &Call,
         _input: PipelineData,
     ) -> Result<PipelineData, ShellError> {
-        let output = match uu_whoami::whoami() {
+        let output = match crate::coreutils::with_localized("whoami", || {
+            uu_whoami::whoami().map_err(|error| error.to_string())
+        })? {
             Ok(username) => username.to_string_lossy().to_string(),
             Err(e) => {
                 return Err(ShellError::GenericError {

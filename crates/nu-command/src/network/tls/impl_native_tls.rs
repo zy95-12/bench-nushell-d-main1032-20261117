@@ -1,16 +1,27 @@
 use nu_protocol::ShellError;
-use ureq::TlsConnector;
 
 #[doc = include_str!("./tls.rustdoc.md")]
-pub fn tls(allow_insecure: bool) -> Result<impl TlsConnector, ShellError> {
-    native_tls::TlsConnector::builder()
-        .danger_accept_invalid_certs(allow_insecure)
-        .build()
-        .map_err(|e| ShellError::GenericError {
-            error: format!("Failed to build network tls: {}", e),
-            msg: String::new(),
-            span: None,
-            help: None,
-            inner: vec![],
-        })
+pub fn tls(allow_insecure: bool) -> Result<ureq::tls::TlsConfig, ShellError> {
+    Ok(ureq::tls::TlsConfig::builder()
+        .provider(ureq::tls::TlsProvider::NativeTls)
+        .root_certs(ureq::tls::RootCerts::PlatformVerifier)
+        .disable_verification(allow_insecure)
+        .build())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn tls_uses_platform_roots_and_explicit_insecure_option() {
+        let secure = tls(false).unwrap();
+        assert_eq!(secure.provider(), ureq::tls::TlsProvider::NativeTls);
+        assert!(matches!(
+            secure.root_certs(),
+            ureq::tls::RootCerts::PlatformVerifier
+        ));
+        assert!(!secure.disable_verification());
+        assert!(tls(true).unwrap().disable_verification());
+    }
 }

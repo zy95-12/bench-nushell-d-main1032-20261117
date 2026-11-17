@@ -1,0 +1,5 @@
+$ cargo check -p nu --locked
+    Blocking waiting for file lock on build directory
+    Checking nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/563f1efa661f4b50093768d31a2725c2bc4713c9dad14310/crates/nu-command)
+    Checking nu v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/563f1efa661f4b50093768d31a2725c2bc4713c9dad14310)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 48s

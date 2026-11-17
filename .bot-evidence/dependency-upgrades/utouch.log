@@ -1,0 +1,38 @@
+$ cargo test -p nu-command --test main commands::utouch
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.32s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-7345e8ece8303ba9)
+
+running 30 tests
+test commands::utouch::change_file_times_to_date ... ignored
+test commands::utouch::change_file_times_to_reference_file_with_date ... ignored
+test commands::utouch::fails_when_glob_has_no_matches ... ok
+test commands::utouch::change_file_mtime_to_reference ... ok
+test commands::utouch::change_modified_and_access_time_of_file_to_today ... ok
+test commands::utouch::creates_file_four_dots ... ok
+test commands::utouch::change_modified_and_access_time_of_dir_to_today ... ok
+test commands::utouch::change_modified_time_of_file_to_today ... ok
+test commands::utouch::change_file_times_if_exists_with_no_create ... ok
+test commands::utouch::change_access_time_of_dir_to_today ... ok
+test commands::utouch::creates_file_three_dots ... ok
+test commands::utouch::change_modified_and_access_time_of_files_matching_glob_to_today ... ok
+test commands::utouch::change_dir_atime_to_reference ... ok
+test commands::utouch::not_create_file_if_it_not_exists ... ok
+test commands::utouch::change_file_times_to_reference_file ... ok
+test commands::utouch::change_access_time_of_file_to_today ... ok
+test commands::utouch::change_dir_times_to_reference_dir ... ok
+test commands::utouch::creates_file_four_dots_quotation_marks ... ok
+test commands::utouch::change_file_times_to_timestamp ... ok
+test commands::utouch::recognizes_stdout ... ok
+test commands::utouch::change_modified_time_of_dir_to_today ... ok
+test commands::utouch::creates_two_files ... ok
+test commands::utouch::creates_a_file_when_it_doesnt_exist ... ok
+test commands::utouch::creates_a_file_when_glob_is_quoted ... ok
+test commands::utouch::change_dir_three_dots_times ... ok
+test commands::utouch::reference_respects_cwd ... ok
+test commands::utouch::follow_symlinks ... ok
+test commands::utouch::respects_cwd ... ok
+test commands::utouch::no_follow_symlinks ... ok
+test commands::utouch::create_a_file_with_tilde ... ok
+
+test result: ok. 28 passed; 0 failed; 2 ignored; 0 measured; 2003 filtered out; finished in 0.09s
+

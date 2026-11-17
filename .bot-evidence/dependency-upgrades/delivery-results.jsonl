@@ -1,0 +1,11 @@
+{"name": "check-delivery", "command": ["cargo", "check", "-p", "nu", "--locked"], "exit_code": 0}
+{"name": "commands-delivery", "command": ["cargo", "test", "-p", "nu-command", "--test", "main", "commands::"], "exit_code": 101}
+{"name": "ucp-delivery", "command": ["cargo", "test", "-p", "nu-command", "--test", "main", "commands::ucp"], "exit_code": 0}
+{"name": "umv-delivery", "command": ["cargo", "test", "-p", "nu-command", "--test", "main", "commands::move_::umv"], "exit_code": 0}
+{"name": "utouch-delivery", "command": ["cargo", "test", "-p", "nu-command", "--test", "main", "commands::utouch"], "exit_code": 0}
+{"name": "mktemp-delivery", "command": ["cargo", "test", "-p", "nu-command", "--test", "main", "commands::mktemp"], "exit_code": 0}
+{"name": "umkdir-delivery", "command": ["cargo", "test", "-p", "nu-command", "--test", "main", "commands::umkdir"], "exit_code": 0}
+{"name": "uname-delivery", "command": ["cargo", "test", "-p", "nu-command", "--test", "main", "commands::uname"], "exit_code": 0}
+{"name": "whoami-delivery", "command": ["cargo", "test", "-p", "nu-command", "--lib", "platform::whoami"], "exit_code": 0}
+{"name": "coreutils-locales-delivery", "command": ["cargo", "test", "-p", "nu-command", "--lib", "coreutils::tests"], "exit_code": 0}
+{"name": "fmt-delivery", "command": ["cargo", "fmt", "--all", "--", "--check"], "exit_code": 0}
