@@ -2,7 +2,7 @@ use super::PathSubcommandArguments;
 use nu_engine::command_prelude::*;
 use nu_path::expand_to_real_path;
 use nu_protocol::engine::StateWorkingSet;
-use std::path::Path;
+use std::path::{Component, Path, PathBuf};
 
 struct Arguments {
     path: Spanned<String>,
@@ -146,16 +146,44 @@ fn relative_to(path: &Path, span: Span, args: &Arguments) -> Value {
     let rhs = expand_to_real_path(&args.path.item);
     match lhs.strip_prefix(&rhs) {
         Ok(p) => Value::string(p.to_string_lossy(), span),
-        Err(e) => Value::error(
-            ShellError::CantConvert {
-                to_type: e.to_string(),
-                from_type: "string".into(),
+        Err(e) => {
+            if is_case_insensitive_filesystem() {
+                if let Some(path) = try_case_insensitive_strip_prefix(&lhs, &rhs) {
+                    return Value::string(path.to_string_lossy(), span);
+                }
+            }
+            Value::error(
+                ShellError::CantConvert {
+                    to_type: e.to_string(),
+                    from_type: "string".into(),
+                    span,
+                    help: None,
+                },
                 span,
-                help: None,
-            },
-            span,
-        ),
+            )
+        }
     }
+}
+
+fn is_case_insensitive_filesystem() -> bool {
+    cfg!(any(windows, target_os = "macos"))
+}
+
+fn try_case_insensitive_strip_prefix(lhs: &Path, rhs: &Path) -> Option<PathBuf> {
+    let mut lhs_components = lhs.components();
+    for rhs_component in rhs.components() {
+        let lhs_component = lhs_components.next()?;
+        let equal = match (lhs_component, rhs_component) {
+            (Component::Normal(a), Component::Normal(b)) => {
+                a.to_str()?.to_lowercase() == b.to_str()?.to_lowercase()
+            }
+            (a, b) => a == b,
+        };
+        if !equal {
+            return None;
+        }
+    }
+    Some(lhs_components.as_path().to_path_buf())
 }
 
 #[cfg(test)]
@@ -167,5 +195,43 @@ mod tests {
         use crate::test_examples;
 
         test_examples(PathRelativeTo {})
+    }
+}
+
+#[cfg(test)]
+mod predictable_prefix_tests {
+    use super::*;
+    #[test]
+    fn predictable_insensitive_components_preserve_suffix() {
+        assert_eq!(
+            try_case_insensitive_strip_prefix(
+                Path::new("Ärea/Child/LeAf"),
+                Path::new("ärea/child")
+            ),
+            Some(PathBuf::from("LeAf"))
+        );
+        assert_eq!(
+            try_case_insensitive_strip_prefix(Path::new("parent/child"), Path::new("PARENT/CHILD")),
+            Some(PathBuf::new())
+        );
+        assert_eq!(
+            try_case_insensitive_strip_prefix(
+                Path::new("parent/childish"),
+                Path::new("PARENT/child")
+            ),
+            None
+        );
+        assert_eq!(
+            try_case_insensitive_strip_prefix(Path::new("parent"), Path::new("parent/child")),
+            None
+        );
+        assert_eq!(
+            try_case_insensitive_strip_prefix(Path::new("/parent"), Path::new("parent")),
+            None
+        );
+        assert_eq!(
+            try_case_insensitive_strip_prefix(Path::new("parent"), Path::new("../parent")),
+            None
+        );
     }
 }

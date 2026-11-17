@@ -1,0 +1,78 @@
+   Compiling nu-path v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nu-path)
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nu-protocol)
+   Compiling nu-test-support v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nu-test-support)
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nu-engine)
+   Compiling nu-parser v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nu-parser)
+   Compiling nu-color-config v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nu-color-config)
+   Compiling nu-table v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nu-table)
+   Compiling nu-cmd-base v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nu-cmd-base)
+   Compiling nuon v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nuon)
+   Compiling nu-cmd-lang v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nu-cmd-lang)
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nu-command)
+error[E0433]: failed to resolve: use of undeclared type `PathBuf`
+   --> crates/nu-command/src/path/relative_to.rs:183:18
+    |
+183 |             Some(PathBuf::from("LeAf"))
+    |                  ^^^^^^^ use of undeclared type `PathBuf`
+    |
+    = note: struct `crate::system::run_external::test::PathBuf` exists but is inaccessible
+help: consider importing one of these structs
+    |
+175 +     use std::path::PathBuf;
+    |
+175 +     use nu_path::PathBuf;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `PathBuf`
+   --> crates/nu-command/src/path/relative_to.rs:187:18
+    |
+187 |             Some(PathBuf::new())
+    |                  ^^^^^^^ use of undeclared type `PathBuf`
+    |
+    = note: struct `crate::system::run_external::test::PathBuf` exists but is inaccessible
+help: consider importing one of these structs
+    |
+175 +     use std::path::PathBuf;
+    |
+175 +     use nu_path::PathBuf;
+    |
+
+error[E0425]: cannot find function `try_case_insensitive_strip_prefix` in this scope
+   --> crates/nu-command/src/path/relative_to.rs:179:13
+    |
+179 |             try_case_insensitive_strip_prefix(
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `try_case_insensitive_strip_prefix` in this scope
+   --> crates/nu-command/src/path/relative_to.rs:186:13
+    |
+186 |             try_case_insensitive_strip_prefix(Path::new("parent/child"), Path::new("PARENT/CHILD")),
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `try_case_insensitive_strip_prefix` in this scope
+   --> crates/nu-command/src/path/relative_to.rs:190:13
+    |
+190 |             try_case_insensitive_strip_prefix(
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `try_case_insensitive_strip_prefix` in this scope
+   --> crates/nu-command/src/path/relative_to.rs:197:13
+    |
+197 |             try_case_insensitive_strip_prefix(Path::new("parent"), Path::new("parent/child")),
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `try_case_insensitive_strip_prefix` in this scope
+   --> crates/nu-command/src/path/relative_to.rs:201:13
+    |
+201 |             try_case_insensitive_strip_prefix(Path::new("/parent"), Path::new("parent")),
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `try_case_insensitive_strip_prefix` in this scope
+   --> crates/nu-command/src/path/relative_to.rs:205:13
+    |
+205 |             try_case_insensitive_strip_prefix(Path::new("parent"), Path::new("../parent")),
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+Some errors have detailed explanations: E0425, E0433.
+For more information about an error, try `rustc --explain E0425`.
+error: could not compile `nu-command` (lib test) due to 8 previous errors

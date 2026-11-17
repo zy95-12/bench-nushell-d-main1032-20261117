@@ -194,6 +194,38 @@ impl CustomValue for PluginCustomValueWithSource {
             )
     }
 
+    fn follow_path_int_with_options(
+        &self,
+        self_span: Span,
+        index: usize,
+        path_span: Span,
+        optional: bool,
+    ) -> Result<Value, ShellError> {
+        self.get_plugin(Some(self_span), "follow cell path")?
+            .custom_value_follow_path_int_with_options(
+                self.clone().into_spanned(self_span),
+                index.into_spanned(path_span),
+                optional,
+            )
+    }
+
+    fn follow_path_string_with_options(
+        &self,
+        self_span: Span,
+        column: String,
+        path_span: Span,
+        optional: bool,
+        casing: nu_protocol::casing::Casing,
+    ) -> Result<Value, ShellError> {
+        self.get_plugin(Some(self_span), "follow cell path")?
+            .custom_value_follow_path_string_with_options(
+                self.clone().into_spanned(self_span),
+                column.into_spanned(path_span),
+                optional,
+                casing,
+            )
+    }
+
     fn partial_cmp(&self, other: &Value) -> Option<Ordering> {
         self.get_plugin(Some(other.span()), "perform comparison")
             .and_then(|plugin| {

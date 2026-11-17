@@ -1,0 +1,23 @@
+$ cargo test -p nu-command --lib formats::to::md
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 16.64s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_command-be47c9922de50ddc)
+
+running 14 tests
+test formats::to::md::tests::render_blockquote ... ok
+test formats::to::md::tests::render_h1 ... ok
+test formats::to::md::tests::render_h3 ... ok
+test formats::to::md::tests::render_h2 ... ok
+test formats::to::md::tests::test_empty_center_column ... ok
+test formats::to::md::tests::test_empty_column_header ... ok
+test formats::to::md::tests::test_center_complex_cell_path ... ok
+test formats::to::md::tests::test_center_non_existing_column ... ok
+test formats::to::md::tests::test_center_multiple_columns ... ok
+test formats::to::md::tests::render_table ... ok
+test formats::to::md::tests::test_center_column ... ok
+test formats::to::md::tests::test_empty_row_value ... ok
+test formats::to::md::tests::test_content_type_metadata ... ok
+test formats::to::md::tests::test_examples ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 427 filtered out; finished in 0.01s
+

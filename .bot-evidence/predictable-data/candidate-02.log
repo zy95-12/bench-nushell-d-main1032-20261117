@@ -1,0 +1,12 @@
+$ cargo test -p nu-command --test main commands::str_length
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 20.90s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-af0b020b004ce5a6)
+
+running 3 tests
+test commands::str_length::predictable_const_scalar_counts ... ok
+test commands::str_length::predictable_scalar_counts ... ok
+test commands::str_length::predictable_incompatible_modes ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 2024 filtered out; finished in 0.03s
+

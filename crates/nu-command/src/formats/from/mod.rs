@@ -27,3 +27,6 @@ pub use xlsx::FromXlsx;
 pub use xml::FromXml;
 pub use yaml::FromYaml;
 pub use yaml::FromYml;
+
+#[cfg(feature = "sqlite")]
+pub(crate) use json::convert_nujson_to_value;

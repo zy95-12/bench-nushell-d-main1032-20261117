@@ -1,0 +1,524 @@
+Accepted tree plus final CLI regression tests only; isolated target and accepted-tree nu binary. Test filter: predictable --nocapture.
+
+running 27 tests
+test commands::get::predictable_const_case_and_optional ... === stderr
+Error: The `get` command doesn't have flag `ignore-case`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: const x = ({Name: 7} | get --ignore-case name); const y = ({Name: 7} | get --optional missing); [$x $y] | to nuon
+    label at line 1, columns 28 to 40: unknown flag
+diagnostic help: Available flags: --help(-h), --optional(-o), --ignore-errors(-i), --sensitive(-s). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::get::predictable_const_case_and_optional' panicked at crates/nu-command/tests/commands/get.rs:240:5:
+assertion `left == right` failed: Error: The `get` command doesn't have flag `ignore-case`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: const x = ({Name: 7} | get --ignore-case name); const y = ({Name: 7} | get --optional missing); [$x $y] | to nuon
+    label at line 1, columns 28 to 40: unknown flag
+diagnostic help: Available flags: --help(-h), --optional(-o), --ignore-errors(-i), --sensitive(-s). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+  left: ""
+ right: "[7, null]"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test commands::get::predictable_exact_case_default ... === stderr
+Error: Name not found
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: {Name: 7} | get name
+    label at line 1, columns 17 to 20: did you mean 'Name'?
+diagnostic code: nu::shell::name_not_found
+
+
+ok
+test commands::get::predictable_ignore_case_nested_and_optional ... === stderr
+Error: The `get` command doesn't have flag `ignore-case`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: {Outer: {Name: 7}} | get --ignore-case outer.name
+    label at line 1, columns 26 to 38: unknown flag
+diagnostic help: Available flags: --help(-h), --optional(-o), --ignore-errors(-i), --sensitive(-s). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::get::predictable_ignore_case_nested_and_optional' panicked at crates/nu-command/tests/commands/get.rs:220:5:
+assertion `left == right` failed: Error: The `get` command doesn't have flag `ignore-case`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: {Outer: {Name: 7}} | get --ignore-case outer.name
+    label at line 1, columns 26 to 38: unknown flag
+diagnostic help: Available flags: --help(-h), --optional(-o), --ignore-errors(-i), --sensitive(-s). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+  left: ""
+ right: "7"
+FAILED
+test commands::get::predictable_optional_ignore_case ... === stderr
+Error: The `get` command doesn't have flag `ignore-case`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: {Name: 7} | get --ignore-case --optional missing | to nuon
+    label at line 1, columns 17 to 29: unknown flag
+diagnostic help: Available flags: --help(-h), --optional(-o), --ignore-errors(-i), --sensitive(-s). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::get::predictable_optional_ignore_case' panicked at crates/nu-command/tests/commands/get.rs:232:5:
+Error: The `get` command doesn't have flag `ignore-case`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: {Name: 7} | get --ignore-case --optional missing | to nuon
+    label at line 1, columns 17 to 29: unknown flag
+diagnostic help: Available flags: --help(-h), --optional(-o), --ignore-errors(-i), --sensitive(-s). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+FAILED
+test commands::get::predictable_stream_case ... === stderr
+Error: The `get` command doesn't have flag `ignore-case`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: [{Name: 1} {NAME: 2}] | each { $in } | get --ignore-case name | to nuon
+    label at line 1, columns 44 to 56: unknown flag
+diagnostic help: Available flags: --help(-h), --optional(-o), --ignore-errors(-i), --sensitive(-s). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::get::predictable_stream_case' panicked at crates/nu-command/tests/commands/get.rs:245:5:
+assertion `left == right` failed: Error: The `get` command doesn't have flag `ignore-case`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: [{Name: 1} {NAME: 2}] | each { $in } | get --ignore-case name | to nuon
+    label at line 1, columns 44 to 56: unknown flag
+diagnostic help: Available flags: --help(-h), --optional(-o), --ignore-errors(-i), --sensitive(-s). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+  left: ""
+ right: "[1, 2]"
+FAILED
+test commands::into_binary::predictable_endian_and_compact ... === stderr
+Error: The `into binary` command doesn't have flag `endian`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: [(258 | into binary --endian big | encode hex) (258 | into binary -e little | encode hex) (258 | into binary -e big -c | encode hex) (258 | into binary -e little -c | encode hex)] | to nuon
+    label at line 1, columns 21 to 28: unknown flag
+diagnostic help: Available flags: --help(-h), --compact(-c). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::into_binary::predictable_endian_and_compact' panicked at crates/nu-command/tests/commands/into_binary.rs:7:5:
+assertion `left == right` failed
+  left: ""
+ right: "[\"0000000000000102\", \"0201000000000000\", \"0102\", \"0201\"]"
+FAILED
+test commands::into_binary::predictable_endian_numeric_types_and_paths ... === stderr
+Error: The `into binary` command doesn't have flag `-e`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: [(true | into binary -e big | encode hex) (1.0 | into binary -e big | encode hex) (1ns | into binary -e big | encode hex) (1b | into binary -e big | encode hex) ({n: 258} | into binary -e big n | get n | encode hex)] | str join ','
+    label at line 1, column 23: unknown flag
+diagnostic help: Available flags: --help(-h), --compact(-c). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::into_binary::predictable_endian_numeric_types_and_paths' panicked at crates/nu-command/tests/commands/into_binary.rs:22:5:
+assertion `left == right` failed
+  left: ""
+ right: "0000000000000001,3FF0000000000000,0000000000000001,0000000000000001,0000000000000102"
+FAILED
+test commands::into_binary::predictable_endian_rejects_unknown ... === stderr
+Error: The `into binary` command doesn't have flag `endian`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: 1 | into binary --endian sideways
+    label at line 1, columns 17 to 24: unknown flag
+diagnostic help: Available flags: --help(-h), --compact(-c). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+ok
+test commands::predictable_formats::predictable_cellpath_interpolation ... === stderr
+
+ok
+test commands::predictable_formats::predictable_cellpath_string ... === stderr
+Error: Command does not support cell-path input.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: $.foo.2.bar? | into string
+    label at line 1, columns 16 to 26: command doesn't support cell-path input
+diagnostic code: nu::parser::input_type_mismatch
+
+
+
+thread 'commands::predictable_formats::predictable_cellpath_string' panicked at crates/nu-command/tests/commands/predictable_formats.rs:10:5:
+assertion `left == right` failed
+  left: ""
+ right: "$.foo.2.bar?"
+FAILED
+test commands::predictable_formats::predictable_nuon_equals ... === stderr
+
+
+thread 'commands::predictable_formats::predictable_nuon_equals' panicked at crates/nu-command/tests/commands/predictable_formats.rs:5:5:
+assertion `left == right` failed
+  left: "[[a=b], {a=b: x=y}]"
+ right: "[[\"a=b\"], {\"a=b\": \"x=y\"}]"
+FAILED
+test commands::predictable_formats::predictable_sqlite_json_roundtrip ... === stderr
+Error: Input type not supported.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: nu --no-config-file --no-std-lib --error-style "plain" -c "let db = ($env.PWD | path join test.db); [{data: {items: [1 {x: true} null]}}] | into sqlite $db; open $db | query db 'select data from main' | get 0.data.items.1.x"
+    label at line 1, column 1: only sql input data is supported
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: let db = ($env.PWD | path join test.db); [{data: {items: [1 {x: true} null]}}] | into sqlite $db; open $db | query db 'select data from main' | get 0.data.items.1.x
+    label at line 1, columns 50 to 76: input type: record<items: list<any>>
+diagnostic code: nu::shell::only_supports_this_input_type
+
+
+
+thread 'commands::predictable_formats::predictable_sqlite_json_roundtrip' panicked at crates/nu-command/tests/commands/predictable_formats.rs:18:9:
+assertion `left == right` failed: Error: Input type not supported.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: nu --no-config-file --no-std-lib --error-style "plain" -c "let db = ($env.PWD | path join test.db); [{data: {items: [1 {x: true} null]}}] | into sqlite $db; open $db | query db 'select data from main' | get 0.data.items.1.x"
+    label at line 1, column 1: only sql input data is supported
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: let db = ($env.PWD | path join test.db); [{data: {items: [1 {x: true} null]}}] | into sqlite $db; open $db | query db 'select data from main' | get 0.data.items.1.x
+    label at line 1, columns 50 to 76: input type: record<items: list<any>>
+diagnostic code: nu::shell::only_supports_this_input_type
+
+
+  left: ""
+ right: "true"
+FAILED
+test commands::predictable_formats::predictable_sqlite_jsonb_roundtrip ... === stderr
+Error: Input type not supported.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: nu --no-config-file --no-std-lib --error-style "plain" -c "let db = ($env.PWD | path join test.db); {seed: 1} | into sqlite $db -t seed; open $db | query db 'create table test (data JSONB, ordinary TEXT, bytes BLOB)'; [{data: {items: [1 2]} ordinary: '{\"x\":1}' bytes: 0x[0102]}] | into sqlite $db -t test; let row = (open $db | query db 'select data, ordinary, bytes, typeof(data) as kind from test' | get 0); if $row.kind != blob { error make {msg: 'JSONB storage must use a blob'} }; if $row.ordinary != '{\"x\":1}' { error make {msg: 'ordinary text changed'} }; if ($row.bytes | encode hex) != '0102' { error make {msg: 'ordinary blob changed'} }; $row.data.items | to nuon"
+    label at line 1, column 1: only sql input data is supported
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: let db = ($env.PWD | path join test.db); {seed: 1} | into sqlite $db -t seed; open $db | query db 'create table test (data JSONB, ordinary TEXT, bytes BLOB)'; [{data: {items: [1 2]} ordinary: '{"x":1}' bytes: 0x[0102]}] | into sqlite $db -t test; let row = (open $db | query db 'select data, ordinary, bytes, typeof(data) as kind from test' | get 0); if $row.kind != blob { error make {msg: 'JSONB storage must use a blob'} }; if $row.ordinary != '{"x":1}' { error make {msg: 'ordinary text changed'} }; if ($row.bytes | encode hex) != '0102' { error make {msg: 'ordinary blob changed'} }; $row.data.items | to nuon
+    label at line 1, columns 168 to 181: input type: record<items: list<int>>
+diagnostic code: nu::shell::only_supports_this_input_type
+
+
+
+thread 'commands::predictable_formats::predictable_sqlite_jsonb_roundtrip' panicked at crates/nu-command/tests/commands/predictable_formats.rs:27:9:
+assertion `left == right` failed: Error: Input type not supported.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: nu --no-config-file --no-std-lib --error-style "plain" -c "let db = ($env.PWD | path join test.db); {seed: 1} | into sqlite $db -t seed; open $db | query db 'create table test (data JSONB, ordinary TEXT, bytes BLOB)'; [{data: {items: [1 2]} ordinary: '{\"x\":1}' bytes: 0x[0102]}] | into sqlite $db -t test; let row = (open $db | query db 'select data, ordinary, bytes, typeof(data) as kind from test' | get 0); if $row.kind != blob { error make {msg: 'JSONB storage must use a blob'} }; if $row.ordinary != '{\"x\":1}' { error make {msg: 'ordinary text changed'} }; if ($row.bytes | encode hex) != '0102' { error make {msg: 'ordinary blob changed'} }; $row.data.items | to nuon"
+    label at line 1, column 1: only sql input data is supported
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: let db = ($env.PWD | path join test.db); {seed: 1} | into sqlite $db -t seed; open $db | query db 'create table test (data JSONB, ordinary TEXT, bytes BLOB)'; [{data: {items: [1 2]} ordinary: '{"x":1}' bytes: 0x[0102]}] | into sqlite $db -t test; let row = (open $db | query db 'select data, ordinary, bytes, typeof(data) as kind from test' | get 0); if $row.kind != blob { error make {msg: 'JSONB storage must use a blob'} }; if $row.ordinary != '{"x":1}' { error make {msg: 'ordinary text changed'} }; if ($row.bytes | encode hex) != '0102' { error make {msg: 'ordinary blob changed'} }; $row.data.items | to nuon
+    label at line 1, columns 168 to 181: input type: record<items: list<int>>
+diagnostic code: nu::shell::only_supports_this_input_type
+
+
+  left: ""
+ right: "[1, 2]"
+FAILED
+test commands::reject::predictable_exact_case_default ... === stderr
+Error: Cannot find column 'name'
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: {Name: 7} | reject name
+    label at line 1, columns 1 to 9: value originates here
+    label at line 1, columns 20 to 23: cannot find column 'name'
+diagnostic code: nu::shell::column_not_found
+
+
+ok
+test commands::reject::predictable_ignore_case_nested_and_optional ... === stderr
+Error: The `reject` command doesn't have flag `ignore-case`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: {Outer: {Name: 7 Other: 8}} | reject --ignore-case outer.name | get Outer.Other
+    label at line 1, columns 38 to 50: unknown flag
+diagnostic help: Available flags: --help(-h), --optional(-o), --ignore-errors(-i). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::reject::predictable_ignore_case_nested_and_optional' panicked at crates/nu-command/tests/commands/reject.rs:200:5:
+assertion `left == right` failed: Error: The `reject` command doesn't have flag `ignore-case`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: {Outer: {Name: 7 Other: 8}} | reject --ignore-case outer.name | get Outer.Other
+    label at line 1, columns 38 to 50: unknown flag
+diagnostic help: Available flags: --help(-h), --optional(-o), --ignore-errors(-i). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+  left: ""
+ right: "8"
+FAILED
+test commands::reject::predictable_optional_ignore_case ... === stderr
+Error: The `reject` command doesn't have flag `ignore-case`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: {Name: 7} | reject --ignore-case --optional missing | to nuon
+    label at line 1, columns 20 to 32: unknown flag
+diagnostic help: Available flags: --help(-h), --optional(-o), --ignore-errors(-i). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::reject::predictable_optional_ignore_case' panicked at crates/nu-command/tests/commands/reject.rs:212:5:
+Error: The `reject` command doesn't have flag `ignore-case`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: {Name: 7} | reject --ignore-case --optional missing | to nuon
+    label at line 1, columns 20 to 32: unknown flag
+diagnostic help: Available flags: --help(-h), --optional(-o), --ignore-errors(-i). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+FAILED
+test commands::relative_to::predictable_component_boundaries ... === stderr
+
+=== stderr
+Error: Can't convert to prefix not found.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: "/foo/barley" | path relative-to "/foo/bar"
+    label at line 1, columns 1 to 13: can't convert string to prefix not found
+diagnostic code: nu::shell::cant_convert
+
+
+ok
+test commands::relative_to::predictable_platform_casing ... === stderr
+Error: Can't convert to prefix not found.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: "parent/Child/Leaf" | path relative-to "PARENT/child"
+    label at line 1, columns 1 to 19: can't convert string to prefix not found
+diagnostic code: nu::shell::cant_convert
+
+
+ok
+test commands::select::predictable_exact_case_default ... === stderr
+Error: Name not found
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: {Name: 7} | select name
+    label at line 1, columns 20 to 23: did you mean 'Name'?
+diagnostic code: nu::shell::name_not_found
+
+
+ok
+test commands::select::predictable_ignore_case_nested_and_optional ... === stderr
+Error: The `select` command doesn't have flag `ignore-case`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: {Outer: {Name: 7}} | select --ignore-case outer.name | get "outer.name"
+    label at line 1, columns 29 to 41: unknown flag
+diagnostic help: Available flags: --help(-h), --optional(-o), --ignore-errors(-i). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::select::predictable_ignore_case_nested_and_optional' panicked at crates/nu-command/tests/commands/select.rs:295:5:
+assertion `left == right` failed: Error: The `select` command doesn't have flag `ignore-case`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: {Outer: {Name: 7}} | select --ignore-case outer.name | get "outer.name"
+    label at line 1, columns 29 to 41: unknown flag
+diagnostic help: Available flags: --help(-h), --optional(-o), --ignore-errors(-i). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+  left: ""
+ right: "7"
+FAILED
+test commands::select::predictable_optional_ignore_case ... === stderr
+Error: The `select` command doesn't have flag `ignore-case`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: {Name: 7} | select --ignore-case --optional missing | to nuon
+    label at line 1, columns 20 to 32: unknown flag
+diagnostic help: Available flags: --help(-h), --optional(-o), --ignore-errors(-i). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::select::predictable_optional_ignore_case' panicked at crates/nu-command/tests/commands/select.rs:307:5:
+Error: The `select` command doesn't have flag `ignore-case`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: {Name: 7} | select --ignore-case --optional missing | to nuon
+    label at line 1, columns 20 to 32: unknown flag
+diagnostic help: Available flags: --help(-h), --optional(-o), --ignore-errors(-i). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+FAILED
+test commands::source::predictable_source_keeps_normal_paths ... === stderr
+Error: File not found
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: source /this/path/does/not/exist
+    label at line 1, columns 8 to 32: File not found: /this/path/does/not/exist
+diagnostic help: sourced files need to be available before your script is run
+diagnostic code: nu::parser::sourced_file_not_found
+
+
+ok
+test commands::str_length::predictable_const_scalar_counts ... === stderr
+Error: The `str length` command doesn't have flag `chars`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: const n = ("hällo" | str length --chars); $n
+    label at line 1, columns 33 to 39: unknown flag
+diagnostic help: Available flags: --help(-h), --grapheme-clusters(-g), --utf-8-bytes(-b). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::str_length::predictable_const_scalar_counts' panicked at crates/nu-command/tests/commands/str_length.rs:13:5:
+assertion `left == right` failed
+  left: ""
+ right: "5"
+FAILED
+test commands::str_length::predictable_incompatible_modes ... === stderr
+Error: The `str length` command doesn't have flag `-c`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: "a" | str length -c -g
+    label at line 1, column 19: unknown flag
+diagnostic help: Available flags: --help(-h), --grapheme-clusters(-g), --utf-8-bytes(-b). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::str_length::predictable_incompatible_modes' panicked at crates/nu-command/tests/commands/str_length.rs:22:9:
+Error: The `str length` command doesn't have flag `-c`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: "a" | str length -c -g
+    label at line 1, column 19: unknown flag
+diagnostic help: Available flags: --help(-h), --grapheme-clusters(-g), --utf-8-bytes(-b). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+FAILED
+test commands::str_length::predictable_scalar_counts ... === stderr
+Error: The `str length` command doesn't have flag `-c`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: [("hällo" | str length) ("hällo" | str length -c) ("é" | str length -c) ("é" | str length -g)] | to nuon
+    label at line 1, column 48: unknown flag
+diagnostic help: Available flags: --help(-h), --grapheme-clusters(-g), --utf-8-bytes(-b). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::str_length::predictable_scalar_counts' panicked at crates/nu-command/tests/commands/str_length.rs:7:5:
+assertion `left == right` failed
+  left: ""
+ right: "[6, 5, 2, 1]"
+FAILED
+test commands::to_md::predictable_optional_markdown_escaping ... === stderr
+Error: The `to md` command doesn't have flag `escape`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: [[a]; ["*x* <b>"]] | to md --escape
+    label at line 1, columns 28 to 35: unknown flag
+diagnostic help: Available flags: --help(-h), --pretty(-p), --per-element(-e), --center(-c). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::to_md::predictable_optional_markdown_escaping' panicked at crates/nu-command/tests/commands/to_md.rs:10:5:
+assertion `left == right` failed
+  left: ""
+ right: "|a||---||\\*x\\* &lt;b&gt;|"
+FAILED
+test commands::to_md::predictable_table_delimiters_and_escaping ... === stderr
+
+
+thread 'commands::to_md::predictable_table_delimiters_and_escaping' panicked at crates/nu-command/tests/commands/to_md.rs:5:5:
+assertion `left == right` failed
+  left: "|a|b||-||x|yz|"
+ right: "|a\\|b||---||x\\|y<br>z|"
+FAILED
+
+failures:
+
+failures:
+    commands::get::predictable_const_case_and_optional
+    commands::get::predictable_ignore_case_nested_and_optional
+    commands::get::predictable_optional_ignore_case
+    commands::get::predictable_stream_case
+    commands::into_binary::predictable_endian_and_compact
+    commands::into_binary::predictable_endian_numeric_types_and_paths
+    commands::predictable_formats::predictable_cellpath_string
+    commands::predictable_formats::predictable_nuon_equals
+    commands::predictable_formats::predictable_sqlite_json_roundtrip
+    commands::predictable_formats::predictable_sqlite_jsonb_roundtrip
+    commands::reject::predictable_ignore_case_nested_and_optional
+    commands::reject::predictable_optional_ignore_case
+    commands::select::predictable_ignore_case_nested_and_optional
+    commands::select::predictable_optional_ignore_case
+    commands::str_length::predictable_const_scalar_counts
+    commands::str_length::predictable_incompatible_modes
+    commands::str_length::predictable_scalar_counts
+    commands::to_md::predictable_optional_markdown_escaping
+    commands::to_md::predictable_table_delimiters_and_escaping
+
+test result: FAILED. 8 passed; 19 failed; 0 ignored; 0 measured; 2019 filtered out; finished in 0.33s
+
+
+exit_code=101

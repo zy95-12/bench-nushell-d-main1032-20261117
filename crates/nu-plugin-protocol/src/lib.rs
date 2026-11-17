@@ -201,6 +201,10 @@ pub enum CustomValueOp {
     FollowPathInt(Spanned<usize>),
     /// [`follow_path_string()`](nu_protocol::CustomValue::follow_path_string)
     FollowPathString(Spanned<String>),
+    /// Index access with optional-path semantics.
+    FollowPathIntWithOptions(Spanned<usize>, bool),
+    /// Key access with optional-path semantics and casing.
+    FollowPathStringWithOptions(Spanned<String>, bool, nu_protocol::casing::Casing),
     /// [`partial_cmp()`](nu_protocol::CustomValue::partial_cmp)
     PartialCmp(Value),
     /// [`operation()`](nu_protocol::CustomValue::operation)
@@ -215,6 +219,8 @@ impl CustomValueOp {
     pub fn name(&self) -> &'static str {
         match self {
             CustomValueOp::ToBaseValue => "to_base_value",
+            CustomValueOp::FollowPathIntWithOptions(..) => "follow_path_int_with_options",
+            CustomValueOp::FollowPathStringWithOptions(..) => "follow_path_string_with_options",
             CustomValueOp::FollowPathInt(_) => "follow_path_int",
             CustomValueOp::FollowPathString(_) => "follow_path_string",
             CustomValueOp::PartialCmp(_) => "partial_cmp",

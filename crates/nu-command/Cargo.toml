@@ -91,6 +91,7 @@ roxmltree = { workspace = true }
 rusqlite = { workspace = true, features = [
 	"bundled",
 	"backup",
+	"column_decltype",
 	"chrono",
 ], optional = true }
 rustls = { workspace = true, optional = true, features = ["ring"] }

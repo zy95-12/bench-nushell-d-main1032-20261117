@@ -1,0 +1,137 @@
+$ cargo test -p nu-path
+   Compiling libc v0.2.174
+   Compiling dirs-sys v0.4.1
+   Compiling pwd v1.4.0
+   Compiling dirs v5.0.1
+   Compiling nu-path v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-path)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.51s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_path-ac9ae929473089ee)
+
+running 45 tests
+test assert_path_eq::test::assert_path_eq_works ... ok
+test components::test::cur_dir_only ... ok
+test components::test::cur_dir_with_trailing_slash ... ok
+test components::test::empty_path ... ok
+test components::test::normal_only ... ok
+test components::test::normal_with_trailing_slash ... ok
+test components::test::parent_dir_only ... ok
+test components::test::parent_dir_with_trailing_slash ... ok
+test components::test::reconstruct_unix_only ... ok
+test components::test::reconstruct_unix_with_trailing_slash ... ok
+test components::test::root ... ok
+test dots::test_expand_dots::backtrack_once ... ok
+test dots::test_expand_dots::backtrack_to_root ... ok
+test dots::test_expand_dots::double_dots ... ok
+test dots::test_expand_dots::empty_path ... ok
+test dots::test_expand_dots::more_single_dots ... ok
+test dots::test_expand_dots::single_dot ... ok
+test dots::test_expand_ndots::empty_path ... ok
+test dots::test_expand_ndots::filenames_with_dots ... ok
+test dots::test_expand_ndots::five_dots ... ok
+test dots::test_expand_ndots::leading_dot_slash ... ok
+test dots::test_expand_ndots::multiple_ndots ... ok
+test dots::test_expand_ndots::root_dir ... ok
+test dots::test_expand_ndots::three_dots ... ok
+test dots::test_expand_ndots::three_dots_with_trailing_slash ... ok
+test dots::test_expand_ndots::trailing_dots ... ok
+test dots::test_expand_ndots::two_dots ... ok
+test predictable_device_tests::predictable_device_paths_are_platform_specific ... ok
+test tilde::tests::does_not_expand_tilde_if_tilde_is_not_first_character ... ok
+test tilde::tests::expand_tilde_preserve_trailing_slash ... ok
+test tilde::tests::path_does_not_include_trailing_separator ... ok
+test tilde::tests::string_with_tilde ... ok
+test tilde::tests::string_with_tilde_double_forward_slash ... ok
+test tilde::tests::string_with_multi_byte_chars ... ok
+test tilde::tests::string_with_tilde_forward_slash ... ok
+test tilde::tests::string_with_tilde_other_user ... ok
+test trailing_slash::tests::strip_non_trailing_windows ... ignored, only for Windows
+test trailing_slash::tests::strip_non_trailing_windows_unc ... ignored, only for Windows
+test trailing_slash::tests::strip_non_trailing_unix ... ok
+test trailing_slash::tests::strip_root_windows ... ignored, only for Windows
+test tilde::tests::user_home_dir_fallback ... ok
+test trailing_slash::tests::strip_root_unix ... ok
+test trailing_slash::tests::strip_trailing_windows ... ignored, only for Windows
+test trailing_slash::tests::strip_trailing_windows_unc ... ignored, only for Windows
+test trailing_slash::tests::strip_trailing_unix ... ok
+
+test result: ok. 40 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nu_path
+
+running 73 tests
+test crates/nu-path/src/path.rs - path::AbsolutePath::canonicalize (line 1022) - compile ... ok
+test crates/nu-path/src/path.rs - path::AbsolutePath::is_symlink (line 1117) - compile ... ok
+test crates/nu-path/src/path.rs - path::AbsolutePath::read_link (line 1065) - compile ... ok
+test crates/nu-path/src/path.rs - path::AbsolutePath::symlink_metadata (line 1139) - compile ... ok
+test crates/nu-path/src/path.rs - path::AbsolutePath::try_exists (line 1093) - compile ... ok
+test crates/nu-path/src/path.rs - path::CanonicalPath (line 152) - compile ... ok
+test crates/nu-path/src/path.rs - path::CanonicalPath::as_absolute (line 1157) - compile ... ok
+test crates/nu-path/src/path.rs - path::CanonicalPathBuf (line 1406) - compile ... ok
+test crates/nu-path/src/path.rs - path::CanonicalPathBuf::into_absolute (line 1857) - compile ... ok
+test crates/nu-path/src/components.rs - components::components (line 39) ... ok
+test crates/nu-path/src/path.rs - path::AbsolutePath (line 116) ... ok
+test crates/nu-path/src/path.rs - path::AbsolutePath (line 128) ... ok
+test crates/nu-path/src/path.rs - path::AbsolutePathBuf (line 1365) ... ok
+test crates/nu-path/src/path.rs - path::AbsolutePathBuf (line 1380) ... ok
+test crates/nu-path/src/path.rs - path::Ancestors (line 1215) ... ok
+test crates/nu-path/src/path.rs - path::Path::as_mut_os_str (line 645) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::exists (line 944) - compile ... ok
+test crates/nu-path/src/path.rs - path::Path::is_absolute (line 672) ... ok
+test crates/nu-path/src/path.rs - path::Path::is_relative (line 689) ... ok
+test crates/nu-path/src/path.rs - path::Path::new (line 620) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::is_dir (line 996) - compile ... ok
+test crates/nu-path/src/path.rs - path::Path::new (line 628) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::is_file (line 965) - compile ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::metadata (line 896) - compile ... ok
+test crates/nu-path/src/path.rs - path::Path::try_absolute (line 705) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::read_dir (line 917) - compile ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::as_any (line 601) ... ok
+test crates/nu-path/src/path.rs - path::Path::try_relative (line 724) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::ancestors (line 307) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::as_os_str (line 199) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::as_std_path (line 860) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::as_relative_std_path (line 821) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::join (line 748) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::iter (line 528) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::cast (line 581) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::display (line 550) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::ends_with (line 419) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::parent (line 272) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::extension (line 472) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::components (line 504) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::file_stem (line 448) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::file_name (line 340) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::has_root (line 843) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::starts_with (line 391) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::to_std_path_buf (line 876) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::strip_prefix (line 361) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::to_path_buf (line 252) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::try_new (line 180) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::with_extension (line 789) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::to_string_lossy (line 234) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::to_str (line 215) ... ok
+test crates/nu-path/src/path.rs - path::PathBuf::new (line 1577) ... ok
+test crates/nu-path/src/path.rs - path::Path<Form>::with_file_name (line 768) ... ok
+test crates/nu-path/src/path.rs - path::PathBuf<Form>::into_any (line 1560) ... ok
+test crates/nu-path/src/path.rs - path::PathBuf::with_capacity (line 1593) ... ok
+test crates/nu-path/src/path.rs - path::PathBuf<Form>::push (line 1708) ... ok
+test crates/nu-path/src/path.rs - path::PathBuf<Form>::pop (line 1451) ... ok
+test crates/nu-path/src/path.rs - path::RelativePathBuf (line 1340) ... ok
+test crates/nu-path/src/path.rs - path::RelativePathBuf (line 1325) ... ok
+test crates/nu-path/src/path.rs - path::PathBuf<Form>::set_extension (line 1777) ... ok
+test crates/nu-path/src/path.rs - path::PathBuf (line 1264) ... ok
+test crates/nu-path/src/path.rs - path::PathBuf<Form>::set_file_name (line 1733) ... ok
+test crates/nu-path/src/path.rs - path::PathBuf<Form>::into_os_string (line 1470) ... ok
+test crates/nu-path/src/path.rs - path::PathBuf<Form>::push (line 1698) ... ok
+test crates/nu-path/src/path.rs - path::PathBuf::try_into_relative (line 1643) ... ok
+test crates/nu-path/src/path.rs - path::PathBuf::try_into_absolute (line 1662) ... ok
+test crates/nu-path/src/path.rs - path::PathBuf::as_mut_os_string (line 1614) ... ok
+test crates/nu-path/src/path.rs - path::PathBuf<Form>::into_std_path_buf (line 1839) ... ok
+test crates/nu-path/src/path.rs - path::RelativePath (line 94) ... ok
+test crates/nu-path/src/path.rs - path::PathBuf<Form>::cast_into (line 1540) ... ok
+test crates/nu-path/src/path.rs - path::RelativePath (line 77) ... ok
+test crates/nu-path/src/path.rs - path::PathBuf<Form>::as_path (line 1432) ... ok
+test crates/nu-path/src/path.rs - path::PathBuf<Form>::into_relative_std_path_buf (line 1822) ... ok
+
+test result: ok. 73 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+

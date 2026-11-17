@@ -4109,6 +4109,9 @@ pub fn find_in_dirs(
         cwd: &str,
         dirs_var_name: Option<&str>,
     ) -> Option<ParserPath> {
+        if nu_path::is_windows_device_path(filename) {
+            return Some(ParserPath::RealPath(filename.into()));
+        }
         // Choose whether to use file-relative or PWD-relative path
         let actual_cwd = working_set
             .files
@@ -4174,6 +4177,9 @@ pub fn find_in_dirs(
         cwd: &str,
         dirs_env: Option<&str>,
     ) -> Option<PathBuf> {
+        if nu_path::is_windows_device_path(filename) {
+            return Some(filename.into());
+        }
         // Choose whether to use file-relative or PWD-relative path
         let actual_cwd = working_set
             .files

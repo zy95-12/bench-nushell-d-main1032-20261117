@@ -1,0 +1,29 @@
+$ cargo test -p nu-command --test main commands::get
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.29s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-af0b020b004ce5a6)
+
+running 21 tests
+test commands::get::errors_fetching_by_accessing_empty_list ... ok
+test commands::get::predictable_exact_case_default ... ok
+test commands::get::get_does_not_delve_too_deep_in_nested_lists ... ok
+test commands::get::errors_fetching_by_column_not_present ... ok
+test commands::get::errors_fetching_by_column_using_a_number ... ok
+test commands::get::errors_fetching_by_index_out_of_bounds ... ok
+test commands::get::test_const ... ok
+test commands::get::ignore_errors_works ... ok
+test commands::get::predictable_optional_ignore_case ... ok
+test commands::get::simple_get_list ... ok
+test commands::get::simple_get_record ... ok
+test commands::get::ignore_multiple ... ok
+test commands::get::predictable_ignore_case_nested_and_optional ... ok
+test commands::get::predictable_const_case_and_optional ... ok
+test commands::get::predictable_stream_case ... ok
+test commands::get::fetches_by_column_path ... ok
+test commands::get::fetches_by_index ... ok
+test commands::get::fetches_more_than_one_column_path ... ok
+test commands::get::quoted_column_access ... ok
+test commands::get::column_paths_are_either_double_quoted_or_regular_unquoted_words_separated_by_dot ... ok
+test commands::get::fetches_a_row ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 2006 filtered out; finished in 0.05s
+

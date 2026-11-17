@@ -1,0 +1,58 @@
+$ cargo test -p nuon
+   Compiling procfs v0.17.0
+   Compiling miette v7.6.0
+   Compiling nu-system v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-system)
+   Compiling nu-utils v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-utils)
+   Compiling nu-path v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-path)
+   Compiling nu-derive-value v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-derive-value)
+   Compiling nu-experimental v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-experimental)
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-protocol)
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-engine)
+   Compiling nu-parser v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-parser)
+   Compiling nuon v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nuon)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 19.02s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nuon-7ea7005747fabdeb)
+
+running 33 tests
+test tests::escaping ... ok
+test tests::escaping2 ... ok
+test tests::binary ... ok
+test tests::duration ... ok
+test tests::binary_roundtrip ... ok
+test tests::bool ... ok
+test tests::float_inf_parsed_properly ... ok
+test tests::float_nan_parsed_properly ... ok
+test tests::float_doesnt_become_int ... ok
+test tests::float_neg_inf_parsed_properly ... ok
+test tests::filesize ... ok
+test tests::negative_int ... ok
+test tests::from_nuon_illegal_table ... ok
+test tests::list_of_numbers ... ok
+test tests::read_code_should_fail_rather_than_panic ... ok
+test tests::range ... ok
+test tests::to_nuon_errs_on_closure ... ignored
+test tests::to_nuon_quotes_empty_string ... ok
+test tests::to_nuon_datetime ... ok
+test tests::read_sample_data ... ok
+test tests::to_nuon_quotes_empty_string_in_list ... ok
+test tests::cell_path ... ok
+test tests::escaping3 ... ok
+test predictable_equals_strings_are_quoted ... ok
+test tests::escaping4 ... ok
+test tests::list_of_strings ... ok
+test tests::escaping5 ... ok
+test tests::to_nuon_quotes_empty_string_in_table ... ok
+test tests::table ... ok
+test tests::records ... ok
+test tests::does_not_quote_strings_unnecessarily ... ok
+test tests::quotes_some_strings_necessarily ... ok
+test tests::to_nuon_converts_columns_with_spaces ... ok
+
+test result: ok. 32 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nuon
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

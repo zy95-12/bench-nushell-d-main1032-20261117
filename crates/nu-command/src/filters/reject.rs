@@ -12,6 +12,7 @@ impl Command for Reject {
 
     fn signature(&self) -> Signature {
         Signature::build("reject")
+            .switch("ignore-case", "access cell paths case-insensitively", None)
             .input_output_types(vec![
                 (Type::record(), Type::record()),
                 (Type::table(), Type::table()),
@@ -90,6 +91,12 @@ impl Command for Reject {
             }
         }
         let span = call.head;
+
+        if call.has_flag(engine_state, stack, "ignore-case")? {
+            for path in &mut new_columns {
+                path.make_insensitive();
+            }
+        }
 
         let optional = call.has_flag(engine_state, stack, "optional")?
             || call.has_flag(engine_state, stack, "ignore-errors")?;

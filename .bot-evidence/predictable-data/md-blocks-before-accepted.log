@@ -1,0 +1,67 @@
+Accepted pre-change tree with new tests only; /tmp/nu-predictable-pre-target/debug/deps/main-0f5c7bf05adfd82f commands::to_md --nocapture --test-threads=1.
+
+running 5 tests
+test commands::to_md::predictable_adjacent_record_tables_have_blank_line ... === stderr
+
+
+thread 'commands::to_md::predictable_adjacent_record_tables_have_blank_line' panicked at crates/nu-command/tests/commands/to_md.rs:16:5:
+assertion `left == right` failed
+  left: "\"|a|\\n|-|\\n|1||b|\\n|-|\\n|2|\""
+ right: "\"|a|\\n|---|\\n|1|\\n\\n|b|\\n|---|\\n|2|\""
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test commands::to_md::predictable_grouped_mixed_schema_tables_have_blank_line ... === stderr
+
+
+thread 'commands::to_md::predictable_grouped_mixed_schema_tables_have_blank_line' panicked at crates/nu-command/tests/commands/to_md.rs:22:5:
+assertion `left == right` failed
+  left: "\"|a|\\n|-|\\n|1|\\n|2|\\n|b|\\n|-|\\n|3|\\n|4|\""
+ right: "\"|a|\\n|---|\\n|1|\\n|2|\\n\\n|b|\\n|---|\\n|3|\\n|4|\""
+FAILED
+test commands::to_md::predictable_heading_blockquote_and_table_boundaries ... === stderr
+
+
+thread 'commands::to_md::predictable_heading_blockquote_and_table_boundaries' panicked at crates/nu-command/tests/commands/to_md.rs:32:5:
+assertion `left == right` failed
+  left: "\"# Title\\n> Quote\\n|a|\\n|-|\\n|1|\""
+ right: "\"# Title\\n> Quote\\n\\n|a|\\n|---|\\n|1|\""
+FAILED
+test commands::to_md::predictable_optional_markdown_escaping ... === stderr
+Error: The `to md` command doesn't have flag `escape`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: [[a]; ["*x* <b>"]] | to md --escape
+    label at line 1, columns 28 to 35: unknown flag
+diagnostic help: Available flags: --help(-h), --pretty(-p), --per-element(-e), --center(-c). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::to_md::predictable_optional_markdown_escaping' panicked at crates/nu-command/tests/commands/to_md.rs:10:5:
+assertion `left == right` failed
+  left: ""
+ right: "|a||---||\\*x\\* &lt;b&gt;|"
+FAILED
+test commands::to_md::predictable_table_delimiters_and_escaping ... === stderr
+
+
+thread 'commands::to_md::predictable_table_delimiters_and_escaping' panicked at crates/nu-command/tests/commands/to_md.rs:5:5:
+assertion `left == right` failed
+  left: "|a|b||-||x|yz|"
+ right: "|a\\|b||---||x\\|y<br>z|"
+FAILED
+
+failures:
+
+failures:
+    commands::to_md::predictable_adjacent_record_tables_have_blank_line
+    commands::to_md::predictable_grouped_mixed_schema_tables_have_blank_line
+    commands::to_md::predictable_heading_blockquote_and_table_boundaries
+    commands::to_md::predictable_optional_markdown_escaping
+    commands::to_md::predictable_table_delimiters_and_escaping
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 2044 filtered out; finished in 0.09s
+
+
+exit_code=101

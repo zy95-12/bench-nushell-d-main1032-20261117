@@ -286,3 +286,23 @@ fn select_with_negative_number_errors_out() {
     let actual = nu!("[1 2 3] | select (-2)");
     assert!(actual.err.contains("negative number"));
 }
+
+#[test]
+fn predictable_ignore_case_nested_and_optional() {
+    let actual = nu_test_support::nu!(
+        r#"{Outer: {Name: 7}} | select --ignore-case outer.name | get "outer.name""#
+    );
+    assert_eq!(actual.out, "7", "{}", actual.err);
+}
+#[test]
+fn predictable_exact_case_default() {
+    let actual = nu_test_support::nu!(r#"{Name: 7} | select name"#);
+    assert!(!actual.err.is_empty());
+}
+
+#[test]
+fn predictable_optional_ignore_case() {
+    let actual =
+        nu_test_support::nu!(r#"{Name: 7} | select --ignore-case --optional missing | to nuon"#);
+    assert!(actual.err.is_empty(), "{}", actual.err);
+}

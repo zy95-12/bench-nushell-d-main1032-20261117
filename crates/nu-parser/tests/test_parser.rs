@@ -3140,3 +3140,12 @@ fn unclosed_delimiters_have_nonempty_source_spans() {
         }
     }
 }
+
+#[cfg(windows)]
+#[test]
+fn predictable_find_device_path_without_canonicalization() {
+    let engine = nu_protocol::engine::EngineState::new();
+    let working_set = nu_protocol::engine::StateWorkingSet::new(&engine);
+    let found = nu_parser::find_in_dirs(r"\\.\NUL", &working_set, ".", None);
+    assert!(found.is_some());
+}
