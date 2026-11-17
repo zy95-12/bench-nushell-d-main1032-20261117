@@ -1,0 +1,119 @@
+   Compiling crossterm v0.28.1
+   Compiling strum v0.26.3
+   Compiling nu-system v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-system)
+   Compiling miette v7.6.0
+   Compiling nu-utils v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-utils)
+   Compiling rmp-serde v1.3.0
+   Compiling chrono-tz-build v0.4.0
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-protocol)
+   Compiling chrono-tz v0.10.0
+   Compiling clap_derive v4.5.18
+   Compiling getrandom v0.2.15
+   Compiling clap v4.5.23
+   Compiling uucore v0.0.30
+   Compiling nu-json v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-json)
+   Compiling ahash v0.8.11
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-engine)
+   Compiling nu-plugin-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-plugin-protocol)
+   Compiling nu-plugin-core v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-plugin-core)
+   Compiling nu-plugin-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-plugin-engine)
+   Compiling nu-parser v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-parser)
+   Compiling futures-sink v0.3.31
+   Compiling icu_normalizer v1.5.0
+   Compiling futures-channel v0.3.31
+   Compiling ring v0.17.13
+   Compiling hashbrown v0.14.5
+   Compiling futures-io v0.3.31
+   Compiling futures-util v0.3.31
+   Compiling darling_core v0.20.10
+   Compiling hashlink v0.9.1
+   Compiling rustls-webpki v0.102.8
+   Compiling idna_adapter v1.2.0
+   Compiling nu-cmd-base v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-cmd-base)
+   Compiling nu-color-config v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-color-config)
+   Compiling rustls v0.23.20
+   Compiling rusqlite v0.31.0
+   Compiling darling_macro v0.20.10
+   Compiling idna v1.0.3
+   Compiling reedline v0.41.0
+   Compiling rand_chacha v0.9.0
+   Compiling oem_cp v2.0.0
+   Compiling url v2.5.4
+   Compiling darling v0.20.10
+   Compiling serde_repr v0.1.19
+   Compiling instability v0.3.7
+   Compiling lsp-types v0.97.0
+   Compiling ureq v3.0.3
+   Compiling rust-embed-impl v8.7.0
+   Compiling rand v0.9.0
+   Compiling nu-table v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-table)
+   Compiling rand_core v0.6.4
+   Compiling alloca v0.4.0
+   Compiling scroll_derive v0.11.1
+   Compiling doc-comment v0.3.3
+   Compiling predicates-core v1.0.8
+   Compiling ratatui v0.29.0
+   Compiling lsp-textdocument v0.4.2
+   Compiling trash v5.2.1
+   Compiling nu-cli v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-cli)
+   Compiling calamine v0.28.0
+   Compiling uu_mv v0.0.30
+   Compiling uu_cp v0.0.30
+   Compiling scroll v0.11.0
+   Compiling uu_uname v0.0.30
+   Compiling ureq v2.12.1
+   Compiling rand_chacha v0.3.1
+   Compiling uu_mktemp v0.0.30
+   Compiling rust-embed v8.7.0
+   Compiling uu_touch v0.0.30
+   Compiling update-informer v1.3.0
+   Compiling multipart-rs v0.1.13
+   Compiling lsp-server v0.7.8
+   Compiling futures-executor v0.3.31
+   Compiling nuon v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nuon)
+   Compiling uu_whoami v0.0.30
+   Compiling uu_mkdir v0.0.30
+   Compiling nu-term-grid v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-term-grid)
+   Compiling termtree v0.4.1
+   Compiling assert_cmd v2.0.16
+   Compiling sdd v3.0.7
+   Compiling plain v0.2.3
+   Compiling tango-bench v0.6.0
+   Compiling difflib v0.4.0
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-command)
+   Compiling predicates v3.1.2
+   Compiling scc v2.3.3
+   Compiling goblin v0.7.1
+   Compiling predicates-tree v1.0.11
+   Compiling nu-lsp v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-lsp)
+   Compiling futures v0.3.31
+   Compiling nu-cmd-extra v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-cmd-extra)
+   Compiling nu-cmd-lang v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-cmd-lang)
+   Compiling rand v0.8.5
+   Compiling nu-explore v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-explore)
+   Compiling nu-std v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-std)
+   Compiling nu-cmd-plugin v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-cmd-plugin)
+   Compiling colorz v1.1.4
+   Compiling bstr v1.11.1
+   Compiling ctrlc v3.4.5
+   Compiling wait-timeout v0.2.0
+   Compiling serial_test_derive v3.2.0
+   Compiling libloading v0.8.6
+   Compiling glob-match v0.2.1
+   Compiling serial_test v3.2.0
+   Compiling nu-test-support v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-test-support)
+   Compiling nu v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 30s
+     Running tests/main.rs (/tmp/nu-streaming-candidate-target/debug/deps/main-31d17ad7e8517ec0)
+
+running 8 tests
+test streaming::streaming_try_break_removes_handler ... ok
+test streaming::streaming_try_continue_removes_handler ... ok
+test streaming::streaming_loop_preserves_enclosing_handler ... ok
+test streaming::streaming_table_configuration_roundtrips ... ok
+test overlays::streaming_overlay_origin_module_is_registered_in_scope ... ok
+test overlays::streaming_overlay_list_includes_hidden_with_status ... ok
+test streaming::streaming_namespace_help_retains_real_commands ... ok
+test streaming::streaming_example_result_spans_are_source_spans ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 1518 filtered out; finished in 0.05s

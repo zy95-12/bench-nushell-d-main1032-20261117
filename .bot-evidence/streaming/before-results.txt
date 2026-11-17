@@ -1,0 +1,12 @@
+build 0
+root 101
+commands 101
+inprocess 101
+config-path 101
+dotnu 0
+commands-final 101
+protocol 101
+cli-variables 101
+inprocess-final 101
+inprocess-final-latest 101
+inprocess-final-fixed-guard 101

@@ -339,6 +339,10 @@ impl UpdateFromValue for TableIndent {
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct TableConfig {
     pub mode: TableMode,
+    /// Maximum buffering duration per streamed table page, in nanoseconds.
+    pub batch_duration: i64,
+    /// Maximum rows per streamed table page (must be positive).
+    pub page_size: usize,
     pub index_mode: TableIndexMode,
     pub show_empty: bool,
     pub padding: TableIndent,
@@ -358,6 +362,8 @@ impl IntoValue for TableConfig {
 
         record! {
             "mode" => self.mode.into_value(span),
+            "batch_duration" => Value::duration(self.batch_duration, span),
+            "page_size" => (self.page_size as i64).into_value(span),
             "index_mode" => self.index_mode.into_value(span),
             "show_empty" => self.show_empty.into_value(span),
             "padding" => self.padding.into_value(span),
@@ -375,6 +381,8 @@ impl Default for TableConfig {
     fn default() -> Self {
         Self {
             mode: TableMode::Rounded,
+            batch_duration: 1_000_000_000,
+            page_size: 1000,
             index_mode: TableIndexMode::Always,
             show_empty: true,
             trim: TrimStrategy::default(),
@@ -403,6 +411,18 @@ impl UpdateFromValue for TableConfig {
             let path = &mut path.push(col);
             match col.as_str() {
                 "mode" => self.mode.update(val, path, errors),
+                "batch_duration" => match val.as_duration() {
+                    Ok(duration) if duration >= 0 => self.batch_duration = duration,
+                    Ok(_) => errors.invalid_value(path, "a non-negative duration", val),
+                    Err(_) => errors.type_mismatch(path, Type::Duration, val),
+                },
+                "page_size" => match val.as_int() {
+                    Ok(size) if size > 0 && usize::try_from(size).is_ok() => {
+                        self.page_size = size as usize
+                    }
+                    Ok(_) => errors.invalid_value(path, "a positive integer", val),
+                    Err(_) => errors.type_mismatch(path, Type::Int, val),
+                },
                 "index_mode" => self.index_mode.update(val, path, errors),
                 "show_empty" => self.show_empty.update(val, path, errors),
                 "trim" => self.trim.update(val, path, errors),
@@ -426,6 +446,58 @@ impl UpdateFromValue for TableConfig {
                 },
                 _ => errors.unknown_option(path, val),
             }
+        }
+    }
+}
+
+#[cfg(test)]
+mod streaming_tests {
+    use super::*;
+    use crate::Config;
+
+    #[test]
+    fn streaming_table_settings_update_and_serialize() {
+        let old = Config::default();
+        let mut config = old.clone();
+        let value = Value::test_record(record! {
+            "table" => Value::test_record(record! {
+                "batch_duration" => Value::test_duration(20_000_000),
+                "page_size" => Value::test_int(2),
+            }),
+        });
+        config.update_from_value(&old, &value).unwrap();
+        let serialized = config.into_value(Span::test_data());
+        let table = serialized
+            .as_record()
+            .unwrap()
+            .get("table")
+            .unwrap()
+            .as_record()
+            .unwrap();
+        assert_eq!(
+            table.get("batch_duration").unwrap(),
+            &Value::test_duration(20_000_000)
+        );
+        assert_eq!(table.get("page_size").unwrap(), &Value::test_int(2));
+    }
+
+    #[test]
+    fn streaming_table_settings_reject_invalid_limits() {
+        for (key, value) in [
+            ("page_size", Value::test_int(0)),
+            ("page_size", Value::test_int(-1)),
+            ("batch_duration", Value::test_duration(-1)),
+            ("batch_duration", Value::test_int(1)),
+        ] {
+            let old = Config::default();
+            let mut config = old.clone();
+            let update =
+                Value::test_record(record! {"table" => Value::test_record(record! {key => value})});
+            assert!(config.update_from_value(&old, &update).is_err());
+            assert_eq!(
+                config.into_value(Span::test_data()),
+                old.into_value(Span::test_data())
+            );
         }
     }
 }

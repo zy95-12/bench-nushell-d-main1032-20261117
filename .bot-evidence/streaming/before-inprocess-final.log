@@ -1,0 +1,62 @@
+   Compiling nu-command v0.106.0 (/tmp/nu-streaming-before/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 10.69s
+     Running tests/streaming.rs (/tmp/nu-streaming-before-target/debug/deps/streaming-d5dfdd00a3aa6c16)
+
+running 7 tests
+test streaming_flatten_pulls_closure_results_on_demand ... FAILED
+test streaming_partial_results_clear_content_type_and_retain_origin ... FAILED
+test streaming_partial_binary_results_clear_content_type ... FAILED
+test streaming_save_custom_values ... FAILED
+test streaming_table_page_size_controls_batches ... FAILED
+test streaming_table_batch_duration_controls_batches ... FAILED
+test streaming_save_preserves_custom_extension_dispatch ... ok
+
+failures:
+
+---- streaming_flatten_pulls_closure_results_on_demand stdout ----
+
+thread 'streaming_flatten_pulls_closure_results_on_demand' panicked at crates/nu-command/tests/streaming.rs:249:5:
+[UnknownFlag("each", "flatten", Span { start: 13, end: 22 }, "Available flags: --help(-h), --keep-empty(-k). Use `--help` for more information.")]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- streaming_partial_results_clear_content_type_and_retain_origin stdout ----
+
+thread 'streaming_partial_results_clear_content_type_and_retain_origin' panicked at crates/nu-command/tests/streaming.rs:78:13:
+assertion `left == right` failed: first 1, stream=false
+  left: Some("application/json")
+ right: None
+
+---- streaming_partial_binary_results_clear_content_type stdout ----
+
+thread 'streaming_partial_binary_results_clear_content_type' panicked at crates/nu-command/tests/streaming.rs:192:13:
+assertion `left == right` failed: first 1, stream=false
+  left: Some("application/octet-stream")
+ right: None
+
+---- streaming_save_custom_values stdout ----
+
+thread 'streaming_save_custom_values' panicked at crates/nu-command/tests/streaming.rs:27:6:
+called `Result::unwrap()` on an `Err` value: CantConvert { to_type: "string", from_type: "save regression", span: Span { start: 9223372036854775807, end: 9223372036854775807 }, help: None }
+
+---- streaming_table_page_size_controls_batches stdout ----
+
+thread 'streaming_table_page_size_controls_batches' panicked at crates/nu-command/tests/streaming.rs:27:6:
+called `Result::unwrap()` on an `Err` value: InvalidConfig { errors: [UnknownOption { path: "$env.config.table.page_size", span: Span { start: 30, end: 31 } }] }
+
+---- streaming_table_batch_duration_controls_batches stdout ----
+
+thread 'streaming_table_batch_duration_controls_batches' panicked at crates/nu-command/tests/streaming.rs:27:6:
+called `Result::unwrap()` on an `Err` value: InvalidConfig { errors: [UnknownOption { path: "$env.config.table.batch_duration", span: Span { start: 35, end: 38 } }] }
+
+
+failures:
+    streaming_flatten_pulls_closure_results_on_demand
+    streaming_partial_binary_results_clear_content_type
+    streaming_partial_results_clear_content_type_and_retain_origin
+    streaming_save_custom_values
+    streaming_table_batch_duration_controls_batches
+    streaming_table_page_size_controls_batches
+
+test result: FAILED. 1 passed; 6 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p nu-command --test streaming`

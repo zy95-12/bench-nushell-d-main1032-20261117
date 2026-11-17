@@ -1,0 +1,194 @@
+   Compiling syn v2.0.90
+   Compiling log v0.4.22
+   Compiling smallvec v1.13.2
+   Compiling byteorder v1.5.0
+   Compiling getrandom v0.2.15
+   Compiling mio v1.0.3
+   Compiling rand_core v0.6.4
+   Compiling aho-corasick v1.1.3
+   Compiling regex-automata v0.4.9
+   Compiling serde_derive v1.0.216
+   Compiling zerocopy-derive v0.7.35
+   Compiling zerocopy v0.7.35
+   Compiling ppv-lite86 v0.2.20
+   Compiling thiserror-impl v2.0.12
+   Compiling serde v1.0.216
+   Compiling thiserror v2.0.12
+   Compiling rand_chacha v0.3.1
+   Compiling rand v0.8.5
+   Compiling bitflags v2.6.0
+   Compiling rustix v0.38.42
+   Compiling chrono v0.4.39
+   Compiling nix v0.29.0
+   Compiling terminal_size v0.4.1
+   Compiling serde_json v1.0.133
+   Compiling phf_generator v0.11.2
+   Compiling thiserror-impl v1.0.69
+   Compiling synstructure v0.13.1
+   Compiling parking_lot_core v0.9.10
+   Compiling parking_lot v0.12.3
+   Compiling thiserror v1.0.69
+   Compiling phf_codegen v0.11.2
+   Compiling regex v1.11.1
+   Compiling zerofrom-derive v0.1.5
+   Compiling signal-hook-mio v0.2.4
+   Compiling crossterm v0.28.1
+   Compiling zerofrom v0.1.5
+   Compiling yoke-derive v0.7.5
+   Compiling buf-trait v0.4.1
+   Compiling byteyarn v0.5.1
+   Compiling parse-zoneinfo v0.3.1
+   Compiling zerovec-derive v0.10.3
+   Compiling yoke v0.7.5
+   Compiling nu-utils v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-utils)
+   Compiling zerovec v0.10.4
+   Compiling chrono-tz-build v0.4.0
+   Compiling displaydoc v0.2.5
+   Compiling ref-cast-impl v1.0.23
+   Compiling procfs-core v0.17.0
+   Compiling ref-cast v1.0.23
+   Compiling chrono-tz v0.10.0
+   Compiling pwd v1.4.0
+   Compiling clap_builder v4.5.23
+   Compiling procfs v0.17.0
+   Compiling proc-macro-error2 v2.0.1
+   Compiling nu-path v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-path)
+   Compiling erased-serde v0.4.5
+   Compiling strum_macros v0.26.4
+   Compiling tinystr v0.7.6
+   Compiling http v1.2.0
+   Compiling typetag-impl v0.2.18
+   Compiling miette-derive v7.6.0
+   Compiling strum v0.26.3
+   Compiling icu_locid v1.5.0
+   Compiling miette v7.6.0
+   Compiling nu-system v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-system)
+   Compiling typetag v0.2.18
+   Compiling nu-derive-value v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-derive-value)
+   Compiling clap v4.5.23
+   Compiling nu-experimental v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-experimental)
+   Compiling xattr v1.3.1
+   Compiling chrono-humanize v0.2.3
+   Compiling icu_provider_macros v1.5.0
+   Compiling httparse v1.9.5
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-protocol)
+   Compiling uucore v0.0.30
+   Compiling icu_provider v1.5.0
+   Compiling icu_locid_transform v1.5.0
+   Compiling icu_collections v1.5.0
+   Compiling futures-macro v0.3.31
+   Compiling futures-util v0.3.31
+   Compiling pest v2.7.15
+   Compiling icu_properties v1.5.1
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-engine)
+   Compiling socket2 v0.5.8
+   Compiling powerfmt v0.2.0
+   Compiling icu_normalizer v1.5.0
+   Compiling rustix v1.0.7
+   Compiling deranged v0.3.11
+   Compiling tokio v1.45.0
+   Compiling pest_meta v2.7.15
+   Compiling tracing-core v0.1.33
+   Compiling num-conv v0.1.0
+   Compiling futures-sink v0.3.31
+   Compiling time-core v0.1.2
+   Compiling num_threads v0.1.7
+   Compiling rustls v0.23.20
+   Compiling tracing v0.1.41
+   Compiling time v0.3.37
+   Compiling nu-parser v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-parser)
+   Compiling tokio-util v0.7.13
+   Compiling rand_chacha v0.9.0
+   Compiling pest_generator v2.7.15
+   Compiling idna_adapter v1.2.0
+   Compiling rustc_version v0.4.1
+   Compiling http-body v1.0.1
+   Compiling linked-hash-map v0.5.6
+   Compiling atomic-waker v1.1.2
+   Compiling zopfli v0.8.1
+   Compiling oem_cp v2.0.0
+   Compiling shadow-rs v1.2.0
+   Compiling h2 v0.4.7
+   Compiling tempfile v3.20.0
+   Compiling nu-json v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-json)
+   Compiling rstest_macros v0.23.0
+   Compiling idna v1.0.3
+   Compiling rand v0.9.0
+   Compiling pest_derive v2.7.15
+   Compiling ureq-proto v0.3.5
+   Compiling futures-channel v0.3.31
+   Compiling serde_spanned v0.6.8
+   Compiling toml_datetime v0.6.8
+   Compiling mio v0.8.11
+   Compiling httpdate v1.0.3
+   Compiling ureq v3.0.3
+   Compiling which v8.0.0
+   Compiling toml_edit v0.22.22
+   Compiling hyper v1.5.1
+   Compiling notify v6.1.1
+   Compiling parse_datetime v0.8.0
+   Compiling pest_consume v1.1.3
+   Compiling url v2.5.4
+   Compiling nu-color-config v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-color-config)
+   Compiling nu-cmd-lang v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-cmd-lang)
+   Compiling zip v4.1.0
+   Compiling nu-cmd-base v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-cmd-base)
+   Compiling serde_urlencoded v0.7.1
+   Compiling fd-lock v4.0.2
+   Compiling relative-path v1.9.3
+   Compiling uu_cp v0.0.30
+   Compiling reedline v0.41.0
+   Compiling calamine v0.28.0
+   Compiling uu_mv v0.0.30
+   Compiling serde_yaml v0.9.34+deprecated
+   Compiling dialoguer v0.11.0
+   Compiling notify-debouncer-full v0.3.2
+   Compiling csv v1.3.1
+   Compiling uu_uname v0.0.30
+   Compiling ureq v2.12.1
+   Compiling wax v0.6.0
+   Compiling nu-table v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-table)
+   Compiling dtparse v2.0.1
+   Compiling human-date-parser v0.3.1
+   Compiling uu_touch v0.0.30
+   Compiling update-informer v1.3.0
+   Compiling hyper-util v0.1.10
+   Compiling toml v0.8.19
+   Compiling multipart-rs v0.1.13
+   Compiling uu_mktemp v0.0.30
+   Compiling http-body-util v0.1.2
+   Compiling nuon v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nuon)
+   Compiling uu_mkdir v0.0.30
+   Compiling uu_whoami v0.0.30
+   Compiling nu-term-grid v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-term-grid)
+   Compiling umask v2.1.0
+   Compiling assert-json-diff v2.0.2
+   Compiling yansi v1.0.1
+   Compiling diff v0.1.13
+   Compiling similar v2.7.0
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-command)
+   Compiling mockito v1.7.0
+   Compiling pretty_assertions v1.4.1
+   Compiling rstest v0.23.0
+   Compiling nu-test-support v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-test-support)
+   Compiling rstest_reuse v0.7.0
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 39s
+     Running tests/main.rs (/tmp/nu-streaming-candidate-target/debug/deps/main-af0b020b004ce5a6)
+
+running 14 tests
+test commands::each::each_group_works ... ok
+test commands::each::each_window_stride ... ok
+test commands::each::each_window ... ok
+test commands::each::each_while_uses_enumerate_index ... ok
+test commands::each::each_no_args_in_block ... ok
+test commands::each::streaming_default_each_keeps_nested_lists ... ok
+test commands::each::streaming_nested_errors_survive_ignoring_closures ... ok
+test commands::each::each_works_separately ... ok
+test commands::each::streaming_flatten_does_not_evaluate_unused_results ... ok
+test commands::each::each_uses_enumerate_index ... ok
+test commands::each::streaming_flatten_preserves_order ... ok
+test commands::each::errors_in_nested_each_show ... ok
+test commands::each::streaming_single_null_skips_closure ... ok
+test commands::each::each_implicit_it_in_block ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 1988 filtered out; finished in 0.12s

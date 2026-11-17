@@ -947,6 +947,8 @@ impl<'a> StateWorkingSet<'a> {
 
         self.use_decls(definitions.decls);
         self.use_modules(definitions.modules);
+        let module_name = self.get_module(origin).name.clone();
+        self.use_modules(vec![(module_name, origin)]);
 
         let mut constants = vec![];
 

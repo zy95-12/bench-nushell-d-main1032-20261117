@@ -193,7 +193,8 @@ fn reject(
     cell_paths: Vec<CellPath>,
 ) -> Result<PipelineData, ShellError> {
     let mut unique_rows: HashSet<usize> = HashSet::new();
-    let metadata = input.metadata();
+    let metadata = input.metadata().map(|m| m.with_content_type(None));
+    let input = input.set_metadata(metadata.clone());
     let mut new_columns = vec![];
     let mut new_rows = vec![];
     for column in cell_paths {
@@ -253,7 +254,7 @@ fn reject(
 
                     value
                 })
-                .into_pipeline_data(span, engine_state.signals().clone());
+                .into_pipeline_data_with_metadata(span, engine_state.signals().clone(), metadata);
 
             Ok(result)
         }

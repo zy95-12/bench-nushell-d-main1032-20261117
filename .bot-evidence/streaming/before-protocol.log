@@ -1,0 +1,86 @@
+   Compiling syn v2.0.90
+   Compiling bitflags v2.6.0
+   Compiling linux-raw-sys v0.4.14
+   Compiling rustix v0.38.42
+   Compiling num-traits v0.2.19
+   Compiling nix v0.29.0
+   Compiling serde_derive v1.0.216
+   Compiling semver v1.0.23
+   Compiling scopeguard v1.2.0
+   Compiling byteorder v1.5.0
+   Compiling smallvec v1.13.2
+   Compiling parking_lot_core v0.9.10
+   Compiling zerocopy v0.7.35
+   Compiling lock_api v0.4.12
+   Compiling thiserror-impl v1.0.69
+   Compiling serde v1.0.216
+   Compiling regex-syntax v0.8.5
+   Compiling chrono v0.4.39
+   Compiling memchr v2.7.4
+   Compiling aho-corasick v1.1.3
+   Compiling regex-automata v0.4.9
+   Compiling serde_json v1.0.133
+   Compiling thiserror v1.0.69
+   Compiling rustc_version v0.4.1
+   Compiling parking_lot v0.12.3
+   Compiling buf-trait v0.4.1
+   Compiling ref-cast-impl v1.0.23
+   Compiling vte v0.14.1
+   Compiling getrandom v0.3.1
+   Compiling once_cell v1.20.2
+   Compiling procfs-core v0.17.0
+   Compiling rustix v1.0.7
+   Compiling flate2 v1.1.2
+   Compiling strip-ansi-escapes v0.2.1
+   Compiling ref-cast v1.0.23
+   Compiling byteyarn v0.5.1
+   Compiling crossterm v0.28.1
+   Compiling rstest_macros v0.23.0
+   Compiling fancy-regex v0.14.0
+   Compiling pwd v1.4.0
+   Compiling thiserror-impl v2.0.12
+   Compiling nu-utils v0.106.0 (/tmp/nu-streaming-before/crates/nu-utils)
+   Compiling thiserror v2.0.12
+   Compiling proc-macro-error2 v2.0.1
+   Compiling erased-serde v0.4.5
+   Compiling nu-path v0.106.0 (/tmp/nu-streaming-before/crates/nu-path)
+   Compiling procfs v0.17.0
+   Compiling regex v1.11.1
+   Compiling miette-derive v7.6.0
+   Compiling typetag-impl v0.2.18
+   Compiling terminal_size v0.4.1
+   Compiling glob v0.3.1
+   Compiling typetag v0.2.18
+   Compiling which v8.0.0
+   Compiling tempfile v3.20.0
+   Compiling miette v7.6.0
+   Compiling nu-system v0.106.0 (/tmp/nu-streaming-before/crates/nu-system)
+   Compiling nu-derive-value v0.106.0 (/tmp/nu-streaming-before/crates/nu-derive-value)
+   Compiling nu-experimental v0.106.0 (/tmp/nu-streaming-before/crates/nu-experimental)
+   Compiling strum_macros v0.26.4
+   Compiling chrono-humanize v0.2.3
+   Compiling rstest v0.23.0
+   Compiling nu-test-support v0.106.0 (/tmp/nu-streaming-before/crates/nu-test-support)
+   Compiling nu-protocol v0.106.0 (/tmp/nu-streaming-before/crates/nu-protocol)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 45.05s
+     Running unittests src/lib.rs (/tmp/nu-streaming-before-target/debug/deps/nu_protocol-692f0a96493dea9a)
+
+running 2 tests
+test config::table::streaming_tests::streaming_table_settings_update_and_serialize ... FAILED
+test config::table::streaming_tests::streaming_table_settings_reject_invalid_limits ... ok
+
+failures:
+
+---- config::table::streaming_tests::streaming_table_settings_update_and_serialize stdout ----
+
+thread 'config::table::streaming_tests::streaming_table_settings_update_and_serialize' panicked at crates/nu-protocol/src/config/table.rs:448:48:
+called `Result::unwrap()` on an `Err` value: InvalidConfig { errors: [UnknownOption { path: "$env.config.table.batch_duration", span: Span { start: 9223372036854775807, end: 9223372036854775807 } }, UnknownOption { path: "$env.config.table.page_size", span: Span { start: 9223372036854775807, end: 9223372036854775807 } }] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    config::table::streaming_tests::streaming_table_settings_update_and_serialize
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 117 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p nu-protocol --lib`

@@ -1,0 +1,15 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on shared package cache
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 09s
+     Running tests/streaming.rs (/tmp/nu-streaming-candidate-target/debug/deps/streaming-d5dfdd00a3aa6c16)
+
+running 6 tests
+test streaming_flatten_pulls_closure_results_on_demand ... ok
+test streaming_save_custom_values ... ok
+test streaming_partial_binary_results_clear_content_type ... ok
+test streaming_table_batch_duration_controls_batches ... ok
+test streaming_table_page_size_controls_batches ... ok
+test streaming_partial_results_clear_content_type_and_retain_origin ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s

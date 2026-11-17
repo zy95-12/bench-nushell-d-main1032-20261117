@@ -26,6 +26,7 @@ pub(crate) struct BlockBuilder {
     pub(crate) register_allocation_state: Vec<bool>,
     pub(crate) file_count: u32,
     pub(crate) loop_stack: Vec<Loop>,
+    pub(crate) error_handler_depth: usize,
 }
 
 impl BlockBuilder {
@@ -42,6 +43,7 @@ impl BlockBuilder {
             register_allocation_state: vec![true],
             file_count: 0,
             loop_stack: vec![],
+            error_handler_depth: 0,
         }
     }
 
@@ -469,6 +471,7 @@ impl BlockBuilder {
         let loop_ = Loop {
             break_label: self.label(None),
             continue_label: self.label(None),
+            error_handler_depth: self.error_handler_depth,
         };
         self.loop_stack.push(loop_);
         loop_
@@ -488,7 +491,11 @@ impl BlockBuilder {
                 msg: "`break` called from outside of a loop".into(),
                 span: Some(span),
             })?;
-        self.jump(loop_.break_label, span)
+        let target = *loop_;
+        for _ in target.error_handler_depth..self.error_handler_depth {
+            self.push(Instruction::PopErrorHandler.into_spanned(span))?;
+        }
+        self.jump(target.break_label, span)
     }
 
     /// Add a loop continuing jump instruction.
@@ -500,7 +507,11 @@ impl BlockBuilder {
                 msg: "`continue` called from outside of a loop".into(),
                 span: Some(span),
             })?;
-        self.jump(loop_.continue_label, span)
+        let target = *loop_;
+        for _ in target.error_handler_depth..self.error_handler_depth {
+            self.push(Instruction::PopErrorHandler.into_spanned(span))?;
+        }
+        self.jump(target.continue_label, span)
     }
 
     /// Pop the loop state. Checks that the loop being ended is the same one that was expected.
@@ -586,6 +597,7 @@ impl BlockBuilder {
 pub(crate) struct Loop {
     pub(crate) break_label: LabelId,
     pub(crate) continue_label: LabelId,
+    pub(crate) error_handler_depth: usize,
 }
 
 /// Add a new comment to an existing one

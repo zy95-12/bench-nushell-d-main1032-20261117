@@ -1,0 +1,19 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.29s
+     Running tests/main.rs (/tmp/nu-streaming-candidate-target/debug/deps/main-af0b020b004ce5a6)
+
+running 13 tests
+test commands::which::correct_precedence_alias_def_custom ... ignored, TODO: Can't have alias with the same name as command
+test commands::which::correctly_report_of_shadowed_alias ... ignored
+test commands::which::multiple_reports_for_alias_def_custom ... ignored, TODO: Can't have alias with the same name as command
+test commands::which::which_alias_ls ... ignored, TODO: Can't have alias recursion
+test commands::which::which_ls ... ok
+test commands::which::which_custom_alias ... ok
+test commands::which::which_accepts_spread_list ... ok
+test commands::which::do_not_show_hidden_aliases ... ok
+test commands::which::one_report_of_multiple_defs ... ok
+test commands::which::do_not_show_hidden_commands ... ok
+test commands::which::which_def_ls ... ok
+test commands::which::def_only_seen_once ... ok
+test commands::which::streaming_which_without_arguments_lists_visible_commands ... ok
+
+test result: ok. 9 passed; 0 failed; 4 ignored; 0 measured; 1989 filtered out; finished in 0.03s

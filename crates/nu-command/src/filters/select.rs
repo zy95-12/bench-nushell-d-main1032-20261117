@@ -226,8 +226,11 @@ fn select(
     }
     let columns = new_columns;
 
+    let metadata = input.metadata().map(|m| m.with_content_type(None));
+    let input = input.set_metadata(metadata);
     let input = if !unique_rows.is_empty() {
-        let metadata = input.metadata();
+        let metadata = input.metadata().map(|m| m.with_content_type(None));
+        let input = input.set_metadata(metadata.clone());
         let pipeline_iter: PipelineIterator = input.into_iter();
 
         NthIterator {

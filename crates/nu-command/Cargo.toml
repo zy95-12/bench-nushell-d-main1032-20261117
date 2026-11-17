@@ -227,6 +227,7 @@ sqlite = ["rusqlite"]
 trash-support = ["trash"]
 
 [dev-dependencies]
+typetag = "0.2"
 nu-cmd-lang = { path = "../nu-cmd-lang", version = "0.106.0" }
 nu-test-support = { path = "../nu-test-support", version = "0.106.0" }
 

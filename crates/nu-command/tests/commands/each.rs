@@ -63,3 +63,45 @@ fn errors_in_nested_each_show() {
     let actual = nu!("[[1,2]] | each {|x| $x | each {|y| error make {msg: \"oh noes\"} } }");
     assert!(actual.err.contains("oh noes"))
 }
+
+#[test]
+fn streaming_flatten_does_not_evaluate_unused_results() {
+    let actual = nu!(
+        r#"[1 2] | each --flatten { 1..3 | each {|x| if $x > 1 { error make {msg: 'overconsumed'} } else { $x } } } | first"#
+    );
+    assert!(actual.err.is_empty(), "{}", actual.err);
+    assert_eq!(actual.out, "1");
+}
+
+#[test]
+fn streaming_flatten_preserves_order() {
+    let actual = nu!("[1 2] | each --flatten {|x| [$x ($x + 10)] } | to nuon");
+    assert!(actual.err.is_empty(), "{}", actual.err);
+    assert_eq!(actual.out, "[1, 11, 2, 12]");
+}
+
+#[test]
+fn streaming_single_null_skips_closure() {
+    for flags in ["", "--keep-empty", "--flatten"] {
+        let actual = nu!(format!(
+            "null | each {flags} {{ error make {{msg: 'called on null'}} }} | length"
+        ));
+        assert!(actual.err.is_empty(), "{}", actual.err);
+        assert_eq!(actual.out, "0");
+    }
+}
+
+#[test]
+fn streaming_nested_errors_survive_ignoring_closures() {
+    let actual = nu!(
+        r#"[1] | each { [2] | each { error make {msg: 'nested failure'} } | each { 42 } } | each { 99 }"#
+    );
+    assert!(actual.err.contains("nested failure"), "{}", actual.err);
+}
+
+#[test]
+fn streaming_default_each_keeps_nested_lists() {
+    let actual = nu!("[1 2] | each {|x| [$x ($x + 10)] } | to nuon");
+    assert!(actual.err.is_empty(), "{}", actual.err);
+    assert_eq!(actual.out, "[[1, 11], [2, 12]]");
+}
