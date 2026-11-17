@@ -23,6 +23,7 @@ If multiple cell paths are given, this will produce a list of values."#
 
     fn signature(&self) -> nu_protocol::Signature {
         Signature::build("get")
+            .switch("ignore-case", "access cell paths case-insensitively", None)
             .input_output_types(vec![
                 (
                     // TODO: This is too permissive; if we could express this
@@ -112,9 +113,16 @@ If multiple cell paths are given, this will produce a list of values."#
         call: &Call,
         input: PipelineData,
     ) -> Result<PipelineData, ShellError> {
-        let cell_path: CellPath = call.req_const(working_set, 0)?;
-        let rest: Vec<CellPath> = call.rest_const(working_set, 1)?;
-        let ignore_errors = call.has_flag_const(working_set, "ignore-errors")?;
+        let mut cell_path: CellPath = call.req_const(working_set, 0)?;
+        let mut rest: Vec<CellPath> = call.rest_const(working_set, 1)?;
+        let ignore_errors = call.has_flag_const(working_set, "ignore-errors")?
+            || call.has_flag_const(working_set, "optional")?;
+        if call.has_flag_const(working_set, "ignore-case")? {
+            cell_path.make_insensitive();
+            for path in &mut rest {
+                path.make_insensitive();
+            }
+        }
         let metadata = input.metadata().map(|m| m.with_content_type(None));
         let input = input.set_metadata(metadata.clone());
         action(
@@ -135,8 +143,14 @@ If multiple cell paths are given, this will produce a list of values."#
         call: &Call,
         input: PipelineData,
     ) -> Result<PipelineData, ShellError> {
-        let cell_path: CellPath = call.req(engine_state, stack, 0)?;
-        let rest: Vec<CellPath> = call.rest(engine_state, stack, 1)?;
+        let mut cell_path: CellPath = call.req(engine_state, stack, 0)?;
+        let mut rest: Vec<CellPath> = call.rest(engine_state, stack, 1)?;
+        if call.has_flag(engine_state, stack, "ignore-case")? {
+            cell_path.make_insensitive();
+            for path in &mut rest {
+                path.make_insensitive();
+            }
+        }
         let optional = call.has_flag(engine_state, stack, "optional")?
             || call.has_flag(engine_state, stack, "ignore-errors")?;
         let metadata = input.metadata().map(|m| m.with_content_type(None));

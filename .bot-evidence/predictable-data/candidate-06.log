@@ -1,0 +1,34 @@
+$ cargo test -p nu-command --test main commands::select
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.30s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-af0b020b004ce5a6)
+
+running 26 tests
+test commands::select::predictable_exact_case_default ... ok
+test commands::select::select_with_negative_number_errors_out ... ok
+test commands::select::selects_a_row ... ok
+test commands::select::select_failed3 ... ok
+test commands::select::select_rows_with_list_spread ... ok
+test commands::select::select_repeated_column ... ok
+test commands::select::complex_nested_columns ... ok
+test commands::select::ignore_errors_works ... ok
+test commands::select::predictable_ignore_case_nested_and_optional ... ok
+test commands::select::column_names_with_spaces ... ok
+test commands::select::ignores_duplicate_columns_selected ... ok
+test commands::select::select_ignores_errors_successfully1 ... ok
+test commands::select::select_failed1 ... ok
+test commands::select::select_single_row_with_variable ... ok
+test commands::select::regular_columns ... ok
+test commands::select::selects_large_row_number ... ok
+test commands::select::select_repeated_rows ... ok
+test commands::select::select_ignores_errors_successfully3 ... ok
+test commands::select::fails_if_given_unknown_column_name ... ok
+test commands::select::select_failed2 ... ok
+test commands::select::predictable_optional_ignore_case ... ok
+test commands::select::select_columns_with_list_spread ... ok
+test commands::select::select_ignores_errors_successfully2 ... ok
+test commands::select::selects_many_rows ... ok
+test commands::select::select_ignores_errors_successfully4 ... ok
+test commands::select::select_on_empty_list_returns_empty_list ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 2001 filtered out; finished in 0.07s
+

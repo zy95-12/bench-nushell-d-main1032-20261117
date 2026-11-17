@@ -437,7 +437,10 @@ fn open_file(
     span: Span,
     append: bool,
 ) -> Result<File, ShellError> {
-    let file: std::io::Result<File> = match (append, path.exists()) {
+    let file: std::io::Result<File> = match (
+        append,
+        path.exists() || nu_path::is_windows_device_path(path),
+    ) {
         (true, true) => std::fs::OpenOptions::new().append(true).open(path),
         _ => {
             // This is a temporary solution until `std::fs::File::create` is fixed on Windows (rust-lang/rust#134893)

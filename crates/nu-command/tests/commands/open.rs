@@ -465,3 +465,10 @@ fn test_metadata_without_raw() {
         assert!(result.out.contains("appveyor.yml"));
     })
 }
+
+#[cfg(windows)]
+#[test]
+fn predictable_device_open_bypasses_glob() {
+    let actual = nu_test_support::nu!(r#"open --raw '\\.\NUL' | bytes length"#);
+    assert_eq!(actual.out, "0", "{}", actual.err);
+}

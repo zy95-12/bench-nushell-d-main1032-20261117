@@ -1,0 +1,268 @@
+$ cargo test -p nu-protocol
+   Compiling nu-utils v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-utils)
+   Compiling nu-path v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-path)
+   Compiling nu-system v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-system)
+   Compiling nu-experimental v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-experimental)
+   Compiling nu-derive-value v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-derive-value)
+   Compiling nu-test-support v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-test-support)
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c998520ac6e6dead357b70604f9f4e2690e19814b042c50f/crates/nu-protocol)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 22.69s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_protocol-692f0a96493dea9a)
+
+running 120 tests
+test ast::call::test::argument_span_unknown ... ok
+test ast::call::test::argument_span_named ... ok
+test ast::call::test::argument_span_positional ... ok
+test ast::cell_path::test::path_member_partial_ord ... ok
+test ast::call::test::call_arguments_span ... ok
+test config::ansi_coloring::tests::test_use_ansi_coloring_false ... ok
+test config::ansi_coloring::tests::test_use_ansi_coloring_true ... ok
+test config::ansi_coloring::tests::test_use_ansi_coloring_auto ... ok
+test config::plugin_gc::tests::reconstruct ... ok
+test config::plugin_gc::tests::update ... ok
+test config::table::streaming_tests::streaming_table_settings_update_and_serialize ... ok
+test engine::engine_state::engine_state_tests::add_file_gives_id ... ok
+test did_you_mean::tests::did_you_mean_examples ... ok
+test engine::engine_state::engine_state_tests::add_file_gives_id_including_parent ... ok
+test engine::engine_state::engine_state_tests::get_plugin_config ... ok
+test engine::engine_state::engine_state_tests::merge_states ... ok
+test engine::engine_state::engine_state_tests::list_variables ... ok
+test engine::engine_state::test_cwd::pwd_is_empty_string ... ok
+test engine::engine_state::test_cwd::pwd_is_non_string_value ... ok
+test engine::engine_state::test_cwd::pwd_is_relative_path ... ok
+test engine::engine_state::test_cwd::pwd_has_trailing_slash ... ok
+test engine::engine_state::test_cwd::pwd_not_set ... ok
+test config::table::streaming_tests::streaming_table_settings_reject_invalid_limits ... ok
+test engine::engine_state::test_cwd::pwd_points_to_root ... ok
+test engine::engine_state::test_cwd::pwd_points_to_normal_directory ... ok
+test engine::engine_state::test_cwd::pwd_points_to_nonexistent_entity ... ok
+test engine::engine_state::test_cwd::pwd_points_to_normal_file ... ok
+test engine::engine_state::test_cwd::pwd_points_to_broken_symlink ... ok
+test engine::engine_state::test_cwd::pwd_points_to_symlink_to_directory ... ok
+test engine::engine_state::test_cwd::stack_pwd_is_empty_string ... ok
+test engine::sequence::output_is_sequential ... ok
+test engine::engine_state::test_cwd::stack_pwd_not_set ... ok
+test engine::stack::test::test_children_changes_override_parent ... ok
+test engine::engine_state::test_cwd::stack_pwd_points_to_normal_directory_with_symlink_components ... ok
+test engine::engine_state::test_cwd::stack_pwd_points_to_normal_directory ... ok
+test engine::stack::test::test_children_changes_persist_in_offspring ... ok
+test engine::engine_state::test_cwd::pwd_points_to_symlink_to_file ... ok
+test engine::stack::test::test_children_dont_see_deleted_values ... ok
+test engine::stack::test::test_children_see_inner_values ... ok
+test engine::stack::test::test_merging_children_back_to_parent ... ok
+test errors::shell_error::bridge::test_bridge_io_error_roundtrip ... ok
+test errors::shell_error::location::test_location_macro ... ok
+test pipeline::byte_stream::tests::chunks_read_binary_passthrough ... ok
+test pipeline::byte_stream::tests::chunks_read_string_clean ... ok
+test errors::shell_error::shell_error_serialize_roundtrip ... ok
+test pipeline::byte_stream::tests::chunks_read_string_split_boundary ... ok
+test engine::variable::tests::compound_mismatch_points_to_the_bad_value ... ok
+test pipeline::byte_stream::tests::chunks_read_string_utf8_error ... ok
+test pipeline::handlers::tests::test_guard_drop ... ok
+test pipeline::byte_stream::tests::chunks_read_unknown_fallback ... ok
+test ty::tests::subtype_relation::test_any_is_top_type ... ok
+test pipeline::handlers::tests::test_multiple_handlers ... ok
+test ty::tests::subtype_relation::test_number_supertype ... ok
+test ty::tests::subtype_relation::test_list_covariance ... ok
+test ty::tests::subtype_relation::test_reflexivity ... ok
+test value::custom_value::predictable_options_tests::predictable_custom_cell_path_options ... ok
+test value::filesize::tests::display_auto_binary::case_1 ... ok
+test value::filesize::tests::display_auto_binary::case_2 ... ok
+test value::filesize::tests::display_auto_binary::case_3 ... ok
+test value::filesize::tests::display_auto_metric::case_1 ... ok
+test value::filesize::tests::display_auto_metric::case_2 ... ok
+test value::filesize::tests::display_auto_metric::case_3 ... ok
+test value::filesize::tests::display_unit::case_2 ... ok
+test value::filesize::tests::display_unit::case_1 ... ok
+test value::filesize::tests::display_unit::case_3 ... ok
+test value::filesize::tests::display_unit::case_4 ... ok
+test value::filesize::tests::display_unit::case_5 ... ok
+test value::from_value::tests::expected_type_default_impl ... ok
+test value::from_value::tests::from_value_vec_u8 ... ok
+test value::test_derive::bytes_from_value ... ok
+test value::test_derive::bytes_into_value ... ok
+test value::test_derive::bytes_roundtrip ... ok
+test value::test_derive::default_field_struct_from_value ... ok
+test value::test_derive::enum_from_value ... ok
+test value::test_derive::enum_incorrect_type ... ok
+test value::test_derive::enum_into_value ... ok
+test value::test_derive::enum_rename_all::from_value ... ok
+test value::test_derive::enum_rename_all::into_value ... ok
+test value::test_derive::enum_roundtrip ... ok
+test value::test_derive::enum_type_name_attr ... ok
+test value::test_derive::enum_unknown_variant ... ok
+test value::test_derive::missing_options ... ok
+test value::test_derive::named_fields_struct_incorrect_type ... ok
+test value::test_derive::named_fields_struct_from_value ... ok
+test value::test_derive::named_fields_struct_missing_value ... ok
+test value::test_derive::named_fields_struct_into_value ... ok
+test value::test_derive::named_fields_struct_rename_all::from_value ... ok
+test value::test_derive::named_fields_struct_rename_all::into_value ... ok
+test value::test_derive::renamed_field_struct_from_value ... ok
+test value::test_derive::renamed_field_struct_into_value ... ok
+test value::test_derive::renamed_field_struct_roundtrip ... ok
+test value::test_derive::renamed_variant_enum_from_value ... ok
+test value::test_derive::named_fields_struct_roundtrip ... ok
+test value::test_derive::renamed_variant_enum_into_value ... ok
+test value::test_derive::renamed_variant_enum_roundtrip ... ok
+test value::test_derive::struct_type_name_attr ... ok
+test value::test_derive::unit_struct_from_value ... ok
+test value::test_derive::unit_struct_into_value ... ok
+test value::test_derive::unit_struct_roundtrip ... ok
+test value::test_derive::unnamed_fields_struct_from_value ... ok
+test value::test_derive::unnamed_fields_struct_incorrect_type ... ok
+test value::test_derive::unnamed_fields_struct_into_value ... ok
+test value::test_derive::unnamed_fields_struct_missing_value ... ok
+test value::test_derive::unnamed_fields_struct_roundtrip ... ok
+test value::tests::at_cell_path::test_lists_with_data_at_cell_path ... ok
+test value::tests::at_cell_path::test_mixed_with_data_at_cell_path ... ok
+test value::tests::at_cell_path::test_nested_insert_data_at_cell_path ... ok
+test value::tests::get_type::test_list ... ok
+test value::tests::at_cell_path::test_record_with_data_at_cell_path ... ok
+test value::tests::at_cell_path::test_nested_upsert_data_at_cell_path ... ok
+test value::tests::is_empty::test_list ... ok
+test value::tests::is_empty::test_record ... ok
+test value::tests::into_string::test_datetime ... ok
+test value::tests::into_string::test_negative_year_datetime ... ok
+test value::tests::is_empty::test_string ... ok
+test value::tests::is_subtype::test_list ... ok
+test value::tests::is_subtype::test_record ... ok
+test value::tests::is_subtype::test_table ... ok
+test value::tests::test_env_as_bool ... ok
+test engine::sequence::output_is_unique_even_under_contention ... ok
+
+test result: ok. 120 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/into_config.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/into_config-6a5268427d75b947)
+
+running 10 tests
+test config_unsupported_key_reverted ... ignored, Figure out how to make test_bins::nu_repl() continue execution after shell errors
+test config_unsupported_type_reverted ... ignored, Figure out how to make test_bins::nu_repl() continue execution after shell errors
+test config_unsupported_value_reverted ... ignored, Figure out how to make test_bins::nu_repl() continue execution after errors
+test config_is_mutable ... ok
+test config_affected_when_mutated ... ok
+test config_preserved_after_do ... ok
+test config_add_unsupported_key ... ok
+test config_add_unsupported_type ... ok
+test config_affected_when_deep_mutated ... ok
+test config_add_unsupported_value ... ok
+
+test result: ok. 7 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/mod.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/mod-afb90de489835241)
+
+running 17 tests
+test pipeline::byte_stream::test_empty_slice_exclusive ... ok
+test pipeline::byte_stream::test_empty_slice_inclusive ... ok
+test pipeline::byte_stream::test_invalid_range_exclusive ... ok
+test pipeline::byte_stream::test_invalid_range_inclusive ... ok
+test pipeline::byte_stream::test_max_end_exclusive ... ok
+test pipeline::byte_stream::test_max_end_inclusive ... ok
+test pipeline::byte_stream::test_negative_end_exclusive ... ok
+test pipeline::byte_stream::test_negative_end_inclusive ... ok
+test pipeline::byte_stream::test_negative_start_and_end_exclusive ... ok
+test pipeline::byte_stream::test_negative_start_and_end_inclusive ... ok
+test pipeline::byte_stream::test_negative_start_exclusive ... ok
+test pipeline::byte_stream::test_negative_start_inclusive ... ok
+test pipeline::byte_stream::test_out_of_bounds_exclusive ... ok
+test pipeline::byte_stream::test_out_of_bounds_inclusive ... ok
+test pipeline::byte_stream::test_simple_positive_slice_exclusive ... ok
+test pipeline::byte_stream::test_simple_positive_slice_exclusive_streaming ... ok
+test pipeline::byte_stream::test_simple_positive_slice_inclusive ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/test_config.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_config-b350d7001368969e)
+
+running 7 tests
+test filesize_format_binary ... ok
+test filesize_mib ... ok
+test plugins ... ok
+test filesize_format_decimal ... ok
+test filesize_mb ... ok
+test narratable_errors ... ok
+test fancy_default_errors ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests/test_pipeline_data.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_pipeline_data-1beca3b6a04fc8b6)
+
+running 1 test
+test test_convert_pipeline_data_to_value ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/test_signature.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_signature-d5fd50978fb16615)
+
+running 5 tests
+test test_signature ... ok
+test test_signature_chained ... ok
+test test_signature_same_short - should panic ... ok
+test test_signature_same_name - should panic ... ok
+test test_signature_round_trip ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/test_value.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_value-fc032fa2985729d3)
+
+running 6 tests
+test float_equality_is_symmetric_at_scaled_epsilon_boundary ... ok
+test negated_prefix_and_suffix_are_string_only ... ok
+test test_comparison_nothing ... ok
+test test_duration_to_string::case_2 ... ok
+test test_duration_to_string::case_1 ... ok
+test test_case_insensitive_env_var ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nu_protocol
+
+running 45 tests
+test crates/nu-protocol/src/errors/labeled_error.rs - errors::labeled_error::LabeledError::with_code (line 83) ... ok
+test crates/nu-protocol/src/ast/unit.rs - ast::unit::Unit::as_str (line 107) ... ok
+test crates/nu-protocol/src/errors/labeled_error.rs - errors::labeled_error::LabeledError::new (line 42) ... ok
+test crates/nu-protocol/src/errors/labeled_error.rs - errors::labeled_error::LabeledError::from_diagnostic (line 145) ... ok
+test crates/nu-protocol/src/engine/stack.rs - engine::stack::Stack::stdout_file (line 732) ... ok
+test crates/nu-protocol/src/errors/labeled_error.rs - errors::labeled_error::LabeledError::with_help (line 113) ... ok
+test crates/nu-protocol/src/errors/labeled_error.rs - errors::labeled_error::LabeledError::with_inner (line 128) ... ok
+test crates/nu-protocol/src/errors/labeled_error.rs - errors::labeled_error::LabeledError::with_label (line 62) ... ok
+test crates/nu-protocol/src/errors/shell_error/io.rs - errors::shell_error::io::ErrorKind::Std (line 157) ... ok
+test crates/nu-protocol/src/errors/labeled_error.rs - errors::labeled_error::LabeledError::with_url (line 98) ... ok
+test crates/nu-protocol/src/errors/shell_error/io.rs - errors::shell_error::io::IoError (line 44) ... ok
+test crates/nu-protocol/src/errors/shell_error/io.rs - errors::shell_error::io::IoError::new_internal (line 305) ... ok
+test crates/nu-protocol/src/errors/shell_error/io.rs - errors::shell_error::io::IoError (line 67) ... ok
+test crates/nu-protocol/src/errors/shell_error/io.rs - errors::shell_error::io::IoError (line 56) ... ok
+test crates/nu-protocol/src/errors/shell_error/io.rs - errors::shell_error::io::IoError::new_internal_with_path (line 336) ... ok
+test crates/nu-protocol/src/span.rs - span::IntoSpanned::into_spanned (line 79) ... ok
+test crates/nu-protocol/src/syntax_shape.rs - syntax_shape::SyntaxShape::to_type (line 132) ... ok
+test crates/nu-protocol/src/pipeline/list_stream.rs - pipeline::list_stream::ListStream::modify (line 97) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::Filesize::largest_binary_unit (line 116) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::Filesize::largest_metric_unit (line 82) ... ok
+test crates/nu-protocol/src/errors/shell_error/io.rs - errors::shell_error::io::IoErrorExt::not_found_as (line 578) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::FilesizeFormatter (line 624) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::FilesizeFormatter::locale (line 769) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::FilesizeFormatter::format (line 789) ... ok
+test crates/nu-protocol/src/value/from_value.rs - value::from_value::FromValue (line 61) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::FilesizeUnit::as_str (line 416) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::FilesizeFormatter::show_unit (line 705) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::FilesizeUnitFormat::as_str (line 534) ... ok
+test crates/nu-protocol/src/value/mod.rs - value::Value::coerce_string (line 442) ... ok
+test crates/nu-protocol/src/value/mod.rs - value::Value::coerce_str (line 383) ... ok
+test crates/nu-protocol/src/value/record.rs - value::record::Record::retain_mut (line 227) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::FilesizeFormatter::precision (line 732) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::FilesizeFormatter::unit (line 676) ... ok
+test crates/nu-protocol/src/value/from_value.rs - value::from_value::FromValue (line 92) ... ok
+test crates/nu-protocol/src/value/into_value.rs - value::into_value::IntoValue (line 63) ... ok
+test crates/nu-protocol/src/value/into_value.rs - value::into_value::IntoValue (line 37) ... ok
+test crates/nu-protocol/src/value/record.rs - value::record::Record::sort_cols (line 347) ... ok
+test crates/nu-protocol/src/value/mod.rs - value::Value::coerce_into_string (line 477) ... ok
+test crates/nu-protocol/src/value/mod.rs - value::Value::coerce_binary (line 621) ... ok
+test crates/nu-protocol/src/value/mod.rs - value::Value::coerce_float (line 291) ... ok
+test crates/nu-protocol/src/value/record.rs - value::record::Record::truncate (line 271) ... ok
+test crates/nu-protocol/src/value/record.rs - value::record::Record::drain (line 319) ... ok
+test crates/nu-protocol/src/value/mod.rs - value::Value::coerce_into_binary (line 644) ... ok
+test crates/nu-protocol/src/value/record.rs - value::record::Record::retain (line 201) ... ok
+test crates/nu-protocol/src/value/record.rs - value::record::Record::deserialize (line 390) ... ok
+
+test result: ok. 45 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+

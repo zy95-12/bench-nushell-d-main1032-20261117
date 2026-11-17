@@ -510,3 +510,13 @@ mod tests {
         );
     }
 }
+
+#[test]
+fn predictable_equals_strings_are_quoted() {
+    let value = nu_protocol::Value::test_list(vec![nu_protocol::Value::test_string("a=b")]);
+    let engine = nu_protocol::engine::EngineState::new();
+    assert_eq!(
+        to_nuon(&engine, &value, ToStyle::Default, None, false).unwrap(),
+        r#"["a=b"]"#
+    );
+}

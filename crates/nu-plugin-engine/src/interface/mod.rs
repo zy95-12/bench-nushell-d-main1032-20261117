@@ -1013,6 +1013,33 @@ impl PluginInterface {
         self.custom_value_op_expecting_value(value, CustomValueOp::FollowPathString(column_name))
     }
 
+    /// Follow an index with cell-path options.
+    pub fn custom_value_follow_path_int_with_options(
+        &self,
+        value: Spanned<PluginCustomValueWithSource>,
+        index: Spanned<usize>,
+        optional: bool,
+    ) -> Result<Value, ShellError> {
+        self.custom_value_op_expecting_value(
+            value,
+            CustomValueOp::FollowPathIntWithOptions(index, optional),
+        )
+    }
+
+    /// Follow a key with cell-path options.
+    pub fn custom_value_follow_path_string_with_options(
+        &self,
+        value: Spanned<PluginCustomValueWithSource>,
+        column: Spanned<String>,
+        optional: bool,
+        casing: nu_protocol::casing::Casing,
+    ) -> Result<Value, ShellError> {
+        self.custom_value_op_expecting_value(
+            value,
+            CustomValueOp::FollowPathStringWithOptions(column, optional, casing),
+        )
+    }
+
     /// Invoke comparison logic for custom values.
     pub fn custom_value_partial_cmp(
         &self,
@@ -1238,6 +1265,8 @@ impl CurrentCallState {
             PluginCall::CustomValueOp(_, op) => {
                 // Handle anything within the op.
                 match op {
+                    CustomValueOp::FollowPathIntWithOptions(..)
+                    | CustomValueOp::FollowPathStringWithOptions(..) => Ok(()),
                     CustomValueOp::ToBaseValue => Ok(()),
                     CustomValueOp::FollowPathInt(_) => Ok(()),
                     CustomValueOp::FollowPathString(_) => Ok(()),

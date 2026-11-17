@@ -1529,3 +1529,42 @@ fn prepare_plugin_call_custom_value_op() {
         }
     }
 }
+
+#[test]
+fn predictable_plugin_cell_path_options_transport() -> Result<(), ShellError> {
+    use nu_protocol::casing::Casing;
+    let test = TestCase::new();
+    let manager = test.plugin("test");
+    let interface = manager.get_interface();
+    start_fake_plugin_call_responder(manager, 2, move |_| {
+        vec![ReceivedPluginCallMessage::Response(
+            PluginCallResponse::PipelineData(PipelineData::Value(Value::test_bool(true), None)),
+        )]
+    });
+    let value = test_plugin_custom_value_with_source();
+    assert_eq!(
+        interface.custom_value_follow_path_string_with_options(
+            value.clone().into_spanned(Span::test_data()),
+            "key".to_owned().into_spanned(Span::test_data()),
+            true,
+            Casing::Insensitive,
+        )?,
+        Value::test_bool(true)
+    );
+    assert!(
+        matches!(test.next_written(), Some(PluginInput::Call(_, PluginCall::CustomValueOp(_, CustomValueOp::FollowPathStringWithOptions(key, true, Casing::Insensitive)))) if key.item == "key")
+    );
+    // Exercise the public interface for numeric options as well.
+    assert_eq!(
+        interface.custom_value_follow_path_int_with_options(
+            value.into_spanned(Span::test_data()),
+            2.into_spanned(Span::test_data()),
+            true
+        )?,
+        Value::test_bool(true)
+    );
+    assert!(
+        matches!(test.next_written(), Some(PluginInput::Call(_, PluginCall::CustomValueOp(_, CustomValueOp::FollowPathIntWithOptions(index, true)))) if index.item == 2)
+    );
+    Ok(())
+}

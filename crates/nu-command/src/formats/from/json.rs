@@ -146,7 +146,7 @@ fn read_json_lines(
     ListStream::new(iter, span, signals)
 }
 
-fn convert_nujson_to_value(value: nu_json::Value, span: Span) -> Value {
+pub(crate) fn convert_nujson_to_value(value: nu_json::Value, span: Span) -> Value {
     match value {
         nu_json::Value::Array(array) => Value::list(
             array

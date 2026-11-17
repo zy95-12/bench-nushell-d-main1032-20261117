@@ -1,0 +1,32 @@
+$ cargo test -p nu-command --test main commands::open
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.30s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-af0b020b004ce5a6)
+
+running 24 tests
+test commands::open::open_no_parameter ... ok
+test commands::open::errors_if_file_not_found ... ok
+test commands::open::test_open_with_converter_flags ... ok
+test commands::open::parses_xml ... ok
+test commands::open::parses_dotfile ... ok
+test commands::open::parses_json ... ok
+test commands::open::parses_tsv ... ok
+test commands::open::open_files_inside_glob_metachars_dir ... ok
+test commands::open::parses_csv ... ok
+test commands::open::open_multiple_files ... ok
+test commands::open::parses_toml ... ok
+test commands::open::parses_file_with_uppercase_extension ... ok
+test commands::open::open_wildcard ... ok
+test commands::open::open_ignore_ansi ... ok
+test commands::open::open_files_with_glob_metachars::case_3 ... ok
+test commands::open::open_files_with_glob_metachars_nw::case_1 ... ok
+test commands::open::test_open_block_command ... ok
+test commands::open::open_files_with_glob_metachars::case_1 ... ok
+test commands::open::open_files_with_glob_metachars::case_4 ... ok
+test commands::open::open_files_with_glob_metachars::case_2 ... ok
+test commands::open::open_files_with_glob_metachars_nw::case_2 ... ok
+test commands::open::parses_file_with_multiple_extensions ... ok
+test commands::open::test_content_types_with_open_raw ... ok
+test commands::open::test_metadata_without_raw ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 2003 filtered out; finished in 0.35s
+

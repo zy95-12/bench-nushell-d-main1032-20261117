@@ -1,0 +1,302 @@
+[
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-path"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-00.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nuon"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-01.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-command",
+      "--test",
+      "main",
+      "commands::str_length"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-02.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-command",
+      "--test",
+      "main",
+      "commands::to_md"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-03.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-command",
+      "--test",
+      "main",
+      "commands::into_binary"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-04.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-command",
+      "--test",
+      "main",
+      "commands::get"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-05.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-command",
+      "--test",
+      "main",
+      "commands::select"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-06.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-command",
+      "--test",
+      "main",
+      "commands::reject"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-07.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-command",
+      "--test",
+      "main",
+      "commands::relative_to"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-08.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-command",
+      "--test",
+      "main",
+      "commands::open"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-09.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-command",
+      "--test",
+      "main",
+      "commands::save"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-10.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-command",
+      "--test",
+      "main",
+      "commands::source"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-11.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-command",
+      "--test",
+      "main",
+      "--features",
+      "sqlite",
+      "predictable"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-12.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-command",
+      "--test",
+      "main",
+      "--features",
+      "sqlite",
+      "commands::database::into_sqlite"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-13.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-command",
+      "--test",
+      "main",
+      "format_conversions::markdown"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-14.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-command",
+      "--lib",
+      "formats::to::md"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-15.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-command",
+      "--lib",
+      "predictable_insensitive"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-16.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-color-config",
+      "predictable_unspecified_theme"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-17.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-protocol"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-18.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-plugin",
+      "-p",
+      "nu-plugin-engine",
+      "-p",
+      "nu-plugin-protocol",
+      "--lib"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-19.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-parser"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-20.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "check",
+      "-p",
+      "nu",
+      "--locked"
+    ],
+    "exit_code": 0,
+    "log": ".bot-evidence/predictable-data/candidate-21.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu",
+      "--test",
+      "main",
+      "repl::test_config_path"
+    ],
+    "exit_code": 101,
+    "log": ".bot-evidence/predictable-data/candidate-22.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "nu-cli",
+      "--test",
+      "main",
+      "completions::variables_completions"
+    ],
+    "exit_code": 101,
+    "log": ".bot-evidence/predictable-data/candidate-23.log"
+  }
+]

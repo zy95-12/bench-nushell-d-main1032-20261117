@@ -104,8 +104,17 @@ impl Command for Open {
             let arg_span = path.span;
             // let path_no_whitespace = &path.item.trim_end_matches(|x| matches!(x, '\x09'..='\x0d'));
 
-            for path in
-                nu_engine::glob_from(&path, &cwd, call_span, None, engine_state.signals().clone())
+            let paths: Box<dyn Iterator<Item = Result<PathBuf, ShellError>>> =
+                if nu_path::is_windows_device_path(path.item.as_ref()) {
+                    Box::new(std::iter::once(Ok(PathBuf::from(path.item.as_ref()))))
+                } else {
+                    nu_engine::glob_from(
+                        &path,
+                        &cwd,
+                        call_span,
+                        None,
+                        engine_state.signals().clone(),
+                    )
                     .map_err(|err| match err {
                         ShellError::Io(mut err) => {
                             err.kind = err.kind.not_found_as(NotFound::File);
@@ -115,7 +124,8 @@ impl Command for Open {
                         _ => err,
                     })?
                     .1
-            {
+                };
+            for path in paths {
                 let path = path?;
                 let path = Path::new(&path);
 

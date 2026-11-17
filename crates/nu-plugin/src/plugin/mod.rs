@@ -170,6 +170,41 @@ pub trait Plugin: Sync {
             .map_err(LabeledError::from)
     }
 
+    /// Follow an index while passing the optional flag to the custom value.
+    fn custom_value_follow_path_int_with_options(
+        &self,
+        engine: &EngineInterface,
+        value: Spanned<Box<dyn CustomValue>>,
+        index: Spanned<usize>,
+        optional: bool,
+    ) -> Result<Value, LabeledError> {
+        if !optional {
+            return self.custom_value_follow_path_int(engine, value, index);
+        }
+        value
+            .item
+            .follow_path_int_with_options(value.span, index.item, index.span, optional)
+            .map_err(LabeledError::from)
+    }
+
+    /// Follow a key while passing optional and casing flags to the custom value.
+    fn custom_value_follow_path_string_with_options(
+        &self,
+        engine: &EngineInterface,
+        value: Spanned<Box<dyn CustomValue>>,
+        column: Spanned<String>,
+        optional: bool,
+        casing: nu_protocol::casing::Casing,
+    ) -> Result<Value, LabeledError> {
+        if !optional && casing == nu_protocol::casing::Casing::Sensitive {
+            return self.custom_value_follow_path_string(engine, value, column);
+        }
+        value
+            .item
+            .follow_path_string_with_options(value.span, column.item, column.span, optional, casing)
+            .map_err(LabeledError::from)
+    }
+
     /// Implement comparison logic for custom values.
     ///
     /// The default implementation of this method just calls [`CustomValue::partial_cmp`], but
@@ -600,6 +635,28 @@ fn custom_value_op(
         CustomValueOp::ToBaseValue => {
             let result = plugin
                 .custom_value_to_base_value(engine, local_value)
+                .map(|value| PipelineData::Value(value, None));
+            engine
+                .write_response(result)
+                .and_then(|writer| writer.write())
+        }
+        CustomValueOp::FollowPathIntWithOptions(index, optional) => {
+            let result = plugin
+                .custom_value_follow_path_int_with_options(engine, local_value, index, optional)
+                .map(|value| PipelineData::Value(value, None));
+            engine
+                .write_response(result)
+                .and_then(|writer| writer.write())
+        }
+        CustomValueOp::FollowPathStringWithOptions(column, optional, casing) => {
+            let result = plugin
+                .custom_value_follow_path_string_with_options(
+                    engine,
+                    local_value,
+                    column,
+                    optional,
+                    casing,
+                )
                 .map(|value| PipelineData::Value(value, None));
             engine
                 .write_response(result)

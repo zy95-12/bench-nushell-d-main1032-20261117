@@ -378,6 +378,7 @@ impl Value {
     /// - `Glob`
     /// - `Binary` (only if valid utf-8)
     /// - `Date`
+    /// - `CellPath`
     ///
     /// ```
     /// # use nu_protocol::Value;
@@ -392,6 +393,7 @@ impl Value {
     ///                 | Value::Glob { .. }
     ///                 | Value::Binary { .. }
     ///                 | Value::Date { .. }
+    ///                 | Value::CellPath { .. }
     ///         ),
     ///         val.coerce_str().is_ok(),
     ///     );
@@ -399,6 +401,7 @@ impl Value {
     /// ```
     pub fn coerce_str(&self) -> Result<Cow<str>, ShellError> {
         match self {
+            Value::CellPath { val, .. } => Ok(Cow::Owned(val.to_string())),
             Value::Bool { val, .. } => Ok(Cow::Owned(val.to_string())),
             Value::Int { val, .. } => Ok(Cow::Owned(val.to_string())),
             Value::Float { val, .. } => Ok(Cow::Owned(val.to_string())),
@@ -434,6 +437,7 @@ impl Value {
     /// - `Glob`
     /// - `Binary` (only if valid utf-8)
     /// - `Date`
+    /// - `CellPath`
     ///
     /// ```
     /// # use nu_protocol::Value;
@@ -448,6 +452,7 @@ impl Value {
     ///                 | Value::Glob { .. }
     ///                 | Value::Binary { .. }
     ///                 | Value::Date { .. }
+    ///                 | Value::CellPath { .. }
     ///         ),
     ///         val.coerce_string().is_ok(),
     ///     );
@@ -467,6 +472,7 @@ impl Value {
     /// - `Glob`
     /// - `Binary` (only if valid utf-8)
     /// - `Date`
+    /// - `CellPath`
     ///
     /// ```
     /// # use nu_protocol::Value;
@@ -481,6 +487,7 @@ impl Value {
     ///                 | Value::Glob { .. }
     ///                 | Value::Binary { .. }
     ///                 | Value::Date { .. }
+    ///                 | Value::CellPath { .. }
     ///         ),
     ///         val.coerce_into_string().is_ok(),
     ///     );
@@ -489,6 +496,7 @@ impl Value {
     pub fn coerce_into_string(self) -> Result<String, ShellError> {
         let span = self.span();
         match self {
+            Value::CellPath { val, .. } => Ok(val.to_string()),
             Value::Bool { val, .. } => Ok(val.to_string()),
             Value::Int { val, .. } => Ok(val.to_string()),
             Value::Float { val, .. } => Ok(val.to_string()),
@@ -2101,7 +2109,7 @@ fn get_value_member<'a>(
                     }
                 }
                 Value::Custom { val, .. } => {
-                    match val.follow_path_int(current.span(), *count, *origin_span)
+                    match val.follow_path_int_with_options(current.span(), *count, *origin_span, *optional)
                     {
                         Ok(val) => Ok(ControlFlow::Continue(Cow::Owned(val))),
                         Err(err) => {
@@ -2198,8 +2206,13 @@ fn get_value_member<'a>(
                     Ok(ControlFlow::Continue(Cow::Owned(Value::list(list, span))))
                 }
                 Value::Custom { val, .. } => {
-                    match val.follow_path_string(current.span(), column_name.clone(), *origin_span)
-                    {
+                    match val.follow_path_string_with_options(
+                        current.span(),
+                        column_name.clone(),
+                        *origin_span,
+                        *optional,
+                        *casing,
+                    ) {
                         Ok(val) => Ok(ControlFlow::Continue(Cow::Owned(val))),
                         Err(err) => {
                             if *optional {

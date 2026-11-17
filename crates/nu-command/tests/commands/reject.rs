@@ -191,3 +191,23 @@ fn test_works_with_integer_path_and_stream() {
 
     assert_eq!(actual.out, "[N, s, h, e, l, l]");
 }
+
+#[test]
+fn predictable_ignore_case_nested_and_optional() {
+    let actual = nu_test_support::nu!(
+        r#"{Outer: {Name: 7 Other: 8}} | reject --ignore-case outer.name | get Outer.Other"#
+    );
+    assert_eq!(actual.out, "8", "{}", actual.err);
+}
+#[test]
+fn predictable_exact_case_default() {
+    let actual = nu_test_support::nu!(r#"{Name: 7} | reject name"#);
+    assert!(!actual.err.is_empty());
+}
+
+#[test]
+fn predictable_optional_ignore_case() {
+    let actual =
+        nu_test_support::nu!(r#"{Name: 7} | reject --ignore-case --optional missing | to nuon"#);
+    assert!(actual.err.is_empty(), "{}", actual.err);
+}

@@ -1,0 +1,18 @@
+   Compiling syn v2.0.90
+   Compiling libc v0.2.174
+   Compiling dirs-sys v0.4.1
+   Compiling dirs v5.0.1
+   Compiling thiserror-impl v1.0.69
+   Compiling ref-cast-impl v1.0.23
+   Compiling ref-cast v1.0.23
+   Compiling thiserror v1.0.69
+   Compiling pwd v1.4.0
+   Compiling nu-path v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/pre-change/crates/nu-path)
+error[E0432]: unresolved import `super::is_windows_device_path`
+  --> crates/nu-path/src/lib.rs:23:9
+   |
+23 |     use super::is_windows_device_path;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no `is_windows_device_path` in the root
+
+For more information about this error, try `rustc --explain E0432`.
+error: could not compile `nu-path` (lib test) due to 1 previous error
