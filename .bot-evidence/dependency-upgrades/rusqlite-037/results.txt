@@ -1,0 +1,13 @@
+check-nu-final: 0 | cargo check -p nu --locked
+check-cli: 0 | cargo check -p nu-cli --locked
+check-command: 0 | cargo check -p nu-command --features sqlite --locked
+build-nu: 0 | cargo build -p nu --locked
+unit-history-final: 101 | cargo test -p nu-cli --lib history --locked
+integration-history: 0 | cargo test -p nu-cli --features plugin --test main history --locked
+command-open: 0 | cargo test -p nu-command --features sqlite --test main commands::open --locked
+command-into-sqlite: 101 | cargo test -p nu-command --features sqlite --test main sqlite --locked
+command-query: 101 | cargo test -p nu-command --features sqlite --test main commands::query::db --locked
+command-stor: 0 | cargo test -p nu-command --features sqlite --test main commands::stor --locked
+command-sqlite-unit: 0 | cargo test -p nu-command --features sqlite --lib sqlite --locked
+fmt: 0 | cargo fmt --all -- --check
+diff: 0 | git diff --check

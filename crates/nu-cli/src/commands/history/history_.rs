@@ -1,3 +1,4 @@
+use crate::SqliteBackedHistory;
 use nu_engine::command_prelude::*;
 use nu_protocol::{
     HistoryFileFormat,
@@ -5,7 +6,6 @@ use nu_protocol::{
 };
 use reedline::{
     FileBackedHistory, History as ReedlineHistory, HistoryItem, SearchDirection, SearchQuery,
-    SqliteBackedHistory,
 };
 
 use super::fields;

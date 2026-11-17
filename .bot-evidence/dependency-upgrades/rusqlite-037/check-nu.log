@@ -1,0 +1,37 @@
+    Checking nu-utils v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-utils)
+    Checking nu-system v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-system)
+    Checking nu-path v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-path)
+   Compiling nu-derive-value v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-derive-value)
+    Checking nu-experimental v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-experimental)
+    Checking nu-json v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-json)
+    Checking rusqlite v0.37.0
+    Checking nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-protocol)
+    Checking reedline v0.42.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/reedline)
+    Checking nu-pretty-hex v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-pretty-hex)
+   Compiling nu-cmd-lang v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-cmd-lang)
+    Checking nu-term-grid v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-term-grid)
+   Compiling nu v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b)
+    Checking nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-engine)
+    Checking nu-plugin-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-plugin-protocol)
+    Checking nu-plugin-core v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-plugin-core)
+    Checking nu-color-config v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-color-config)
+    Checking nu-plugin-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-plugin-engine)
+    Checking nu-table v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-table)
+    Checking nu-parser v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-parser)
+    Checking nu-cmd-plugin v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-cmd-plugin)
+    Checking nu-cmd-base v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-cmd-base)
+    Checking nuon v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nuon)
+    Checking nu-std v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-std)
+    Checking nu-cli v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-cli)
+    Checking nu-cmd-extra v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-cmd-extra)
+    Checking nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-command)
+    Checking nu-lsp v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-lsp)
+error[E0432]: unresolved import `rusqlite::DatabaseName`
+  --> crates/nu-command/src/database/values/sqlite.rs:10:17
+   |
+10 |     Connection, DatabaseName, Error as SqliteError, OpenFlags, Row, Statement, ToSql,
+   |                 ^^^^^^^^^^^^ no `DatabaseName` in the root
+
+    Checking nu-explore v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-explore)
+For more information about this error, try `rustc --explain E0432`.
+error: could not compile `nu-command` (lib) due to 1 previous error

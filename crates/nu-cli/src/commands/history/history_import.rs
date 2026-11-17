@@ -1,3 +1,4 @@
+use crate::SqliteBackedHistory;
 use std::path::{Path, PathBuf};
 
 use nu_engine::command_prelude::*;
@@ -6,9 +7,7 @@ use nu_protocol::{
     shell_error::{self, io::IoError},
 };
 
-use reedline::{
-    FileBackedHistory, History, HistoryItem, ReedlineError, SearchQuery, SqliteBackedHistory,
-};
+use reedline::{FileBackedHistory, History, HistoryItem, ReedlineError, SearchQuery};
 
 use super::fields;
 

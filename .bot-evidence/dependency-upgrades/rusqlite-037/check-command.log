@@ -1,0 +1,20 @@
+$ cargo check -p nu-command --features sqlite --locked
+    Checking nu-utils v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-utils)
+    Checking nu-system v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-system)
+    Checking rustls v0.23.20
+    Checking nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-protocol)
+    Checking nu-json v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-json)
+    Checking ureq v3.0.3
+    Checking reedline v0.42.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/reedline)
+    Checking update-informer v1.3.0
+    Checking nu-term-grid v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-term-grid)
+    Checking nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-engine)
+    Checking nu-parser v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-parser)
+    Checking nu-color-config v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-color-config)
+    Checking nu-table v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-table)
+    Checking nu-cmd-base v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-cmd-base)
+    Checking nuon v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nuon)
+    Checking nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-command)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 11.86s
+
+EXIT STATUS: 0

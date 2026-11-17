@@ -1,0 +1,20 @@
+    Blocking waiting for file lock on build directory
+   Compiling nu-cli v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-cli)
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 26.35s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-900eed7639c82d97)
+
+running 9 tests
+test commands::history_import::history_import_pipe_string ... ok
+test commands::history_import::history_import_pipe_record ... ok
+test commands::history_import::sqlite_history_long_preserves_metadata ... ok
+test commands::history_import::to_empty_plaintext ... ok
+test commands::history_import::to_empty_sqlite ... ok
+test commands::history_import::to_existing::case_1_plaintext ... ok
+test commands::history_import::to_existing::case_2_sqlite ... ok
+test commands::history_import::history_import_formats_reopen::case_1_plaintext_to_sqlite ... ok
+test commands::history_import::history_import_formats_reopen::case_2_sqlite_to_plaintext ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 107 filtered out; finished in 0.11s
+
+EXIT STATUS: 0

@@ -1,0 +1,15 @@
+$ cargo test -p nu-command --features sqlite --lib sqlite --locked
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 25.40s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_command-b62961768e53e8b0)
+
+running 4 tests
+test database::values::sqlite::test::can_read_empty_db ... ok
+test database::commands::into_sqlite::tests::test_examples ... ok
+test database::values::sqlite::test::can_read_empty_table ... ok
+test database::values::sqlite::test::can_read_null_and_non_null_data ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 463 filtered out; finished in 0.00s
+
+
+EXIT STATUS: 0

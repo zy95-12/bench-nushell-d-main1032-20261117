@@ -1,0 +1,24 @@
+    Blocking waiting for file lock on build directory
+   Compiling reedline v0.42.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/reedline)
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-command)
+   Compiling nu-cli v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 39.51s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_cli-e34ddd2b9fc03eb9)
+
+running 12 tests
+test commands::history::history_import::tests::test_backup_no_file ... ok
+test commands::history::history_import::tests::test_find_backup_path::case_2_backup_exists ... ok
+test commands::history::history_import::tests::test_find_backup_path::case_1_no_backup ... ok
+test commands::history::history_import::tests::test_find_backup_path::case_3_multiple_backups_exists ... ok
+test commands::history::history_import::tests::test_item_from_value_string ... ok
+test commands::history::history_import::tests::test_item_from_value_record_bad_type ... ok
+test commands::history::history_import::tests::test_item_from_value_record_extra_field ... ok
+test commands::history::history_import::tests::test_item_from_value_record ... ok
+test sqlite_history::tests::timestamps_and_sessions ... ok
+test commands::history::history_import::tests::test_backup ... ok
+test sqlite_history::tests::previous_format_and_schema ... ok
+test sqlite_history::tests::persistence_filters_and_mutations ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 47 filtered out; finished in 0.17s
+
+EXIT STATUS: 0

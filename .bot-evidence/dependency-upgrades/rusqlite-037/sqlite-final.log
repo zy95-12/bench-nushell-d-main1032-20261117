@@ -1,0 +1,23 @@
+$ cargo test -p nu-command --features sqlite --test main sqlite --locked
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/b398feac214eb79844c4b870ed541ef483ba8b96c31d9a7b/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.32s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-a0c16a89ba95e9e0)
+
+running 12 tests
+test commands::database::into_sqlite::into_sqlite_empty ... ok
+test commands::open::parses_sqlite_get_column_name ... ok
+test commands::open::parses_sqlite ... ok
+test commands::database::into_sqlite::into_sqlite_values_first_column_null ... ok
+test commands::database::into_sqlite::into_sqlite_values ... ok
+test commands::database::into_sqlite::into_sqlite_schema ... ok
+test commands::query::db::sqlite_storage_query_roundtrip ... ok
+test commands::predictable_formats::predictable_sqlite_json_roundtrip ... ok
+test commands::predictable_formats::predictable_sqlite_jsonb_roundtrip ... ok
+test commands::database::into_sqlite::into_sqlite_values_first_column_null_preexisting_db ... ok
+test commands::database::into_sqlite::into_sqlite_existing_db_append ... ok
+test commands::database::into_sqlite::into_sqlite_big_insert ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 2041 filtered out; finished in 2.74s
+
+
+EXIT STATUS: 0
