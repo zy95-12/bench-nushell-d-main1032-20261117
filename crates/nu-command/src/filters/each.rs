@@ -43,6 +43,11 @@ with 'transpose' first."#
                 SyntaxShape::Closure(Some(vec![SyntaxShape::Any])),
                 "The closure to run.",
             )
+            .switch(
+                "flatten",
+                "stream closure results into a single list",
+                Some('f'),
+            )
             .switch("keep-empty", "keep empty result cells", Some('k'))
             .allow_variants_without_examples(true)
             .category(Category::Filters)
@@ -104,62 +109,29 @@ with 'transpose' first."#
         let closure: Closure = call.req(engine_state, stack, 0)?;
         let keep_empty = call.has_flag(engine_state, stack, "keep-empty")?;
 
-        let metadata = input.metadata();
+        let metadata = input.metadata().map(|m| m.with_content_type(None));
+        let flatten = call.has_flag(engine_state, stack, "flatten")?;
         match input {
-            PipelineData::Empty => Ok(PipelineData::Empty),
+            PipelineData::Empty | PipelineData::Value(Value::Nothing { .. }, _) => {
+                Ok(PipelineData::Empty)
+            }
             PipelineData::Value(Value::Range { .. }, ..)
             | PipelineData::Value(Value::List { .. }, ..)
             | PipelineData::ListStream(..) => {
                 let mut closure = ClosureEval::new(engine_state, stack, closure);
                 Ok(input
                     .into_iter()
-                    .map_while(move |value| {
-                        let span = value.span();
-                        let is_error = value.is_error();
-                        match closure.run_with_value(value) {
-                            Ok(PipelineData::ListStream(s, ..)) => {
-                                let mut vals = vec![];
-                                for v in s {
-                                    if let Value::Error { .. } = v {
-                                        return Some(v);
-                                    } else {
-                                        vals.push(v)
-                                    }
-                                }
-                                Some(Value::list(vals, span))
-                            }
-                            Ok(data) => Some(data.into_value(head).unwrap_or_else(|err| {
-                                Value::error(chain_error_with_input(err, is_error, span), span)
-                            })),
-                            Err(error) => {
-                                let error = chain_error_with_input(error, is_error, span);
-                                Some(Value::error(error, span))
-                            }
-                        }
-                    })
+                    .flat_map(move |value| each_result(&mut closure, value, head, flatten))
                     .into_pipeline_data(head, engine_state.signals().clone()))
             }
             PipelineData::ByteStream(stream, ..) => {
                 if let Some(chunks) = stream.chunks() {
                     let mut closure = ClosureEval::new(engine_state, stack, closure);
                     Ok(chunks
-                        .map_while(move |value| {
-                            let value = match value {
-                                Ok(value) => value,
-                                Err(err) => return Some(Value::error(err, head)),
-                            };
-
-                            let span = value.span();
-                            let is_error = value.is_error();
-                            match closure
-                                .run_with_value(value)
-                                .and_then(|data| data.into_value(head))
-                            {
-                                Ok(value) => Some(value),
-                                Err(error) => {
-                                    let error = chain_error_with_input(error, is_error, span);
-                                    Some(Value::error(error, span))
-                                }
+                        .flat_map(move |value| match value {
+                            Ok(value) => each_result(&mut closure, value, head, flatten),
+                            Err(err) => {
+                                PipelineData::Value(Value::error(err, head), None).into_iter()
                             }
                         })
                         .into_pipeline_data(head, engine_state.signals().clone()))
@@ -169,6 +141,7 @@ with 'transpose' first."#
             }
             // This match allows non-iterables to be accepted,
             // which is currently considered undesirable (Nov 2022).
+            PipelineData::Value(value @ Value::Error { .. }, _) => Ok(value.into_pipeline_data()),
             PipelineData::Value(value, ..) => {
                 ClosureEvalOnce::new(engine_state, stack, closure).run_with_value(value)
             }
@@ -181,6 +154,40 @@ with 'transpose' first."#
         })
         .map(|data| data.set_metadata(metadata))
     }
+}
+
+// Preserve incoming errors even when a closure ignores its argument. Otherwise a nested
+// iterator can silently turn an upstream failure into a successful value.
+fn each_result(
+    closure: &mut ClosureEval,
+    value: Value,
+    head: Span,
+    flatten: bool,
+) -> nu_protocol::PipelineIterator {
+    let span = value.span();
+    if value.is_error() {
+        return PipelineData::Value(value, None).into_iter();
+    }
+    let result = match closure.run_with_value(value) {
+        Ok(data) if flatten => return data.into_iter(),
+        Ok(PipelineData::ListStream(stream, _)) => {
+            let mut values = Vec::new();
+            for value in stream {
+                if value.is_error() {
+                    return PipelineData::Value(value, None).into_iter();
+                }
+                values.push(value);
+            }
+            Ok(Value::list(values, span))
+        }
+        Ok(data) => data.into_value(head),
+        Err(err) => Err(err),
+    };
+    std::iter::once(
+        result.unwrap_or_else(|err| Value::error(chain_error_with_input(err, false, span), span)),
+    )
+    .into_pipeline_data(head, nu_protocol::Signals::empty())
+    .into_iter()
 }
 
 #[cfg(test)]

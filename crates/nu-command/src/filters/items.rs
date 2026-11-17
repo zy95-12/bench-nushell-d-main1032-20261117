@@ -40,7 +40,8 @@ impl Command for Items {
         let head = call.head;
         let closure: Closure = call.req(engine_state, stack, 0)?;
 
-        let metadata = input.metadata();
+        let metadata = input.metadata().map(|m| m.with_content_type(None));
+        let input = input.set_metadata(metadata.clone());
         match input {
             PipelineData::Empty => Ok(PipelineData::Empty),
             PipelineData::Value(value, ..) => {

@@ -7,7 +7,9 @@ pub(crate) fn get_engine_state() -> EngineState {
     let engine_state = nu_command::add_shell_command_context(engine_state);
     let engine_state = nu_cmd_extra::add_extra_command_context(engine_state);
     let engine_state = nu_cli::add_cli_context(engine_state);
-    nu_explore::add_explore_context(engine_state)
+    let mut engine_state = nu_explore::add_explore_context(engine_state);
+    nu_engine::add_namespace_commands(&mut engine_state).expect("register namespace commands");
+    engine_state
 }
 
 #[cfg(test)]

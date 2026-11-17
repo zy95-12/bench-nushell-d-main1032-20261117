@@ -1,0 +1,21 @@
+    Blocking waiting for file lock on build directory
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 35.40s
+     Running tests/main.rs (/tmp/nu-streaming-candidate-target/debug/deps/main-af0b020b004ce5a6)
+
+running 14 tests
+test commands::each::each_while_uses_enumerate_index ... ok
+test commands::each::streaming_default_each_keeps_nested_lists ... ok
+test commands::each::each_window_stride ... ok
+test commands::each::each_window ... ok
+test commands::each::streaming_flatten_preserves_order ... ok
+test commands::each::each_group_works ... ok
+test commands::each::each_uses_enumerate_index ... ok
+test commands::each::streaming_nested_errors_survive_ignoring_closures ... ok
+test commands::each::errors_in_nested_each_show ... ok
+test commands::each::each_works_separately ... ok
+test commands::each::each_no_args_in_block ... ok
+test commands::each::streaming_flatten_does_not_evaluate_unused_results ... ok
+test commands::each::streaming_single_null_skips_closure ... ok
+test commands::each::each_implicit_it_in_block ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 1988 filtered out; finished in 0.12s

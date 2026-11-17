@@ -1,0 +1,164 @@
+    Blocking waiting for file lock on build directory
+   Compiling nu-protocol v0.106.0 (/tmp/nu-streaming-before/crates/nu-protocol)
+   Compiling nu-engine v0.106.0 (/tmp/nu-streaming-before/crates/nu-engine)
+   Compiling nu-parser v0.106.0 (/tmp/nu-streaming-before/crates/nu-parser)
+   Compiling nu-color-config v0.106.0 (/tmp/nu-streaming-before/crates/nu-color-config)
+   Compiling nu-table v0.106.0 (/tmp/nu-streaming-before/crates/nu-table)
+   Compiling nu-cmd-base v0.106.0 (/tmp/nu-streaming-before/crates/nu-cmd-base)
+   Compiling nuon v0.106.0 (/tmp/nu-streaming-before/crates/nuon)
+   Compiling nu-command v0.106.0 (/tmp/nu-streaming-before/crates/nu-command)
+   Compiling nu-cmd-lang v0.106.0 (/tmp/nu-streaming-before/crates/nu-cmd-lang)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 46.02s
+     Running tests/main.rs (/tmp/nu-streaming-before-target/debug/deps/main-af0b020b004ce5a6)
+
+running 10 tests
+test commands::each::streaming_flatten_preserves_order ... FAILED
+test commands::each::streaming_single_null_skips_closure ... FAILED
+test commands::which::streaming_which_without_arguments_lists_visible_commands ... FAILED
+test commands::each::streaming_flatten_does_not_evaluate_unused_results ... FAILED
+test commands::detect_columns::streaming_overlapping_cells_do_not_duplicate_keys ... FAILED
+test commands::each::streaming_default_each_keeps_nested_lists ... ok
+test commands::detect_columns::streaming_duplicate_headers_are_unique ... FAILED
+test commands::parse::regex::parse_works_with_streaming ... ok
+test commands::each::streaming_nested_errors_survive_ignoring_closures ... FAILED
+test commands::generate::generate_with_input_is_streaming ... ok
+
+failures:
+
+---- commands::each::streaming_flatten_preserves_order stdout ----
+=== stderr
+Error: The `each` command doesn't have flag `flatten`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: [1 2] | each --flatten {|x| [$x ($x + 10)] } | to nuon
+    label at line 1, columns 14 to 22: unknown flag
+diagnostic help: Available flags: --help(-h), --keep-empty(-k). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::each::streaming_flatten_preserves_order' panicked at crates/nu-command/tests/commands/each.rs:79:5:
+Error: The `each` command doesn't have flag `flatten`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: [1 2] | each --flatten {|x| [$x ($x + 10)] } | to nuon
+    label at line 1, columns 14 to 22: unknown flag
+diagnostic help: Available flags: --help(-h), --keep-empty(-k). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- commands::each::streaming_single_null_skips_closure stdout ----
+=== stderr
+Error: called on null
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: null | each  { error make {msg: 'called on null'} } | length
+    label at line 1, columns 16 to 25: originates from here
+diagnostic code: nu::shell::error
+
+
+
+
+thread 'commands::each::streaming_single_null_skips_closure' panicked at crates/nu-command/tests/commands/each.rs:89:9:
+Error: called on null
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: null | each  { error make {msg: 'called on null'} } | length
+    label at line 1, columns 16 to 25: originates from here
+diagnostic code: nu::shell::error
+
+
+
+
+---- commands::which::streaming_which_without_arguments_lists_visible_commands stdout ----
+=== stderr
+Error: Missing parameter: application.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: def visible_command [] {}; which | where command == visible_command | get 0.type
+    label at line 1, columns 28 to 32: missing parameter: application
+diagnostic code: nu::shell::missing_parameter
+
+
+
+thread 'commands::which::streaming_which_without_arguments_lists_visible_commands' panicked at crates/nu-command/tests/commands/which.rs:126:5:
+Error: Missing parameter: application.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: def visible_command [] {}; which | where command == visible_command | get 0.type
+    label at line 1, columns 28 to 32: missing parameter: application
+diagnostic code: nu::shell::missing_parameter
+
+
+
+---- commands::each::streaming_flatten_does_not_evaluate_unused_results stdout ----
+=== stderr
+Error: The `each` command doesn't have flag `flatten`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: [1 2] | each --flatten { 1.. | each {|x| if $x > 1 { error make {msg: 'overconsumed'} } else { $x } } } | first
+    label at line 1, columns 14 to 22: unknown flag
+diagnostic help: Available flags: --help(-h), --keep-empty(-k). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::each::streaming_flatten_does_not_evaluate_unused_results' panicked at crates/nu-command/tests/commands/each.rs:72:5:
+Error: The `each` command doesn't have flag `flatten`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: [1 2] | each --flatten { 1.. | each {|x| if $x > 1 { error make {msg: 'overconsumed'} } else { $x } } } | first
+    label at line 1, columns 14 to 22: unknown flag
+diagnostic help: Available flags: --help(-h), --keep-empty(-k). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+---- commands::detect_columns::streaming_overlapping_cells_do_not_duplicate_keys stdout ----
+=== stderr
+
+
+thread 'commands::detect_columns::streaming_overlapping_cells_do_not_duplicate_keys' panicked at crates/nu-command/tests/commands/detect_columns.rs:113:5:
+assertion `left == right` failed
+  left: "[wide_header, wide_header, wide_header, b]"
+ right: "[wide_header, b]"
+
+---- commands::detect_columns::streaming_duplicate_headers_are_unique stdout ----
+=== stderr
+
+
+thread 'commands::detect_columns::streaming_duplicate_headers_are_unique' panicked at crates/nu-command/tests/commands/detect_columns.rs:105:9:
+assertion `left == right` failed
+  left: "[a, a, \"a_2\"]"
+ right: "[a, \"a_3\", \"a_2\"]"
+
+---- commands::each::streaming_nested_errors_survive_ignoring_closures stdout ----
+=== stderr
+
+
+thread 'commands::each::streaming_nested_errors_survive_ignoring_closures' panicked at crates/nu-command/tests/commands/each.rs:99:5:
+
+
+
+failures:
+    commands::detect_columns::streaming_duplicate_headers_are_unique
+    commands::detect_columns::streaming_overlapping_cells_do_not_duplicate_keys
+    commands::each::streaming_flatten_does_not_evaluate_unused_results
+    commands::each::streaming_flatten_preserves_order
+    commands::each::streaming_nested_errors_survive_ignoring_closures
+    commands::each::streaming_single_null_skips_closure
+    commands::which::streaming_which_without_arguments_lists_visible_commands
+
+test result: FAILED. 3 passed; 7 failed; 0 ignored; 0 measured; 1992 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `-p nu-command --test main`

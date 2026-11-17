@@ -1,0 +1,67 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.30s
+     Running tests/main.rs (/tmp/nu-streaming-candidate-target/debug/deps/main-af0b020b004ce5a6)
+
+running 5 tests
+test commands::detect_columns::streaming_overlapping_cells_do_not_duplicate_keys ... FAILED
+test commands::detect_columns::streaming_duplicate_headers_are_unique ... FAILED
+test commands::detect_columns::detect_columns_with_flag_c ... ok
+test commands::detect_columns::detect_columns_with_legacy ... ok
+test commands::detect_columns::detect_columns_with_legacy_and_flag_c ... ok
+
+failures:
+
+---- commands::detect_columns::streaming_overlapping_cells_do_not_duplicate_keys stdout ----
+=== stderr
+Error: Row number too large (empty content).
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: "wide_header        b; one two three      four extra" | detect columns | get 0 | columns | to nuon
+    label at line 1, column 78: index too large (empty content)
+diagnostic code: nu::shell::access_beyond_end
+
+
+
+thread 'commands::detect_columns::streaming_overlapping_cells_do_not_duplicate_keys' panicked at crates/nu-command/tests/commands/detect_columns.rs:114:5:
+Error: Row number too large (empty content).
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: "wide_header        b; one two three      four extra" | detect columns | get 0 | columns | to nuon
+    label at line 1, column 78: index too large (empty content)
+diagnostic code: nu::shell::access_beyond_end
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- commands::detect_columns::streaming_duplicate_headers_are_unique stdout ----
+=== stderr
+Error: Row number too large (empty content).
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: "a  a  a_2; 1  2  3" | detect columns  | get 0 | columns | to nuon
+    label at line 1, column 46: index too large (empty content)
+diagnostic code: nu::shell::access_beyond_end
+
+
+
+thread 'commands::detect_columns::streaming_duplicate_headers_are_unique' panicked at crates/nu-command/tests/commands/detect_columns.rs:105:9:
+Error: Row number too large (empty content).
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: "a  a  a_2; 1  2  3" | detect columns  | get 0 | columns | to nuon
+    label at line 1, column 46: index too large (empty content)
+diagnostic code: nu::shell::access_beyond_end
+
+
+
+
+failures:
+    commands::detect_columns::streaming_duplicate_headers_are_unique
+    commands::detect_columns::streaming_overlapping_cells_do_not_duplicate_keys
+
+test result: FAILED. 3 passed; 2 failed; 0 ignored; 0 measured; 1997 filtered out; finished in 0.06s
+
+error: test failed, to rerun pass `-p nu-command --test main`

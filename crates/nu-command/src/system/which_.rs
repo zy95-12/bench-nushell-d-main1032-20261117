@@ -196,10 +196,22 @@ fn which(
     };
 
     if which_args.applications.is_empty() {
-        return Err(ShellError::MissingParameter {
-            param_name: "application".into(),
-            span: head,
-        });
+        let mut names: Vec<_> = engine_state
+            .find_commands_by_predicate(|_| true, true)
+            .into_iter()
+            .map(|(_, name, _, _)| name)
+            .collect();
+        names.sort();
+        names.dedup();
+        let entries: Vec<_> = names
+            .into_iter()
+            .filter_map(|name| {
+                get_entry_in_commands(engine_state, &String::from_utf8_lossy(&name), head)
+            })
+            .collect();
+        return Ok(entries
+            .into_iter()
+            .into_pipeline_data(head, engine_state.signals().clone()));
     }
 
     let mut output = vec![];

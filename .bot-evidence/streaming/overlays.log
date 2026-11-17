@@ -1,0 +1,123 @@
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-protocol)
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-engine)
+   Compiling nu-plugin-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-plugin-protocol)
+   Compiling nu-color-config v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-color-config)
+   Compiling nu-table v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-table)
+   Compiling nu-plugin-core v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-plugin-core)
+   Compiling nu-plugin-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-plugin-engine)
+   Compiling nu-parser v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-parser)
+   Compiling nu-cmd-plugin v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-cmd-plugin)
+   Compiling nu-cmd-base v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-cmd-base)
+   Compiling nuon v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nuon)
+   Compiling nu-cli v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-cli)
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-command)
+   Compiling nu-lsp v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-lsp)
+   Compiling nu-cmd-extra v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-cmd-extra)
+   Compiling nu-cmd-lang v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-cmd-lang)
+   Compiling nu-std v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-std)
+   Compiling nu-explore v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-explore)
+   Compiling nu v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 21.47s
+     Running tests/main.rs (/tmp/nu-streaming-candidate-target/debug/deps/main-31d17ad7e8517ec0)
+
+running 98 tests
+test overlays::overlay_preserve_hidden_alias ... ignored, TODO: For this to work, we'd need to make predecls respect overlays
+test overlays::overlay_preserve_hidden_decl ... ignored, TODO: For this to work, we'd need to make predecls respect overlays
+test overlays::add_overlay_from_const_module_name_decl ... ok
+test overlays::add_overlay_from_const_file_decl ... ok
+test overlays::add_overlay_from_file_decl_cd ... ok
+test overlays::add_prefixed_overlay_mismatch_1 ... ok
+test overlays::hide_overlay ... ok
+test overlays::hide_overlay_discard_decl ... ok
+test overlays::hide_last_overlay ... ok
+test overlays::add_overlay_scoped ... ok
+test overlays::add_prefixed_overlay_mismatch_2 ... ok
+test overlays::hide_overlay_dont_keep_overwritten_alias ... ok
+test overlays::hide_overlay_discard_env ... ok
+test overlays::hide_overlay_discard_alias ... ok
+test overlays::alias_overlay_hide ... ok
+test overlays::add_overlay_as_new_name ... ok
+test overlays::alias_overlay_new ... ok
+test overlays::add_overlay_from_file_env ... ok
+test overlays::alias_overlay_use ... ok
+test overlays::add_overlay ... ok
+test overlays::hide_overlay_dont_keep_env ... ok
+test overlays::add_prefixed_overlay ... ok
+test overlays::alias_overlay_use_3 ... ok
+test overlays::add_overlay_env ... ok
+test overlays::add_overlay_twice ... ok
+test overlays::overlay_trim_single_quote ... ok
+test overlays::add_prefixed_overlay_twice ... ok
+test overlays::hide_overlay_from_const_name ... ok
+test overlays::overlay_hide_dont_restore_hidden_env_which_is_introduce_currently ... ok
+test overlays::alias_overlay_use_2 ... ok
+test overlays::add_overlay_from_file_alias ... ok
+test overlays::add_overlay_from_file_decl ... ok
+test overlays::new_overlay_from_const_name ... ok
+test overlays::overlay_use_after_hide_config_affected ... ok
+test overlays::overlay_trim_double_quote ... ok
+test overlays::add_prefixed_overlay_env_no_prefix ... ok
+test overlays::overlay_hide_renamed_overlay ... ok
+test overlays::overlay_wrong_rename_type ... ok
+test overlays::overlay_use_main_not_exported ... ok
+test overlays::overlay_hide_config_affected ... ok
+test overlays::hide_overlay_dont_keep_overwritten_env ... ok
+test overlays::overlay_cant_rename_existing_overlay ... ok
+test overlays::overlay_trim_double_quote_hide ... ok
+test overlays::hide_overlay_dont_keep_env_in_latest_overlay ... ok
+test overlays::overlay_use_do_cd ... ok
+test overlays::hide_overlay_dont_keep_overwritten_decl ... ok
+test overlays::overlay_hide_restore_hidden_env ... ok
+test overlays::overlay_use_do_cd_file_relative ... ok
+test overlays::overlay_trim_single_quote_hide ... ok
+test overlays::hide_overlay_env ... ok
+test overlays::overlay_keep_pwd ... ok
+test overlays::overlay_use_main ... ok
+test overlays::overlay_use_dont_cd_overlay ... ok
+test overlays::overlay_use_find_scoped_module ... ok
+test overlays::overlay_use_main_prefix ... ok
+test overlays::overlay_use_main_def_env ... ok
+test overlays::overlay_use_main_def_known_external ... ok
+test overlays::hide_overlay_scoped ... ok
+test overlays::overlay_preserve_hidden_env_1 ... ok
+test overlays::overlay_add_renamed_const ... ok
+test overlays::overlay_new_with_reload ... ok
+test overlays::list_overlay_scoped ... ok
+test overlays::list_last_overlay ... ok
+test overlays::hide_overlay_keep_alias_in_latest_overlay ... ok
+test overlays::overlay_can_add_renamed_overlay ... ok
+test overlays::overlay_hide_and_add_renamed_overlay ... ok
+test overlays::hide_overlay_keep_decl ... ok
+test overlays::streaming_overlay_origin_module_is_registered_in_scope ... ok
+test overlays::overlay_preserve_hidden_env_2 ... ok
+test overlays::hide_overlay_scoped_env ... ok
+test overlays::overlay_add_renamed_from_file ... ok
+test overlays::overlay_reset_hidden_env ... ok
+test overlays::streaming_overlay_list_includes_hidden_with_status ... ok
+test overlays::list_default_overlay ... ok
+test overlays::hide_overlay_keep_decl_in_latest_overlay ... ok
+test overlays::overlay_add_renamed ... ok
+test overlays::test_overlay_use_with_printing_current_file ... ok
+test overlays::test_overlay_use_with_printing_file_pwd ... ok
+test overlays::overlay_use_export_env_hide ... ok
+test overlays::hide_overlay_keep_alias ... ok
+test overlays::overlay_reactivate_with_nufile_should_not_change_pwd ... ok
+test overlays::overlay_use_and_reload ... ok
+test overlays::overlay_reactivate_with_module_name_should_change_pwd ... ok
+test overlays::overlay_new ... ok
+test overlays::report_errors_in_export_env ... ok
+test overlays::overlay_help_no_error ... ok
+test overlays::overlay_use_and_reolad_keep_custom ... ok
+test overlays::overlay_use_do_not_eval_twice ... ok
+test overlays::overlay_use_export_env ... ok
+test overlays::overlay_use_export_env_config_affected ... ok
+test overlays::preserve_overrides ... ok
+test overlays::overlay_use_and_restore_older_env_vars ... ok
+test overlays::reset_overrides ... ok
+test overlays::prefixed_overlay_keeps_custom_decl ... ok
+test overlays::update_overlay_from_module ... ok
+test overlays::update_overlay_from_module_env ... ok
+test overlays::overlay_use_module_dir_prefix ... ok
+test overlays::overlay_use_module_dir ... ok
+
+test result: ok. 96 passed; 0 failed; 2 ignored; 0 measured; 1428 filtered out; finished in 0.54s

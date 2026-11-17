@@ -72,7 +72,8 @@ impl Command for Columns {
 }
 
 fn getcol(head: Span, input: PipelineData) -> Result<PipelineData, ShellError> {
-    let metadata = input.metadata();
+    let metadata = input.metadata().map(|m| m.with_content_type(None));
+    let input = input.set_metadata(metadata.clone());
     match input {
         PipelineData::Empty => Ok(PipelineData::Empty),
         PipelineData::Value(v, ..) => {

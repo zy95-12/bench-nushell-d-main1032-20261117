@@ -178,7 +178,7 @@ fn guess_width(
         return Ok(Value::nothing(input_span).into_pipeline_data());
     }
     if !args.noheader {
-        let columns = result[0].clone();
+        let columns = unique_headers(result[0].clone());
         Ok(result
             .into_iter()
             .skip(1)
@@ -257,6 +257,11 @@ fn detect_columns(
             }
         }
 
+        let names = unique_headers(headers.iter().map(|h| h.item.clone()).collect());
+        for (header, name) in headers.iter_mut().zip(names) {
+            header.item = name;
+        }
+
         Ok(args
             .noheader
             .then_some(orig_headers)
@@ -305,7 +310,7 @@ fn detect_columns(
                     for header in &headers {
                         for pre_o in &pre_output {
                             if pre_o.0 == header.item {
-                                record.push(&header.item, pre_o.1.clone());
+                                record.insert(header.item.clone(), pre_o.1.clone());
                             }
                         }
                     }
@@ -320,6 +325,28 @@ fn detect_columns(
     } else {
         Ok(PipelineData::empty())
     }
+}
+
+// Reserve original names too, so a generated suffix cannot collide with a later header.
+fn unique_headers(headers: Vec<String>) -> Vec<String> {
+    let reserved: std::collections::HashSet<_> = headers.iter().cloned().collect();
+    let mut used = std::collections::HashSet::new();
+    headers
+        .into_iter()
+        .map(|name| {
+            if used.insert(name.clone()) {
+                return name;
+            }
+            let mut suffix = 2;
+            loop {
+                let candidate = format!("{name}_{suffix}");
+                if !reserved.contains(&candidate) && used.insert(candidate.clone()) {
+                    return candidate;
+                }
+                suffix += 1;
+            }
+        })
+        .collect()
 }
 
 pub fn find_columns(input: &str) -> Vec<Spanned<String>> {

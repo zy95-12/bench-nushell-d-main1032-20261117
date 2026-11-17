@@ -1,0 +1,35 @@
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.70s
+     Running tests/main.rs (/tmp/nu-streaming-candidate-target/debug/deps/main-af0b020b004ce5a6)
+
+running 28 tests
+test commands::save::save_not_override_file_by_default ... ok
+test commands::save::save_same_file_with_extension_pipeline ... ok
+test commands::save::save_same_file_with_extension ... ok
+test commands::save::save_missing_parent_dir ... ok
+test commands::save::save_same_file_without_extension_pipeline ... ok
+test commands::save::force_save_to_dir ... ok
+test commands::save::save_failure_not_overrides ... ok
+test commands::save::save_missing_ancestor_dir ... ok
+test commands::save::save_same_file_without_extension ... ok
+test commands::save::save_not_overrides_err_by_default ... ok
+test commands::save::writes_out_csv ... ok
+test commands::save::save_override_works ... ok
+test commands::save::save_same_file_with_collect_and_filter ... ok
+test commands::save::save_with_custom_converter ... ok
+test commands::save::save_append_will_create_file_if_not_exists ... ok
+test commands::save::save_append_will_not_overwrite_content ... ok
+test commands::save::save_string_and_stream_as_raw ... ok
+test commands::save::save_file_correct_relative_path ... ok
+test commands::save::save_list_stream ... ok
+test commands::save::writes_out_list ... ok
+test commands::save::writes_out_range ... ok
+test commands::save::save_same_file_with_collect ... ok
+test commands::save::save_stderr_and_stdout_to_same_file ... ok
+test commands::save::save_append_works_on_stderr ... ok
+test commands::save::save_override_works_stderr ... ok
+test commands::save::save_stderr_and_stdout_to_diff_file ... ok
+test commands::save::parent_redirection_doesnt_affect_save ... ok
+test commands::save::save_from_child_process_dont_sink_stderr ... ok
+
+test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 1974 filtered out; finished in 0.14s

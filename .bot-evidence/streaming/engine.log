@@ -1,0 +1,22 @@
+    Blocking waiting for file lock on build directory
+   Compiling nu-utils v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-utils)
+   Compiling nu-system v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-system)
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-protocol)
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/c7406e56b3b3a27da1929b2817e06cddbe86073e3b19442a/crates/nu-engine)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 38.41s
+     Running unittests src/lib.rs (/tmp/nu-streaming-candidate-target/debug/deps/nu_engine-9f8aae14a0d37486)
+
+running 1 test
+test documentation::tests::test_code_formatting ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Doc-tests nu_engine
+
+running 4 tests
+test crates/nu-engine/src/closure_eval.rs - closure_eval::ClosureEval (line 31) - compile ... ok
+test crates/nu-engine/src/closure_eval.rs - closure_eval::ClosureEval (line 46) - compile ... ok
+test crates/nu-engine/src/closure_eval.rs - closure_eval::ClosureEvalOnce (line 169) - compile ... ok
+test crates/nu-engine/src/closure_eval.rs - closure_eval::ClosureEvalOnce (line 184) - compile ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

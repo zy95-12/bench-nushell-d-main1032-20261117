@@ -231,7 +231,8 @@ impl Command for Find {
             .get_flag(engine_state, stack, "columns")?
             .unwrap_or_default();
 
-        let input = split_string_if_multiline(input, call.head);
+        let metadata = input.metadata().map(|m| m.with_content_type(None));
+        let input = split_string_if_multiline(input.set_metadata(metadata), call.head);
 
         find_in_pipelinedata(pattern, columns_to_search, engine_state, stack, input)
     }

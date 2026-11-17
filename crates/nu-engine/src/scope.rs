@@ -100,7 +100,14 @@ impl<'e, 's> ScopeData<'e, 's> {
                             record! {
                                 "description" => Value::string(x.description, span),
                                 "example" => Value::string(x.example, span),
-                                "result" => x.result.unwrap_or(Value::nothing(span)),
+                                "result" => {
+                                    let mut result = x.result.unwrap_or(Value::nothing(span));
+                                    let _ = result.recurse_mut(&mut |value| {
+                                        value.set_span(span);
+                                        Ok::<_, std::convert::Infallible>(())
+                                    });
+                                    result
+                                },
                             },
                             span,
                         )

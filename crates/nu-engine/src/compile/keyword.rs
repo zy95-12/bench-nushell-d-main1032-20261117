@@ -449,6 +449,7 @@ pub(crate) fn compile_try(
         builder.push(Instruction::OnError { index: err_label.0 }.into_spanned(call.head))?
     };
 
+    builder.error_handler_depth += 1;
     builder.add_comment("try");
 
     // Compile the block
@@ -473,6 +474,7 @@ pub(crate) fn compile_try(
     }
     builder.push(Instruction::DrainIfEnd { src: io_reg }.into_spanned(call.head))?;
     builder.push(Instruction::PopErrorHandler.into_spanned(call.head))?;
+    builder.error_handler_depth -= 1;
 
     // Jump over the failure case
     builder.jump(end_label, catch_span)?;
