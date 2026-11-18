@@ -323,17 +323,26 @@ fn table(
         .collect::<Vec<Value>>();
     let mut headers = merge_descriptors(&vec_of_values);
 
-    let mut empty_header_index = 0;
     for value in &vec_of_values {
-        if let Value::Record { val, .. } = value {
-            for column in val.columns() {
-                if column.is_empty() && !headers.contains(&String::new()) {
-                    headers.insert(empty_header_index, String::new());
-                    empty_header_index += 1;
-                    break;
-                }
-                empty_header_index += 1;
-            }
+        if let Value::Record { val, .. } = value
+            && let Some(empty_index) = val.columns().position(String::is_empty)
+        {
+            // Anchor to this record's neighbors in the merged header order.
+            // Earlier records may repeat columns or contain additional columns.
+            let insertion_index = val
+                .columns()
+                .take(empty_index)
+                .last()
+                .and_then(|column| headers.iter().position(|header| header == column))
+                .map(|index| index + 1)
+                .or_else(|| {
+                    val.columns()
+                        .nth(empty_index + 1)
+                        .and_then(|column| headers.iter().position(|header| header == column))
+                })
+                .unwrap_or(0);
+            headers.insert(insertion_index.min(headers.len()), String::new());
+            break;
         }
     }
 
@@ -379,6 +388,7 @@ fn table(
         String::from("")
     } else {
         get_output_string(
+            &headers,
             &escaped_headers,
             &escaped_rows,
             &column_widths,
@@ -391,6 +401,12 @@ fn table(
 }
 
 pub fn group_by(values: PipelineData, head: Span, config: &Config) -> (PipelineData, bool) {
+    // Keep column boundaries and distinguish record schemas from scalar text.
+    #[derive(Hash, PartialEq, Eq)]
+    enum GroupKey {
+        Columns(Vec<String>),
+        Value(String),
+    }
     let mut lists = IndexMap::new();
     let mut single_list = false;
     for val in values {
@@ -399,12 +415,12 @@ pub fn group_by(values: PipelineData, head: Span, config: &Config) -> (PipelineD
         } = val
         {
             lists
-                .entry(record.columns().map(|c| c.as_str()).collect::<String>())
+                .entry(GroupKey::Columns(record.columns().cloned().collect()))
                 .and_modify(|v: &mut Vec<Value>| v.push(val.clone()))
                 .or_insert_with(|| vec![val.clone()]);
         } else {
             lists
-                .entry(val.to_expanded_string(",", config))
+                .entry(GroupKey::Value(val.to_expanded_string(",", config)))
                 .and_modify(|v: &mut Vec<Value>| v.push(val.clone()))
                 .or_insert_with(|| vec![val.clone()]);
         }
@@ -425,6 +441,7 @@ pub fn group_by(values: PipelineData, head: Span, config: &Config) -> (PipelineD
 
 fn get_output_string(
     headers: &[String],
+    escaped_headers: &[String],
     rows: &[Vec<String>],
     column_widths: &[usize],
     pretty: bool,
@@ -453,13 +470,13 @@ fn get_output_string(
                 output_string.push(' ');
                 if center.is_some() && to_center.contains(&headers[i]) {
                     output_string.push_str(&get_centered_string(
-                        headers[i].clone(),
+                        escaped_headers[i].clone(),
                         column_widths[i],
                         ' ',
                     ));
                 } else {
                     output_string.push_str(&get_padded_string(
-                        headers[i].clone(),
+                        escaped_headers[i].clone(),
                         column_widths[i],
                         ' ',
                     ));
@@ -467,7 +484,7 @@ fn get_output_string(
                 output_string.push(' ');
             } else {
                 output_string.push(' ');
-                output_string.push_str(&headers[i]);
+                output_string.push_str(&escaped_headers[i]);
                 output_string.push(' ');
             }
 
@@ -729,6 +746,54 @@ mod tests {
             | 1 | 2 |
             | 3 | 4 |
         "#)
+        );
+    }
+
+    #[test]
+    fn empty_header_first_appears_in_later_record() {
+        let input = Value::test_list(vec![
+            Value::test_record(record! {"a" => Value::test_int(1), "b" => Value::test_int(2)}),
+            Value::test_record(record! {"a" => Value::test_int(3), "b" => Value::test_int(4)}),
+            Value::test_record(
+                record! {"a" => Value::test_int(5), "" => Value::test_int(6), "b" => Value::test_int(7)},
+            ),
+        ]);
+        assert_eq!(
+            table(
+                input.into_pipeline_data(),
+                false,
+                &None,
+                false,
+                false,
+                &Config::default()
+            ),
+            "| a |  | b |\n| --- | --- | --- |\n| 1 |  | 2 |\n| 3 |  | 4 |\n| 5 | 6 | 7 |"
+        );
+    }
+
+    #[test]
+    fn empty_header_uses_known_column_order_and_stays_in_place() {
+        let input = Value::test_list(vec![
+            Value::test_record(
+                record! {"x" => Value::test_int(1), "a" => Value::test_int(2), "b" => Value::test_int(3)},
+            ),
+            Value::test_record(
+                record! {"a" => Value::test_int(4), "" => Value::test_int(5), "b" => Value::test_int(6)},
+            ),
+            Value::test_record(
+                record! {"" => Value::test_int(7), "b" => Value::test_int(8), "x" => Value::test_int(9)},
+            ),
+        ]);
+        assert_eq!(
+            table(
+                input.into_pipeline_data(),
+                false,
+                &None,
+                false,
+                false,
+                &Config::default()
+            ),
+            "| x | a |  | b |\n| --- | --- | --- | --- |\n| 1 | 2 |  | 3 |\n|  | 4 | 5 | 6 |\n| 9 |  | 7 | 8 |"
         );
     }
 
@@ -1041,6 +1106,67 @@ mod tests {
             | version    |          0.104.1           |
             | build_time | 2025-05-28 11:00:45 +01:00 |
         "#)
+        );
+    }
+
+    #[test]
+    fn center_escaped_column_names() {
+        for (name, escape_md, escape_html, rendered) in [
+            ("a|b", false, false, r"a\|b"),
+            ("a*b", true, false, r"a\*b"),
+            ("a&b", false, true, "a&amp;b"),
+            ("a<b", true, true, "a&lt;b"),
+        ] {
+            let center = Some(vec![CellPath {
+                members: vec![PathMember::test_string(
+                    name.into(),
+                    false,
+                    Casing::Sensitive,
+                )],
+            }]);
+            for pretty in [false, true] {
+                let output = table(
+                    Value::test_record(record! {name => Value::test_int(1)}).into_pipeline_data(),
+                    pretty,
+                    &center,
+                    escape_md,
+                    escape_html,
+                    &Config::default(),
+                );
+                assert!(
+                    output.lines().next().unwrap().contains(rendered),
+                    "{output}"
+                );
+                let dashes = if pretty { rendered.len().max(3) } else { 3 };
+                assert_eq!(
+                    output.lines().nth(1).unwrap(),
+                    format!("|:{}:|", "-".repeat(dashes))
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn per_element_keeps_distinct_column_groups() {
+        let input = Value::test_list(vec![
+            Value::test_record(record! {"a" => Value::test_int(1), "bc" => Value::test_int(2)}),
+            Value::test_record(record! {"ab" => Value::test_int(3), "c" => Value::test_int(4)}),
+        ]);
+        let output = to_md(
+            input.into_pipeline_data(),
+            false,
+            true,
+            &None,
+            &Config::default(),
+            Span::test_data(),
+            (false, false),
+        )
+        .unwrap()
+        .into_value(Span::test_data())
+        .unwrap();
+        assert_eq!(
+            output.as_str().unwrap(),
+            "| a | bc |\n| --- | --- |\n| 1 | 2 |\n\n| ab | c |\n| --- | --- |\n| 3 | 4 |"
         );
     }
 

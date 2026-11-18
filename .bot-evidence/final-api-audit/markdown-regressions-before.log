@@ -1,0 +1,48 @@
+    Blocking waiting for file lock on build directory
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 51.36s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_command-1e680ef937d8e7f1)
+
+running 16 tests
+test formats::to::md::tests::render_h2 ... ok
+test formats::to::md::tests::render_h3 ... ok
+test formats::to::md::tests::render_blockquote ... ok
+test formats::to::md::tests::render_h1 ... ok
+test formats::to::md::tests::test_center_complex_cell_path ... ok
+test formats::to::md::tests::test_empty_center_column ... ok
+test formats::to::md::tests::test_center_non_existing_column ... ok
+test formats::to::md::tests::test_center_column ... ok
+test formats::to::md::tests::render_table ... ok
+test formats::to::md::tests::test_empty_column_header ... ok
+test formats::to::md::tests::test_center_multiple_columns ... ok
+test formats::to::md::tests::test_empty_row_value ... ok
+test formats::to::md::tests::center_escaped_column_names ... FAILED
+test formats::to::md::tests::per_element_keeps_distinct_column_groups ... FAILED
+test formats::to::md::tests::test_content_type_metadata ... ok
+test formats::to::md::tests::test_examples ... ok
+
+failures:
+
+---- formats::to::md::tests::center_escaped_column_names stdout ----
+
+thread 'formats::to::md::tests::center_escaped_column_names' panicked at crates/nu-command/src/formats/to/md.rs:1069:17:
+assertion `left == right` failed
+  left: "| --- |"
+ right: "|:---:|"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- formats::to::md::tests::per_element_keeps_distinct_column_groups stdout ----
+
+thread 'formats::to::md::tests::per_element_keeps_distinct_column_groups' panicked at crates/nu-command/src/formats/to/md.rs:1082:9:
+assertion `left == right` failed
+  left: "| a | bc | ab | c |\n| --- | --- | --- | --- |\n| 1 | 2 |  |  |\n|  |  | 3 | 4 |"
+ right: "| a | bc |\n| --- | --- |\n| 1 | 2 |\n\n| ab | c |\n| --- | --- |\n| 3 | 4 |"
+
+
+failures:
+    formats::to::md::tests::center_escaped_column_names
+    formats::to::md::tests::per_element_keeps_distinct_column_groups
+
+test result: FAILED. 14 passed; 2 failed; 0 ignored; 0 measured; 432 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p nu-command --lib`

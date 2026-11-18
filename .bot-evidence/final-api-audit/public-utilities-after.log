@@ -1,0 +1,33 @@
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-protocol)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.17s
+     Running tests/test_pipeline_data.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_pipeline_data-6c948db99a454b1c)
+
+running 5 tests
+test constructors_preserve_stream_interrupt_sources ... ok
+test constructors_keep_streams_lazy_and_metadata_intact ... ok
+test constructors_preserve_values_and_metadata ... ok
+test stream_into_conversions_preserve_lazy_streams_without_metadata ... ok
+test test_convert_pipeline_data_to_value ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/test_public_utilities.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_public_utilities-64b3e08139abb2e8)
+
+running 1 test
+test value_module_reexports_multilife ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/test_signature.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_signature-0385215a0f2045c4)
+
+running 7 tests
+test completion_metadata_belongs_to_signature_arguments ... ok
+test test_signature ... ok
+test test_signature_chained ... ok
+test test_signature_same_short - should panic ... ok
+test test_signature_same_name - should panic ... ok
+test test_signature_round_trip ... ok
+test nu_constant_reports_lsp_mode ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

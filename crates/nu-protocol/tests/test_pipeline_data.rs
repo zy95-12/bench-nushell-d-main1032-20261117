@@ -19,11 +19,12 @@ fn constructors_preserve_values_and_metadata() {
     use nu_protocol::{PipelineData, PipelineMetadata};
     let span = Span::new(1, 3);
     let metadata = PipelineMetadata::default().with_content_type(Some("application/test".into()));
-    let empty = PipelineData::empty();
+    const EMPTY: PipelineData = PipelineData::empty();
+    let empty = EMPTY;
     assert!(matches!(empty, PipelineData::Empty));
     assert_eq!(empty.metadata(), None);
     assert_eq!(empty.span(), None);
-    let data = PipelineData::value(Value::int(42, span), Some(metadata.clone()));
+    let data = PipelineData::value(Value::int(42, span), metadata.clone());
     assert_eq!(data.metadata(), Some(metadata.clone()));
     assert_eq!(data.into_value(span).unwrap(), Value::int(42, span));
     // Exercise the migrated IntoPipelineData implementation as well.
@@ -53,7 +54,7 @@ fn constructors_keep_streams_lazy_and_metadata_intact() {
         span,
         Signals::empty(),
     );
-    let data = PipelineData::list_stream(stream, Some(metadata.clone()));
+    let data = PipelineData::list_stream(stream, metadata.clone());
     assert_eq!(reads.load(Ordering::SeqCst), 0);
     assert_eq!(data.metadata(), Some(metadata.clone()));
     assert_eq!(data.span(), Some(span));
@@ -73,7 +74,7 @@ fn constructors_keep_streams_lazy_and_metadata_intact() {
         })
         .with_known_size(Some(3));
     stream.push_caller_span(Span::new(10, 20));
-    let data = PipelineData::byte_stream(stream, Some(metadata.clone()));
+    let data = PipelineData::byte_stream(stream, metadata.clone());
     assert_eq!(reads.load(Ordering::SeqCst), 0);
     assert_eq!(data.metadata(), Some(metadata));
     let PipelineData::ByteStream(stream, _) = data else {

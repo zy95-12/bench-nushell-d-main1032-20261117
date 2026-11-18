@@ -1,0 +1,15 @@
+    Blocking waiting for file lock on build directory
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 42.50s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-2f9abcfca3beee56)
+
+running 6 tests
+test commands::to_md::predictable_optional_markdown_escaping ... ok
+test commands::to_md::predictable_table_delimiters_and_escaping ... ok
+test commands::to_md::predictable_grouped_mixed_schema_tables_have_blank_line ... ok
+test commands::to_md::predictable_adjacent_record_tables_have_blank_line ... ok
+test commands::to_md::predictable_heading_blockquote_and_table_boundaries ... ok
+test commands::to_md::canonical_escape_flags_are_independent ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 2055 filtered out; finished in 0.09s
+

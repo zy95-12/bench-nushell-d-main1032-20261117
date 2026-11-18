@@ -1,0 +1,23 @@
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-protocol)
+error[E0603]: module `value` is private
+  --> crates/nu-protocol/tests/test_public_utilities.rs:3:22
+   |
+3  |     use nu_protocol::value::MultiLife;
+   |                      ^^^^^ private module
+   |
+note: the module `value` is defined here
+  --> /home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-protocol/src/lib.rs:29:1
+   |
+29 | mod value;
+   | ^^^^^^^^^
+help: consider importing one of these enums instead
+   |
+3  -     use nu_protocol::value::MultiLife;
+3  +     use nu_protocol::MultiLife;
+   |
+3  -     use nu_protocol::value::MultiLife;
+3  +     use nu_utils::MultiLife;
+   |
+
+For more information about this error, try `rustc --explain E0603`.
+error: could not compile `nu-protocol` (test "test_public_utilities") due to 1 previous error

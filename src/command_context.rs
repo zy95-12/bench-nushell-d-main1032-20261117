@@ -243,6 +243,27 @@ mod tests {
 mod namespace_tests {
     use super::*;
     #[test]
+    fn command_context_preserves_existing_engine_state() {
+        use nu_protocol::{Signature, Value, engine::StateWorkingSet};
+
+        let mut engine = nu_cmd_lang::create_default_context();
+        engine.add_env_var("AUDIT_SENTINEL".into(), Value::test_int(42));
+        let mut working_set = StateWorkingSet::new(&engine);
+        let decl_id = working_set.add_decl(Signature::build("audit-sentinel").predeclare());
+        engine.merge_delta(working_set.render()).unwrap();
+
+        let engine = add_command_context(engine);
+        assert_eq!(engine.find_decl(b"audit-sentinel", &[]), Some(decl_id));
+        assert_eq!(
+            engine.get_env_var("AUDIT_SENTINEL"),
+            Some(&Value::test_int(42))
+        );
+        for name in [b"let".as_slice(), b"ls", b"commandline edit"] {
+            assert!(engine.find_decl(name, &[]).is_some());
+        }
+    }
+
+    #[test]
     fn every_multiword_command_has_a_parent() {
         let engine = add_command_context(nu_cmd_lang::create_default_context());
         for (_, name, _, _) in engine.find_commands_by_predicate(|_| true, false) {

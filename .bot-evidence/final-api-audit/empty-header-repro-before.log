@@ -1,0 +1,6 @@
+Error:   × Main thread panicked.
+  ├─▶ at crates/nu-command/src/formats/to/md.rs:331:29
+  ╰─▶ insertion index (is 4) should be <= len (is 2)
+  help: set the `RUST_BACKTRACE=1` environment variable to display a
+        backtrace.
+
