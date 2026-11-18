@@ -63,7 +63,8 @@ fn main() -> Result<()> {
         miette_hook(x);
     }));
 
-    let mut engine_state = command_context::get_engine_state();
+    let mut engine_state =
+        command_context::add_command_context(nu_cmd_lang::create_default_context());
 
     // Provide `version` the features of this nu binary
     let cargo_features = env!("NU_FEATURES").split(",").map(Cow::Borrowed).collect();

@@ -1,0 +1,191 @@
+{
+  "handoff_ref": "task_history:51816",
+  "prior_candidate_ref": "task_history:43810",
+  "results": [
+    {
+      "command": "cargo fmt --all",
+      "exit_code": 0,
+      "log": "fmt.log",
+      "suites": []
+    },
+    {
+      "command": "cargo fmt --all -- --check",
+      "exit_code": 0,
+      "log": "fmt-check.log",
+      "suites": []
+    },
+    {
+      "command": "cargo test -p nu-parser",
+      "exit_code": 0,
+      "log": "parser.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 22,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 240,
+          "failed": 0,
+          "ignored": 2
+        },
+        {
+          "status": "ok",
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-command --test main",
+      "exit_code": 0,
+      "log": "command-main.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 2008,
+          "failed": 0,
+          "ignored": 32
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-command --test streaming",
+      "exit_code": 0,
+      "log": "streaming.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 9,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-color-config",
+      "exit_code": 0,
+      "log": "style.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 26,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-protocol config::table",
+      "exit_code": 0,
+      "log": "table-config.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo check -p nu -p nu_plugin_query --locked",
+      "exit_code": 0,
+      "log": "policy-check.log",
+      "suites": []
+    }
+  ],
+  "changed_source_paths": [
+    "crates/nu-color-config/src/style_computer.rs",
+    "crates/nu-command/src/filters/each.rs",
+    "crates/nu-command/tests/commands/each.rs",
+    "crates/nu-command/tests/commands/ls.rs",
+    "crates/nu-parser/src/parser.rs",
+    "crates/nu-protocol/src/config/table.rs",
+    "crates/nu-std/std/config/mod.nu",
+    "crates/nu-utils/src/default_files/default_config.nu"
+  ],
+  "source_digest_sha256": "1ffb8bc5336769643159b86f8c38d10278e3bdbfaec9e440ef22929883871afc",
+  "provenance": "Only the restored candidate, supplied contracts, and work produced in this trial were used. No external reference implementation, later upstream code, hidden test or evaluator material accessed.",
+  "pre_fix_regressions": [
+    {
+      "command": "cargo test -p nu-color-config shipped_themes_use_terminal_default_foregrounds",
+      "exit_code": 101,
+      "log": "style-before.log"
+    },
+    {
+      "command": "cargo test -p nu-command --test main unknown_flags_without_close_match_point_to_help",
+      "exit_code": 101,
+      "log": "flags-before.log"
+    },
+    {
+      "command": "cargo test -p nu-command --test main nested_each_errors_include_each_closure_level_once",
+      "exit_code": 101,
+      "log": "each-before.log"
+    }
+  ],
+  "scope": "Three requested repairs plus explicitly authorized optional TableConfig record-order hardening. Earlier verification remains historical in the parent evidence directory; this manifest records repair verification."
+}

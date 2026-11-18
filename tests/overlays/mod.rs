@@ -1631,7 +1631,7 @@ fn streaming_overlay_list_includes_hidden_with_status() {
     assert!(actual.err.is_empty(), "{}", actual.err);
     assert_eq!(
         actual.out,
-        "[[name, active]; [zero, true], [eggs, true], [spam, false]]"
+        "[[name, active]; [spam, false], [zero, true], [eggs, true]]"
     );
 }
 
@@ -1642,4 +1642,13 @@ fn streaming_overlay_origin_module_is_registered_in_scope() {
     );
     assert!(actual.err.is_empty(), "{}", actual.err);
     assert_eq!(actual.out, "42");
+}
+
+#[test]
+fn overlay_list_orders_hidden_then_activation_order() {
+    let actual = nu!(
+        "overlay new first; overlay new second; overlay hide first; overlay hide second; overlay use first; let hidden_first = ((overlay list | get name) == [second zero first]); overlay use second; $hidden_first and ((overlay list | get name) == [zero first second]) and ((overlay list | last | get name) == second)"
+    );
+    assert!(actual.err.is_empty(), "{}", actual.err);
+    assert_eq!(actual.out, "true");
 }

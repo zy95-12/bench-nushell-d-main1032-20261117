@@ -101,19 +101,9 @@ impl Command for Debug {
 // put another *_to_string() converter in nu_protocol
 trait ValueExt {
     fn coerce_into_string_all(&self) -> Result<String, ShellError>;
-    fn cant_convert_to<T>(&self, typ: &str) -> Result<T, ShellError>;
 }
 
 impl ValueExt for Value {
-    fn cant_convert_to<T>(&self, typ: &str) -> Result<T, ShellError> {
-        Err(ShellError::CantConvert {
-            to_type: typ.into(),
-            from_type: self.get_type().to_string(),
-            span: self.span(),
-            help: None,
-        })
-    }
-
     fn coerce_into_string_all(&self) -> Result<String, ShellError> {
         let span = self.span();
         match self {

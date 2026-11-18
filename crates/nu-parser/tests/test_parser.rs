@@ -3161,6 +3161,24 @@ fn unknown_flag_suggests_nearby_flag() {
     );
     parse(&mut working_set, None, b"demo --verbos", false);
     assert!(
-        matches!(working_set.parse_errors.first(), Some(ParseError::UnknownFlag(_, _, _, help)) if help.contains("Did you mean `--verbose`?"))
+        matches!(working_set.parse_errors.first(), Some(ParseError::UnknownFlag(_, _, _, help)) if help.contains("Did you mean: `--verbose`?"))
     );
+}
+
+#[test]
+fn table_variable_headers_require_string_compatible_types() {
+    for ty in [Type::Bool, Type::Int] {
+        for (name, header, ty) in [("cols", "$cols", ty)] {
+            let engine = EngineState::new();
+            let mut working = StateWorkingSet::new(&engine);
+            working.add_variable(name.as_bytes().to_vec(), Span::test_data(), ty, false);
+            parse(
+                &mut working,
+                None,
+                format!("[[{header}]; [1]]").as_bytes(),
+                false,
+            );
+            assert!(working.parse_errors.iter().any(|error| matches!(error, ParseError::LabeledErrorWithHelp { label, .. } if label == "must be a string")), "{header}: {:?}", working.parse_errors);
+        }
+    }
 }

@@ -1,0 +1,44 @@
+    Blocking waiting for file lock on build directory
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2m 15s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-24bdff57c096a9e9)
+
+running 1 test
+test eval::null_spread_in_rest_arguments ... FAILED
+
+failures:
+
+---- eval::null_spread_in_rest_arguments stdout ----
+=== stderr
+
+=== stderr
+Error: Input type not supported.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: echo ...null | length
+    label at line 1, columns 1 to 4: input type: string
+    label at line 1, columns 16 to 21: only list<any>, binary, and nothing input data is supported
+diagnostic code: nu::shell::only_supports_this_input_type
+
+
+
+thread 'eval::null_spread_in_rest_arguments' panicked at tests/eval/mod.rs:482:9:
+echo ...null | length: Error: Input type not supported.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: echo ...null | length
+    label at line 1, columns 1 to 4: input type: string
+    label at line 1, columns 16 to 21: only list<any>, binary, and nothing input data is supported
+diagnostic code: nu::shell::only_supports_this_input_type
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    eval::null_spread_in_rest_arguments
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1526 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `-p nu --test main`

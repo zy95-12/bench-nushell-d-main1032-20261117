@@ -126,3 +126,47 @@ fn streaming_which_without_arguments_lists_visible_commands() {
     assert!(actual.err.is_empty(), "{}", actual.err);
     assert_eq!(actual.out, "custom");
 }
+
+#[test]
+fn no_arguments_lists_builtins_and_path_executables() {
+    let result = nu!(
+        r#"let unique = (which); let all = (which -a); [($unique | any {|entry| $entry.command == 'which' and $entry.type == 'built-in'}) ($unique | any {|entry| $entry.type == 'external'}) (($unique | length) <= ($all | length)) (($unique | get command | uniq | length) == ($unique | length))] | all {$in}"#
+    );
+    assert!(result.err.is_empty(), "{}", result.err);
+    assert_eq!(result.out, "true");
+}
+
+#[test]
+fn namespace_commands_display_help() {
+    for name in ["detect", "attr", "error", "query"] {
+        let result = nu!(name);
+        assert!(result.err.is_empty(), "{name}: {}", result.err);
+        assert!(result.out.contains("subcommand"), "{name}: {}", result.out);
+    }
+}
+
+#[cfg(unix)]
+#[test]
+fn listing_respects_path_order_duplicates_and_executable_permissions() {
+    use std::os::unix::fs::PermissionsExt;
+    let dir = tempfile::tempdir().unwrap();
+    let first = dir.path().join("first");
+    let second = dir.path().join("second");
+    std::fs::create_dir(&first).unwrap();
+    std::fs::create_dir(&second).unwrap();
+    for path in [first.join("sample-exe"), second.join("sample-exe")] {
+        std::fs::write(&path, "#!/bin/sh\n").unwrap();
+        std::fs::set_permissions(path, std::fs::Permissions::from_mode(0o755)).unwrap();
+    }
+    std::fs::write(first.join("not-executable"), "data").unwrap();
+    std::os::unix::fs::symlink(first.join("sample-exe"), first.join("linked-exe")).unwrap();
+    let source = format!(
+        r#"$env.PATH = ['{}' '{}']; let one = (which | where command == sample-exe); let all = (which -a | where command == sample-exe); [($one | length) ($all | length) ($one.0.path == '{}') (which | any {{|entry| $entry.command == not-executable}}) (which | any {{|entry| $entry.command == linked-exe}})] | to nuon"#,
+        first.display(),
+        second.display(),
+        first.join("sample-exe").display()
+    );
+    let result = nu!(source);
+    assert!(result.err.is_empty(), "{}", result.err);
+    assert_eq!(result.out, "[1, 2, true, false, true]");
+}

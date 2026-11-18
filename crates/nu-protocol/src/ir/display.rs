@@ -178,6 +178,9 @@ impl fmt::Display for FmtInstruction<'_> {
             Instruction::StringAppend { src_dst, val } => {
                 write!(f, "{:WIDTH$} {src_dst}, {val}", "string-append")
             }
+            Instruction::CheckTableColumn { src_dst } => {
+                write!(f, "{:WIDTH$} {src_dst}", "check-table-column")
+            }
             Instruction::GlobFrom { src_dst, no_expand } => {
                 let no_expand = if *no_expand { "no-expand" } else { "expand" };
                 write!(f, "{:WIDTH$} {src_dst}, {no_expand}", "glob-from",)

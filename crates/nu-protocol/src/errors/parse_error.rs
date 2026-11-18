@@ -70,6 +70,15 @@ pub enum ParseError {
         #[label("expected {0}, but command outputs {1}")] Span,
     ),
 
+    /// Several concrete outputs were considered, none matching the declared output.
+    #[error("Command output doesn't match {0}: command outputs {1}.")]
+    #[diagnostic(code(nu::parser::output_type_mismatch))]
+    OutputMismatchAlternatives(
+        Type,
+        String,
+        #[label("expected {0}, but command outputs {1}")] Span,
+    ),
+
     #[error("Type mismatch during operation.")]
     #[diagnostic(code(nu::parser::type_mismatch))]
     Mismatch(String, String, #[label("expected {0}, found {1}")] Span), // expected, found, span
@@ -620,7 +629,8 @@ impl ParseError {
             ParseError::TypeMismatch(_, _, s) => *s,
             ParseError::TypeMismatchHelp(_, _, s, _) => *s,
             ParseError::InputMismatch(_, s) => *s,
-            ParseError::OutputMismatch(_, _, s) => *s,
+            ParseError::OutputMismatch(_, _, s)
+            | ParseError::OutputMismatchAlternatives(_, _, s) => *s,
             ParseError::MissingRequiredFlag(_, s) => *s,
             ParseError::IncompleteMathExpression(s) => *s,
             ParseError::UnknownState(_, s) => *s,

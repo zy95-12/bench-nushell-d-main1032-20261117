@@ -749,7 +749,17 @@ where
 
     let mut long_desc = String::new();
     let _ = write!(long_desc, "\n{help_section_name}Flags{RESET}:\n");
-    for flag in &signature.named {
+    let mut flags: Vec<_> = signature.named.iter().collect();
+    flags.sort_by_key(|flag| {
+        if flag.required {
+            0
+        } else if flag.long == "help" {
+            1
+        } else {
+            2
+        }
+    });
+    for flag in flags {
         // Indentation
         long_desc.push_str("  ");
         // Short flag shown before long flag
@@ -891,5 +901,30 @@ mod interactive_help_tests {
             "{help}"
         );
         assert!(help.contains("--optional <int>:"), "{help}");
+    }
+}
+
+#[cfg(test)]
+mod flag_order_tests {
+    use super::*;
+    #[test]
+    fn required_then_help_then_optional_preserves_group_order() {
+        let signature = Signature::build("demo")
+            .switch("optional-first", "Optional.", None)
+            .required_named("required-first", SyntaxShape::String, "Required.", None)
+            .required_named("required-second", SyntaxShape::String, "Required.", None)
+            .switch("optional-second", "Optional.", None);
+        let help = get_flags_section(&signature, &HelpStyle::default(), |_| String::new());
+        let positions: Vec<_> = [
+            "--required-first",
+            "--required-second",
+            "--help",
+            "--optional-first",
+            "--optional-second",
+        ]
+        .iter()
+        .map(|name| help.find(name).unwrap())
+        .collect();
+        assert!(positions.windows(2).all(|pair| pair[0] < pair[1]), "{help}");
     }
 }

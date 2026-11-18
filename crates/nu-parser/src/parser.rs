@@ -508,7 +508,10 @@ fn parse_external_arg(working_set: &mut StateWorkingSet, span: Span) -> External
 
     if contents.len() > 3
         && contents.starts_with(b"...")
-        && (contents[3] == b'$' || contents[3] == b'[' || contents[3] == b'(')
+        && (contents[3] == b'$'
+            || contents[3] == b'['
+            || contents[3] == b'('
+            || &contents[3..] == b"null")
     {
         ExternalArgument::Spread(parse_value(
             working_set,
@@ -692,9 +695,9 @@ fn parse_long_flag(
                     arg_span,
                     nu_protocol::did_you_mean(sig.named.iter().map(|flag| &flag.long), &long_name)
                         .map(|name| {
-                            format!("Did you mean `--{name}`? Use `--help` for more information.")
+                            format!("Did you mean: `--{name}`? Use `--help` for more information.")
                         })
-                        .unwrap_or_else(|| sig.clone().formatted_flags()),
+                        .unwrap_or_else(|| "Use `--help` to see available flags".into()),
                 ));
                 (
                     Some(Spanned {
@@ -774,7 +777,7 @@ fn parse_short_flags(
                     sig.name.clone(),
                     format!("-{}", String::from_utf8_lossy(contents)),
                     *first,
-                    sig.clone().formatted_flags(),
+                    "Use `--help` to see available flags".into(),
                 ));
             }
 
@@ -1237,7 +1240,10 @@ pub fn parse_internal_call(
 
             if contents.len() > 3
                 && contents.starts_with(b"...")
-                && (contents[3] == b'$' || contents[3] == b'[' || contents[3] == b'(')
+                && (contents[3] == b'$'
+                    || contents[3] == b'['
+                    || contents[3] == b'('
+                    || &contents[3..] == b"null")
             {
                 if signature.rest_positional.is_none() && !signature.allows_unknown_args {
                     working_set.error(ParseError::UnexpectedSpreadArg(
@@ -4286,14 +4292,8 @@ pub fn parse_signature_helper(working_set: &mut StateWorkingSet, span: Span) -> 
                         }
                         ParseMode::Type => {
                             if let Some(last) = args.last_mut() {
-                                let syntax_shape = parse_shape_name(
-                                    working_set,
-                                    &contents,
-                                    span,
-                                    ShapeDescriptorUse::Argument,
-                                );
                                 let (syntax_shape, parsed_completion) =
-                                    nu_protocol::Completion::from_shape(syntax_shape);
+                                    parse_argument_shape(working_set, &contents, span);
                                 // Store completion on the parameter, independently of its syntax shape.
                                 match last {
                                     Arg::Positional {
@@ -4833,9 +4833,7 @@ fn table_type(head: &[Expression], rows: &[Vec<Expression>]) -> (Type, Vec<Parse
             } else {
                 // Dynamic column names are evaluated when the table is constructed.
                 // Their names cannot be represented in a static table schema.
-                if !matches!(expr.expr, Expr::Var(_) | Expr::FullCellPath(_))
-                    && !type_compatible(&Type::String, &expr.ty)
-                {
+                if !type_compatible(&Type::String, &expr.ty) {
                     errors.push(mk_error(expr.span));
                 }
                 String::from("{ column }")
@@ -7299,4 +7297,85 @@ pub fn parse(
     }
 
     output
+}
+
+/// Parse signature completion metadata separately from the syntax shape.
+fn parse_argument_shape(
+    working_set: &mut StateWorkingSet,
+    contents: &[u8],
+    span: Span,
+) -> (SyntaxShape, Option<nu_protocol::Completion>) {
+    if let Some(at) = contents.iter().position(|b| *b == b'@') {
+        let completion_span = Span::new(span.start + at + 1, span.end);
+        let completion = &contents[at + 1..];
+        if matches!(completion.first(), Some(b'[' | b'{' | b'$')) {
+            let shape = parse_shape_name(
+                working_set,
+                &contents[..at],
+                Span::new(span.start, span.start + at),
+                ShapeDescriptorUse::Argument,
+            );
+            let expr = parse_value(working_set, completion_span, &SyntaxShape::Any);
+            match eval_constant(working_set, &expr) {
+                Ok(Value::List { vals, .. }) => {
+                    let mut values = Vec::new();
+                    let mut has_records = false;
+                    for value in vals {
+                        let (value, description) = match value {
+                            Value::Record { val, .. } => {
+                                has_records = true;
+                                let description = val
+                                    .get("description")
+                                    .and_then(|value| value.as_str().ok())
+                                    .map(str::to_owned);
+                                (
+                                    val.get("value")
+                                        .cloned()
+                                        .unwrap_or_else(|| Value::nothing(completion_span)),
+                                    description,
+                                )
+                            }
+                            other => (other, None),
+                        };
+                        match value.coerce_into_string() {
+                            Ok(value) => {
+                                values.push(nu_protocol::CompletionItem { value, description })
+                            }
+                            Err(_) => working_set.error(ParseError::Expected(
+                                "string completion value",
+                                completion_span,
+                            )),
+                        }
+                    }
+                    let completion = if has_records {
+                        nu_protocol::Completion::ListWithDescriptions(values)
+                    } else {
+                        nu_protocol::Completion::List(
+                            values.into_iter().map(|item| item.value).collect(),
+                        )
+                    };
+                    return (shape, Some(completion));
+                }
+                Ok(value) => working_set.error(ParseError::OperatorUnsupportedType {
+                    op: "@",
+                    unsupported: value.get_type(),
+                    op_span: Span::new(span.start + at, span.start + at + 1),
+                    unsupported_span: completion_span,
+                    help: None,
+                }),
+                Err(error) => working_set.error(ParseError::LabeledError(
+                    "Completion must be a constant list".into(),
+                    error.to_string(),
+                    completion_span,
+                )),
+            }
+            return (shape, None);
+        }
+    }
+    nu_protocol::Completion::from_shape(parse_shape_name(
+        working_set,
+        contents,
+        span,
+        ShapeDescriptorUse::Argument,
+    ))
 }

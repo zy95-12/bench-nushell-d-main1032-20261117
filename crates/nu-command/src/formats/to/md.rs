@@ -16,6 +16,17 @@ impl Command for ToMd {
         Signature::build("to md")
             .input_output_types(vec![(Type::Any, Type::String)])
             .switch(
+                "escape-md",
+                "Escape Markdown characters in cells.",
+                Some('m'),
+            )
+            .switch("escape-html", "Escape HTML characters in cells.", Some('t'))
+            .switch(
+                "escape-all",
+                "Escape Markdown and HTML characters in cells.",
+                Some('a'),
+            )
+            .switch(
                 "escape",
                 "escape Markdown formatting characters and HTML in table cells",
                 None,
@@ -48,7 +59,9 @@ impl Command for ToMd {
             Example {
                 description: "Outputs an MD string representing the contents of this table",
                 example: "[[foo bar]; [1 2]] | to md",
-                result: Some(Value::test_string("|foo|bar|\n|---|---|\n|1|2|")),
+                result: Some(Value::test_string(
+                    "| foo | bar |\n| --- | --- |\n| 1 | 2 |",
+                )),
             },
             Example {
                 description: "Optionally, output a formatted markdown string",
@@ -73,7 +86,7 @@ impl Command for ToMd {
                 description: "Separate list into markdown tables",
                 example: "[ {foo: 1, bar: 2} {foo: 3, bar: 4} {foo: 5}] | to md --per-element",
                 result: Some(Value::test_string(
-                    "|foo|bar|\n|---|---|\n|1|2|\n|3|4|\n\n|foo|\n|---|\n|5|",
+                    "| foo | bar |\n| --- | --- |\n| 1 | 2 |\n| 3 | 4 |\n\n| foo |\n| --- |\n| 5 |",
                 )),
             },
             Example {
@@ -105,7 +118,14 @@ impl Command for ToMd {
             &center,
             &config,
             head,
-            call.has_flag(engine_state, stack, "escape")?,
+            (
+                call.has_flag(engine_state, stack, "escape-md")?
+                    || call.has_flag(engine_state, stack, "escape-all")?
+                    || call.has_flag(engine_state, stack, "escape")?,
+                call.has_flag(engine_state, stack, "escape-html")?
+                    || call.has_flag(engine_state, stack, "escape-all")?
+                    || call.has_flag(engine_state, stack, "escape")?,
+            ),
         )
     }
 }
@@ -117,7 +137,7 @@ fn to_md(
     center: &Option<Vec<CellPath>>,
     config: &Config,
     head: Span,
-    escape: bool,
+    (escape_md, escape_html): (bool, bool),
 ) -> Result<PipelineData, ShellError> {
     // text/markdown became a valid mimetype with rfc7763
     let metadata = input
@@ -146,10 +166,15 @@ fn to_md(
                 _ => false,
             };
             let fragment = match val {
-                Value::List { .. } => {
-                    table_with_escape(val.into_pipeline_data(), pretty, center, config, escape)
-                }
-                other => fragment_with_escape(other, pretty, center, config, escape),
+                Value::List { .. } => table(
+                    val.into_pipeline_data(),
+                    pretty,
+                    center,
+                    escape_md,
+                    escape_html,
+                    config,
+                ),
+                other => fragment(other, pretty, center, escape_md, escape_html, config),
             };
             if fragment.is_empty() {
                 continue;
@@ -172,23 +197,26 @@ fn to_md(
         );
     }
     Ok(Value::string(
-        table_with_escape(grouped_input, pretty, center, config, escape),
+        table(
+            grouped_input,
+            pretty,
+            center,
+            escape_md,
+            escape_html,
+            config,
+        ),
         head,
     )
     .into_pipeline_data_with_metadata(Some(metadata)))
 }
 
-#[cfg(test)]
-fn fragment(input: Value, pretty: bool, center: &Option<Vec<CellPath>>, config: &Config) -> String {
-    fragment_with_escape(input, pretty, center, config, false)
-}
-
-fn fragment_with_escape(
+fn fragment(
     input: Value,
     pretty: bool,
     center: &Option<Vec<CellPath>>,
+    escape_md: bool,
+    escape_html: bool,
     config: &Config,
-    escape: bool,
 ) -> String {
     let mut out = String::new();
 
@@ -201,12 +229,13 @@ fn fragment_with_escape(
                     "h3" => "### ".to_string(),
                     "blockquote" => "> ".to_string(),
                     _ => {
-                        return table_with_escape(
+                        return table(
                             input.into_pipeline_data(),
                             pretty,
                             center,
+                            escape_md,
+                            escape_html,
                             config,
-                            escape,
                         );
                     }
                 };
@@ -215,7 +244,14 @@ fn fragment_with_escape(
                 out.push_str(&data.to_expanded_string("|", config));
             }
             _ => {
-                out = table_with_escape(input.into_pipeline_data(), pretty, center, config, escape)
+                out = table(
+                    input.into_pipeline_data(),
+                    pretty,
+                    center,
+                    escape_md,
+                    escape_html,
+                    config,
+                )
             }
         }
     } else {
@@ -226,14 +262,17 @@ fn fragment_with_escape(
     out
 }
 
-fn collect_headers(headers: &[String], escape: bool) -> (Vec<String>, Vec<usize>) {
+fn collect_headers(
+    headers: &[String],
+    escape_md: bool,
+    escape_html: bool,
+) -> (Vec<String>, Vec<usize>) {
     let mut escaped_headers: Vec<String> = Vec::new();
     let mut column_widths: Vec<usize> = Vec::new();
 
     if !headers.is_empty() {
         for header in headers {
-            let escaped_header_string =
-                escape_cell(&v_htmlescape::escape(header).to_string(), escape, false);
+            let escaped_header_string = escape_cell(header, escape_md, escape_html);
             column_widths.push(escaped_header_string.len().max(3));
             escaped_headers.push(escaped_header_string);
         }
@@ -244,18 +283,8 @@ fn collect_headers(headers: &[String], escape: bool) -> (Vec<String>, Vec<usize>
     (escaped_headers, column_widths)
 }
 
-#[cfg(test)]
-fn table(
-    input: PipelineData,
-    pretty: bool,
-    center: &Option<Vec<CellPath>>,
-    config: &Config,
-) -> String {
-    table_with_escape(input, pretty, center, config, false)
-}
-
 fn escape_cell(text: &str, escape: bool, html: bool) -> String {
-    let text = if escape && html {
+    let text = if html {
         v_htmlescape::escape(text).to_string()
     } else {
         text.to_owned()
@@ -267,7 +296,7 @@ fn escape_cell(text: &str, escape: bool, html: bool) -> String {
             '\n' => out.push_str("<br>"),
             '|' => out.push_str("\\|"),
             '\\' => out.push_str("\\\\"),
-            '*' | '_' | '[' | ']' | '`' if escape => {
+            '*' | '_' | '[' | ']' | '`' | '<' | '>' | '(' | ')' | '#' if escape => {
                 out.push('\\');
                 out.push(c);
             }
@@ -277,12 +306,13 @@ fn escape_cell(text: &str, escape: bool, html: bool) -> String {
     out
 }
 
-fn table_with_escape(
+fn table(
     input: PipelineData,
     pretty: bool,
     center: &Option<Vec<CellPath>>,
+    escape_md: bool,
+    escape_html: bool,
     config: &Config,
-    escape: bool,
 ) -> String {
     let vec_of_values = input
         .into_iter()
@@ -307,7 +337,7 @@ fn table_with_escape(
         }
     }
 
-    let (escaped_headers, mut column_widths) = collect_headers(&headers, escape);
+    let (escaped_headers, mut column_widths) = collect_headers(&headers, escape_md, escape_html);
 
     let mut escaped_rows: Vec<Vec<String>> = Vec::new();
 
@@ -323,7 +353,7 @@ fn table_with_escape(
                         .cloned()
                         .unwrap_or_else(|| Value::nothing(span))
                         .to_expanded_string(", ", config);
-                    let value_string = escape_cell(&value_string, escape, true);
+                    let value_string = escape_cell(&value_string, escape_md, escape_html);
                     let new_column_width = value_string.len();
 
                     escaped_row.push(value_string);
@@ -335,7 +365,7 @@ fn table_with_escape(
             }
             p => {
                 let value_string =
-                    v_htmlescape::escape(&p.to_abbreviated_string(config)).to_string();
+                    escape_cell(&p.to_abbreviated_string(config), escape_md, escape_html);
                 escaped_row.push(value_string);
             }
         }
@@ -436,7 +466,9 @@ fn get_output_string(
                 }
                 output_string.push(' ');
             } else {
+                output_string.push(' ');
                 output_string.push_str(&headers[i]);
+                output_string.push(' ');
             }
 
             output_string.push('|');
@@ -460,7 +492,7 @@ fn get_output_string(
                 output_string.push_str("---");
                 output_string.push(':');
             } else {
-                output_string.push_str("---");
+                output_string.push_str(" --- ");
             }
 
             output_string.push('|');
@@ -492,7 +524,13 @@ fn get_output_string(
                 }
                 output_string.push(' ');
             } else {
+                if !headers.is_empty() {
+                    output_string.push(' ');
+                }
                 output_string.push_str(&row[i]);
+                if !headers.is_empty() {
+                    output_string.push(' ');
+                }
             }
 
             if !headers.is_empty() {
@@ -571,7 +609,7 @@ mod tests {
         });
 
         assert_eq!(
-            fragment(value, false, &None, &Config::default()),
+            fragment(value, false, &None, false, false, &Config::default()),
             "# Ecuador\n"
         );
     }
@@ -583,7 +621,7 @@ mod tests {
         });
 
         assert_eq!(
-            fragment(value, false, &None, &Config::default()),
+            fragment(value, false, &None, false, false, &Config::default()),
             "## Ecuador\n"
         );
     }
@@ -595,7 +633,7 @@ mod tests {
         });
 
         assert_eq!(
-            fragment(value, false, &None, &Config::default()),
+            fragment(value, false, &None, false, false, &Config::default()),
             "### Ecuador\n"
         );
     }
@@ -607,7 +645,7 @@ mod tests {
         });
 
         assert_eq!(
-            fragment(value, false, &None, &Config::default()),
+            fragment(value, false, &None, false, false, &Config::default()),
             "> Ecuador\n"
         );
     }
@@ -631,19 +669,28 @@ mod tests {
                 value.clone().into_pipeline_data(),
                 false,
                 &None,
+                false,
+                false,
                 &Config::default()
             ),
             one(r#"
-            |country|
-            |---|
-            |Ecuador|
-            |New Zealand|
-            |USA|
+            | country |
+            | --- |
+            | Ecuador |
+            | New Zealand |
+            | USA |
         "#)
         );
 
         assert_eq!(
-            table(value.into_pipeline_data(), true, &None, &Config::default()),
+            table(
+                value.into_pipeline_data(),
+                true,
+                &None,
+                false,
+                false,
+                &Config::default()
+            ),
             one(r#"
             | country     |
             | ----------- |
@@ -672,13 +719,15 @@ mod tests {
                 value.clone().into_pipeline_data(),
                 false,
                 &None,
+                false,
+                false,
                 &Config::default()
             ),
             one(r#"
-            ||foo|
-            |---|---|
-            |1|2|
-            |3|4|
+            |  | foo |
+            | --- | --- |
+            | 1 | 2 |
+            | 3 | 4 |
         "#)
         );
     }
@@ -705,14 +754,16 @@ mod tests {
                 value.clone().into_pipeline_data(),
                 false,
                 &None,
+                false,
+                false,
                 &Config::default()
             ),
             one(r#"
-            |foo|bar|
-            |---|---|
-            |1|2|
-            |3|4|
-            |5||
+            | foo | bar |
+            | --- | --- |
+            | 1 | 2 |
+            | 3 | 4 |
+            | 5 |  |
         "#)
         );
     }
@@ -757,6 +808,8 @@ mod tests {
                 value.clone().into_pipeline_data(),
                 true,
                 &center,
+                false,
+                false,
                 &Config::default()
             ),
             one(r#"
@@ -774,14 +827,16 @@ mod tests {
                 value.clone().into_pipeline_data(),
                 false,
                 &center,
+                false,
+                false,
                 &Config::default()
             ),
             one(r#"
-            |foo|bar|
-            |---|:---:|
-            |1|2|
-            |3|4|
-            |5|6|
+            | foo | bar |
+            | --- |:---:|
+            | 1 | 2 |
+            | 3 | 4 |
+            | 5 | 6 |
         "#)
         );
     }
@@ -810,6 +865,8 @@ mod tests {
                 value.clone().into_pipeline_data(),
                 true,
                 &center,
+                false,
+                false,
                 &Config::default()
             ),
             one(r#"
@@ -873,6 +930,8 @@ mod tests {
                 value.clone().into_pipeline_data(),
                 true,
                 &center,
+                false,
+                false,
                 &Config::default()
             ),
             one(r#"
@@ -924,6 +983,8 @@ mod tests {
                 value.clone().into_pipeline_data(),
                 true,
                 &center,
+                false,
+                false,
                 &Config::default()
             ),
             one(r#"
@@ -970,6 +1031,8 @@ mod tests {
                 value.clone().into_pipeline_data(),
                 true,
                 &center,
+                false,
+                false,
                 &Config::default()
             ),
             one(r#"

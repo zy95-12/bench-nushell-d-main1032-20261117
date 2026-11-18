@@ -31,6 +31,21 @@ impl CustomValue for CustomU32 {
         Ok(Value::int(self.0 as i64, span))
     }
 
+    fn save(
+        &self,
+        path: nu_protocol::Spanned<&std::path::Path>,
+        _: Span,
+        save_span: Span,
+    ) -> Result<(), ShellError> {
+        std::fs::write(path.item, format!("plugin u32: {}", self.0)).map_err(|error| {
+            ShellError::Io(nu_protocol::shell_error::io::IoError::new(
+                error,
+                save_span,
+                Some(path.item.into()),
+            ))
+        })
+    }
+
     fn as_any(&self) -> &dyn std::any::Any {
         self
     }
@@ -149,5 +164,75 @@ fn test_into_int_from_u32() -> Result<(), ShellError> {
         )?
         .into_value(Span::test_data())?;
     assert_eq!(Value::test_int(42), result);
+    Ok(())
+}
+
+#[derive(Clone)]
+struct SaveCustom;
+impl nu_protocol::engine::Command for SaveCustom {
+    fn name(&self) -> &str {
+        "save-custom"
+    }
+    fn signature(&self) -> Signature {
+        Signature::build(self.name())
+            .required("path", nu_protocol::SyntaxShape::Filepath, "Destination.")
+            .input_output_type(Type::Any, Type::Nothing)
+    }
+    fn description(&self) -> &str {
+        "Exercise host dispatch of a plugin value's save method."
+    }
+    fn run(
+        &self,
+        engine: &nu_protocol::engine::EngineState,
+        stack: &mut nu_protocol::engine::Stack,
+        call: &nu_protocol::engine::Call,
+        input: PipelineData,
+    ) -> Result<PipelineData, ShellError> {
+        use nu_engine::CallExt;
+        let path: nu_protocol::Spanned<std::path::PathBuf> = call.req(engine, stack, 0)?;
+        let value = input.into_value(call.head)?;
+        value.as_custom_value()?.save(
+            path.as_ref().map(|path| path.as_path()),
+            value.span(),
+            call.head,
+        )?;
+        Ok(PipelineData::empty())
+    }
+}
+
+#[test]
+fn plugin_custom_save_reaches_the_originating_value() -> Result<(), Box<ShellError>> {
+    let path = std::env::temp_dir().join(format!(
+        "nu-plugin-save-{}-{}.txt",
+        std::process::id(),
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+            .as_nanos()
+    ));
+    let mut plugin = PluginTest::new("custom_u32", CustomU32Plugin.into())?;
+    plugin.add_decl(Box::new(SaveCustom))?;
+    plugin.eval(&format!("42 | into u32 | save-custom '{}'", path.display()))?;
+    let contents = std::fs::read_to_string(&path).unwrap();
+    std::fs::remove_file(&path).unwrap();
+    assert_eq!(contents, "plugin u32: 42");
+    let error = plugin
+        .eval_with(
+            &format!("save-custom '{}'", path.display()),
+            PipelineData::value(
+                Value::test_custom_value(Box::new(nu_plugin_protocol::test_util::TestCustomValue(
+                    1,
+                ))),
+                None,
+            ),
+        )
+        .unwrap_err();
+    assert!(
+        error
+            .to_string()
+            .contains("Custom value does not implement `save`"),
+        "{error:?}"
+    );
+    assert!(!path.exists());
     Ok(())
 }

@@ -470,3 +470,16 @@ fn custom_command() {
 }
 
 mod type_system;
+
+#[test]
+fn null_spread_in_rest_arguments() {
+    for command in [
+        "def f [...x] { $x }; f ...null | length",
+        "echo before ...null after | length | $in - 2",
+        "nu --testbin cococo before ...null after | str trim | if $in == 'before after' { 0 } else { 1 }",
+    ] {
+        let result = nu!(command);
+        assert!(result.err.is_empty(), "{command}: {}", result.err);
+        assert_eq!(result.out, "0", "{command}");
+    }
+}

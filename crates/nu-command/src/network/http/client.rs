@@ -175,7 +175,7 @@ pub fn http_parse_url(
         Err(_e) => {
             return Err(ShellError::UnsupportedInput {
                 msg: "Incomplete or incorrect URL. Expected a full URL, e.g., https://www.example.com".to_string(),
-                input: format!("value: '{requested_url:?}'"),
+                input: format!("value: '{requested_url}'"),
                 msg_span: call.head,
                 input_span: span
             });
@@ -745,31 +745,27 @@ fn handle_response_io_error(span: Span, error: std::io::Error) -> ShellError {
 fn handle_response_error(span: Span, requested_url: &str, response_err: Error) -> ShellError {
     match response_err {
         Error::StatusCode(301) => ShellError::NetworkFailure {
-            msg: format!("Resource moved permanently (301): {requested_url:?}"),
+            msg: format!("Resource moved permanently (301): {requested_url}"),
             span,
         },
         Error::StatusCode(400) => ShellError::NetworkFailure {
-            msg: format!("Bad request (400) to {requested_url:?}"),
+            msg: format!("Bad request (400) to {requested_url}"),
             span,
         },
         Error::StatusCode(403) => ShellError::NetworkFailure {
-            msg: format!("Access forbidden (403) to {requested_url:?}"),
+            msg: format!("Access forbidden (403) to {requested_url}"),
             span,
         },
         Error::StatusCode(404) => ShellError::NetworkFailure {
-            msg: format!("Requested file not found (404): {requested_url:?}"),
+            msg: format!("Requested file not found (404): {requested_url}"),
             span,
         },
         Error::StatusCode(408) => ShellError::NetworkFailure {
-            msg: format!("Request timeout (408): {requested_url:?}"),
+            msg: format!("Request timeout (408): {requested_url}"),
             span,
         },
-        Error::StatusCode(_) => ShellError::NetworkFailure {
-            msg: format!(
-                "Cannot make request to {:?}. Error is {:?}",
-                requested_url,
-                response_err.to_string()
-            ),
+        Error::StatusCode(code) => ShellError::NetworkFailure {
+            msg: format!("Cannot make request to {requested_url}. Error is {code}"),
             span,
         },
 
@@ -1092,5 +1088,41 @@ mod test {
 
         let none = None;
         assert_eq!(BodyType::Unknown(none.clone()), BodyType::from(none));
+    }
+}
+
+#[cfg(test)]
+mod reconciliation_tests {
+    use super::*;
+    #[test]
+    fn status_errors_preserve_unquoted_urls() {
+        let url = "https://example.invalid/path";
+        for (status, expected) in [
+            (301, format!("Resource moved permanently (301): {url}")),
+            (400, format!("Bad request (400) to {url}")),
+            (403, format!("Access forbidden (403) to {url}")),
+            (404, format!("Requested file not found (404): {url}")),
+            (408, format!("Request timeout (408): {url}")),
+            (500, format!("Cannot make request to {url}. Error is 500")),
+        ] {
+            let ShellError::NetworkFailure { msg, .. } =
+                handle_response_error(Span::test_data(), url, Error::StatusCode(status))
+            else {
+                panic!("expected network failure")
+            };
+            assert_eq!(msg, expected);
+        }
+    }
+    #[test]
+    fn body_read_timeout_is_typed_io_timeout() {
+        let timeout = Error::Timeout(ureq::Timeout::Global);
+        let error = handle_response_io_error(Span::test_data(), std::io::Error::other(timeout));
+        let ShellError::Io(error) = error else {
+            panic!("expected typed IO error")
+        };
+        assert_eq!(
+            error.kind,
+            ErrorKind::from_std(std::io::ErrorKind::TimedOut)
+        );
     }
 }

@@ -66,7 +66,11 @@ pub fn parse_iter<'i, Ctx: Clone>(
             continue;
         }
 
-        let Some(option) = ALL.iter().find(|option| option.identifier() == key.trim()) else {
+        let Some(option) = ALL.iter().find(|option| {
+            option.identifier() == key.trim()
+                || (key.trim() == "enforce-typed-variables"
+                    && option.identifier() == "enforce-runtime-annotations")
+        }) else {
             warnings.push((ParseWarning::Unknown(key.to_string()), ctx));
             continue;
         };

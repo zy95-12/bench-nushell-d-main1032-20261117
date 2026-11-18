@@ -200,10 +200,7 @@ mod tests {
     fn inlay_hint_variable_type() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("hints");
-        script.push("type.nu");
+        let script = fixtures().join("lsp/hints/type.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -227,10 +224,7 @@ mod tests {
     fn inlay_hint_assignment_type() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("hints");
-        script.push("assignment.nu");
+        let script = fixtures().join("lsp/hints/assignment.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -255,10 +249,7 @@ mod tests {
     fn inlay_hint_parameter_names() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("hints");
-        script.push("param.nu");
+        let script = fixtures().join("lsp/hints/param.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -316,10 +307,7 @@ mod tests {
     #[test]
     /// https://github.com/nushell/nushell/pull/15071
     fn inlay_hint_for_nu_script_loaded_on_init() {
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("hints");
-        script.push("type.nu");
+        let script = fixtures().join("lsp/hints/type.nu");
         let script_path_str = script.to_str();
         let script = path_to_uri(&script);
 

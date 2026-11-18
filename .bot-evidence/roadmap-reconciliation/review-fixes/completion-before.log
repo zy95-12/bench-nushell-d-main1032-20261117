@@ -1,0 +1,27 @@
+    Blocking waiting for file lock on build directory
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 54.71s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-7b5a0db5f20b557e)
+
+running 4 tests
+test completions::signature_static_list_syntax::case_4 ... FAILED
+test completions::signature_static_list_syntax::case_1 ... ok
+test completions::signature_static_list_syntax::case_2 ... ok
+test completions::signature_static_list_syntax::case_3 ... ok
+
+failures:
+
+---- completions::signature_static_list_syntax::case_4 stdout ----
+
+thread 'completions::signature_static_list_syntax::case_4' panicked at crates/nu-cli/tests/completions/mod.rs:2939:13:
+assertion `left == right` failed
+  left: None
+ right: Some("first")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    completions::signature_static_list_syntax::case_4
+
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 119 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p nu-cli --test main`

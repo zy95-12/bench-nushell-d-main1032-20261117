@@ -277,6 +277,12 @@ pub(crate) fn compile_expression(
                         None,
                         reg,
                     )?;
+                    if column.as_string().is_none() {
+                        builder.push(
+                            Instruction::CheckTableColumn { src_dst: reg }
+                                .into_spanned(column.span),
+                        )?;
+                    }
                     Ok(reg)
                 })
                 .collect::<Result<Vec<RegId>, CompileError>>()?;

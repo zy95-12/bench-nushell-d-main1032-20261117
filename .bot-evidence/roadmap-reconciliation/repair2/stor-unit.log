@@ -1,0 +1,26 @@
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 18.58s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_command-6350f4759353ea97)
+
+running 18 tests
+test stor::create::test::test_process_with_missing_table_name ... ok
+test stor::create::test::test_process_with_missing_columns ... ok
+test stor::create::test::test_process_with_unsupported_column_data_type ... ok
+test stor::delete::test::test_examples ... ok
+test stor::create::test::test_examples ... ok
+test stor::open::test::test_examples ... ok
+test stor::insert::test::test_examples ... ok
+test stor::reset::test::test_examples ... ok
+test stor::export::test::test_examples ... ok
+test stor::import::test::test_examples ... ok
+test stor::update::test::test_examples ... ok
+test stor::create::test::test_process_with_valid_parameters ... ok
+test stor::insert::test::test_errors_when_table_doesnt_exist ... ok
+test stor::insert::test::test_no_errors_when_param_is_wrong_type ... ok
+test stor::insert::test::test_process_string_with_space ... ok
+test stor::insert::test::test_errors_when_column_doesnt_exist ... ok
+test stor::insert::test::test_no_errors_when_string_too_long ... ok
+test stor::insert::test::test_process_with_simple_parameters ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 452 filtered out; finished in 0.00s
+

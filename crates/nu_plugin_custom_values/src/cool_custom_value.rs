@@ -68,9 +68,12 @@ impl CustomValue for CoolCustomValue {
         _self_span: Span,
         index: usize,
         path_span: Span,
+        optional: bool,
     ) -> Result<Value, ShellError> {
         if index == 0 {
             Ok(Value::string(&self.cool, path_span))
+        } else if optional {
+            Ok(Value::nothing(path_span))
         } else {
             Err(ShellError::AccessBeyondEnd {
                 max_idx: 0,
@@ -84,9 +87,16 @@ impl CustomValue for CoolCustomValue {
         self_span: Span,
         column_name: String,
         path_span: Span,
+        optional: bool,
+        casing: nu_protocol::casing::Casing,
     ) -> Result<Value, ShellError> {
-        if column_name == "cool" {
+        if column_name == "cool"
+            || (casing == nu_protocol::casing::Casing::Insensitive
+                && column_name.eq_ignore_ascii_case("cool"))
+        {
             Ok(Value::string(&self.cool, path_span))
+        } else if optional {
+            Ok(Value::nothing(path_span))
         } else {
             Err(ShellError::CantFindColumn {
                 col_name: column_name,
@@ -153,5 +163,48 @@ impl CustomValue for CoolCustomValue {
 
     fn as_mut_any(&mut self) -> &mut dyn std::any::Any {
         self
+    }
+}
+
+#[cfg(test)]
+mod path_tests {
+    use super::*;
+    #[test]
+    fn custom_paths_honor_optional_and_casing() {
+        let value = CoolCustomValue {
+            cool: "data".into(),
+        };
+        let span = Span::test_data();
+        assert_eq!(
+            value
+                .follow_path_string(
+                    span,
+                    "COOL".into(),
+                    span,
+                    false,
+                    nu_protocol::casing::Casing::Insensitive
+                )
+                .unwrap(),
+            Value::test_string("data")
+        );
+        assert!(
+            value
+                .follow_path_string(
+                    span,
+                    "COOL".into(),
+                    span,
+                    true,
+                    nu_protocol::casing::Casing::Sensitive
+                )
+                .unwrap()
+                .is_nothing()
+        );
+        assert!(
+            value
+                .follow_path_int(span, 1, span, true)
+                .unwrap()
+                .is_nothing()
+        );
+        assert!(value.follow_path_int(span, 1, span, false).is_err());
     }
 }

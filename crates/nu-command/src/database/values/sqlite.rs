@@ -4,7 +4,7 @@ use super::definitions::{
 };
 use nu_protocol::{
     CustomValue, PipelineData, Record, ShellError, Signals, Span, Spanned, Value,
-    shell_error::io::IoError,
+    engine::EngineState, shell_error::io::IoError,
 };
 use rusqlite::{
     Connection, Error as SqliteError, OpenFlags, Row, Statement, ToSql, types::ValueRef,
@@ -379,7 +379,11 @@ impl CustomValue for SQLiteDatabase {
         _self_span: Span,
         _index: usize,
         path_span: Span,
+        optional: bool,
     ) -> Result<Value, ShellError> {
+        if optional {
+            return Ok(Value::nothing(path_span));
+        }
         // In theory we could support this, but tables don't have an especially well-defined order
         Err(ShellError::IncompatiblePathAccess { type_name: "SQLite databases do not support integer-indexed access. Try specifying a table name instead".into(), span: path_span })
     }
@@ -389,8 +393,42 @@ impl CustomValue for SQLiteDatabase {
         _self_span: Span,
         column_name: String,
         path_span: Span,
+        optional: bool,
+        casing: nu_protocol::casing::Casing,
     ) -> Result<Value, ShellError> {
         let db = open_sqlite_db(&self.path, path_span)?;
+        let column_name = if casing == nu_protocol::casing::Casing::Insensitive || optional {
+            let mut statement = db
+                .prepare("SELECT name FROM sqlite_master WHERE type = 'table'")
+                .map_err(|e| {
+                    SqliteOrShellError::from(e)
+                        .into_shell_error(path_span, "Failed to list SQLite tables")
+                })?;
+            let names = statement
+                .query_map([], |row| row.get::<_, String>(0))
+                .map_err(|e| {
+                    SqliteOrShellError::from(e)
+                        .into_shell_error(path_span, "Failed to list SQLite tables")
+                })?;
+            let names = names.collect::<Result<Vec<_>, _>>().map_err(|error| {
+                SqliteOrShellError::from(error)
+                    .into_shell_error(path_span, "Failed to list SQLite tables")
+            })?;
+            let found = names.into_iter().find(|name| {
+                if casing == nu_protocol::casing::Casing::Insensitive {
+                    name.to_lowercase() == column_name.to_lowercase()
+                } else {
+                    name == &column_name
+                }
+            });
+            match found {
+                Some(name) => name,
+                None if optional => return Ok(Value::nothing(path_span)),
+                None => column_name,
+            }
+        } else {
+            column_name
+        };
         read_single_table(db, column_name, path_span, &self.signals)
             .map_err(|e| e.into_shell_error(path_span, "Failed to read from SQLite database"))
     }
@@ -431,6 +469,13 @@ fn run_sql_query(
 
 // This is taken from to text local_into_string but tweaks it a bit so that certain formatting does not happen
 pub fn value_to_sql(value: Value) -> Result<Box<dyn rusqlite::ToSql>, ShellError> {
+    value_to_sql_with_engine_state(&EngineState::new(), value)
+}
+
+fn value_to_sql_with_engine_state(
+    engine_state: &EngineState,
+    value: Value,
+) -> Result<Box<dyn rusqlite::ToSql>, ShellError> {
     Ok(match value {
         Value::Bool { val, .. } => Box::new(val),
         Value::Int { val, .. } => Box::new(val),
@@ -442,12 +487,7 @@ pub fn value_to_sql(value: Value) -> Result<Box<dyn rusqlite::ToSql>, ShellError
         Value::Binary { val, .. } => Box::new(val),
         Value::Nothing { .. } => Box::new(rusqlite::types::Null),
         value @ (Value::List { .. } | Value::Record { .. }) => {
-            let json = crate::value_to_json_value(
-                &nu_protocol::engine::EngineState::new(),
-                &value,
-                value.span(),
-                false,
-            )?;
+            let json = crate::value_to_json_value(engine_state, &value, value.span(), false)?;
             Box::new(
                 nu_json::to_string(&json).map_err(|err| ShellError::GenericError {
                     error: "Cannot encode SQLite JSON".into(),
@@ -473,9 +513,17 @@ pub fn value_to_sql(value: Value) -> Result<Box<dyn rusqlite::ToSql>, ShellError
 pub fn values_to_sql(
     values: impl IntoIterator<Item = Value>,
 ) -> Result<Vec<Box<dyn rusqlite::ToSql>>, ShellError> {
+    values_to_sql_with_engine_state(&EngineState::new(), values)
+}
+
+/// Convert SQL parameters with the engine context used for nested JSON values.
+pub fn values_to_sql_with_engine_state(
+    engine_state: &EngineState,
+    values: impl IntoIterator<Item = Value>,
+) -> Result<Vec<Box<dyn rusqlite::ToSql>>, ShellError> {
     values
         .into_iter()
-        .map(value_to_sql)
+        .map(|value| value_to_sql_with_engine_state(engine_state, value))
         .collect::<Result<Vec<_>, _>>()
 }
 
@@ -847,5 +895,51 @@ mod test {
         });
 
         assert_eq!(converted_db, expected);
+    }
+}
+
+#[cfg(test)]
+mod path_option_tests {
+    use super::*;
+    use nu_protocol::casing::Casing;
+    #[test]
+    fn sqlite_table_paths_support_optional_and_case_insensitive_lookup() {
+        let directory = tempfile::tempdir().unwrap();
+        let path = directory.path().join("paths.db");
+        let connection = Connection::open(&path).unwrap();
+        connection
+            .execute_batch("CREATE TABLE MiXeD (id INTEGER); INSERT INTO MiXeD VALUES (42);")
+            .unwrap();
+        drop(connection);
+        let value = SQLiteDatabase::new(&path, Signals::empty());
+        let span = Span::test_data();
+        let found = value
+            .follow_path_string(span, "mixed".into(), span, false, Casing::Insensitive)
+            .unwrap();
+        assert_eq!(
+            found.as_list().unwrap()[0]
+                .as_record()
+                .unwrap()
+                .get("id")
+                .unwrap(),
+            &Value::test_int(42)
+        );
+        assert!(
+            value
+                .follow_path_string(span, "missing".into(), span, true, Casing::Sensitive)
+                .unwrap()
+                .is_nothing()
+        );
+        assert!(
+            value
+                .follow_path_string(span, "mixed".into(), span, true, Casing::Sensitive)
+                .unwrap()
+                .is_nothing()
+        );
+        assert!(
+            value
+                .follow_path_string(span, "missing".into(), span, false, Casing::Insensitive)
+                .is_err()
+        );
     }
 }

@@ -491,6 +491,10 @@ pub fn add_shell_command_context(mut engine_state: EngineState) -> EngineState {
             StorUpdate,
         };
 
+        working_set.add_decl(Box::new(nu_engine::Namespace("detect".into())));
+        working_set.add_decl(Box::new(nu_engine::Namespace("query".into())));
+        #[cfg(windows)]
+        working_set.add_decl(Box::new(nu_engine::Namespace("registry".into())));
         working_set.render()
     };
 

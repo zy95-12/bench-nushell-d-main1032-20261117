@@ -1,0 +1,256 @@
+{
+  "review_ref": "task_history:64245",
+  "handoff_ref": "task_history:65987",
+  "prior_candidate_ref": "task_history:60059",
+  "results": [
+    {
+      "command": "cargo fmt --all",
+      "exit_code": 0,
+      "log": "fmt.log",
+      "suites": []
+    },
+    {
+      "command": "cargo fmt --all -- --check",
+      "exit_code": 0,
+      "log": "fmt-check.log",
+      "suites": []
+    },
+    {
+      "command": "cargo build -p nu --locked",
+      "exit_code": 0,
+      "log": "build.log",
+      "suites": []
+    },
+    {
+      "command": "cargo test -p nu-command --test streaming",
+      "exit_code": 0,
+      "log": "streaming.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 10,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu --test main overlays::",
+      "exit_code": 0,
+      "log": "overlay.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 97,
+          "failed": 0,
+          "ignored": 2
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu_plugin_query query_xml",
+      "exit_code": 0,
+      "log": "xml.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 10,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-cli --test main signature_static_list_syntax",
+      "exit_code": 0,
+      "log": "completion.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-cli --test main multi_",
+      "exit_code": 0,
+      "log": "multi-types.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-command --test main",
+      "exit_code": 0,
+      "log": "command-main.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 2009,
+          "failed": 0,
+          "ignored": 32
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-parser",
+      "exit_code": 0,
+      "log": "parser.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 6,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 22,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 240,
+          "failed": 0,
+          "ignored": 2
+        },
+        {
+          "status": "ok",
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-cli",
+      "exit_code": 0,
+      "log": "cli.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 59,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 119,
+          "failed": 0,
+          "ignored": 4
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu_plugin_query",
+      "exit_code": 0,
+      "log": "query.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 50,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo check -p nu --locked",
+      "exit_code": 0,
+      "log": "check-nu.log",
+      "suites": []
+    },
+    {
+      "command": "cargo check -p nu -p nu_plugin_query --locked",
+      "exit_code": 0,
+      "log": "policy-check.log",
+      "suites": []
+    }
+  ],
+  "changed_source_paths": [
+    "crates/nu-cli/src/completions/completer.rs",
+    "crates/nu-cli/tests/completions/mod.rs",
+    "crates/nu-cmd-lang/src/core_commands/overlay/list.rs",
+    "crates/nu-command/src/filesystem/save.rs",
+    "crates/nu-command/tests/streaming.rs",
+    "crates/nu-parser/src/parser.rs",
+    "crates/nu-parser/src/type_check.rs",
+    "crates/nu-protocol/src/errors/parse_error.rs",
+    "crates/nu-protocol/src/signature.rs",
+    "crates/nu_plugin_query/src/query_xml.rs",
+    "tests/overlays/mod.rs"
+  ],
+  "source_digest_sha256": "bdfab56ad45b82649cbbc982924d513d71c99ee9e5024194467a0df12e1b5b44",
+  "provenance": "Only supplied checkout/contracts, this trial work, and the explicitly referred review records were used. No later upstream/reference implementation, hidden tests or evaluator material accessed.",
+  "pre_fix_regressions": [
+    {
+      "command": "cargo test -p nu-command --test streaming custom_save_respects_overwrite_and_append_flags",
+      "exit_code": 101,
+      "log": "save-before.log"
+    },
+    {
+      "command": "cargo test -p nu --test main overlay_list_orders_hidden_then_activation_order",
+      "exit_code": 101,
+      "log": "overlay-before.log"
+    },
+    {
+      "command": "cargo test -p nu_plugin_query xml_namespace_default_can_be_overridden",
+      "exit_code": 101,
+      "log": "xml-before.log"
+    },
+    {
+      "command": "cargo test -p nu-cli --test main multi_",
+      "exit_code": 101,
+      "log": "types-before.log"
+    },
+    {
+      "command": "cargo test -p nu-cli --test main signature_static_list_syntax",
+      "exit_code": 101,
+      "log": "completion-before.log"
+    }
+  ],
+  "compatibility": [
+    "CustomValue::save signature unchanged; --append explicitly rejected before custom serialization, and no-force overwrite protection checked before callback.",
+    "Public check_pipeline_type signature retained as a wrapper; block output validation uses the private multi-type helper. Existing OutputMismatch retained for one type, additive OutputMismatchAlternatives carries all multiple outputs under the same diagnostic code.",
+    "Completion::List(Vec<String>) retained. Additive CompletionItem/ListWithDescriptions preserves value and description; CLI Suggestion.description also flows through existing LSP detail conversion."
+  ],
+  "scope": "Addresses all five blocking findings from task_history:64245. Earlier evidence remains historical in parent directories. No dependency/workflow changes or publication actions."
+}

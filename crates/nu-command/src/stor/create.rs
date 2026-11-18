@@ -83,9 +83,15 @@ fn process(
             Some(record) => {
                 let mut create_stmt = format!("CREATE TABLE {new_table_name} ( ");
                 for (column_name, column_datatype) in record {
-                    match column_datatype.coerce_str()?.as_ref() {
+                    match column_datatype.coerce_str()?.to_ascii_lowercase().as_str() {
                         "int" => {
                             create_stmt.push_str(&format!("{column_name} INTEGER, "));
+                        }
+                        "json" => {
+                            create_stmt.push_str(&format!("{column_name} JSON, "));
+                        }
+                        "jsonb" => {
+                            create_stmt.push_str(&format!("{column_name} JSONB, "));
                         }
                         "float" => {
                             create_stmt.push_str(&format!("{column_name} REAL, "));

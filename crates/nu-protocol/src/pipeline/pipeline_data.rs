@@ -54,18 +54,18 @@ impl PipelineData {
     }
 
     /// Construct a single value, preserving its pipeline metadata.
-    pub fn value(value: Value, metadata: Option<PipelineMetadata>) -> Self {
-        Self::Value(value, metadata)
+    pub fn value(value: Value, metadata: impl Into<Option<PipelineMetadata>>) -> Self {
+        Self::Value(value, metadata.into())
     }
 
     /// Wrap a list stream without consuming it, preserving its metadata.
-    pub fn list_stream(stream: ListStream, metadata: Option<PipelineMetadata>) -> Self {
-        Self::ListStream(stream, metadata)
+    pub fn list_stream(stream: ListStream, metadata: impl Into<Option<PipelineMetadata>>) -> Self {
+        Self::ListStream(stream, metadata.into())
     }
 
     /// Wrap a byte stream unchanged, including its type, signals and known size.
-    pub fn byte_stream(stream: ByteStream, metadata: Option<PipelineMetadata>) -> Self {
-        Self::ByteStream(stream, metadata)
+    pub fn byte_stream(stream: ByteStream, metadata: impl Into<Option<PipelineMetadata>>) -> Self {
+        Self::ByteStream(stream, metadata.into())
     }
 
     pub fn metadata(&self) -> Option<PipelineMetadata> {

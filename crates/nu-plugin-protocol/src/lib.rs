@@ -197,6 +197,8 @@ impl<D> PluginCall<D> {
 pub enum CustomValueOp {
     /// [`to_base_value()`](nu_protocol::CustomValue::to_base_value)
     ToBaseValue,
+    /// Save using the plugin custom value serialization.
+    Save(Spanned<std::path::PathBuf>, Span),
     /// [`follow_path_int()`](nu_protocol::CustomValue::follow_path_int)
     FollowPathInt(Spanned<usize>),
     /// [`follow_path_string()`](nu_protocol::CustomValue::follow_path_string)
@@ -219,6 +221,7 @@ impl CustomValueOp {
     pub fn name(&self) -> &'static str {
         match self {
             CustomValueOp::ToBaseValue => "to_base_value",
+            CustomValueOp::Save(..) => "save",
             CustomValueOp::FollowPathIntWithOptions(..) => "follow_path_int_with_options",
             CustomValueOp::FollowPathStringWithOptions(..) => "follow_path_string_with_options",
             CustomValueOp::FollowPathInt(_) => "follow_path_int",

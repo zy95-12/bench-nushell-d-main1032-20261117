@@ -402,6 +402,26 @@ impl NuCompleter {
                                         })
                                         .collect()
                                 }
+                                nu_protocol::Completion::ListWithDescriptions(values) => {
+                                    let prefix = String::from_utf8_lossy(prefix);
+                                    values
+                                        .iter()
+                                        .filter(|item| item.value.starts_with(prefix.as_ref()))
+                                        .map(|item| SemanticSuggestion {
+                                            suggestion: Suggestion {
+                                                value: item.value.clone(),
+                                                description: item.description.clone(),
+                                                span: reedline::Span {
+                                                    start: new_span.start - offset,
+                                                    end: new_span.end - offset,
+                                                },
+                                                append_whitespace: true,
+                                                ..Suggestion::default()
+                                            },
+                                            kind: None,
+                                        })
+                                        .collect()
+                                }
                             };
                             suggestions.splice(0..0, values);
                             break;

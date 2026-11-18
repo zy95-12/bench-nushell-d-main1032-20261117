@@ -1,0 +1,25 @@
+    Blocking waiting for file lock on build directory
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-protocol)
+error[E0599]: no method named `as_record_mut` found for enum `value::Value` in the current scope
+   --> crates/nu-protocol/src/config/table.rs:541:18
+    |
+540 |               let table = serialized
+    |  _________________________-
+541 | |                 .as_record_mut()
+    | |_________________-^^^^^^^^^^^^^
+    |
+   ::: crates/nu-protocol/src/value/mod.rs:48:1
+    |
+48  |   pub enum Value {
+    |   -------------- method `as_record_mut` not found for this enum
+    |
+help: there is a method `as_record` with a similar name
+    |
+541 -                 .as_record_mut()
+541 +                 .as_record()
+    |
+
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-engine)
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `nu-protocol` (lib test) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

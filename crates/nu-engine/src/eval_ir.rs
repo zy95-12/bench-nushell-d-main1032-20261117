@@ -626,6 +626,14 @@ fn eval_instruction<D: DebugContext>(
             ctx.put_reg(*src_dst, Value::list(list, list_span).into_pipeline_data());
             Ok(Continue)
         }
+        Instruction::CheckTableColumn { src_dst } => {
+            let value = ctx.collect_reg(*src_dst, *span)?;
+            if !matches!(value, Value::String { .. } | Value::Glob { .. }) {
+                return value.cant_convert_to("string");
+            }
+            ctx.put_reg(*src_dst, value.into_pipeline_data());
+            Ok(Continue)
+        }
         Instruction::RecordInsert { src_dst, key, val } => {
             let record_value = ctx.collect_reg(*src_dst, *span)?;
             let key = ctx.collect_reg(*key, *span)?;
@@ -1209,6 +1217,8 @@ fn gather_arguments(
                     // Rest variable should span the spread syntax, not the list values
                     rest_span = Some(rest_span.map_or(spread_span, |s| s.append(spread_span)));
                     // All further positional args should go to spread
+                    always_spread = true;
+                } else if matches!(vals, Value::Nothing { .. }) {
                     always_spread = true;
                 } else if let Value::Error { error, .. } = vals {
                     return Err(*error);

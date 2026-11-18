@@ -88,6 +88,31 @@ impl Command for Save {
 
         let from_io_error = IoError::factory(span, path.item.as_path());
         match input {
+            PipelineData::Value(Value::Custom { val, internal_span }, metadata) => {
+                check_saving_to_source_file(metadata.as_ref(), &path, stderr_path.as_ref())?;
+                if append {
+                    return Err(ShellError::GenericError {
+                        error: "Custom value save does not support append".into(),
+                        msg: "The custom save interface cannot append to an existing file.".into(),
+                        span: Some(span),
+                        help: Some(
+                            "Use another serialization supported by the custom value to append."
+                                .into(),
+                        ),
+                        inner: vec![],
+                    });
+                }
+                prepare_path(&path, false, force)?;
+                val.save(
+                    Spanned {
+                        item: path.item.as_path(),
+                        span: path.span,
+                    },
+                    internal_span,
+                    span,
+                )?;
+                Ok(PipelineData::empty())
+            }
             PipelineData::ByteStream(stream, metadata) => {
                 check_saving_to_source_file(metadata.as_ref(), &path, stderr_path.as_ref())?;
 

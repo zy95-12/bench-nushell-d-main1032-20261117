@@ -1,0 +1,260 @@
+    Blocking waiting for file lock on build directory
+   Compiling nu-plugin v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-plugin)
+   Compiling nu-plugin-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-plugin-engine)
+   Compiling nu-plugin-core v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-plugin-core)
+   Compiling nu-plugin-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-plugin-protocol)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 33s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_plugin-4e4a814e2a202e63)
+
+running 40 tests
+test plugin::interface::tests::interface_add_env_var ... ok
+test plugin::interface::tests::interface_eval_closure_with_stream ... ok
+test plugin::interface::tests::interface_get_config ... ok
+test plugin::interface::tests::interface_get_env_var ... ok
+test plugin::interface::tests::interface_write_engine_call_registers_subscription ... ok
+test plugin::interface::tests::interface_write_engine_call_writes_with_correct_context ... ok
+test plugin::interface::tests::interface_get_env_vars ... ok
+test plugin::interface::tests::interface_prepare_pipeline_data_serializes_custom_values_in_streams ... ok
+test plugin::interface::tests::interface_prepare_pipeline_data_serializes_custom_values ... ok
+test plugin::interface::tests::interface_get_span_contents ... ok
+test plugin::interface::tests::interface_prepare_pipeline_data_embeds_serialization_errors_in_streams ... ok
+test plugin::interface::tests::interface_hello_sends_protocol_info ... ok
+test plugin::interface::tests::interface_get_help ... ok
+test plugin::interface::tests::interface_get_current_dir ... ok
+test plugin::interface::tests::interface_get_plugin_config ... ok
+test plugin::interface::tests::interface_write_response_with_error ... ok
+test plugin::interface::tests::interface_write_response_with_stream ... ok
+test plugin::interface::tests::interface_write_signature ... ok
+test plugin::interface::tests::is_using_stdio_is_false_for_test ... ok
+test plugin::interface::tests::manager_consume_all_consumes_messages ... ok
+test plugin::interface::tests::interface_write_response_with_value ... ok
+test plugin::interface::tests::manager_consume_all_exits_after_streams_and_interfaces_are_dropped ... ok
+test plugin::interface::tests::manager_consume_all_propagates_io_error_to_engine_calls ... ok
+test plugin::interface::tests::manager_consume_all_propagates_io_error_to_readers ... ok
+test plugin::interface::tests::manager_consume_all_propagates_message_error_to_engine_calls ... ok
+test plugin::interface::tests::manager_consume_all_propagates_message_error_to_readers ... ok
+test plugin::interface::tests::manager_consume_call_custom_value_op_forwards_to_receiver_with_context ... ok
+test plugin::interface::tests::manager_consume_call_metadata_forwards_to_receiver_with_context ... ok
+test plugin::interface::tests::manager_consume_call_run_forwards_to_receiver_with_context ... ok
+test plugin::interface::tests::manager_consume_call_run_deserializes_custom_values_in_args ... ok
+test plugin::interface::tests::manager_consume_call_run_forwards_to_receiver_with_pipeline_data ... ok
+test plugin::interface::tests::manager_consume_call_signature_forwards_to_receiver_with_context ... ok
+test plugin::interface::tests::manager_consume_engine_call_response_forwards_to_subscriber_with_pipeline_data ... ok
+test plugin::interface::tests::manager_consume_errors_on_sending_other_messages_before_hello ... ok
+test plugin::interface::tests::manager_consume_errors_on_wrong_nushell_version ... ok
+test plugin::interface::tests::manager_consume_goodbye_closes_plugin_call_channel ... ok
+test plugin::interface::tests::manager_consume_sets_protocol_info_on_hello ... ok
+test plugin::interface::tests::manager_prepare_pipeline_data_deserializes_custom_values ... ok
+test plugin::interface::tests::manager_prepare_pipeline_data_deserializes_custom_values_in_streams ... ok
+test plugin::interface::tests::manager_prepare_pipeline_data_embeds_deserialization_errors_in_streams ... ok
+
+test result: ok. 40 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_plugin_core-1217ca762cc2c977)
+
+running 69 tests
+test communication_mode::local_socket::tests::local_socket_path_contains_provided_name ... ok
+test communication_mode::local_socket::tests::local_socket_path_contains_pid ... ok
+test interface::stream::tests::reader_drop ... ok
+test interface::stream::tests::list_reader_recv_wrong_type ... ok
+test interface::stream::tests::raw_reader_recv_wrong_type ... ok
+test interface::stream::tests::reader_iter_fuse_on_error ... ok
+test interface::stream::tests::reader_recv_acknowledge ... ok
+test interface::stream::tests::reader_recv_end_of_stream ... ok
+test interface::stream::tests::reader_recv_list_messages ... ok
+test interface::stream::tests::reader_recv_raw_messages ... ok
+test interface::stream::tests::signal_notify_sent_false_if_unacknowledged ... ok
+test interface::stream::tests::signal_notify_sent_never_false_if_flowing ... ok
+test interface::stream::tests::signal_set_dropped ... ok
+test interface::stream::tests::stream_manager_broadcast_read_error ... ok
+test interface::stream::tests::stream_manager_drop_writers_on_drop ... ok
+test interface::stream::tests::stream_manager_single_stream_read_scenario ... ok
+test interface::stream::tests::stream_manager_write_scenario ... ok
+test interface::stream::tests::writer_end ... ok
+test interface::stream::tests::writer_write_all_stops_if_dropped ... ok
+test interface::stream::tests::stream_manager_multi_stream_read_scenario ... ok
+test interface::tests::read_pipeline_data_empty ... ok
+test interface::tests::read_pipeline_data_prepared_properly ... ok
+test interface::tests::read_pipeline_data_byte_stream ... ok
+test interface::tests::read_pipeline_data_value ... ok
+test interface::tests::read_pipeline_data_list_stream ... ok
+test interface::tests::write_pipeline_data_empty ... ok
+test interface::tests::write_pipeline_data_byte_stream ... ok
+test interface::tests::write_pipeline_data_prepared_properly ... ok
+test interface::tests::write_pipeline_data_list_stream ... ok
+test interface::tests::write_pipeline_data_value ... ok
+test serializers::json::tests::decode_eof ... ok
+test serializers::json::tests::call_round_trip_signature ... ok
+test serializers::json::tests::decode_gibberish ... ok
+test serializers::json::tests::call_round_trip_customvalueop ... ok
+test serializers::json::tests::decode_io_error ... ok
+test serializers::json::tests::input_round_trip_stream_data_list ... ok
+test serializers::json::tests::call_round_trip_run ... ok
+test serializers::json::tests::input_round_trip_stream_data_raw ... ok
+test serializers::json::tests::json_ends_in_newline ... ok
+test serializers::json::tests::json_has_no_other_newlines ... ok
+test serializers::json::tests::output_round_trip_option ... ok
+test serializers::json::tests::output_round_trip_stream_data_list ... ok
+test serializers::json::tests::output_round_trip_stream_data_raw ... ok
+test serializers::json::tests::response_round_trip_error ... ok
+test serializers::json::tests::response_round_trip_error_none ... ok
+test serializers::json::tests::response_round_trip_value ... ok
+test serializers::json::tests::response_round_trip_plugin_custom_value ... ok
+test serializers::msgpack::tests::decode_eof ... ok
+test serializers::msgpack::tests::call_round_trip_signature ... ok
+test serializers::json::tests::response_round_trip_signature ... ok
+test serializers::msgpack::tests::decode_io_error ... ok
+test serializers::msgpack::tests::call_round_trip_customvalueop ... ok
+test serializers::msgpack::tests::input_round_trip_stream_data_raw ... ok
+test serializers::msgpack::tests::decode_gibberish ... ok
+test serializers::msgpack::tests::output_round_trip_option ... ok
+test serializers::msgpack::tests::call_round_trip_run ... ok
+test serializers::msgpack::tests::input_round_trip_stream_data_list ... ok
+test serializers::msgpack::tests::output_round_trip_stream_data_list ... ok
+test serializers::msgpack::tests::output_round_trip_stream_data_raw ... ok
+test serializers::msgpack::tests::response_round_trip_error_none ... ok
+test serializers::msgpack::tests::response_round_trip_error ... ok
+test serializers::msgpack::tests::response_round_trip_value ... ok
+test serializers::msgpack::tests::response_round_trip_plugin_custom_value ... ok
+test util::waitable::set_from_other_thread ... ok
+test util::waitable::dont_deadlock_if_waiting_without_writer ... ok
+test util::with_custom_values_in::find_custom_values ... ok
+test serializers::msgpack::tests::response_round_trip_signature ... ok
+test interface::stream::tests::signal_wait_for_drain_blocks_on_unacknowledged ... ok
+test interface::stream::tests::signal_wait_for_drain_unblocks_on_dropped ... ok
+
+test result: ok. 69 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_plugin_engine-7f0651231b4cccb1)
+
+running 52 tests
+test gc::tests::adding_locks_changes_last_update ... ok
+test gc::tests::no_timeout_if_disabled_by_config ... ok
+test gc::tests::no_timeout_if_locks_count_over_zero ... ok
+test gc::tests::no_timeout_if_disabled_by_plugin ... ok
+test gc::tests::timeout_past_deadline ... ok
+test gc::tests::timeout_configured_as_zero ... ok
+test gc::tests::timeout_with_deadline_in_future ... ok
+test interface::tests::interface_get_signature ... ok
+test interface::tests::interface_hello_sends_protocol_info ... ok
+test interface::tests::interface_prepare_pipeline_data_accepts_normal_values ... ok
+test interface::tests::interface_goodbye ... ok
+test interface::tests::interface_prepare_pipeline_data_accepts_normal_streams ... ok
+test interface::tests::interface_get_metadata ... ok
+test interface::tests::interface_prepare_pipeline_data_rejects_bad_custom_value_in_a_stream ... ok
+test interface::tests::interface_prepare_pipeline_data_rejects_bad_custom_value ... ok
+test interface::tests::interface_receive_plugin_call_receives_error ... ok
+test interface::tests::interface_receive_plugin_call_handles_engine_call ... ok
+test interface::tests::interface_receive_plugin_call_receives_response ... ok
+test interface::tests::interface_custom_value_to_base_value ... ok
+test interface::tests::interface_write_plugin_call_registers_subscription ... ok
+test interface::tests::interface_write_plugin_call_writes_custom_value_op ... ok
+test interface::tests::interface_write_plugin_call_writes_run_with_stream_input ... ok
+test interface::tests::interface_run ... ok
+test interface::tests::interface_write_plugin_call_writes_run_with_value_input ... ok
+test interface::tests::interface_write_plugin_call_writes_signature ... ok
+test interface::tests::manager_consume_all_consumes_messages ... ok
+test interface::tests::manager_consume_all_exits_after_streams_and_interfaces_are_dropped ... ok
+test interface::tests::manager_consume_all_propagates_io_error_to_plugin_calls ... ok
+test interface::tests::manager_consume_all_propagates_io_error_to_readers ... ok
+test interface::tests::manager_consume_all_propagates_message_error_to_plugin_calls ... ok
+test interface::tests::manager_consume_call_response_forwards_to_subscriber_with_pipeline_data ... ok
+test interface::tests::manager_consume_all_propagates_message_error_to_readers ... ok
+test interface::tests::manager_consume_call_response_registers_streams ... ok
+test interface::tests::manager_consume_engine_call_forwards_to_subscriber_with_pipeline_data ... ok
+test interface::tests::manager_consume_errors_on_sending_other_messages_before_hello ... ok
+test interface::tests::manager_consume_errors_on_wrong_nushell_version ... ok
+test interface::tests::manager_consume_sets_protocol_info_on_hello ... ok
+test interface::tests::manager_consume_stream_end_removes_context_only_if_last_stream ... ok
+test interface::tests::manager_prepare_pipeline_data_adds_source_to_list_streams ... ok
+test interface::tests::manager_prepare_pipeline_data_adds_source_to_values ... ok
+test interface::tests::manager_send_plugin_call_response_removes_context_only_if_no_streams_to_read ... ok
+test interface::tests::prepare_custom_value_sends_to_keep_channel_if_drop_notify ... ok
+test interface::tests::prepare_custom_value_verifies_source ... ok
+test interface::tests::predictable_plugin_cell_path_options_transport ... ok
+test interface::tests::prepare_plugin_call_custom_value_op ... ok
+test interface::tests::prepare_plugin_call_run ... ok
+test plugin_custom_value_with_source::tests::add_source_in_at_root ... ok
+test plugin_custom_value_with_source::tests::add_source_in_nested_list ... ok
+test plugin_custom_value_with_source::tests::add_source_in_nested_closure ... ok
+test plugin_custom_value_with_source::tests::verify_source_error_message ... ok
+test plugin_custom_value_with_source::tests::add_source_in_nested_record ... ok
+test interface::tests::manager_handle_engine_call_after_response_received ... ok
+
+test result: ok. 52 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_plugin_protocol-4a4e3abd3bf9ecd2)
+
+running 14 tests
+test evaluated_call::test::call_to_value ... ok
+test plugin_custom_value::tests::deserialize_in_closure ... ok
+test plugin_custom_value::tests::deserialize_in_root ... ok
+test plugin_custom_value::tests::deserialize_in_list ... ok
+test plugin_custom_value::tests::deserialize_in_record ... ok
+test plugin_custom_value::tests::expected_serialize_output ... ok
+test plugin_custom_value::tests::serialize_deserialize ... ok
+test plugin_custom_value::tests::serialize_in_closure ... ok
+test plugin_custom_value::tests::serialize_in_list ... ok
+test plugin_custom_value::tests::serialize_in_record ... ok
+test plugin_custom_value::tests::serialize_in_root ... ok
+test tests::protocol_info_compatible ... ok
+test tests::protocol_info_compatible_with_nightly ... ok
+test tests::protocol_info_incompatible ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nu_plugin
+
+running 16 tests
+test crates/nu-plugin/src/lib.rs - (line 18) - compile ... ok
+test crates/nu-plugin/src/plugin/interface/mod.rs - plugin::interface::EngineInterface::add_env_var (line 672) - compile ... ok
+test crates/nu-plugin/src/plugin/interface/mod.rs - plugin::interface::EngineInterface::call_decl (line 919) - compile ... ok
+test crates/nu-plugin/src/plugin/interface/mod.rs - plugin::interface::EngineInterface::eval_closure (line 861) - compile ... ok
+test crates/nu-plugin/src/plugin/interface/mod.rs - plugin::interface::EngineInterface::eval_closure_with_stream (line 784) - compile ... ok
+test crates/nu-plugin/src/plugin/interface/mod.rs - plugin::interface::EngineInterface::get_config (line 541) - compile ... ok
+test crates/nu-plugin/src/plugin/interface/mod.rs - plugin::interface::EngineInterface::get_current_dir (line 620) - compile ... ok
+test crates/nu-plugin/src/plugin/interface/mod.rs - plugin::interface::EngineInterface::get_env_var (line 606) - compile ... ok
+test crates/nu-plugin/src/plugin/interface/mod.rs - plugin::interface::EngineInterface::get_env_vars (line 647) - compile ... ok
+test crates/nu-plugin/src/plugin/interface/mod.rs - plugin::interface::EngineInterface::get_help (line 695) - compile ... ok
+test crates/nu-plugin/src/plugin/interface/mod.rs - plugin::interface::EngineInterface::get_plugin_config (line 585) - compile ... ok
+test crates/nu-plugin/src/plugin/mod.rs - plugin::Plugin::version (line 102) - compile ... ok
+test crates/nu-plugin/src/plugin/mod.rs - plugin::serve_plugin (line 276) - compile ... ok
+test crates/nu-plugin/src/plugin/command.rs - plugin::command::SimplePluginCommand (line 167) ... ok
+test crates/nu-plugin/src/plugin/command.rs - plugin::command::PluginCommand (line 23) ... ok
+test crates/nu-plugin/src/plugin/mod.rs - plugin::Plugin (line 49) ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Doc-tests nu_plugin_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nu_plugin_engine
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nu_plugin_protocol
+
+running 15 tests
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::get_flag (line 384) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::add_named (line 60) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::get_flag_value (line 307) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::add_positional (line 44) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::get_flag_value (line 286) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::get_flag (line 401) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::get_flag (line 367) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::add_flag (line 77) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::has_flag (line 191) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::has_flag (line 223) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::has_flag (line 175) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::has_flag (line 207) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::rest (line 428) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::nth (line 337) ... ok
+test crates/nu-plugin-protocol/src/evaluated_call.rs - evaluated_call::EvaluatedCall::has_flag (line 239) ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+

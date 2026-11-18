@@ -877,8 +877,8 @@ impl Iterator for PagingTableCreator {
                 // Pull from stream until time runs out or we have enough items
                 (batch, end) = stream_collect(
                     &mut self.stream,
-                    self.config.table.page_size,
-                    std::time::Duration::from_nanos(self.config.table.batch_duration as u64),
+                    usize::from(self.config.table.stream_page_size.get()),
+                    self.config.table.batch_duration,
                     self.engine_state.signals(),
                 );
             }

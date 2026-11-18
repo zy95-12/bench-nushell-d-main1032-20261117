@@ -1,0 +1,60 @@
+    Blocking waiting for file lock on build directory
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 38.37s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-1afc2392e0a3f64d)
+
+running 1 test
+test commands::each::nested_each_errors_include_each_closure_level_once ... FAILED
+
+failures:
+
+---- commands::each::nested_each_errors_include_each_closure_level_once stdout ----
+=== stderr
+Error: Eval block failed with pipeline input
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: [[1]] | each  {|xs| $xs | each  { error make {msg: 'original nested failure'} } }
+    label at line 1, column 3: source value
+diagnostic code: nu::shell::eval_block_with_input
+
+Error: original nested failure
+    Diagnostic severity: error
+
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: [[1]] | each  {|xs| $xs | each  { error make {msg: 'original nested failure'} } }
+    label at line 1, columns 35 to 44: originates from here
+
+
+
+
+thread 'commands::each::nested_each_errors_include_each_closure_level_once' panicked at crates/nu-command/tests/commands/each.rs:117:13:
+assertion `left == right` failed: inner=, outer=: Error: Eval block failed with pipeline input
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: [[1]] | each  {|xs| $xs | each  { error make {msg: 'original nested failure'} } }
+    label at line 1, column 3: source value
+diagnostic code: nu::shell::eval_block_with_input
+
+Error: original nested failure
+    Diagnostic severity: error
+
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: [[1]] | each  {|xs| $xs | each  { error make {msg: 'original nested failure'} } }
+    label at line 1, columns 35 to 44: originates from here
+
+
+
+  left: 1
+ right: 2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    commands::each::nested_each_errors_include_each_closure_level_once
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2039 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p nu-command --test main`

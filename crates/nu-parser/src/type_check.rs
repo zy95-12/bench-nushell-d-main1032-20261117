@@ -762,11 +762,38 @@ pub fn math_result_type(
     }
 }
 
+/// Format all alternatives without losing their order in diagnostics.
+fn format_type_alternatives(types: &[Type]) -> String {
+    let names: Vec<_> = types.iter().map(ToString::to_string).collect();
+    match names.as_slice() {
+        [] => "nothing".into(),
+        [name] => name.clone(),
+        [first, second] => format!("{first} or {second}"),
+        _ => {
+            let (last, rest) = names.split_last().expect("nonempty alternatives");
+            format!("{}, or {last}", rest.join(", "))
+        }
+    }
+}
+
 pub fn check_pipeline_type(
     working_set: &StateWorkingSet,
     pipeline: &Pipeline,
     input_type: Type,
 ) -> (Type, Option<Vec<ParseError>>) {
+    let (types, errors) = check_pipeline_types(working_set, pipeline, input_type);
+    let output = types
+        .into_iter()
+        .reduce(|a, b| a.widen(&b))
+        .unwrap_or(Type::Any);
+    (output, errors)
+}
+
+fn check_pipeline_types(
+    working_set: &StateWorkingSet,
+    pipeline: &Pipeline,
+    input_type: Type,
+) -> (Vec<Type>, Option<Vec<ParseError>>) {
     let mut current_types = vec![input_type];
     let mut errors = vec![];
     for elem in &pipeline.elements {
@@ -784,11 +811,7 @@ pub fn check_pipeline_type(
             }
             if outputs.is_empty() {
                 if !signature.input_output_types.is_empty() {
-                    let inputs = current_types
-                        .iter()
-                        .map(ToString::to_string)
-                        .collect::<Vec<_>>()
-                        .join(" or ");
+                    let inputs = format_type_alternatives(&current_types);
                     errors.push(ParseError::InputMismatch(inputs, call.head));
                 }
                 outputs.push(Type::Any);
@@ -798,13 +821,7 @@ pub fn check_pipeline_type(
             current_types = vec![elem.expr.ty.clone()];
         }
     }
-    // The expression type has no union representation. Keep alternatives separate above,
-    // and widen only at the boundary to the block's single output type.
-    let output = current_types
-        .into_iter()
-        .reduce(|a, b| a.widen(&b))
-        .unwrap_or(Type::Any);
-    (output, (!errors.is_empty()).then_some(errors))
+    (current_types, (!errors.is_empty()).then_some(errors))
 }
 
 pub fn check_block_input_output(working_set: &StateWorkingSet, block: &Block) -> Vec<ParseError> {
@@ -813,21 +830,22 @@ pub fn check_block_input_output(working_set: &StateWorkingSet, block: &Block) ->
 
     for (input_type, output_type) in &block.signature.input_output_types {
         let mut current_type = input_type.clone();
-        let mut current_output_type = Type::Nothing;
+        let mut current_output_types = vec![Type::Nothing];
 
         for pipeline in &block.pipelines {
             let (checked_output_type, err) =
-                check_pipeline_type(working_set, pipeline, current_type);
-            current_output_type = checked_output_type;
+                check_pipeline_types(working_set, pipeline, current_type);
+            current_output_types = checked_output_type;
             current_type = Type::Nothing;
             if let Some(err) = err {
                 output_errors.extend_from_slice(&err);
             }
         }
 
-        if !type_compatible(output_type, &current_output_type)
+        if !current_output_types
+            .iter()
+            .any(|ty| type_compatible(output_type, ty))
             && output_type != &Type::Any
-            && current_output_type != Type::Any
         {
             let span = if block.pipelines.is_empty() {
                 if let Some(span) = block.span {
@@ -847,11 +865,19 @@ pub fn check_block_input_output(working_set: &StateWorkingSet, block: &Block) ->
                     .span
             };
 
-            output_errors.push(ParseError::OutputMismatch(
-                output_type.clone(),
-                current_output_type.clone(),
-                span,
-            ))
+            output_errors.push(if current_output_types.len() == 1 {
+                ParseError::OutputMismatch(
+                    output_type.clone(),
+                    current_output_types[0].clone(),
+                    span,
+                )
+            } else {
+                ParseError::OutputMismatchAlternatives(
+                    output_type.clone(),
+                    format_type_alternatives(&current_output_types),
+                    span,
+                )
+            })
         }
     }
 
@@ -949,5 +975,22 @@ fn compound_assignment_result_type(
             };
             (Type::Nothing, Some(err))
         }
+    }
+}
+
+#[cfg(test)]
+mod alternative_diagnostic_tests {
+    use super::*;
+    #[test]
+    fn type_alternatives_use_natural_conjunctions() {
+        assert_eq!(format_type_alternatives(&[Type::Int]), "int");
+        assert_eq!(
+            format_type_alternatives(&[Type::Int, Type::String]),
+            "int or string"
+        );
+        assert_eq!(
+            format_type_alternatives(&[Type::Int, Type::String, Type::Filesize]),
+            "int, string, or filesize"
+        );
     }
 }

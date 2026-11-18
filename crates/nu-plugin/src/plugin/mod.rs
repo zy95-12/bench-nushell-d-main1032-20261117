@@ -149,7 +149,7 @@ pub trait Plugin: Sync {
         let _ = engine;
         custom_value
             .item
-            .follow_path_int(custom_value.span, index.item, index.span)
+            .follow_path_int(custom_value.span, index.item, index.span, false)
             .map_err(LabeledError::from)
     }
 
@@ -166,7 +166,13 @@ pub trait Plugin: Sync {
         let _ = engine;
         custom_value
             .item
-            .follow_path_string(custom_value.span, column_name.item, column_name.span)
+            .follow_path_string(
+                custom_value.span,
+                column_name.item,
+                column_name.span,
+                false,
+                nu_protocol::casing::Casing::Sensitive,
+            )
             .map_err(LabeledError::from)
     }
 
@@ -632,6 +638,20 @@ fn custom_value_op(
         .deserialize_to_custom_value(custom_value.span)?
         .into_spanned(custom_value.span);
     match op {
+        CustomValueOp::Save(path, save_span) => {
+            let result = local_value
+                .item
+                .save(
+                    path.as_ref().map(|path| path.as_path()),
+                    local_value.span,
+                    save_span,
+                )
+                .map(|_| PipelineData::empty())
+                .map_err(LabeledError::from);
+            engine
+                .write_response(result)
+                .and_then(|writer| writer.write())
+        }
         CustomValueOp::ToBaseValue => {
             let result = plugin
                 .custom_value_to_base_value(engine, local_value)

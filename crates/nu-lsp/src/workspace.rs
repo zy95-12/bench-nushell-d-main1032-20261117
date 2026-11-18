@@ -502,6 +502,42 @@ mod tests {
     };
     use nu_test_support::fs::fixtures;
 
+    fn make_range(
+        start_line: u32,
+        start_char: u32,
+        end_line: u32,
+        end_char: u32,
+    ) -> serde_json::Value {
+        serde_json::json!({"start": {"line": start_line, "character": start_char}, "end": {"line": end_line, "character": end_char}})
+    }
+    fn make_location_ref(
+        uri: &Uri,
+        start_line: u32,
+        start_char: u32,
+        end_line: u32,
+        end_char: u32,
+    ) -> serde_json::Value {
+        serde_json::json!({"uri": uri, "range": make_range(start_line, start_char, end_line, end_char)})
+    }
+    fn make_text_edit(
+        new_text: &str,
+        start_line: u32,
+        start_char: u32,
+        end_line: u32,
+        end_char: u32,
+    ) -> serde_json::Value {
+        serde_json::json!({"newText": new_text, "range": make_range(start_line, start_char, end_line, end_char)})
+    }
+    fn make_highlight(
+        kind: u32,
+        start_line: u32,
+        start_char: u32,
+        end_line: u32,
+        end_char: u32,
+    ) -> serde_json::Value {
+        serde_json::json!({"kind": kind, "range": make_range(start_line, start_char, end_line, end_char)})
+    }
+
     fn send_reference_request(
         client_connection: &Connection,
         uri: Uri,
@@ -636,9 +672,7 @@ mod tests {
     /// Should not exit on malformed init_params
     #[test]
     fn malformed_init_params() {
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("workspace");
+        let mut script = fixtures().join("lsp/workspace");
         let (client_connection, _recv) = initialize_language_server(
             None,
             Some(serde_json::json!({ "workspaceFolders": serde_json::Value::Null })),
@@ -651,9 +685,7 @@ mod tests {
 
     #[test]
     fn command_reference_in_workspace() {
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("workspace");
+        let mut script = fixtures().join("lsp/workspace");
         let (client_connection, _recv) = initialize_language_server(
             None,
             serde_json::to_value(InitializeParams {
@@ -689,13 +721,10 @@ mod tests {
                             }
                         )
                     ));
-                    assert!(array.contains(&serde_json::json!(
-                            {
-                                "uri": script,
-                                "range": { "start": { "line": 0, "character": 11 }, "end": { "line": 0, "character": 16 } }
-                            }
-                        )
-                    ));
+                    assert!(
+                        array
+                            .contains(&serde_json::json!(make_location_ref(&script, 0, 11, 0, 16)))
+                    );
                 }
                 _ => panic!("unexpected message type"),
             }
@@ -705,9 +734,7 @@ mod tests {
 
     #[test]
     fn quoted_command_reference_in_workspace() {
-        let mut script_path = fixtures();
-        script_path.push("lsp");
-        script_path.push("workspace");
+        let mut script_path = fixtures().join("lsp/workspace");
         let (client_connection, _recv) = initialize_language_server(
             None,
             serde_json::to_value(InitializeParams {
@@ -743,13 +770,9 @@ mod tests {
                     has_response = true;
                     let result = r.result.unwrap();
                     let array = result.as_array().unwrap();
-                    assert!(array.contains(&serde_json::json!(
-                            {
-                                "uri": script,
-                                "range": { "start": { "line": 5, "character": 4 }, "end": { "line": 5, "character": 11 } }
-                            }
-                        )
-                    ));
+                    assert!(
+                        array.contains(&serde_json::json!(make_location_ref(&script, 5, 4, 5, 11)))
+                    );
                     assert!(array.contains(&serde_json::json!(
                             {
                                 "uri": script.to_string().replace("bar", "foo"),
@@ -766,9 +789,7 @@ mod tests {
 
     #[test]
     fn module_path_reference_in_workspace() {
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("workspace");
+        let mut script = fixtures().join("lsp/workspace");
         let (client_connection, _recv) = initialize_language_server(
             None,
             serde_json::to_value(InitializeParams {
@@ -804,13 +825,9 @@ mod tests {
                             }
                         )
                     ));
-                    assert!(array.contains(&serde_json::json!(
-                            {
-                                "uri": script,
-                                "range": { "start": { "line": 6, "character": 4 }, "end": { "line": 6, "character": 12 } }
-                            }
-                        )
-                    ));
+                    assert!(
+                        array.contains(&serde_json::json!(make_location_ref(&script, 6, 4, 6, 12)))
+                    );
                 }
                 _ => panic!("unexpected message type"),
             }
@@ -820,9 +837,7 @@ mod tests {
 
     #[test]
     fn rename_quoted_command() {
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("workspace");
+        let mut script = fixtures().join("lsp/workspace");
         let (client_connection, _recv) = initialize_language_server(
             None,
             serde_json::to_value(InitializeParams {
@@ -873,30 +888,13 @@ mod tests {
             let changes = r.result.unwrap()["changes"].clone();
             assert_json_eq!(
                 changes[script.to_string()],
-                serde_json::json!([
-                    {
-                        "range": { "start": { "line": 6, "character": 13 }, "end": { "line": 6, "character": 20 } },
-                        "newText": "new"
-                    }
-                ])
+                serde_json::json!([make_text_edit("new", 6, 13, 6, 20)])
             );
             let changs_bar = changes[script.to_string().replace("foo", "bar")]
                 .as_array()
                 .unwrap();
-            assert!(
-                changs_bar.contains(
-                &serde_json::json!({
-                    "range": { "start": { "line": 5, "character": 4 }, "end": { "line": 5, "character": 11 } },
-                    "newText": "new"
-                })
-            ));
-            assert!(
-                changs_bar.contains(
-                &serde_json::json!({
-                    "range": { "start": { "line": 0, "character": 22 }, "end": { "line": 0, "character": 29 } },
-                    "newText": "new"
-                })
-            ));
+            assert!(changs_bar.contains(&serde_json::json!(make_text_edit("new", 5, 4, 5, 11))));
+            assert!(changs_bar.contains(&serde_json::json!(make_text_edit("new", 0, 22, 0, 29))));
         } else {
             panic!()
         }
@@ -904,9 +902,7 @@ mod tests {
 
     #[test]
     fn rename_module_command() {
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("workspace");
+        let mut script = fixtures().join("lsp/workspace");
         let (client_connection, _recv) = initialize_language_server(
             None,
             serde_json::to_value(InitializeParams {
@@ -957,35 +953,12 @@ mod tests {
             let changes = r.result.unwrap()["changes"].clone();
             assert_json_eq!(
                 changes[script.to_string().replace("baz", "foo")],
-                serde_json::json!([
-                    {
-                        "range": { "start": { "line": 10, "character": 16 }, "end": { "line": 10, "character": 29 } },
-                        "newText": "new"
-                    }
-                ])
+                serde_json::json!([make_text_edit("new", 10, 16, 10, 29)])
             );
             let changs_baz = changes[script.to_string()].as_array().unwrap();
-            assert!(
-                changs_baz.contains(
-                &serde_json::json!({
-                    "range": { "start": { "line": 1, "character": 41 }, "end": { "line": 1, "character": 56 } },
-                    "newText": "new"
-                })
-            ));
-            assert!(
-                changs_baz.contains(
-                &serde_json::json!({
-                    "range": { "start": { "line": 2, "character": 0 }, "end": { "line": 2, "character": 5 } },
-                    "newText": "new"
-                })
-            ));
-            assert!(
-                changs_baz.contains(
-                &serde_json::json!({
-                    "range": { "start": { "line": 9, "character": 20 }, "end": { "line": 9, "character": 33 } },
-                    "newText": "new"
-                })
-            ));
+            assert!(changs_baz.contains(&serde_json::json!(make_text_edit("new", 1, 41, 1, 56))));
+            assert!(changs_baz.contains(&serde_json::json!(make_text_edit("new", 2, 0, 2, 5))));
+            assert!(changs_baz.contains(&serde_json::json!(make_text_edit("new", 9, 20, 9, 33))));
         } else {
             panic!()
         }
@@ -993,9 +966,7 @@ mod tests {
 
     #[test]
     fn rename_command_argument() {
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("workspace");
+        let mut script = fixtures().join("lsp/workspace");
         let (client_connection, _recv) = initialize_language_server(
             None,
             serde_json::to_value(InitializeParams {
@@ -1048,14 +1019,8 @@ mod tests {
                 serde_json::json!({
                     "changes": {
                         script.to_string(): [
-                            {
-                                "range": { "start": { "line": 3, "character": 3 }, "end": { "line": 3, "character": 8 } },
-                                "newText": "new"
-                            },
-                            {
-                                "range": { "start": { "line": 1, "character": 4 }, "end": { "line": 1, "character": 9 } },
-                                "newText": "new"
-                            }
+                            make_text_edit("new", 3, 3, 3, 8),
+                            make_text_edit("new", 1, 4, 1, 9)
                         ]
                     }
                 }),
@@ -1067,9 +1032,7 @@ mod tests {
 
     #[test]
     fn rename_cancelled() {
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("workspace");
+        let mut script = fixtures().join("lsp/workspace");
         let (client_connection, _recv) = initialize_language_server(
             None,
             serde_json::to_value(InitializeParams {
@@ -1136,9 +1099,7 @@ mod tests {
 
     #[test]
     fn existence_of_module_block() {
-        let mut script_path = fixtures();
-        script_path.push("lsp");
-        script_path.push("workspace");
+        let mut script_path = fixtures().join("lsp/workspace");
         let mut engine_state = nu_cmd_lang::create_default_context();
         engine_state.add_env_var(
             "PWD".into(),
@@ -1163,10 +1124,7 @@ mod tests {
 
     #[test]
     fn document_highlight_variable() {
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("workspace");
-        script.push("foo.nu");
+        let script = fixtures().join("lsp/workspace/foo.nu");
         let script = path_to_uri(&script);
 
         let (client_connection, _recv) = initialize_language_server(None, None);
@@ -1178,19 +1136,13 @@ mod tests {
         };
         assert_json_eq!(
             r.result,
-            serde_json::json!([
-                { "range": { "start": { "line": 3, "character": 3 }, "end": { "line": 3, "character": 8 } }, "kind": 1 },
-                { "range": { "start": { "line": 1, "character": 4 }, "end": { "line": 1, "character": 9 } }, "kind": 1 }
-            ]),
+            serde_json::json!([make_highlight(1, 3, 3, 3, 8), make_highlight(1, 1, 4, 1, 9)]),
         );
     }
 
     #[test]
     fn document_highlight_module_alias() {
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("goto");
-        script.push("use_module.nu");
+        let script = fixtures().join("lsp/goto/use_module.nu");
         let script = path_to_uri(&script);
 
         let (client_connection, _recv) = initialize_language_server(None, None);
@@ -1203,8 +1155,8 @@ mod tests {
         assert_json_eq!(
             r.result,
             serde_json::json!([
-                { "range": { "start": { "line": 1, "character": 25 }, "end": { "line": 1, "character": 33 } }, "kind": 1 },
-                { "range": { "start": { "line": 2, "character": 30 }, "end": { "line": 2, "character": 38 } }, "kind": 1 }
+                make_highlight(1, 1, 25, 1, 33),
+                make_highlight(1, 2, 30, 2, 38)
             ]),
         );
 
@@ -1215,18 +1167,15 @@ mod tests {
         assert_json_eq!(
             r.result,
             serde_json::json!([
-                { "range": { "start": { "line": 0, "character": 4 }, "end": { "line": 0, "character": 13 } }, "kind": 1 },
-                { "range": { "start": { "line": 1, "character": 12 }, "end": { "line": 1, "character": 21 } }, "kind": 1 }
+                make_highlight(1, 0, 4, 0, 13),
+                make_highlight(1, 1, 12, 1, 21)
             ]),
         );
     }
 
     #[test]
     fn document_highlight_module_record() {
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("workspace");
-        script.push("baz.nu");
+        let script = fixtures().join("lsp/workspace/baz.nu");
         let script = path_to_uri(&script);
 
         let (client_connection, _recv) = initialize_language_server(None, None);
@@ -1239,8 +1188,8 @@ mod tests {
         assert_json_eq!(
             r.result,
             serde_json::json!([
-                { "range": { "start": { "line": 6, "character": 26 }, "end": { "line": 6, "character": 33 } }, "kind": 1 },
-                { "range": { "start": { "line": 8, "character": 1 }, "end": { "line": 8, "character": 8 } }, "kind": 1 },
+                make_highlight(1, 6, 26, 6, 33),
+                make_highlight(1, 8, 1, 8, 8),
             ]),
         );
 
@@ -1251,8 +1200,8 @@ mod tests {
         assert_json_eq!(
             r.result,
             serde_json::json!([
-                { "range": { "start": { "line": 10, "character": 4 }, "end": { "line": 10, "character": 12 } }, "kind": 1 },
-                { "range": { "start": { "line": 11, "character": 1 }, "end": { "line": 11, "character": 8 } }, "kind": 1 },
+                make_highlight(1, 10, 4, 10, 12),
+                make_highlight(1, 11, 1, 11, 8),
             ]),
         );
     }

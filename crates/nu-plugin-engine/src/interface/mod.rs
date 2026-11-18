@@ -995,6 +995,18 @@ impl PluginInterface {
         self.custom_value_op_expecting_value(value, CustomValueOp::ToBaseValue)
     }
 
+    /// Save a custom value in its originating plugin.
+    pub fn custom_value_save(
+        &self,
+        value: Spanned<PluginCustomValueWithSource>,
+        path: Spanned<std::path::PathBuf>,
+        save_span: Span,
+    ) -> Result<(), Box<ShellError>> {
+        self.custom_value_op_expecting_value(value, CustomValueOp::Save(path, save_span))
+            .map(|_| ())
+            .map_err(Box::new)
+    }
+
     /// Follow a numbered cell path on a custom value - e.g. `value.0`.
     pub fn custom_value_follow_path_int(
         &self,
@@ -1267,7 +1279,7 @@ impl CurrentCallState {
                 match op {
                     CustomValueOp::FollowPathIntWithOptions(..)
                     | CustomValueOp::FollowPathStringWithOptions(..) => Ok(()),
-                    CustomValueOp::ToBaseValue => Ok(()),
+                    CustomValueOp::ToBaseValue | CustomValueOp::Save(..) => Ok(()),
                     CustomValueOp::FollowPathInt(_) => Ok(()),
                     CustomValueOp::FollowPathString(_) => Ok(()),
                     CustomValueOp::PartialCmp(value) => self.prepare_value(value, source),

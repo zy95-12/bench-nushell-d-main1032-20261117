@@ -75,12 +75,11 @@ pub fn execute_xpath_query(
 
     let document = package.as_document();
     let mut context = Context::new();
+    context.set_namespace("xml", "http://www.w3.org/XML/1998/namespace");
 
     for (prefix, uri) in namespaces.unwrap_or_default().into_iter() {
         context.set_namespace(prefix.as_str(), uri.into_string()?.as_str());
     }
-
-    context.set_namespace("xml", "http://www.w3.org/XML/1998/namespace");
 
     let output_type = call.has_flag("output-type")?;
     let output_names = call.has_flag("output-names")?;
@@ -411,6 +410,40 @@ mod tests {
                     .iter()
                     .any(|named| named.long == flag && named.arg.is_none())
             );
+        }
+    }
+}
+
+#[cfg(test)]
+mod namespace_precedence_tests {
+    use super::*;
+    #[test]
+    fn xml_namespace_default_can_be_overridden() {
+        let call = EvaluatedCall {
+            head: Span::test_data(),
+            positional: vec![],
+            named: vec![],
+        };
+        for (xml, xpath, namespaces, expected) in [
+            ("<a xml:lang='en'/>", "string(/a/@xml:lang)", None, "en"),
+            (
+                "<a xmlns:dp='urn:custom'><dp:b>custom</dp:b></a>",
+                "string(//xml:b)",
+                Some(nu_protocol::record! {"xml" => Value::test_string("urn:custom")}),
+                "custom",
+            ),
+        ] {
+            let value = execute_xpath_query(
+                &call,
+                &Value::test_string(xml),
+                Some(Spanned {
+                    item: xpath.into(),
+                    span: Span::test_data(),
+                }),
+                namespaces,
+            )
+            .unwrap();
+            assert_eq!(value, Value::test_string(expected));
         }
     }
 }

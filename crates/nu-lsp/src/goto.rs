@@ -15,6 +15,13 @@ impl LanguageServer {
         for cached_file in files.into_iter() {
             if cached_file.covered_span.contains(span.start) {
                 let path = Path::new(&*cached_file.name);
+                if path.is_relative() {
+                    let _ = self.send_log_message(
+                        lsp_types::MessageType::WARNING,
+                        format!("absolute path is expected: {}", path.display()),
+                    );
+                    continue;
+                }
                 let target_uri = path_to_uri(path);
                 if let Some(file) = self.docs.lock().ok()?.get_document(&target_uri) {
                     return Some(Location {
@@ -152,7 +159,7 @@ mod tests {
     #[rstest::rstest]
     #[case("let local = 42\n$local", 1, 3, 4, 9)]
     #[case("let café = 42\n$café", 1, 3, 4, 8)]
-    fn goto_definition_in_unsaved_document(
+    fn goto_definition_in_new_file(
         #[case] text: &str,
         #[case] line: u32,
         #[case] character: u32,
@@ -164,7 +171,7 @@ mod tests {
         let path = directory.path().join("unsaved.nu");
         assert!(!path.exists());
         let uri = path_to_uri(&path);
-        crate::tests::open_text(&client_connection, uri.clone(), text.into()).unwrap();
+        crate::tests::open(&client_connection, uri.clone(), Some(text.into())).unwrap();
         let response =
             send_goto_definition_request(&client_connection, uri.clone(), line, character);
         assert_json_eq!(
@@ -183,10 +190,7 @@ mod tests {
     fn goto_definition_of_cell_path() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("hover");
-        script.push("use.nu");
+        let script = fixtures().join("lsp/hover/use.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -208,10 +212,7 @@ mod tests {
     fn goto_definition_of_module_in_another_file() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("goto");
-        script.push("use_module.nu");
+        let script = fixtures().join("lsp/goto/use_module.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -233,10 +234,7 @@ mod tests {
     fn goto_definition_of_module_in_hide() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("goto");
-        script.push("use_module.nu");
+        let script = fixtures().join("lsp/goto/use_module.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -258,10 +256,7 @@ mod tests {
     fn goto_definition_of_module_in_overlay() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("goto");
-        script.push("use_module.nu");
+        let script = fixtures().join("lsp/goto/use_module.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -314,5 +309,41 @@ mod tests {
                 }
             })
         );
+    }
+}
+
+#[cfg(test)]
+mod relative_path_tests {
+    use super::*;
+    #[test]
+    fn relative_cached_file_is_skipped_with_warning() {
+        let (server, client) = lsp_server::Connection::memory();
+        let lsp = LanguageServer::initialize_connection(
+            server,
+            None,
+            nu_protocol::engine::EngineState::new(),
+        )
+        .unwrap();
+        let cached = CachedFile {
+            name: "std/example.nu".into(),
+            content: b"let x = 1".as_slice().into(),
+            covered_span: Span::new(10, 19),
+        };
+        assert!(
+            lsp.get_location_by_span(std::iter::once(&cached), &Span::new(14, 15))
+                .is_none()
+        );
+        let lsp_server::Message::Notification(notification) = client
+            .receiver
+            .recv_timeout(std::time::Duration::from_secs(1))
+            .unwrap()
+        else {
+            panic!("expected log notification")
+        };
+        assert_eq!(notification.method, "window/logMessage");
+        let params: lsp_types::LogMessageParams =
+            serde_json::from_value(notification.params).unwrap();
+        assert_eq!(params.typ, lsp_types::MessageType::WARNING);
+        assert!(params.message.contains("absolute path is expected"));
     }
 }

@@ -19,7 +19,7 @@ impl Command for OverlayList {
     }
 
     fn extra_description(&self) -> &str {
-        "Active overlays are listed in activation order, followed by hidden overlays sorted by name."
+        "Hidden overlays are listed first, sorted by name, followed by active overlays in activation order. The most recently activated overlay is last."
     }
 
     fn run(
@@ -38,7 +38,9 @@ impl Command for OverlayList {
             .collect();
         hidden.sort();
         hidden.dedup();
-        let names = stack.active_overlays.iter().cloned().chain(hidden);
+        let names = hidden
+            .into_iter()
+            .chain(stack.active_overlays.iter().cloned());
         let rows = names
             .map(|name| {
                 let active = stack.active_overlays.contains(&name);

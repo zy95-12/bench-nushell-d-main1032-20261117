@@ -178,7 +178,7 @@ fn guess_width(
         return Ok(Value::nothing(input_span).into_pipeline_data());
     }
     if !args.noheader {
-        let columns = unique_headers(result[0].clone());
+        let columns = unique_headers(result[0].clone(), input_span).map_err(|error| *error)?;
         Ok(result
             .into_iter()
             .skip(1)
@@ -257,7 +257,8 @@ fn detect_columns(
             }
         }
 
-        let names = unique_headers(headers.iter().map(|h| h.item.clone()).collect());
+        let names = unique_headers(headers.iter().map(|h| h.item.clone()).collect(), name_span)
+            .map_err(|error| *error)?;
         for (header, name) in headers.iter_mut().zip(names) {
             header.item = name;
         }
@@ -327,26 +328,21 @@ fn detect_columns(
     }
 }
 
-// Reserve original names too, so a generated suffix cannot collide with a later header.
-fn unique_headers(headers: Vec<String>) -> Vec<String> {
-    let reserved: std::collections::HashSet<_> = headers.iter().cloned().collect();
+// Reject duplicates before constructing records in either parsing mode.
+fn unique_headers(headers: Vec<String>, span: Span) -> Result<Vec<String>, Box<ShellError>> {
     let mut used = std::collections::HashSet::new();
-    headers
-        .into_iter()
-        .map(|name| {
-            if used.insert(name.clone()) {
-                return name;
-            }
-            let mut suffix = 2;
-            loop {
-                let candidate = format!("{name}_{suffix}");
-                if !reserved.contains(&candidate) && used.insert(candidate.clone()) {
-                    return candidate;
-                }
-                suffix += 1;
-            }
-        })
-        .collect()
+    for name in &headers {
+        if !used.insert(name) {
+            return Err(Box::new(ShellError::GenericError {
+                error: "Duplicate column name".into(),
+                msg: format!("Column '{name}' is defined twice"),
+                span: Some(span),
+                help: Some("Use unique column names or --no-headers.".into()),
+                inner: vec![],
+            }));
+        }
+    }
+    Ok(headers)
 }
 
 pub fn find_columns(input: &str) -> Vec<Spanned<String>> {

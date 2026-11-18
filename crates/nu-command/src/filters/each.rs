@@ -169,12 +169,18 @@ fn each_result(
         return PipelineData::value(value, None).into_iter();
     }
     let result = match closure.run_with_value(value) {
-        Ok(data) if flatten => return data.into_iter(),
+        Ok(data) if flatten => {
+            return data
+                .into_iter()
+                .map(move |value| wrap_closure_error(value, span))
+                .into_pipeline_data(head, nu_protocol::Signals::empty())
+                .into_iter();
+        }
         Ok(PipelineData::ListStream(stream, _)) => {
             let mut values = Vec::new();
             for value in stream {
                 if value.is_error() {
-                    return PipelineData::value(value, None).into_iter();
+                    return PipelineData::value(wrap_closure_error(value, span), None).into_iter();
                 }
                 values.push(value);
             }
@@ -188,6 +194,17 @@ fn each_result(
     )
     .into_pipeline_data(head, nu_protocol::Signals::empty())
     .into_iter()
+}
+
+// A closure's streamed errors belong to this each call, just like errors
+// returned directly by run_with_value. Incoming pipeline errors bypass this.
+fn wrap_closure_error(value: Value, span: Span) -> Value {
+    match value {
+        Value::Error { error, .. } => {
+            Value::error(chain_error_with_input(*error, false, span), span)
+        }
+        value => value,
+    }
 }
 
 #[cfg(test)]

@@ -11,6 +11,24 @@ use lsp_types::{
 use miette::{IntoDiagnostic, Result};
 
 impl LanguageServer {
+    pub(crate) fn send_log_message(
+        &self,
+        message_type: lsp_types::MessageType,
+        message: impl Into<String>,
+    ) -> Result<()> {
+        let notification = lsp_server::Notification::new(
+            "window/logMessage".into(),
+            lsp_types::LogMessageParams {
+                typ: message_type,
+                message: message.into(),
+            },
+        );
+        self.connection
+            .sender
+            .send(lsp_server::Message::Notification(notification))
+            .into_diagnostic()
+    }
+
     pub(crate) fn handle_lsp_notification(
         &mut self,
         notification: lsp_server::Notification,
@@ -147,10 +165,7 @@ mod tests {
     fn hover_correct_documentation_on_let() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("hover");
-        script.push("var.nu");
+        let script = fixtures().join("lsp/hover/var.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -171,10 +186,7 @@ mod tests {
     fn hover_on_command_after_full_content_change() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("hover");
-        script.push("command.nu");
+        let script = fixtures().join("lsp/hover/command.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -206,10 +218,7 @@ hello"#,
     fn hover_on_command_after_partial_content_change() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("hover");
-        script.push("command.nu");
+        let script = fixtures().join("lsp/hover/command.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -245,13 +254,10 @@ hello"#,
     fn open_document_with_utf_char() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("notifications");
-        script.push("issue_11522.nu");
+        let script = fixtures().join("lsp/notifications/issue_11522.nu");
         let script = path_to_uri(&script);
 
-        let result = open(&client_connection, script);
+        let result = open(&client_connection, script, None);
 
         assert_eq!(result.map(|_| ()), Ok(()))
     }

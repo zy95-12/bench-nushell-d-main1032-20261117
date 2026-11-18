@@ -1,0 +1,530 @@
+{
+  "baseline_ref": "task_history:28053",
+  "assignment_ref": "task_history:36801",
+  "source_digest_sha256": "874cfa8e601f6db27cbc6b90a7f6d15f18e39fedf5bf0ae2c91d714358f2cbc3",
+  "changed_source_paths": [
+    "Cargo.lock",
+    "Cargo.toml",
+    "crates/nu-cli/tests/completions/mod.rs",
+    "crates/nu-cmd-lang/src/default_context.rs",
+    "crates/nu-color-config/src/style_computer.rs",
+    "crates/nu-command/src/bytes/at.rs",
+    "crates/nu-command/src/database/values/sqlite.rs",
+    "crates/nu-command/src/default_context.rs",
+    "crates/nu-command/src/filesystem/save.rs",
+    "crates/nu-command/src/filters/find.rs",
+    "crates/nu-command/src/formats/to/md.rs",
+    "crates/nu-command/src/network/http/client.rs",
+    "crates/nu-command/src/strings/detect_columns.rs",
+    "crates/nu-command/src/strings/str_/substring.rs",
+    "crates/nu-command/src/system/which_.rs",
+    "crates/nu-command/src/viewers/table.rs",
+    "crates/nu-command/tests/commands/detect_columns.rs",
+    "crates/nu-command/tests/commands/find.rs",
+    "crates/nu-command/tests/commands/table.rs",
+    "crates/nu-command/tests/commands/to_md.rs",
+    "crates/nu-command/tests/commands/which.rs",
+    "crates/nu-command/tests/format_conversions/markdown.rs",
+    "crates/nu-command/tests/streaming.rs",
+    "crates/nu-engine/src/documentation.rs",
+    "crates/nu-engine/src/eval_ir.rs",
+    "crates/nu-engine/src/lib.rs",
+    "crates/nu-engine/src/namespace.rs",
+    "crates/nu-experimental/src/options/enforce_runtime_annotations.rs",
+    "crates/nu-experimental/src/options/enforce_typed_variables.rs",
+    "crates/nu-experimental/src/options/mod.rs",
+    "crates/nu-experimental/src/parse.rs",
+    "crates/nu-lsp/src/completion.rs",
+    "crates/nu-lsp/src/diagnostics.rs",
+    "crates/nu-lsp/src/goto.rs",
+    "crates/nu-lsp/src/hints.rs",
+    "crates/nu-lsp/src/hover.rs",
+    "crates/nu-lsp/src/lib.rs",
+    "crates/nu-lsp/src/notification.rs",
+    "crates/nu-lsp/src/semantic_tokens.rs",
+    "crates/nu-lsp/src/signature.rs",
+    "crates/nu-lsp/src/symbols.rs",
+    "crates/nu-lsp/src/workspace.rs",
+    "crates/nu-parser/src/parser.rs",
+    "crates/nu-plugin-engine/src/interface/mod.rs",
+    "crates/nu-plugin-engine/src/plugin_custom_value_with_source/mod.rs",
+    "crates/nu-plugin-protocol/src/lib.rs",
+    "crates/nu-plugin-protocol/src/plugin_custom_value/mod.rs",
+    "crates/nu-plugin-test-support/tests/custom_value/mod.rs",
+    "crates/nu-plugin/src/plugin/mod.rs",
+    "crates/nu-protocol/src/ast/call.rs",
+    "crates/nu-protocol/src/config/table.rs",
+    "crates/nu-protocol/src/ir/call.rs",
+    "crates/nu-protocol/src/pipeline/pipeline_data.rs",
+    "crates/nu-protocol/src/value/custom_value.rs",
+    "crates/nu-utils/src/default_files/default_config.nu",
+    "crates/nu_plugin_custom_values/src/cool_custom_value.rs",
+    "src/command_context.rs",
+    "src/main.rs",
+    "tests/eval/mod.rs",
+    "tests/eval/type_system.rs"
+  ],
+  "provenance": "Only supplied checkout and contracts, work produced in this trial, and ordinary crates.io dependency resolution for the required ureq pin. No upstream target/reference implementation, hidden tests, previous experiments or later project objects accessed.",
+  "contracts": {
+    "README.md": "72fccb373e6b2a4796c93bb3bb381872cc083516461a2189e74a34cd47538dce",
+    "contract-01.md": "a8d539bad38ac0243730904a405fa23581c892b7da5a6f8209af319f8c94a349",
+    "contract-02.md": "ac28ed4024fbcfde25fc6470c08949d54690f2e24ce47122739c61f34ac36d8f",
+    "contract-03.md": "0052a0077937f9b92d513460056babc8c7cc0b4745850e634ce48f037e9a82d3",
+    "contract-04.md": "c53cf55789da5853170b9b129c5e01c97c1a1d34656fb329675acf4d45f03434",
+    "contract-05.md": "670fc52917312512163c628a89eaf611761bec593bb66cdfced77e6be1614144",
+    "contract-06.md": "f8ba9bc8e20d153bf780c0797ba83ccb09b9d252ddff2b955cee2476b116f853",
+    "contract-07.md": "7e546182f42f25e0eee753866f9897f1e5acefbed00747d33abcc3c8f68a319f",
+    "contract-08.md": "eb5b37def424eb94ce9bf714f06d3cde9cc929e02ebbba2a4ffb7a2fa6e7e384",
+    "contract-09.md": "31169090439abd69a3989fb333131969db3b52d4e00f040e559333a7cf2965f7",
+    "contract-10.md": "3633d7f61d783f5b60c66dbc437b2ae7c51b6774dbbb992549168d37b2b9c41b",
+    "contract-11.md": "660b2fe1787b880ff522f01ac878a00edb8694bd5af9e1c959a94b8242615bbf",
+    "contract-12.md": "10b5374f84dd810d0430cd5e850849742bb0b9e14e413b8649ed2790db444a4a",
+    "contract-13.md": "a303d76c844bbafd0dd0268a963ebf1033d9c8085949eac350d4a0fbb1eba28a",
+    "roadmap.md": "043f326a33e75993e02b6055b10287a89e1df10cec5324b4e4008283cb62feb6"
+  },
+  "manager_audit_sha256": "eb22af3e74eee0f44ad20c2383eb3bb0ac71c5c13c74b35d10adacec74a7adde",
+  "verification": [
+    {
+      "command": "cargo fmt --all -- --check",
+      "exit_code": 0,
+      "log": "fmt-verified.log",
+      "suites": []
+    },
+    {
+      "command": "cargo check -p nu -p nu_plugin_query --locked",
+      "exit_code": 0,
+      "log": "policy-check-verified.log",
+      "suites": []
+    },
+    {
+      "command": "cargo check -p nu --locked",
+      "exit_code": 0,
+      "log": "check-nu.log",
+      "suites": []
+    },
+    {
+      "command": "cargo test -p nu-parser -p nu-protocol -p nu-engine -p nu-experimental",
+      "exit_code": 0,
+      "log": "core-tests-verified.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 22,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 240,
+          "failed": 0,
+          "ignored": 2
+        },
+        {
+          "status": "ok",
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 123,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 7,
+          "failed": 0,
+          "ignored": 3
+        },
+        {
+          "status": "ok",
+          "passed": 17,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 6,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 45,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-command --test main",
+      "exit_code": 0,
+      "log": "command-main-final.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 2005,
+          "failed": 0,
+          "ignored": 32
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-command --lib",
+      "exit_code": 0,
+      "log": "command-unit-verified.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 446,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-cli",
+      "exit_code": 0,
+      "log": "cli-final.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 59,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 117,
+          "failed": 0,
+          "ignored": 4
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-lsp",
+      "exit_code": 101,
+      "log": "lsp-final.log",
+      "suites": [
+        {
+          "status": "FAILED",
+          "passed": 65,
+          "failed": 1,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-lsp -- --skip hover_on_external_command",
+      "exit_code": 0,
+      "log": "lsp-available-environment.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 65,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-lsp symbols::",
+      "exit_code": 0,
+      "log": "lsp-symbols-verified.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 6,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-command --test streaming",
+      "exit_code": 0,
+      "log": "streaming-final.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 9,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu --test main eval::null_spread_in_rest_arguments",
+      "exit_code": 0,
+      "log": "null-rest-verified.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu --test main eval::type_system",
+      "exit_code": 0,
+      "log": "runtime-annotations.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 9,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu --bin nu command_context",
+      "exit_code": 0,
+      "log": "context-tests.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 8,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-color-config -p nu_plugin_custom_values -p nu-plugin-engine -p nu-plugin-protocol -p nu-plugin",
+      "exit_code": 0,
+      "log": "custom-color-tests.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 25,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 40,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 52,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 14,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 16,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 15,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-plugin-engine -p nu-plugin-protocol -p nu-plugin -p nu-plugin-core",
+      "exit_code": 0,
+      "log": "plugin-api-final.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 40,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 69,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 52,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 14,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 16,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 15,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-plugin-test-support --test main custom_value",
+      "exit_code": 0,
+      "log": "plugin-save-verified.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-command --features sqlite --lib path_option_tests",
+      "exit_code": 0,
+      "log": "sqlite-path-tests-enabled.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo clippy --workspace --all-targets --locked -- -D warnings",
+      "exit_code": 101,
+      "log": "clippy-strict-verified.log",
+      "suites": []
+    },
+    {
+      "command": "cargo clippy --workspace --all-targets --locked",
+      "exit_code": 0,
+      "log": "clippy-diagnostic-verified.log",
+      "suites": []
+    }
+  ],
+  "evidence_reuse": "Core/CLI/command suites were selected for their changed behavior. Later plugin-save transport is additionally checked by plugin API suites, PluginTest save integration and the final policy check. The last LSP edit only removes needless test-helper borrows and is verified by the symbols suite. Historical development failures remain in other logs; use this inventory for selected final evidence.",
+  "limitations": [
+    "Strict Clippy remains failing at unchanged nu-json/src/de.rs:807 (unbuffered_bytes); earlier strict runs also expose unchanged large-error/useless-conversion warnings. The diagnostic workspace/all-targets run succeeds with warnings, not a strict pass.",
+    "Full LSP suite: hover_on_external_command fails because /usr/bin/man is a minimized-system stub. 65 other tests pass; supplemental exclusion run is not a full-suite pass.",
+    "Windows-specific executable/PATHEXT code was not compiled for Windows or executed on this Linux host."
+  ],
+  "acceptance": "Implementation submitted for independent review/QA; these results are observations, not acceptance."
+}

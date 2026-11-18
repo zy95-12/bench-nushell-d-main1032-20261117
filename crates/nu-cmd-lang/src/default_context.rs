@@ -66,6 +66,8 @@ pub fn create_default_context() -> EngineState {
             While,
         };
 
+        working_set.add_decl(Box::new(nu_engine::Namespace("attr".into())));
+        working_set.add_decl(Box::new(nu_engine::Namespace("error".into())));
         working_set.render()
     };
 

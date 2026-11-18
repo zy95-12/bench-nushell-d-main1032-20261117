@@ -3839,7 +3839,7 @@ fn table_colors() {
     ));
     assert_eq!(
         actual.out,
-        "\u{1b}[37m╭───┬───╮\u{1b}[0m\u{1b}[37m│\u{1b}[0m \u{1b}[1;32ma\u{1b}[0m \u{1b}[37m│\u{1b}[0m \u{1b}[37m1\u{1b}[0m \u{1b}[37m│\u{1b}[0m\u{1b}[37m│\u{1b}[0m \u{1b}[1;32mb\u{1b}[0m \u{1b}[37m│\u{1b}[0m \u{1b}[37m2\u{1b}[0m \u{1b}[37m│\u{1b}[0m\u{1b}[37m╰───┴───╯\u{1b}[0m"
+        "\u{1b}[39m╭───┬───╮\u{1b}[0m\u{1b}[39m│\u{1b}[0m \u{1b}[1;32ma\u{1b}[0m \u{1b}[39m│\u{1b}[0m \u{1b}[39m1\u{1b}[0m \u{1b}[39m│\u{1b}[0m\u{1b}[39m│\u{1b}[0m \u{1b}[1;32mb\u{1b}[0m \u{1b}[39m│\u{1b}[0m \u{1b}[39m2\u{1b}[0m \u{1b}[39m│\u{1b}[0m\u{1b}[39m╰───┴───╯\u{1b}[0m"
     );
 
     let actual = nu!(concat!(
@@ -3854,13 +3854,13 @@ fn table_empty_colors() {
     let actual = nu!("$env.config.use_ansi_coloring = true; []");
     assert_eq!(
         actual.out,
-        "\u{1b}[37m╭────────────╮\u{1b}[0m\u{1b}[37m│\u{1b}[0m \u{1b}[2mempty list\u{1b}[0m \u{1b}[37m│\u{1b}[0m\u{1b}[37m╰────────────╯\u{1b}[0m"
+        "\u{1b}[39m╭────────────╮\u{1b}[0m\u{1b}[39m│\u{1b}[0m \u{1b}[2mempty list\u{1b}[0m \u{1b}[39m│\u{1b}[0m\u{1b}[39m╰────────────╯\u{1b}[0m"
     );
 
     let actual = nu!("$env.config.use_ansi_coloring = true; {}");
     assert_eq!(
         actual.out,
-        "\u{1b}[37m╭──────────────╮\u{1b}[0m\u{1b}[37m│\u{1b}[0m \u{1b}[2mempty record\u{1b}[0m \u{1b}[37m│\u{1b}[0m\u{1b}[37m╰──────────────╯\u{1b}[0m"
+        "\u{1b}[39m╭──────────────╮\u{1b}[0m\u{1b}[39m│\u{1b}[0m \u{1b}[2mempty record\u{1b}[0m \u{1b}[39m│\u{1b}[0m\u{1b}[39m╰──────────────╯\u{1b}[0m"
     );
 
     let actual = nu!("$env.config.use_ansi_coloring = false; []");

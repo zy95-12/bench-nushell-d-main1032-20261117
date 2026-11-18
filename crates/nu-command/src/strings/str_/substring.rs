@@ -79,6 +79,9 @@ impl Command for StrSubstring {
     ) -> Result<PipelineData, ShellError> {
         let range: IntRange = call.req(engine_state, stack, 0)?;
 
+        let metadata = input.metadata().map(|m| m.with_content_type(None));
+        let input = input.set_metadata(metadata);
+
         let cell_paths: Vec<CellPath> = call.rest(engine_state, stack, 1)?;
         let cell_paths = (!cell_paths.is_empty()).then_some(cell_paths);
         let args = Arguments {
@@ -96,6 +99,9 @@ impl Command for StrSubstring {
         input: PipelineData,
     ) -> Result<PipelineData, ShellError> {
         let range: IntRange = call.req_const(working_set, 0)?;
+
+        let metadata = input.metadata().map(|m| m.with_content_type(None));
+        let input = input.set_metadata(metadata);
 
         let cell_paths: Vec<CellPath> = call.rest_const(working_set, 1)?;
         let cell_paths = (!cell_paths.is_empty()).then_some(cell_paths);

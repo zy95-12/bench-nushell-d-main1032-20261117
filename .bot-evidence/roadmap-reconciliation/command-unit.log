@@ -1,0 +1,16 @@
+    Blocking waiting for file lock on build directory
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-command)
+error[E0277]: the trait bound `nu_engine::command_prelude::ErrorKind: std::convert::From<std::io::ErrorKind>` is not satisfied
+    --> crates/nu-command/src/network/http/client.rs:1123:61
+     |
+1123 |         assert_eq!(error.kind, std::io::ErrorKind::TimedOut.into());
+     |                                                             ^^^^ the trait `std::convert::From<std::io::ErrorKind>` is not implemented for `nu_engine::command_prelude::ErrorKind`
+     |
+     = help: the following other types implement trait `std::convert::From<T>`:
+               `nu_engine::command_prelude::ErrorKind` implements `std::convert::From<&std::io::Error>`
+               `nu_engine::command_prelude::ErrorKind` implements `std::convert::From<KillByPidError>`
+               `nu_engine::command_prelude::ErrorKind` implements `std::convert::From<std::io::Error>`
+     = note: required for `std::io::ErrorKind` to implement `std::convert::Into<nu_engine::command_prelude::ErrorKind>`
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `nu-command` (lib test) due to 1 previous error

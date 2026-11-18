@@ -4,6 +4,13 @@ use nu_protocol::{
 };
 
 fn evaluate(code: &str, input: PipelineData) -> PipelineData {
+    evaluate_result(code, input).unwrap()
+}
+
+fn evaluate_result(
+    code: &str,
+    input: PipelineData,
+) -> Result<PipelineData, nu_protocol::ShellError> {
     let mut engine = nu_command::add_shell_command_context(nu_cmd_lang::create_default_context());
     engine.add_env_var(
         "PWD".into(),
@@ -24,7 +31,6 @@ fn evaluate(code: &str, input: PipelineData) -> PipelineData {
         &block,
         input,
     )
-    .unwrap()
 }
 
 #[test]
@@ -100,6 +106,20 @@ impl nu_protocol::CustomValue for SaveValue {
     fn to_base_value(&self, _: Span) -> Result<Value, nu_protocol::ShellError> {
         Ok(self.0.clone())
     }
+    fn save(
+        &self,
+        path: nu_protocol::Spanned<&std::path::Path>,
+        _: Span,
+        save_span: Span,
+    ) -> Result<(), nu_protocol::ShellError> {
+        std::fs::write(path.item, "custom save marker").map_err(|error| {
+            nu_protocol::ShellError::Io(nu_protocol::shell_error::io::IoError::new(
+                error,
+                save_span,
+                Some(path.item.into()),
+            ))
+        })
+    }
     fn as_any(&self) -> &dyn std::any::Any {
         self
     }
@@ -111,39 +131,21 @@ impl nu_protocol::CustomValue for SaveValue {
 #[test]
 fn streaming_save_custom_values() {
     let dir = tempfile::tempdir().unwrap();
-    for (name, raw, value, expected) in [
-        (
-            "text",
-            "",
-            Value::test_string("custom text"),
-            b"custom text".to_vec(),
-        ),
-        (
-            "binary",
-            "--raw",
-            Value::test_binary(vec![0, 1, 255]),
-            vec![0, 1, 255],
-        ),
-        (
-            "data.json",
-            "",
-            Value::test_record(nu_protocol::record! {"answer" => Value::test_int(42)}),
-            b"{\n  \"answer\": 42\n}".to_vec(),
-        ),
-    ] {
-        let path = dir.path().join(name);
+    for suffix in ["txt", "json"] {
+        let path = dir.path().join(format!("value.{suffix}"));
         evaluate(
-            &format!("save {raw} '{}'", path.display()),
-            Value::custom(Box::new(SaveValue(value)), Span::test_data()).into_pipeline_data(),
+            &format!("save '{}'", path.display()),
+            Value::custom(Box::new(SaveValue(Value::test_int(42))), Span::test_data())
+                .into_pipeline_data(),
         );
-        assert_eq!(std::fs::read(path).unwrap(), expected, "{name}");
+        assert_eq!(std::fs::read_to_string(path).unwrap(), "custom save marker");
     }
 }
 
 #[test]
 fn streaming_table_page_size_controls_batches() {
     let result = evaluate(
-        "$env.config.table.page_size = 2; $env.config.table.batch_duration = 1hr; $in | table",
+        "$env.config.table.stream_page_size = 2; $env.config.table.batch_duration = 1hr; $in | table",
         Value::test_list((0..5).map(Value::test_int).collect()).into_pipeline_data(),
     );
     let PipelineData::ByteStream(stream, _) = result else {
@@ -168,7 +170,7 @@ fn streaming_table_batch_duration_controls_batches() {
 
 #[test]
 fn streaming_partial_binary_results_clear_content_type() {
-    for command in ["first 1", "skip 1", "take 1"] {
+    for command in ["first 1", "skip 1", "take 1", "bytes at 0..1"] {
         for streamed in [false, true] {
             let input = if streamed {
                 PipelineData::byte_stream(
@@ -268,7 +270,7 @@ fn streaming_flatten_pulls_closure_results_on_demand() {
 }
 
 #[test]
-fn streaming_save_preserves_custom_extension_dispatch() {
+fn custom_save_takes_precedence_over_extension_dispatch() {
     let dir = tempfile::tempdir().unwrap();
     let path = dir.path().join("value.special");
     evaluate(
@@ -279,5 +281,103 @@ fn streaming_save_preserves_custom_extension_dispatch() {
         Value::custom(Box::new(SaveValue(Value::test_int(42))), Span::test_data())
             .into_pipeline_data(),
     );
-    assert_eq!(std::fs::read_to_string(path).unwrap(), "save regression");
+    assert_eq!(std::fs::read_to_string(path).unwrap(), "custom save marker");
+}
+
+#[test]
+fn partial_substrings_clear_content_type_including_cell_paths_and_const() {
+    for (command, value) in [
+        ("str substring 0..1", Value::test_string("hello")),
+        (
+            "str substring 0..1 text",
+            Value::test_record(nu_protocol::record! {"text" => Value::test_string("hello")}),
+        ),
+        (
+            "bytes at 0..1 data",
+            Value::test_record(nu_protocol::record! {"data" => Value::test_binary(vec![1, 2, 3])}),
+        ),
+    ] {
+        let output = evaluate(
+            command,
+            value
+                .into_pipeline_data()
+                .set_metadata(Some(PipelineMetadata {
+                    content_type: Some("application/json".into()),
+                    data_source: DataSource::FilePath("origin".into()),
+                })),
+        );
+        let metadata = output.metadata().unwrap();
+        assert_eq!(metadata.content_type, None, "{command}");
+        assert_eq!(metadata.data_source, DataSource::FilePath("origin".into()));
+    }
+    let output = evaluate(
+        "const part = ('hello' | str substring 0..1); $part",
+        PipelineData::empty(),
+    );
+    assert_eq!(
+        output.into_value(Span::test_data()).unwrap(),
+        Value::test_string("he")
+    );
+}
+
+#[test]
+fn pipeline_constructors_accept_metadata_without_option_wrapper() {
+    let span = Span::test_data();
+    let metadata = PipelineMetadata {
+        content_type: Some("text/plain".into()),
+        ..Default::default()
+    };
+    let value = PipelineData::value(Value::test_int(1), metadata.clone());
+    let list = PipelineData::list_stream(
+        nu_protocol::ListStream::new(
+            std::iter::once(Value::test_int(1)),
+            span,
+            nu_protocol::Signals::empty(),
+        ),
+        metadata.clone(),
+    );
+    let bytes = PipelineData::byte_stream(
+        nu_protocol::ByteStream::read_binary(vec![1], span, nu_protocol::Signals::empty()),
+        metadata.clone(),
+    );
+    for pipeline in [value, list, bytes] {
+        assert_eq!(pipeline.metadata(), Some(metadata.clone()));
+    }
+}
+
+#[test]
+fn custom_save_respects_overwrite_and_append_flags() {
+    let dir = tempfile::tempdir().unwrap();
+    for flag in ["", "--force", "--append"] {
+        let path = dir.path().join("existing.txt");
+        std::fs::write(&path, "original contents").unwrap();
+        let result = evaluate_result(
+            &format!("save {flag} '{}'", path.display()),
+            Value::custom(Box::new(SaveValue(Value::test_int(42))), Span::test_data())
+                .into_pipeline_data(),
+        );
+        if flag == "--force" {
+            assert!(result.is_ok(), "{result:?}");
+            assert_eq!(
+                std::fs::read_to_string(&path).unwrap(),
+                "custom save marker"
+            );
+        } else {
+            assert!(result.is_err(), "{flag} unexpectedly succeeded");
+            assert_eq!(
+                std::fs::read_to_string(&path).unwrap(),
+                "original contents",
+                "{flag}"
+            );
+            let error = result.unwrap_err().to_string();
+            assert!(
+                error.contains(if flag.is_empty() {
+                    "already exists"
+                } else {
+                    "append"
+                }),
+                "{error}"
+            );
+        }
+    }
 }

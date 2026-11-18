@@ -1,0 +1,171 @@
+   Compiling mio v1.0.3
+   Compiling nu-path v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-path)
+   Compiling signal-hook-mio v0.2.4
+   Compiling crossterm v0.28.1
+   Compiling nu-glob v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-glob)
+   Compiling nu-system v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-system)
+   Compiling nu-utils v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-utils)
+   Compiling rustls-pki-types v1.16.0
+   Compiling nu-derive-value v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-derive-value)
+   Compiling nu-experimental v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-experimental)
+   Compiling tokio v1.45.0
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-protocol)
+   Compiling tokio-util v0.7.13
+   Compiling h2 v0.4.7
+   Compiling rustls-webpki v0.103.17
+   Compiling hyper v1.5.1
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-engine)
+   Compiling nu-parser v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-parser)
+   Compiling ureq-proto v0.4.2
+   Compiling zopfli v0.8.1
+   Compiling rustls v0.23.46
+   Compiling nu-json v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-json)
+   Compiling nu-cmd-lang v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-cmd-lang)
+   Compiling rustls-pemfile v2.2.0
+   Compiling webpki-roots v0.26.8
+   Compiling mio v0.8.11
+   Compiling notify v6.1.1
+   Compiling ureq v3.0.12
+   Compiling nu-color-config v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-color-config)
+   Compiling zip v4.1.0
+   Compiling nu-cmd-base v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-cmd-base)
+   Compiling hyper-util v0.1.10
+   Compiling notify-debouncer-full v0.3.2
+   Compiling calamine v0.28.0
+   Compiling mockito v1.7.0
+   Compiling rustls-native-certs v0.8.1
+   Compiling reedline v0.42.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/reedline)
+   Compiling nu-table v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-table)
+   Compiling update-informer v1.3.0
+   Compiling nu-test-support v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-test-support)
+   Compiling nuon v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nuon)
+   Compiling nu-term-grid v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-term-grid)
+   Compiling webpki-roots v1.0.0
+   Compiling nu-pretty-hex v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-pretty-hex)
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-command)
+error: expected parameter name, found `)`
+   --> crates/nu-command/src/formats/to/md.rs:113:9
+    |
+111 |               call.has_flag(engine_state, stack, "escape-md")? |  | call.has_flag(engine_state, stack, "escape-all")? |  | call.has_flag(en...
+    |  _________________________________________________________________-----------------------------------------------------__-
+    | |                                                                 |
+    | |                                                                 while parsing the body of this closure
+112 | |             call.has_flag(engine_state, stack, "escape-html")? |  | call.has_flag(engine_state, stack, "escape-all")? |  | call.has_flag(...
+    | |                                                                -  ----------------------------------------------------- while parsing the body of this closure
+    | |________________________________________________________________|
+    |                                                                  while parsing the body of this closure
+113 |           )
+    |           ^ expected parameter name
+    |
+help: you might have meant to open the body of the closure
+    |
+112 |             call.has_flag(engine_state, stack, "escape-html")? |  | call.has_flag(engine_state, stack, "escape-all")? | {  | call.has_flag(engine_state, stack, "escape")?,
+    |                                                                                                                         +
+help: you might have meant to open the body of the closure
+    |
+112 |             call.has_flag(engine_state, stack, "escape-html")? | {  | call.has_flag(engine_state, stack, "escape-all")? |  | call.has_flag(engine_state, stack, "escape")?,
+    |                                                                  +
+help: you might have meant to open the body of the closure
+    |
+111 |             call.has_flag(engine_state, stack, "escape-md")? |  | call.has_flag(engine_state, stack, "escape-all")? | {  | call.has_flag(engine_state, stack, "escape")?,
+    |                                                                                                                       +
+
+error: expected identifier, found keyword `let`
+   --> crates/nu-command/src/formats/to/md.rs:135:9
+    |
+135 |         let mut output = String::new();
+    |         ^^^ expected identifier, found keyword
+
+error: expected `,`
+   --> crates/nu-command/src/formats/to/md.rs:135:13
+    |
+134 |     if per_element |  | single_list {
+    |                         ----------- while parsing the fields for this pattern
+135 |         let mut output = String::new();
+    |             ^^^
+
+error: expected one of `)`, `,`, `if`, or `|`, found `.`
+   --> crates/nu-command/src/formats/to/md.rs:183:5
+    |
+182 |     )
+    |      -
+    |      |
+    |      expected one of `)`, `,`, `if`, or `|`
+    |      help: missing `,`
+183 |     .into_pipeline_data_with_metadata(Some(metadata)))
+    |     ^ unexpected token
+
+error: expected one of `,`, `:`, or `|`, found `Ok`
+   --> crates/nu-command/src/formats/to/md.rs:179:5
+    |
+178 |     }
+    |      -
+    |      |
+    |      expected one of `,`, `:`, or `|`
+    |      help: missing `,`
+179 |     Ok(Value::string(
+    |     ^^ unexpected token
+
+error: expected one of `:` or `|`, found `}`
+   --> crates/nu-command/src/formats/to/md.rs:184:1
+    |
+183 |     .into_pipeline_data_with_metadata(Some(metadata)))
+    |                                                       - expected one of `:` or `|`
+184 | }
+    | ^ unexpected token
+
+error: expected one of `.`, `:`, `?`, `|`, or an operator, found `)`
+   --> crates/nu-command/src/formats/to/md.rs:339:80
+    |
+339 |     if (column_widths.is_empty() |  |  column_widths.iter().all( | x | *x == 0))
+    |                                                                                ^ expected one of `.`, `:`, `?`, `|`, or an operator
+
+error: expected a pattern, found an expression
+   --> crates/nu-command/src/formats/to/md.rs:111:67
+    |
+111 | ...   call.has_flag(engine_state, stack, "escape-md")? |  | call.has_flag(engine_state, stack, "escape-all")? |  | call.has_flag(engine_s...
+    |                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not a pattern
+    |
+    = note: arbitrary expressions are not allowed in patterns: <https://doc.rust-lang.org/book/ch19-00-patterns.html>
+
+error: expected a pattern, found an expression
+   --> crates/nu-command/src/formats/to/md.rs:111:122
+    |
+111 | ...ne_state, stack, "escape-all")? |  | call.has_flag(engine_state, stack, "escape")?,
+    |                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not a pattern
+    |
+    = note: arbitrary expressions are not allowed in patterns: <https://doc.rust-lang.org/book/ch19-00-patterns.html>
+
+error: expected a pattern, found an expression
+   --> crates/nu-command/src/formats/to/md.rs:112:13
+    |
+112 | ...   call.has_flag(engine_state, stack, "escape-html")? |  | call.has_flag(engine_state, stack, "escape-all")? |  | call.has_flag(engine...
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not a pattern
+    |
+    = note: arbitrary expressions are not allowed in patterns: <https://doc.rust-lang.org/book/ch19-00-patterns.html>
+
+error: expected a pattern, found an expression
+   --> crates/nu-command/src/formats/to/md.rs:112:69
+    |
+112 | ...   call.has_flag(engine_state, stack, "escape-html")? |  | call.has_flag(engine_state, stack, "escape-all")? |  | call.has_flag(engine...
+    |                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not a pattern
+    |
+    = note: arbitrary expressions are not allowed in patterns: <https://doc.rust-lang.org/book/ch19-00-patterns.html>
+
+error: expected a pattern, found an expression
+   --> crates/nu-command/src/formats/to/md.rs:112:124
+    |
+112 | ...ne_state, stack, "escape-all")? |  | call.has_flag(engine_state, stack, "escape")?,
+    |                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not a pattern
+    |
+    = note: arbitrary expressions are not allowed in patterns: <https://doc.rust-lang.org/book/ch19-00-patterns.html>
+
+error: expected a pattern, found an expression
+   --> crates/nu-command/src/formats/to/md.rs:339:40
+    |
+339 |     if (column_widths.is_empty() |  |  column_widths.iter().all( | x | *x == 0))
+    |                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not a pattern
+    |
+    = note: arbitrary expressions are not allowed in patterns: <https://doc.rust-lang.org/book/ch19-00-patterns.html>
+
+error: could not compile `nu-command` (lib test) due to 13 previous errors

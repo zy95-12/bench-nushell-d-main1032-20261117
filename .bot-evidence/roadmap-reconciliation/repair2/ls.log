@@ -1,0 +1,60 @@
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 16.73s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-1afc2392e0a3f64d)
+
+running 52 tests
+test commands::ls::list_unknown_flag ... ok
+test commands::ls::list_directory_contains_invalid_utf8 ... ok
+test commands::ls::unknown_close_long_flag_still_suggests_a_match ... ok
+test commands::ls::list_empty_string ... ok
+test commands::ls::list_a_directory_not_exists ... ok
+test commands::ls::fails_when_glob_doesnt_match ... ok
+test commands::ls::lists_hidden_file_when_explicitly_specified ... ok
+test commands::ls::lists_all_files_in_directories_from_stream ... ok
+test commands::ls::lists_all_hidden_files_when_glob_contains_dot ... ok
+test commands::ls::lists_regular_files_using_asterisk_wildcard ... ok
+test commands::ls::does_not_fail_if_glob_matches_empty_directory ... ok
+test commands::ls::list_inside_glob_metachars_dir ... ok
+test commands::ls::lists_regular_files ... ok
+test commands::ls::glob_with_hidden_directory ... ok
+test commands::ls::list_ignores_ansi ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_20 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_17 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_15 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_08 ... ok
+test commands::ls::unknown_flags_without_close_match_point_to_help ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_03 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_09 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_07 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_04 ... ok
+test commands::ls::list_all_columns ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_02 ... ok
+test commands::ls::list_inside_tilde_glob_metachars_dir ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_19 ... ok
+test commands::ls::list_symlink_with_full_path ... ok
+test commands::ls::list_files_from_two_parents_up_using_multiple_dots ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_05 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_13 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_21 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_10 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_18 ... ok
+test commands::ls::lists_all_hidden_files_when_glob_does_not_contain_dot ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_12 ... ok
+test commands::ls::lists_files_including_starting_with_dot ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_06 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_14 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_11 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_16 ... ok
+test commands::ls::lists_regular_files_using_question_mark_wildcard ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_01 ... ok
+test commands::ls::fails_with_permission_denied ... ok
+test commands::ls::list_with_multiple_path ... ok
+test commands::ls::lists_with_directory_flag ... ok
+test commands::ls::lists_with_directory_flag_without_argument ... ok
+test commands::ls::list_flag_false ... ok
+test commands::ls::consistent_list_order ... ok
+test commands::ls::list_with_tilde ... ok
+test commands::ls::lists_regular_files_in_special_folder ... ok
+
+test result: ok. 52 passed; 0 failed; 0 ignored; 0 measured; 1989 filtered out; finished in 0.32s
+

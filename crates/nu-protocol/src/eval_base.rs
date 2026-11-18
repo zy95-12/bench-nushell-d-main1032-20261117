@@ -138,7 +138,11 @@ pub trait Eval {
             Expr::Table(table) => {
                 let mut output_headers = vec![];
                 for expr in table.columns.as_ref() {
-                    let header = Self::eval::<D>(state, mut_state, expr)?.coerce_into_string()?;
+                    let value = Self::eval::<D>(state, mut_state, expr)?;
+                    let header = match value {
+                        Value::String { val, .. } | Value::Glob { val, .. } => val,
+                        value => return value.cant_convert_to("string"),
+                    };
                     if let Some(idx) = output_headers
                         .iter()
                         .position(|existing| existing == &header)
@@ -416,4 +420,44 @@ pub trait Eval {
 
     /// For expressions that should never actually be evaluated
     fn unreachable(state: Self::State<'_>, expr: &Expression) -> Result<Value, ShellError>;
+}
+
+#[cfg(test)]
+mod table_header_tests {
+    use crate::{
+        Span, Type, Value,
+        ast::{Expr, Expression, Table},
+        engine::{EngineState, StateWorkingSet},
+        eval_const::eval_constant,
+    };
+    fn table_expression(working: &mut StateWorkingSet, header: Expr) -> Expression {
+        let header = Expression::new(working, header, Span::test_data(), Type::Any);
+        Expression::new(
+            working,
+            Expr::Table(Table {
+                columns: vec![header].into(),
+                rows: vec![].into(),
+            }),
+            Span::test_data(),
+            Type::table(),
+        )
+    }
+    #[test]
+    fn table_eval_rejects_dynamic_non_string_headers() {
+        let engine = EngineState::new();
+        let mut working = StateWorkingSet::new(&engine);
+        for header in [Expr::Int(1), Expr::Bool(true), Expr::List(vec![])] {
+            let expr = table_expression(&mut working, header);
+            let error = eval_constant(&working, &expr).unwrap_err();
+            assert!(
+                matches!(error, crate::ShellError::CantConvert { .. }),
+                "{error:?}"
+            );
+        }
+        let expr = table_expression(&mut working, Expr::String("name".into()));
+        assert_eq!(
+            eval_constant(&working, &expr).unwrap(),
+            Value::test_list(vec![])
+        );
+    }
 }

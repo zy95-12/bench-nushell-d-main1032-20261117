@@ -1,5 +1,6 @@
 use super::{config_update_string_enum, prelude::*};
 use crate as nu_protocol;
+use std::{num::NonZeroU16, time::Duration};
 
 #[derive(Clone, Copy, Debug, Default, IntoValue, PartialEq, Eq, Serialize, Deserialize)]
 pub enum TableMode {
@@ -339,9 +340,11 @@ impl UpdateFromValue for TableIndent {
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct TableConfig {
     pub mode: TableMode,
-    /// Maximum buffering duration per streamed table page, in nanoseconds.
-    pub batch_duration: i64,
-    /// Maximum rows per streamed table page (must be positive).
+    /// Maximum buffering duration per streamed table page.
+    pub batch_duration: Duration,
+    /// Maximum rows per streamed table page.
+    pub stream_page_size: NonZeroU16,
+    /// Compatibility mirror of `stream_page_size`; prefer the canonical field.
     pub page_size: usize,
     pub index_mode: TableIndexMode,
     pub show_empty: bool,
@@ -362,8 +365,9 @@ impl IntoValue for TableConfig {
 
         record! {
             "mode" => self.mode.into_value(span),
-            "batch_duration" => Value::duration(self.batch_duration, span),
+            "batch_duration" => Value::duration(self.batch_duration.as_nanos().min(i64::MAX as u128) as i64, span),
             "page_size" => (self.page_size as i64).into_value(span),
+            "stream_page_size" => i64::from(self.stream_page_size.get()).into_value(span),
             "index_mode" => self.index_mode.into_value(span),
             "show_empty" => self.show_empty.into_value(span),
             "padding" => self.padding.into_value(span),
@@ -381,7 +385,8 @@ impl Default for TableConfig {
     fn default() -> Self {
         Self {
             mode: TableMode::Rounded,
-            batch_duration: 1_000_000_000,
+            batch_duration: Duration::from_secs(1),
+            stream_page_size: NonZeroU16::new(1000).expect("positive default"),
             page_size: 1000,
             index_mode: TableIndexMode::Always,
             show_empty: true,
@@ -407,18 +412,40 @@ impl UpdateFromValue for TableConfig {
             return;
         };
 
+        // A changed canonical setting wins. When a full config record only
+        // changes the legacy mirror, honor that change instead. Resolve this
+        // before iterating so record insertion order cannot change the result.
+        let canonical = record.get("stream_page_size");
+        let legacy = record.get("page_size");
+        let selected_page_size = if canonical.is_some_and(|value| {
+            value.as_int().ok() == Some(i64::from(self.stream_page_size.get()))
+        }) && legacy
+            .is_some_and(|value| value.as_int().ok() != Some(self.page_size as i64))
+        {
+            "page_size"
+        } else if canonical.is_some() {
+            "stream_page_size"
+        } else {
+            "page_size"
+        };
         for (col, val) in record.iter() {
             let path = &mut path.push(col);
             match col.as_str() {
                 "mode" => self.mode.update(val, path, errors),
                 "batch_duration" => match val.as_duration() {
-                    Ok(duration) if duration >= 0 => self.batch_duration = duration,
+                    Ok(duration) if duration >= 0 => {
+                        self.batch_duration = Duration::from_nanos(duration as u64)
+                    }
                     Ok(_) => errors.invalid_value(path, "a non-negative duration", val),
                     Err(_) => errors.type_mismatch(path, Type::Duration, val),
                 },
-                "page_size" => match val.as_int() {
-                    Ok(size) if size > 0 && usize::try_from(size).is_ok() => {
-                        self.page_size = size as usize
+                "page_size" | "stream_page_size" => match val.as_int() {
+                    Ok(size) if size > 0 && u16::try_from(size).is_ok() => {
+                        if col == selected_page_size {
+                            self.page_size = size as usize;
+                            self.stream_page_size =
+                                NonZeroU16::new(size as u16).expect("validated positive size");
+                        }
                     }
                     Ok(_) => errors.invalid_value(path, "a positive integer", val),
                     Err(_) => errors.type_mismatch(path, Type::Int, val),
@@ -486,6 +513,8 @@ mod streaming_tests {
         for (key, value) in [
             ("page_size", Value::test_int(0)),
             ("page_size", Value::test_int(-1)),
+            ("stream_page_size", Value::test_int(0)),
+            ("stream_page_size", Value::test_int(65536)),
             ("batch_duration", Value::test_duration(-1)),
             ("batch_duration", Value::test_int(1)),
         ] {
@@ -498,6 +527,59 @@ mod streaming_tests {
                 config.into_value(Span::test_data()),
                 old.into_value(Span::test_data())
             );
+        }
+    }
+}
+
+#[cfg(test)]
+mod canonical_streaming_tests {
+    use super::*;
+    #[test]
+    fn canonical_defaults_and_both_setting_names() {
+        let table = TableConfig::default();
+        assert_eq!(table.batch_duration, Duration::from_secs(1));
+        assert_eq!(table.stream_page_size.get(), 1000);
+        for key in ["page_size", "stream_page_size"] {
+            let old = crate::Config::default();
+            let mut table = old
+                .table
+                .clone()
+                .into_value(Span::test_data())
+                .as_record()
+                .unwrap()
+                .clone();
+            table.insert(key, Value::test_int(3));
+            let serialized = Value::test_record(record! { "table" => Value::test_record(table) });
+            let mut config = old.clone();
+            config.update_from_value(&old, &serialized).unwrap();
+            assert_eq!(config.table.stream_page_size.get(), 3, "{key}");
+            assert_eq!(config.table.page_size, 3, "{key}");
+        }
+    }
+}
+
+#[cfg(test)]
+mod streaming_setting_order_tests {
+    use super::*;
+    #[test]
+    fn canonical_and_legacy_settings_do_not_depend_on_record_order() {
+        for (canonical, legacy, expected) in [(7, 3, 7), (1000, 3, 3), (7, 1000, 7)] {
+            for reverse in [false, true] {
+                let old = crate::Config::default();
+                let mut fields = vec![("stream_page_size", canonical), ("page_size", legacy)];
+                if reverse {
+                    fields.reverse();
+                }
+                let table = fields
+                    .into_iter()
+                    .map(|(name, value)| (name.to_string(), Value::test_int(value)))
+                    .collect::<crate::Record>();
+                let mut config = old.clone();
+                let update = Value::test_record(record! { "table" => Value::test_record(table) });
+                config.update_from_value(&old, &update).unwrap();
+                assert_eq!(config.table.page_size, expected, "reverse={reverse}");
+                assert_eq!(usize::from(config.table.stream_page_size.get()), expected);
+            }
         }
     }
 }

@@ -1,0 +1,202 @@
+   Compiling nu-cli v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 16.36s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_cli-3de94a06ee9245b5)
+
+running 59 tests
+test commands::history::history_import::tests::test_backup_no_file ... ok
+test commands::history::history_import::tests::test_find_backup_path::case_1_no_backup ... ok
+test commands::history::history_import::tests::test_find_backup_path::case_2_backup_exists ... ok
+test commands::history::history_import::tests::test_find_backup_path::case_3_multiple_backups_exists ... ok
+test commands::history::history_import::tests::test_backup ... ok
+test commands::history::history_import::tests::test_item_from_value_record_bad_type ... ok
+test commands::history::history_import::tests::test_item_from_value_record_extra_field ... ok
+test commands::history::history_import::tests::test_item_from_value_string ... ok
+test commands::history::history_import::tests::test_item_from_value_record ... ok
+test completions::completion_options::test::match_algorithm_simple::case_02 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_03 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_04 ... ok
+test completions::completion_options::test::match_algorithm_fuzzy_sort_strip ... ok
+test completions::completion_options::test::match_algorithm_simple::case_05 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_01 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_06 ... ok
+test completions::completion_options::test::match_algorithm_fuzzy_sort_score ... ok
+test completions::completion_options::test::match_algorithm_simple::case_07 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_08 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_09 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_10 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_11 ... ok
+test reedline_config::test::test_error ... ok
+test reedline_config::test::test_edit_event ... ok
+test reedline_config::test::test_move_with_select_false ... ok
+test reedline_config::test::test_move_with_select_true ... ok
+test reedline_config::test::test_multiple_event ... ok
+test reedline_config::test::test_send_event ... ok
+test reedline_config::test::test_send_menu ... ok
+test reedline_config::test::test_until_event ... ok
+test reedline_config::test::test_move_without_optional_select ... ok
+test repl::are_session_ids_in_sync ... ok
+test repl::test_auto_cd::auto_cd_dot ... ok
+test repl::test_auto_cd::auto_cd_double_dot ... ok
+test repl::test_auto_cd::escape_vscode_backslash_test ... ok
+test repl::test_auto_cd::escape_vscode_linefeed_test ... ok
+test repl::test_auto_cd::auto_cd_relative ... ok
+test repl::test_auto_cd::escape_vscode_multibyte_ok ... ok
+test repl::test_auto_cd::auto_cd_nonexistent_directory - should panic ... ok
+test repl::test_auto_cd::escape_vscode_semicolon_test ... ok
+test repl::test_auto_cd::auto_cd_root ... ok
+test repl::test_auto_cd::auto_cd_tilde ... ok
+test repl::test_auto_cd::escape_vscode_tab_null_cr_test ... ok
+test repl::test_auto_cd::auto_cd_trailing_slash ... ok
+test repl::trailing_slash_looks_like_path ... ok
+test repl::test_auto_cd::auto_cd_triple_dot ... ok
+test repl::accept_tests::accepted_edits_execute_once::case_3 ... ok
+test repl::accept_tests::accepted_edits_execute_once::case_1 ... ok
+test repl::accept_tests::accepted_edits_execute_once::case_2 ... ok
+test repl::test_auto_cd::auto_cd_symlink ... ok
+test util::test::test_gather_env_vars ... ok
+test sqlite_history::tests::timestamps_and_sessions ... ok
+test menus::help_completions::test::test_help_completer::case_4 ... ok
+test menus::help_completions::test::test_help_completer::case_1 ... ok
+test menus::help_completions::test::test_help_completer::case_3 ... ok
+test menus::help_completions::test::test_help_completer::case_2 ... ok
+test completions::completer::completer_tests::test_completion_helper ... ok
+test sqlite_history::tests::previous_format_and_schema ... ok
+test sqlite_history::tests::persistence_filters_and_mutations ... ok
+
+test result: ok. 59 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-7b5a0db5f20b557e)
+
+running 123 tests
+test completions::alias_offset_bug_7648 ... ignored, was reverted, still needs fixing
+test completions::alias_offset_bug_7754 ... ignored, was reverted, still needs fixing
+test completions::external_commands_disabled ... ok
+test completions::external_commands ... ok
+test completions::completed_scopes_do_not_leak::case_1 ... ok
+test completions::completed_scopes_do_not_leak::case_2 ... ok
+test completions::attributable_completions ... ok
+test completions::completed_scopes_do_not_leak::case_4 ... ok
+test completions::external_completer_trailing_space ... ignored
+test completions::completed_scopes_do_not_leak::case_3 ... ok
+test completions::alias_of_basic_command ... ok
+test completions::command_cp_with_globcompletion ... ok
+test completions::custom_arguments_vs_subcommands ... ok
+test completions::command_touch_with_filecompletion ... ok
+test completions::command_rm_with_globcompletion ... ok
+test completions::command_watch_with_filecompletion ... ok
+test completions::commandline_accept_modes ... ok
+test completions::alias_of_another_alias ... ok
+test completions::custom_arguments_and_subcommands ... ok
+test completions::command_ls_with_filecompletion ... ok
+test completions::command_save_with_filecompletion ... ok
+test completions::alias_of_command_and_flags ... ok
+test completions::command_open_with_filecompletion ... ok
+test completions::cell_path_operator_completions ... ok
+test completions::external_completer_invalid ... ok
+test completions::custom_completer_triggers_cursor_after_word ... ok
+test completions::assignment_operator_completions ... ok
+test completions::custom_completer_triggers_cursor_before_word ... ok
+test completions::flagcompletion_triggers_after_cursor ... ok
+test completions::external_completer_sudo ... ok
+test completions::custom_flags_and_subcommands ... ok
+test completions::custom_completer_triggers_cursor_on_word_left_boundary ... ok
+test completions::custom_completer_triggers_cursor_next_to_word ... ok
+test completions::customcompletion_triggers_after_cursor ... ok
+test completions::custom_completions_defined_inline ... ok
+test completions::deeply_nested_block ... ok
+test completions::customcompletion_triggers_after_cursor_piped ... ok
+test completions::flag_completions ... ok
+test completions::filecompletions_triggers_after_cursor ... ok
+test completions::customcompletions_no_sort ... ok
+test completions::extern_complete_flags ... ok
+test completions::customcompletions_inherit_options ... ok
+test completions::extern_custom_completion_long_flag_1 ... ok
+test completions::extern_custom_completion_long_flag_short ... ok
+test completions::extern_custom_completion_long_flag_2 ... ok
+test completions::extern_custom_completion_positional ... ok
+test completions::type_inferenced_operator_completions ... ignored
+test completions::attribute_completions ... ok
+test completions::extern_custom_completion_short_flag ... ok
+test completions::dont_use_dotnu_completions ... ok
+test completions::customcompletions_invalid ... ok
+test completions::customcompletions_fallback ... ok
+test completions::customcompletions_override_options ... ok
+test completions::external_completer_no_trailing_space ... ok
+test completions::multi_input_diagnostics_join_three_types ... ok
+test completions::external_completer_pass_flags ... ok
+test completions::lsp_print_does_not_invoke_table_renderer ... ok
+test completions::multi_output_validation_retains_alternatives ... ok
+test completions::cellpath_assignment_operator_completions ... ok
+test completions::missing_script_has_command_line_span ... ok
+test completions::incomplete_nested_block ... ok
+test completions::nu_schema_includes_lsp_mode ... ok
+test completions::negated_string_operator_completions ... ok
+test completions::operator_completions ... ok
+test completions::nested_block ... ok
+test completions::which_command_completions ... ok
+test completions::partial_flags_before_custom_values::case_1 ... ok
+test completions::flagcompletion_triggers_after_cursor_piped ... ok
+test completions::signature_completion_shapes_are_plain ... ok
+test completions::partial_flags_before_custom_values::case_2 ... ok
+test completions::partial_flags_before_custom_values::case_3 ... ok
+test completions::record_cell_path_completions ... ok
+test completions::static_completion_rejects_records_and_non_constants ... ok
+test completions::signature_static_value_lists ... ok
+test completions::unfinished_lexical_variables::case_1 ... ok
+test completions::signature_static_list_syntax::case_3 ... ok
+test completions::quoted_cell_path_completions ... ok
+test completions::table_cell_path_completions ... ok
+test completions::signature_static_list_syntax::case_4 ... ok
+test completions::signature_static_list_syntax::case_2 ... ok
+test completions::unfinished_lexical_variables::case_2 ... ok
+test completions::unfinished_lexical_variables::case_3 ... ok
+test completions::unfinished_lexical_variables::case_4 ... ok
+test completions::variables_command_with_commandcompletion ... ok
+test completions::type_annotation_rejects_custom_completion ... ok
+test completions::sort_fuzzy_completions_in_alphabetical_order ... ok
+test completions::signature_static_list_syntax::case_1 ... ok
+test completions::unknown_command_completion ... ok
+test completions::variables_completions ... ok
+test completions::file_completion_quoted ... ok
+test completions::subcommand_vs_external_completer ... ok
+test completions::external_completer_fallback ... ok
+test completions::variables_customcompletion_subcommands_with_customcompletion_2 ... ok
+test completions::variables_dollar_sign_with_variablecompletion ... ok
+test completions::variables_subcommands_with_customcompletion ... ok
+test completions::variables_single_dash_argument_with_flagcompletion ... ok
+test completions::variables_double_dash_argument_with_flagcompletion ... ok
+test completions::partial_completion_with_dot_expansions ... ok
+test completions::folder_with_directorycompletions ... ok
+test completions::dotnu_completions_const_nu_lib_dirs ... ok
+test completions::folder_with_directorycompletions_with_dots ... ok
+test completions::folder_with_directorycompletions_with_three_trailing_dots ... ok
+test completions::exact_match_case_insensitive ... ok
+test completions::folder_with_directorycompletions_do_not_collapse_dots ... ok
+test completions::dotnu_completions ... ok
+test completions::dotnu_stdlib_completions ... ok
+test commands::nu_highlight::nu_highlight_not_expr ... ok
+test commands::nu_highlight::nu_highlight_where_row_condition ... ok
+test commands::keybindings_list::not_empty ... ok
+test completions::file_completions ... ok
+test completions::exact_match ... ok
+test completions::custom_command_rest_any_args_file_completions ... ok
+test completions::partial_completions ... ok
+test commands::history_import::history_import_pipe_string ... ok
+test commands::history_import::to_existing::case_1_plaintext ... ok
+test commands::history_import::to_empty_plaintext ... ok
+test commands::history_import::to_existing::case_2_sqlite ... ok
+test commands::history_import::history_import_pipe_record ... ok
+test commands::history_import::sqlite_history_long_preserves_metadata ... ok
+test commands::history_import::to_empty_sqlite ... ok
+test commands::history_import::history_import_formats_reopen::case_1_plaintext_to_sqlite ... ok
+test commands::history_import::history_import_formats_reopen::case_2_sqlite_to_plaintext ... ok
+test completions::exportable_completions ... ok
+
+test result: ok. 119 passed; 0 failed; 4 ignored; 0 measured; 0 filtered out; finished in 0.22s
+
+   Doc-tests nu_cli
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
