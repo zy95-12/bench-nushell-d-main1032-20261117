@@ -1,0 +1,5 @@
+    Blocking waiting for file lock on build directory
+   Compiling nu-cmd-lang v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-cmd-lang)
+    Checking nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-command)
+    Checking nu v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 17s

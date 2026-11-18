@@ -1,0 +1,32 @@
+output_file	command	exit_status_and_notes
+cargo-check.log	cargo check -p nu -p nu_plugin_query --locked	0 (baseline)
+core-tests.log	cargo test -p nu-utils -p nu-protocol -p nu-parser -p nu-cli -p nu_plugin_query --locked --lib	0
+markdown-baseline.log	cargo test -p nu-command --locked --lib formats::to::md::tests	0 (before adding regressions)
+completion-tests.log	cargo test -p nu-cli --test main --locked completions::	0; 107 passed, 4 existing ignored
+markdown-regressions-before.log	cargo test -p nu-command --locked --lib formats::to::md::tests	101 (expected: 2 new regressions fail before production fix)
+protocol-parser-tests.log	cargo test -p nu-protocol -p nu-parser --locked --tests	0; 5 existing ignored across test targets
+markdown-regressions-after.log	cargo test -p nu-command --locked --lib --features sqlite formats::to::md::tests	0; 16 passed
+command-context-tests.log	cargo test -p nu --locked --bin nu command_context::namespace_tests	0; 2 passed
+command-lib-tests.log	cargo test -p nu-command --locked --features sqlite --lib	0; 471 passed, 1 existing ignored
+fmt-check.log	cargo fmt --all -- --check	0 (empty output)
+cargo-build.log	cargo build -p nu --locked	0; before export-only visibility fix
+cargo-check-final.log	cargo check -p nu -p nu_plugin_query --locked	0; before export-only visibility fix
+markdown-integration-tests.log	cargo test -p nu-command --locked --features sqlite --test main commands::to_md::	0; 6 passed
+stor-integration-tests.log	cargo test -p nu-command --locked --features sqlite --test main commands::stor::	0; 3 passed
+public-utilities-before.log	cargo test -p nu-protocol --locked --test test_public_utilities	101; expected E0603 before value module visibility fix
+source-diff-check.log	git diff HEAD --check -- crates/nu-command/src/formats/to/md.rs crates/nu-protocol/tests/test_pipeline_data.rs src/command_context.rs	0 (empty output); before export-only fix
+public-utilities-after.log	cargo test -p nu-protocol --locked --test test_public_utilities --test test_pipeline_data --test test_signature	0; 13 passed on final source
+cargo-check-delivery.log	cargo check -p nu -p nu_plugin_query --locked	0; final source including public value module
+fmt-check-delivery.log	cargo fmt --all -- --check	0 (empty output); final source
+source-diff-check-delivery.log	git diff HEAD --check -- '*.rs'	0 (empty output); final source
+empty-header-build-before.log	cargo build -p nu --locked	0; prior candidate production code
+empty-header-repro-path-error.log	"${CARGO_TARGET_DIR:-target}/debug/nu" --no-config-file -c '[{a: 1 b: 2} {a: 3 b: 4} {"": 5 a: 6 b: 7}] | to md' 	127; wrong default target path, corrected using cargo metadata
+empty-header-repro-before.log	/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/nu --no-config-file -c '[{a: 1 b: 2} {a: 3 b: 4} {"": 5 a: 6 b: 7}] | to md'	101; confirmed original panic
+empty-header-tests-before.log	cargo test -p nu-command --locked --features sqlite --lib formats::to::md::tests	101; 16 passed, 2 new regressions panic
+empty-header-tests-after.log	cargo test -p nu-command --locked --features sqlite --lib formats::to::md::tests	0; 18 passed
+empty-header-build-after.log	cargo build -p nu --locked	0; repaired source
+empty-header-repro-after.log	/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/nu --no-config-file -c '[{a: 1 b: 2} {a: 3 b: 4} {"": 5 a: 6 b: 7}] | to md'	0; exact table output, no panic
+empty-header-fmt-check.log	cargo fmt --all -- --check	0; empty output
+empty-header-source-diff-check.log	git diff HEAD --check -- '*.rs'	0; empty output
+empty-header-integration-tests.log	cargo test -p nu-command --locked --features sqlite --test main commands::to_md::	0; 7 passed
+empty-header-cargo-check.log	cargo check -p nu -p nu_plugin_query --locked	0; repaired source

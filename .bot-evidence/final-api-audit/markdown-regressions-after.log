@@ -1,0 +1,24 @@
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 27.19s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_command-6350f4759353ea97)
+
+running 16 tests
+test formats::to::md::tests::render_h2 ... ok
+test formats::to::md::tests::render_h3 ... ok
+test formats::to::md::tests::render_h1 ... ok
+test formats::to::md::tests::render_blockquote ... ok
+test formats::to::md::tests::per_element_keeps_distinct_column_groups ... ok
+test formats::to::md::tests::test_center_complex_cell_path ... ok
+test formats::to::md::tests::render_table ... ok
+test formats::to::md::tests::test_center_column ... ok
+test formats::to::md::tests::center_escaped_column_names ... ok
+test formats::to::md::tests::test_center_multiple_columns ... ok
+test formats::to::md::tests::test_empty_center_column ... ok
+test formats::to::md::tests::test_center_non_existing_column ... ok
+test formats::to::md::tests::test_empty_row_value ... ok
+test formats::to::md::tests::test_empty_column_header ... ok
+test formats::to::md::tests::test_content_type_metadata ... ok
+test formats::to::md::tests::test_examples ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 456 filtered out; finished in 0.01s
+

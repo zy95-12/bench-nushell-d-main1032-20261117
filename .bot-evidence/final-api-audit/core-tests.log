@@ -1,0 +1,339 @@
+   Compiling nu-utils v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-utils)
+   Compiling nu-path v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-path)
+   Compiling nu-glob v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-glob)
+   Compiling nu-system v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-system)
+   Compiling nu-derive-value v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-derive-value)
+   Compiling nu-experimental v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-experimental)
+   Compiling phf_macros v0.11.2
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-protocol)
+   Compiling phf v0.11.2
+   Compiling phf_generator v0.10.0
+   Compiling string_cache_codegen v0.5.2
+   Compiling icu_normalizer v1.5.0
+   Compiling markup5ever v0.12.1
+   Compiling idna_adapter v1.2.0
+   Compiling idna v1.0.3
+   Compiling markup5ever v0.14.0
+   Compiling nu-json v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-json)
+   Compiling url v2.5.4
+   Compiling selectors v0.26.0
+   Compiling cssparser v0.34.0
+   Compiling html5ever v0.27.0
+   Compiling nu-cmd-lang v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-cmd-lang)
+   Compiling xml5ever v0.18.1
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-engine)
+   Compiling nu-parser v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-parser)
+   Compiling nu-cmd-base v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-cmd-base)
+   Compiling nu-color-config v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-color-config)
+   Compiling nu-plugin-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-plugin-protocol)
+   Compiling nu-table v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-table)
+   Compiling nu-plugin-core v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-plugin-core)
+   Compiling nuon v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nuon)
+   Compiling reedline v0.42.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/reedline)
+   Compiling markup5ever_rcdom v0.3.0
+   Compiling html5ever v0.29.0
+   Compiling oem_cp v2.0.0
+   Compiling chrono-tz v0.10.0
+   Compiling nu-test-support v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-test-support)
+   Compiling nu-term-grid v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-term-grid)
+   Compiling nu-pretty-hex v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-pretty-hex)
+   Compiling scraper v0.23.1
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-command)
+   Compiling webpage v2.0.1
+   Compiling nu-plugin v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-plugin)
+   Compiling nu-std v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-std)
+   Compiling nu_plugin_query v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu_plugin_query)
+   Compiling nu-cli v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/798a17ae20304f228c81c5b36673b79162a9ab1f27f4cd18/crates/nu-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 08s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_cli-4340ebc7e86954f4)
+
+running 59 tests
+test commands::history::history_import::tests::test_backup_no_file ... ok
+test commands::history::history_import::tests::test_find_backup_path::case_1_no_backup ... ok
+test commands::history::history_import::tests::test_find_backup_path::case_2_backup_exists ... ok
+test commands::history::history_import::tests::test_find_backup_path::case_3_multiple_backups_exists ... ok
+test commands::history::history_import::tests::test_item_from_value_string ... ok
+test commands::history::history_import::tests::test_backup ... ok
+test commands::history::history_import::tests::test_item_from_value_record_extra_field ... ok
+test commands::history::history_import::tests::test_item_from_value_record_bad_type ... ok
+test completions::completion_options::test::match_algorithm_simple::case_01 ... ok
+test commands::history::history_import::tests::test_item_from_value_record ... ok
+test completions::completion_options::test::match_algorithm_simple::case_04 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_03 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_02 ... ok
+test completions::completion_options::test::match_algorithm_fuzzy_sort_strip ... ok
+test completions::completion_options::test::match_algorithm_simple::case_06 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_05 ... ok
+test completions::completion_options::test::match_algorithm_fuzzy_sort_score ... ok
+test completions::completion_options::test::match_algorithm_simple::case_07 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_08 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_09 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_10 ... ok
+test completions::completion_options::test::match_algorithm_simple::case_11 ... ok
+test reedline_config::test::test_error ... ok
+test reedline_config::test::test_edit_event ... ok
+test reedline_config::test::test_move_with_select_false ... ok
+test reedline_config::test::test_multiple_event ... ok
+test reedline_config::test::test_send_event ... ok
+test reedline_config::test::test_send_menu ... ok
+test reedline_config::test::test_until_event ... ok
+test reedline_config::test::test_move_without_optional_select ... ok
+test reedline_config::test::test_move_with_select_true ... ok
+test repl::are_session_ids_in_sync ... ok
+test repl::test_auto_cd::auto_cd_root ... ok
+test repl::test_auto_cd::escape_vscode_backslash_test ... ok
+test repl::test_auto_cd::escape_vscode_linefeed_test ... ok
+test repl::test_auto_cd::auto_cd_dot ... ok
+test repl::test_auto_cd::auto_cd_tilde ... ok
+test repl::test_auto_cd::auto_cd_double_dot ... ok
+test repl::test_auto_cd::escape_vscode_semicolon_test ... ok
+test repl::test_auto_cd::escape_vscode_multibyte_ok ... ok
+test repl::test_auto_cd::auto_cd_trailing_slash ... ok
+test repl::test_auto_cd::auto_cd_nonexistent_directory - should panic ... ok
+test repl::trailing_slash_looks_like_path ... ok
+test repl::test_auto_cd::escape_vscode_tab_null_cr_test ... ok
+test repl::test_auto_cd::auto_cd_symlink ... ok
+test repl::test_auto_cd::auto_cd_relative ... ok
+test repl::test_auto_cd::auto_cd_triple_dot ... ok
+test util::test::test_gather_env_vars ... ok
+test repl::accept_tests::accepted_edits_execute_once::case_1 ... ok
+test repl::accept_tests::accepted_edits_execute_once::case_3 ... ok
+test repl::accept_tests::accepted_edits_execute_once::case_2 ... ok
+test sqlite_history::tests::timestamps_and_sessions ... ok
+test menus::help_completions::test::test_help_completer::case_4 ... ok
+test menus::help_completions::test::test_help_completer::case_1 ... ok
+test menus::help_completions::test::test_help_completer::case_2 ... ok
+test completions::completer::completer_tests::test_completion_helper ... ok
+test menus::help_completions::test::test_help_completer::case_3 ... ok
+test sqlite_history::tests::previous_format_and_schema ... ok
+test sqlite_history::tests::persistence_filters_and_mutations ... ok
+
+test result: ok. 59 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_parser-dfc7c9facc191fd1)
+
+running 6 tests
+test deparse::test::test_arg_with_flag ... ok
+test deparse::test::test_escape ... ok
+test deparse::test::test_flag_arg_with_values_contains_special ... ok
+test deparse::test::test_not_extra_quote ... ok
+test deparse::test::test_quote_special ... ok
+test type_check::alternative_diagnostic_tests::type_alternatives_use_natural_conjunctions ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_protocol-6a7fea4c9318e98c)
+
+running 131 tests
+test ast::cell_path::test::path_member_partial_ord ... ok
+test ast::call::test::argument_span_named ... ok
+test ast::call::test::argument_span_unknown ... ok
+test ast::call::test::call_arguments_span ... ok
+test ast::call::test::argument_span_positional ... ok
+test config::ansi_coloring::tests::test_use_ansi_coloring_false ... ok
+test config::ansi_coloring::tests::test_use_ansi_coloring_auto ... ok
+test config::ansi_coloring::tests::test_use_ansi_coloring_true ... ok
+test config::plugin_gc::tests::update ... ok
+test config::plugin_gc::tests::reconstruct ... ok
+test config::table::canonical_streaming_tests::canonical_defaults_and_both_setting_names ... ok
+test config::table::streaming_setting_order_tests::canonical_and_legacy_settings_do_not_depend_on_record_order ... ok
+test engine::engine_state::engine_state_tests::add_file_gives_id ... ok
+test config::table::streaming_tests::streaming_table_settings_update_and_serialize ... ok
+test engine::engine_state::engine_state_tests::add_file_gives_id_including_parent ... ok
+test did_you_mean::tests::did_you_mean_examples ... ok
+test engine::engine_state::engine_state_tests::get_plugin_config ... ok
+test engine::engine_state::engine_state_tests::list_variables ... ok
+test engine::engine_state::engine_state_tests::merge_states ... ok
+test engine::engine_state::test_cwd::pwd_is_empty_string ... ok
+test engine::engine_state::test_cwd::pwd_is_non_string_value ... ok
+test engine::engine_state::test_cwd::pwd_is_relative_path ... ok
+test engine::engine_state::test_cwd::pwd_not_set ... ok
+test engine::engine_state::test_cwd::pwd_has_trailing_slash ... ok
+test engine::engine_state::test_cwd::pwd_points_to_root ... ok
+test engine::engine_state::test_cwd::pwd_points_to_nonexistent_entity ... ok
+test engine::engine_state::test_cwd::pwd_points_to_normal_directory ... ok
+test engine::engine_state::test_cwd::pwd_points_to_normal_file ... ok
+test config::table::streaming_tests::streaming_table_settings_reject_invalid_limits ... ok
+test engine::engine_state::test_cwd::pwd_points_to_broken_symlink ... ok
+test engine::sequence::output_is_sequential ... ok
+test engine::stack::test::test_children_changes_override_parent ... ok
+test engine::stack::test::test_children_changes_persist_in_offspring ... ok
+test engine::engine_state::test_cwd::pwd_points_to_symlink_to_directory ... ok
+test engine::engine_state::test_cwd::stack_pwd_is_empty_string ... ok
+test engine::engine_state::test_cwd::stack_pwd_not_set ... ok
+test engine::stack::test::test_children_see_inner_values ... ok
+test engine::engine_state::test_cwd::pwd_points_to_symlink_to_file ... ok
+test engine::stack::test::test_children_dont_see_deleted_values ... ok
+test engine::variable::tests::compound_mismatch_points_to_the_bad_value ... ok
+test engine::engine_state::test_cwd::stack_pwd_points_to_normal_directory ... ok
+test engine::stack::test::test_merging_children_back_to_parent ... ok
+test engine::engine_state::test_cwd::stack_pwd_points_to_normal_directory_with_symlink_components ... ok
+test errors::shell_error::location::test_location_macro ... ok
+test errors::shell_error::bridge::test_bridge_io_error_roundtrip ... ok
+test pipeline::byte_stream::tests::chunks_read_binary_passthrough ... ok
+test eval_base::table_header_tests::table_eval_rejects_dynamic_non_string_headers ... ok
+test errors::shell_error::shell_error_serialize_roundtrip ... ok
+test pipeline::byte_stream::tests::chunks_read_string_clean ... ok
+test pipeline::byte_stream::tests::chunks_read_string_split_boundary ... ok
+test pipeline::byte_stream::tests::chunks_read_string_utf8_error ... ok
+test pipeline::byte_stream::tests::chunks_read_unknown_fallback ... ok
+test pipeline::handlers::tests::test_guard_drop ... ok
+test pipeline::handlers::tests::test_multiple_handlers ... ok
+test plugin::identity::parses_name_from_path ... ok
+test plugin::registry_file::tests::upsert_new ... ok
+test plugin::registry_file::tests::upsert_replace ... ok
+test ty::tests::subtype_relation::test_any_is_top_type ... ok
+test ty::tests::subtype_relation::test_number_supertype ... ok
+test ty::tests::subtype_relation::test_reflexivity ... ok
+test ty::tests::subtype_relation::test_list_covariance ... ok
+test value::custom_value::default_path_tests::missing_optional_paths_return_null ... ok
+test value::custom_value::predictable_options_tests::predictable_custom_cell_path_options ... ok
+test value::filesize::tests::display_auto_binary::case_1 ... ok
+test value::filesize::tests::display_auto_binary::case_2 ... ok
+test value::filesize::tests::display_auto_binary::case_3 ... ok
+test value::filesize::tests::display_auto_metric::case_1 ... ok
+test value::custom_value::save_default_tests::custom_save_requires_explicit_implementation ... ok
+test value::filesize::tests::display_auto_metric::case_2 ... ok
+test value::filesize::tests::display_auto_metric::case_3 ... ok
+test value::filesize::tests::display_unit::case_1 ... ok
+test value::filesize::tests::display_unit::case_3 ... ok
+test value::filesize::tests::display_unit::case_2 ... ok
+test value::filesize::tests::display_unit::case_4 ... ok
+test value::from_value::tests::expected_type_default_impl ... ok
+test value::filesize::tests::display_unit::case_5 ... ok
+test value::from_value::tests::from_value_vec_u8 ... ok
+test value::test_derive::bytes_from_value ... ok
+test value::test_derive::default_field_struct_from_value ... ok
+test value::test_derive::bytes_roundtrip ... ok
+test value::test_derive::enum_incorrect_type ... ok
+test value::test_derive::enum_into_value ... ok
+test value::test_derive::enum_type_name_attr ... ok
+test value::test_derive::bytes_into_value ... ok
+test value::test_derive::missing_options ... ok
+test value::test_derive::enum_from_value ... ok
+test value::test_derive::enum_rename_all::from_value ... ok
+test value::test_derive::enum_roundtrip ... ok
+test value::test_derive::named_fields_struct_incorrect_type ... ok
+test value::test_derive::named_fields_struct_from_value ... ok
+test value::test_derive::enum_unknown_variant ... ok
+test value::test_derive::named_fields_struct_into_value ... ok
+test value::test_derive::enum_rename_all::into_value ... ok
+test value::test_derive::named_fields_struct_rename_all::into_value ... ok
+test value::test_derive::renamed_field_struct_into_value ... ok
+test value::test_derive::named_fields_struct_missing_value ... ok
+test value::test_derive::named_fields_struct_rename_all::from_value ... ok
+test value::test_derive::renamed_field_struct_from_value ... ok
+test value::test_derive::renamed_variant_enum_from_value ... ok
+test value::test_derive::renamed_variant_enum_into_value ... ok
+test value::test_derive::renamed_field_struct_roundtrip ... ok
+test value::test_derive::renamed_variant_enum_roundtrip ... ok
+test value::test_derive::named_fields_struct_roundtrip ... ok
+test value::test_derive::struct_type_name_attr ... ok
+test value::test_derive::unit_struct_from_value ... ok
+test value::test_derive::unit_struct_into_value ... ok
+test value::test_derive::unit_struct_roundtrip ... ok
+test plugin::registry_file::tests::roundtrip_invalid ... ok
+test value::test_derive::unnamed_fields_struct_from_value ... ok
+test value::test_derive::unnamed_fields_struct_incorrect_type ... ok
+test value::test_derive::unnamed_fields_struct_into_value ... ok
+test value::test_derive::unnamed_fields_struct_missing_value ... ok
+test value::test_derive::unnamed_fields_struct_roundtrip ... ok
+test value::tests::at_cell_path::test_lists_with_data_at_cell_path ... ok
+test value::tests::at_cell_path::test_mixed_with_data_at_cell_path ... ok
+test value::tests::at_cell_path::test_nested_insert_data_at_cell_path ... ok
+test value::tests::at_cell_path::test_nested_upsert_data_at_cell_path ... ok
+test value::tests::at_cell_path::test_record_with_data_at_cell_path ... ok
+test value::tests::float_equality_includes_epsilon_boundary_and_is_symmetric ... ok
+test value::tests::get_type::test_list ... ok
+test value::tests::is_empty::test_record ... ok
+test value::tests::is_empty::test_list ... ok
+test value::tests::is_empty::test_string ... ok
+test value::tests::is_subtype::test_list ... ok
+test value::tests::into_string::test_datetime ... ok
+test value::tests::into_string::test_negative_year_datetime ... ok
+test value::tests::is_subtype::test_record ... ok
+test value::tests::is_subtype::test_table ... ok
+test value::tests::test_env_as_bool ... ok
+test plugin::registry_file::tests::roundtrip ... ok
+test engine::sequence::output_is_unique_even_under_contention ... ok
+
+test result: ok. 131 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_utils-04d3a1364c9dacc4)
+
+running 16 tests
+test multi_life::deref ... ok
+test nu_cow::tests::deserialize_does_not_require_borrowed_deserialize ... ok
+test nu_cow::tests::values_and_serde ... ok
+test split_read::error_tests::interruption_retries_same_reader ... ok
+test split_read::error_tests::io_error_terminates_without_partial_field ... ok
+test split_read::tests::all_empty ... ok
+test split_read::tests::complex_delimiter ... ok
+test split_read::tests::delimiter_spread_across_reads ... ok
+test split_read::tests::simple ... ok
+test split_read::tests::empty_delimiter - should panic ... ok
+test strings::shared::macro_in_scope ... ok
+test split_read::tests::with_empty_fields ... ok
+test strings::tests::small_strings_live_inline ... ok
+test strings::tests::round_trip_and_traits ... ok
+test strings::tests::static_and_clone_storage ... ok
+test strings::unique::macro_in_scope ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_plugin_query-a22f6fe128a83930)
+
+running 50 tests
+test query_json::tests::answer_from_get_children ... ok
+test query_json::tests::answer_from_get_age ... ok
+test query_json::tests::answer_from_get_children_count ... ok
+test query_json::tests::answer_from_get_friends_first_name ... ok
+test query_json::tests::validate_string ... ok
+test query_web::tests::test_multiple_attributes ... ok
+test query_web::tests::test_nested_text_nodes ... ok
+test query_web::tests::test_first_child_is_not_empty ... ok
+test query_webpage_info::tests::test_basics ... ok
+test query_web::tests::test_first_child ... ok
+test query_xml::tests::namespaces_are_used ... ok
+test query_xml::tests::functions_implicitly_coerce_argument_types ... ok
+test query_xml::tests::position_function_in_predicate ... ok
+test query_xml::namespace_precedence_tests::xml_namespace_default_can_be_overridden ... ok
+test query_xml::tests::signature_exposes_output_switches ... ok
+test query_xml::tests::xml_prefix_is_implicitly_registered ... ok
+test web_tables::tests::test_find_first_empty ... ok
+test query_xml::tests::nodeset_columns_are_fixed_for_long_unicode_queries ... ok
+test web_tables::tests::test_find_first_incomplete_fragment ... ok
+test web_tables::tests::test_find_first_none ... ok
+test query_xml::tests::every_node_kind_and_missing_names ... ok
+test query_xml::tests::scalars_are_native_even_with_output_flags ... ok
+test query_xml::tests::all_output_flag_combinations_select_columns_in_order ... ok
+test web_tables::tests::test_find_first_some ... ok
+test web_tables::tests::test_find_by_headers_empty ... ok
+test web_tables::tests::test_find_by_headers_none ... ok
+test web_tables::tests::test_find_by_id_none ... ok
+test web_tables::tests::test_find_by_id_some ... ok
+test web_tables::tests::test_headers_empty ... ok
+test web_tables::tests::test_iter_empty ... ok
+test web_tables::tests::test_row_as_slice_without_headers ... ok
+test web_tables::tests::test_row_as_slice_with_headers ... ok
+test web_tables::tests::test_row_as_slice_without_headers_two_tables ... ok
+test web_tables::tests::test_row_get_with_headers ... ok
+test web_tables::tests::test_row_as_slice_complex ... ok
+test web_tables::tests::test_row_as_slice_with_headers_two_tables ... ok
+test web_tables::tests::test_row_get_without_headers ... ok
+test web_tables::tests::test_headers_nonempty ... ok
+test web_tables::tests::test_row_get_complex ... ok
+test web_tables::tests::test_row_is_empty ... ok
+test web_tables::tests::test_row_iter_simple ... ok
+test web_tables::tests::test_row_iter_complex ... ok
+test web_tables::tests::test_iter_nonempty ... ok
+test web_tables::tests::test_row_as_slice_complex_two_tables ... ok
+test web_tables::tests::test_row_iter_simple_two_tables ... ok
+test web_tables::tests::test_row_len ... ok
+test web_tables::tests::test_find_by_headers_some ... ok
+test web_tables::tests::test_row_iter_complex_two_tables ... ok
+test web_tables::tests::test_two_tables_row_get_complex ... ok
+test web_tables::tests::test_row_len_two_tables ... ok
+
+test result: ok. 50 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

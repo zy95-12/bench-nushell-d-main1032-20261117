@@ -53,3 +53,13 @@ fn canonical_escape_flags_are_independent() {
         assert_eq!(result.out, expected, "{flag}");
     }
 }
+
+#[test]
+fn late_empty_header_does_not_panic() {
+    let actual = nu!(r#"[{a: 1 b: 2} {a: 3 b: 4} {"": 5 a: 6 b: 7}] | to md | to json -r"#);
+    assert!(actual.err.is_empty(), "{}", actual.err);
+    assert_eq!(
+        actual.out,
+        r#""|  | a | b |\n| --- | --- | --- |\n|  | 1 | 2 |\n|  | 3 | 4 |\n| 5 | 6 | 7 |""#
+    );
+}

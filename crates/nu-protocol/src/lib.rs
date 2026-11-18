@@ -26,7 +26,7 @@ mod signature;
 pub mod span;
 mod syntax_shape;
 mod ty;
-mod value;
+pub mod value;
 
 pub use alias::*;
 pub use ast::unit::*;
