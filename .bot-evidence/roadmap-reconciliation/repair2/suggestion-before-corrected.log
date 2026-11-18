@@ -1,0 +1,24 @@
+    Blocking waiting for file lock on build directory
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 38.18s
+     Running tests/test_parser.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_parser-8cb3af42397ca39c)
+
+running 1 test
+test unknown_flag_suggests_nearby_flag ... FAILED
+
+failures:
+
+---- unknown_flag_suggests_nearby_flag stdout ----
+
+thread 'unknown_flag_suggests_nearby_flag' panicked at crates/nu-parser/tests/test_parser.rs:3163:5:
+assertion failed: matches!(working_set.parse_errors.first(),
+    Some(ParseError::UnknownFlag(_, _, _, help)) if
+    help.contains("Did you mean: `--verbose`?"))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    unknown_flag_suggests_nearby_flag
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 241 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p nu-parser --test test_parser`

@@ -1,0 +1,45 @@
+   Compiling nu-utils v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-utils)
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-protocol)
+   Compiling nu-json v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-json)
+   Compiling nu-test-support v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-test-support)
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-engine)
+   Compiling nu-color-config v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-color-config)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.81s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_color_config-a0fc93591bc6a6b3)
+
+running 26 tests
+test color_config::tests::test_color_string_to_nustyle_empty_string ... ok
+test color_config::tests::test_color_string_to_nustyle_invalid_string ... ok
+test color_config::tests::test_color_string_to_nustyle_valid_string ... ok
+test color_config::tests::test_get_style_from_value ... ok
+test color_config::tests::test_parse_map_entry ... ok
+test style_computer::terminal_default_foreground_has_sgr_39 ... ok
+test style_computer::predictable_unspecified_theme_uses_terminal_default ... ok
+test text_style::tests::test_blink ... ok
+test text_style::tests::test_dimmed ... ok
+test style_computer::test_computable_style_static ... ok
+test text_style::tests::test_hidden ... ok
+test text_style::tests::test_is_blink ... ok
+test text_style::tests::test_is_bold ... ok
+test text_style::tests::test_is_dimmed ... ok
+test text_style::tests::test_is_italic ... ok
+test text_style::tests::test_is_reverse ... ok
+test text_style::tests::test_is_strikethrough ... ok
+test text_style::tests::test_is_hidden ... ok
+test text_style::tests::test_is_underline ... ok
+test text_style::tests::test_italic ... ok
+test text_style::tests::test_reverse ... ok
+test text_style::tests::test_strikethrough ... ok
+test text_style::tests::test_underline ... ok
+test style_computer::shipped_themes_use_terminal_default_foregrounds ... ok
+test style_computer::test_computable_style_closure_errors ... ok
+test style_computer::test_computable_style_closure_basic ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+   Doc-tests nu_color_config
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

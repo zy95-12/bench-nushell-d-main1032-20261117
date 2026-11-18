@@ -1,0 +1,22 @@
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-protocol)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.37s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_protocol-b0261352a038a48e)
+
+running 1 test
+test eval_base::table_header_tests::table_eval_rejects_dynamic_non_string_headers ... FAILED
+
+failures:
+
+---- eval_base::table_header_tests::table_eval_rejects_dynamic_non_string_headers stdout ----
+
+thread 'eval_base::table_header_tests::table_eval_rejects_dynamic_non_string_headers' panicked at crates/nu-protocol/src/eval_base.rs:434:56:
+called `Result::unwrap_err()` on an `Ok` value: List { vals: [], internal_span: Span { start: 9223372036854775807, end: 9223372036854775807 } }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    eval_base::table_header_tests::table_eval_rejects_dynamic_non_string_headers
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 125 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p nu-protocol --lib`

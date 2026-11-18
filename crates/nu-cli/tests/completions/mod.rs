@@ -1883,8 +1883,6 @@ fn variables_completions() {
     // Test completions for $nu
     let suggestions = completer.complete("$nu.", 4);
 
-    assert_eq!(20, suggestions.len());
-
     let expected: Vec<_> = vec![
         "cache-dir",
         "config-path",
@@ -1901,6 +1899,7 @@ fn variables_completions() {
         "loginshell-path",
         "os-info",
         "pid",
+        #[cfg(feature = "plugin")]
         "plugin-path",
         "startup-time",
         "temp-path",
@@ -2914,4 +2913,126 @@ fn signature_completion_shapes_are_plain() {
         signature.get_long_flag("flag").unwrap().arg,
         Some(nu_protocol::SyntaxShape::String)
     );
+}
+
+#[rstest]
+#[case("def", "[alpha beta]", "")]
+#[case("extern", "[alpha beta]", "")]
+#[case("def", "$choices", "const choices = [alpha beta];")]
+#[case("extern", "[{value: alpha, description: first} {value: beta}]", "")]
+fn signature_static_list_syntax(#[case] kind: &str, #[case] values: &str, #[case] prefix: &str) {
+    let (_, _, mut engine, mut stack) = new_engine();
+    let body = if kind == "def" { " {}" } else { "" };
+    let source =
+        format!("{prefix} {kind} demo [arg: string@{values} --flag(-f): string@{values}]{body}");
+    support::merge_input(source.as_bytes(), &mut engine, &mut stack).unwrap();
+    let mut completer = NuCompleter::new(Arc::new(engine), Arc::new(stack));
+    for line in ["demo a", "demo --flag a"] {
+        let suggestions = completer.complete(line, line.len());
+        assert!(
+            suggestions
+                .iter()
+                .any(|suggestion| suggestion.value == "alpha"),
+            "{line}: {suggestions:?}"
+        );
+        if values.contains("description: first") {
+            assert_eq!(
+                suggestions
+                    .iter()
+                    .find(|suggestion| suggestion.value == "alpha")
+                    .unwrap()
+                    .description
+                    .as_deref(),
+                Some("first")
+            );
+        }
+        assert!(
+            !suggestions
+                .iter()
+                .any(|suggestion| suggestion.value == "beta"),
+            "{line}: {suggestions:?}"
+        );
+    }
+    let suggestions = completer.complete("demo --fl", 9);
+    assert!(
+        suggestions
+            .iter()
+            .any(|suggestion| suggestion.value == "--flag"),
+        "{suggestions:?}"
+    );
+    assert!(
+        !suggestions
+            .iter()
+            .any(|suggestion| suggestion.value == "alpha")
+    );
+}
+
+#[test]
+fn static_completion_rejects_records_and_non_constants() {
+    let (_, _, engine, _) = new_engine();
+    for source in [
+        "def demo [arg: string@{value: a}] {}",
+        "let choices = [a b]; def demo [arg: string@$choices] {}",
+        "let x: string@[a b] = a",
+    ] {
+        let mut working = StateWorkingSet::new(&engine);
+        parse(&mut working, None, source.as_bytes(), false);
+        assert!(!working.parse_errors.is_empty(), "{source}");
+        if source.contains("@{") {
+            assert!(
+                working.parse_errors.iter().any(|error| matches!(
+                    error,
+                    nu_protocol::ParseError::OperatorUnsupportedType {
+                        op: "@",
+                        unsupported: nu_protocol::Type::Record(_),
+                        ..
+                    }
+                )),
+                "{:?}",
+                working.parse_errors
+            );
+        }
+    }
+}
+
+#[test]
+fn multi_output_validation_retains_alternatives() {
+    let (_, _, engine, _) = new_engine();
+    let prefix = "def dynamic []: nothing -> any { 1 }; def multi []: [nothing -> int, nothing -> string, nothing -> filesize] { dynamic };";
+    let mut working = StateWorkingSet::new(&engine);
+    parse(
+        &mut working,
+        None,
+        format!("{prefix} def bad []: nothing -> bool {{ multi }}").as_bytes(),
+        false,
+    );
+    assert!(
+        !working.parse_errors.is_empty(),
+        "incompatible alternatives were accepted"
+    );
+    assert!(
+        format!("{:?}", working.parse_errors).contains("int, string, or filesize"),
+        "{:?}",
+        working.parse_errors
+    );
+    let mut working = StateWorkingSet::new(&engine);
+    parse(
+        &mut working,
+        None,
+        format!("{prefix} def good []: nothing -> string {{ multi }}").as_bytes(),
+        false,
+    );
+    assert!(
+        working.parse_errors.is_empty(),
+        "{:?}",
+        working.parse_errors
+    );
+}
+
+#[test]
+fn multi_input_diagnostics_join_three_types() {
+    let (_, _, engine, _) = new_engine();
+    let mut working = StateWorkingSet::new(&engine);
+    parse(&mut working, None, b"def dynamic []: nothing -> any { 1 }; def multi []: [nothing -> int, nothing -> string, nothing -> filesize] { dynamic }; def bool-only []: bool -> bool { $in }; multi | bool-only", false);
+    assert!(working.parse_errors.iter().any(|error| matches!(error, nu_protocol::ParseError::InputMismatch(types, _) if types == "int, string, or filesize")), "{:?}", working.parse_errors);
 }

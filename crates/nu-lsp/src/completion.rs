@@ -205,6 +205,11 @@ mod tests {
     };
     use nu_test_support::fs::fixtures;
 
+    #[cfg(not(windows))]
+    const DETAIL_STR: &str = "detail";
+    #[cfg(windows)]
+    const DETAIL_STR: &str = "detail\r";
+
     fn send_complete_request(
         client_connection: &Connection,
         uri: Uri,
@@ -239,10 +244,7 @@ mod tests {
     fn complete_on_variable() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("completion");
-        script.push("var.nu");
+        let script = fixtures().join("lsp/completion/var.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -268,24 +270,17 @@ mod tests {
     fn complete_command() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("completion");
-        script.push("command.nu");
+        let script = fixtures().join("lsp/completion/command.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
         let resp = send_complete_request(&client_connection, script.clone(), 0, 6);
 
-        #[cfg(not(windows))]
-        let detail_str = "detail";
-        #[cfg(windows)]
-        let detail_str = "detail\r";
         assert_json_include!(
             actual: result_from_message(resp),
             expected: serde_json::json!([
                 // defined after the cursor
-                { "label": "config n foo bar", "detail": detail_str, "kind": 2 },
+                { "label": "config n foo bar", "detail": DETAIL_STR, "kind": 2 },
                 {
                     "label": "config nu",
                     "detail": "Edit nu configurations.",
@@ -344,7 +339,7 @@ mod tests {
             actual: result_from_message(resp),
             expected: serde_json::json!([
                 // defined before the cursor
-                { "label": "config n foo bar", "detail": detail_str, "kind": 2 },
+                { "label": "config n foo bar", "detail": DETAIL_STR, "kind": 2 },
             ])
         );
 
@@ -367,10 +362,7 @@ mod tests {
     fn fallback_completion() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("completion");
-        script.push("fallback.nu");
+        let script = fixtures().join("lsp/completion/fallback.nu");
         let script = path_to_uri(&script);
         open_unchecked(&client_connection, script.clone());
 
@@ -428,10 +420,7 @@ mod tests {
     fn complete_command_with_line() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("completion");
-        script.push("utf_pipeline.nu");
+        let script = fixtures().join("lsp/completion/utf_pipeline.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -459,10 +448,7 @@ mod tests {
     fn complete_keyword() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("completion");
-        script.push("keyword.nu");
+        let script = fixtures().join("lsp/completion/keyword.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -488,10 +474,7 @@ mod tests {
     fn complete_cell_path() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("completion");
-        script.push("cell_path.nu");
+        let script = fixtures().join("lsp/completion/cell_path.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -533,10 +516,7 @@ mod tests {
         let config = "$env.config.completions.external.completer = {|spans| ['--background']}";
         let (client_connection, _recv) = initialize_language_server(Some(config), None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("completion");
-        script.push("external.nu");
+        let script = fixtures().join("lsp/completion/external.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -578,10 +558,7 @@ mod tests {
     fn complete_operators() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("completion");
-        script.push("fallback.nu");
+        let script = fixtures().join("lsp/completion/fallback.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -623,10 +600,7 @@ mod tests {
     fn complete_use_arguments() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("completion");
-        script.push("use.nu");
+        let script = fixtures().join("lsp/completion/use.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());

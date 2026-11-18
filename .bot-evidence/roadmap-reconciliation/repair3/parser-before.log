@@ -1,0 +1,24 @@
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-protocol)
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-engine)
+   Compiling nu-parser v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-parser)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 16.82s
+     Running tests/test_parser.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_parser-8cb3af42397ca39c)
+
+running 1 test
+test table_variable_headers_require_string_compatible_types ... FAILED
+
+failures:
+
+---- table_variable_headers_require_string_compatible_types stdout ----
+
+thread 'table_variable_headers_require_string_compatible_types' panicked at crates/nu-parser/tests/test_parser.rs:3179:13:
+$cols: []
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    table_variable_headers_require_string_compatible_types
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 242 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p nu-parser --test test_parser`

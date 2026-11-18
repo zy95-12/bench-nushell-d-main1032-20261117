@@ -277,6 +277,7 @@ impl BlockBuilder {
                 index: _,
             } => allocate(&[*src], &[*src]),
             Instruction::CheckMatchGuard { src } => allocate(&[*src], &[*src]),
+            Instruction::CheckTableColumn { src_dst } => allocate(&[*src_dst], &[*src_dst]),
             Instruction::Iterate {
                 dst,
                 stream,

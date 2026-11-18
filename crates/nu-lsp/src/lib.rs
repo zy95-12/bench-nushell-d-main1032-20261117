@@ -569,14 +569,18 @@ mod tests {
         client_connection: &Connection,
         uri: Uri,
     ) -> lsp_server::Notification {
-        open(client_connection, uri).unwrap()
+        open(client_connection, uri, None).unwrap()
     }
 
     pub(crate) fn open(
         client_connection: &Connection,
         uri: Uri,
+        new_text: Option<String>,
     ) -> Result<lsp_server::Notification, String> {
-        let text = std::fs::read_to_string(uri_to_path(&uri)).map_err(|e| e.to_string())?;
+        let text = match new_text {
+            Some(text) => text,
+            None => std::fs::read_to_string(uri_to_path(&uri)).map_err(|e| e.to_string())?,
+        };
 
         open_text(client_connection, uri, text)
     }

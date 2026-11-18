@@ -266,3 +266,58 @@ fn predictable_unspecified_theme_uses_terminal_default() {
         Some(Color::Default)
     );
 }
+
+#[test]
+fn terminal_default_foreground_has_sgr_39() {
+    assert_eq!(Color::Default.normal().prefix().to_string(), "\u{1b}[39m");
+    assert_eq!(
+        Color::Default.normal().on(Color::Red).prefix().to_string(),
+        "\u{1b}[41;39m"
+    );
+    let config = include_str!("../../nu-utils/src/default_files/default_config.nu");
+    assert!(config.contains("search_result: { bg: red }"));
+}
+
+#[test]
+fn shipped_themes_use_terminal_default_foregrounds() {
+    for (source, count) in [
+        (
+            include_str!("../../nu-utils/src/default_files/default_config.nu"),
+            1,
+        ),
+        (include_str!("../../nu-std/std/config/mod.nu"), 2),
+    ] {
+        for key in [
+            "separator",
+            "int",
+            "duration",
+            "range",
+            "float",
+            "string",
+            "nothing",
+            "binary",
+            "cell-path",
+            "record",
+            "list",
+            "block",
+        ] {
+            let values: Vec<_> = source
+                .lines()
+                .filter_map(|line| line.trim().split_once(':'))
+                .filter(|(name, _)| *name == key)
+                .map(|(_, value)| value.trim())
+                .collect();
+            assert_eq!(
+                values,
+                vec!["default"; count],
+                "{key} retains a fixed foreground"
+            );
+        }
+        let search: Vec<_> = source
+            .lines()
+            .map(str::trim)
+            .filter(|line| line.starts_with("search_result:"))
+            .collect();
+        assert_eq!(search, vec!["search_result: { bg: red }"; count]);
+    }
+}

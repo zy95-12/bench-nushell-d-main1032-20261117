@@ -1,0 +1,69 @@
+    Blocking waiting for file lock on build directory
+   Compiling nu-test-support v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-test-support)
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-protocol)
+error[E0308]: mismatched types
+   --> crates/nu-protocol/src/eval_base.rs:429:100
+    |
+429 | ...   let expr = Expression::new(&working, Expr::Table(Table { columns: vec![Expression::new(&working, header, Span::test_data(), Type::A...
+    |                                                                              --------------- ^^^^^^^^ types differ in mutability
+    |                                                                              |
+    |                                                                              arguments to this function are incorrect
+    |
+    = note: expected mutable reference `&mut state_working_set::StateWorkingSet<'_>`
+                       found reference `&state_working_set::StateWorkingSet<'_>`
+note: associated function defined here
+   --> crates/nu-protocol/src/ast/expression.rs:566:12
+    |
+566 |     pub fn new(working_set: &mut StateWorkingSet, expr: Expr, span: Span, ty: Type) -> Expression {
+    |            ^^^ ---------------------------------
+
+error[E0308]: mismatched types
+   --> crates/nu-protocol/src/eval_base.rs:429:40
+    |
+429 | ...   let expr = Expression::new(&working, Expr::Table(Table { columns: vec![Expression::new(&working, header, Span::test_data(), Type::A...
+    |                  --------------- ^^^^^^^^ types differ in mutability
+    |                  |
+    |                  arguments to this function are incorrect
+    |
+    = note: expected mutable reference `&mut state_working_set::StateWorkingSet<'_>`
+                       found reference `&state_working_set::StateWorkingSet<'_>`
+note: associated function defined here
+   --> crates/nu-protocol/src/ast/expression.rs:566:12
+    |
+566 |     pub fn new(working_set: &mut StateWorkingSet, expr: Expr, span: Span, ty: Type) -> Expression {
+    |            ^^^ ---------------------------------
+
+error[E0308]: mismatched types
+   --> crates/nu-protocol/src/eval_base.rs:433:96
+    |
+433 | ...   let expr = Expression::new(&working, Expr::Table(Table { columns: vec![Expression::new(&working, Expr::String("name".into()), Span:...
+    |                                                                              --------------- ^^^^^^^^ types differ in mutability
+    |                                                                              |
+    |                                                                              arguments to this function are incorrect
+    |
+    = note: expected mutable reference `&mut state_working_set::StateWorkingSet<'_>`
+                       found reference `&state_working_set::StateWorkingSet<'_>`
+note: associated function defined here
+   --> crates/nu-protocol/src/ast/expression.rs:566:12
+    |
+566 |     pub fn new(working_set: &mut StateWorkingSet, expr: Expr, span: Span, ty: Type) -> Expression {
+    |            ^^^ ---------------------------------
+
+error[E0308]: mismatched types
+   --> crates/nu-protocol/src/eval_base.rs:433:36
+    |
+433 | ...   let expr = Expression::new(&working, Expr::Table(Table { columns: vec![Expression::new(&working, Expr::String("name".into()), Span:...
+    |                  --------------- ^^^^^^^^ types differ in mutability
+    |                  |
+    |                  arguments to this function are incorrect
+    |
+    = note: expected mutable reference `&mut state_working_set::StateWorkingSet<'_>`
+                       found reference `&state_working_set::StateWorkingSet<'_>`
+note: associated function defined here
+   --> crates/nu-protocol/src/ast/expression.rs:566:12
+    |
+566 |     pub fn new(working_set: &mut StateWorkingSet, expr: Expr, span: Span, ty: Type) -> Expression {
+    |            ^^^ ---------------------------------
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `nu-protocol` (lib test) due to 4 previous errors

@@ -1,0 +1,45 @@
+    Blocking waiting for file lock on build directory
+   Compiling nu-color-config v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-color-config)
+   Compiling nu-table v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-table)
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-command)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 39.49s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-1afc2392e0a3f64d)
+
+running 1 test
+test commands::ls::unknown_flags_without_close_match_point_to_help ... FAILED
+
+failures:
+
+---- commands::ls::unknown_flags_without_close_match_point_to_help stdout ----
+=== stderr
+Error: The `ls` command doesn't have flag `zzzzzzzzzz`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: ls --zzzzzzzzzz
+    label at line 1, columns 4 to 15: unknown flag
+diagnostic help: Available flags: --help(-h), --all(-a), --long(-l), --short-names(-s), --full-paths(-f), --du(-d), --directory(-D), --mime-type(-m), --threads(-t). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+
+thread 'commands::ls::unknown_flags_without_close_match_point_to_help' panicked at crates/nu-command/tests/commands/ls.rs:872:9:
+--zzzzzzzzzz: Error: The `ls` command doesn't have flag `zzzzzzzzzz`.
+    Diagnostic severity: error
+Begin snippet for source starting at line 1, column 1
+
+snippet line 1: ls --zzzzzzzzzz
+    label at line 1, columns 4 to 15: unknown flag
+diagnostic help: Available flags: --help(-h), --all(-a), --long(-l), --short-names(-s), --full-paths(-f), --du(-d), --directory(-D), --mime-type(-m), --threads(-t). Use `--help` for more information.
+diagnostic code: nu::parser::unknown_flag
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    commands::ls::unknown_flags_without_close_match_point_to_help
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2039 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p nu-command --test main`

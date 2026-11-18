@@ -1,0 +1,29 @@
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-protocol)
+   Compiling nu-plugin-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-plugin-protocol)
+   Compiling nu-plugin-core v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-plugin-core)
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-engine)
+   Compiling nu-plugin v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-plugin)
+   Compiling nu_plugin_query v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu_plugin_query)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 16.52s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_plugin_query-dcfce449650f7400)
+
+running 10 tests
+test query_xml::tests::signature_exposes_output_switches ... ok
+test query_xml::tests::namespaces_are_used ... ok
+test query_xml::tests::functions_implicitly_coerce_argument_types ... ok
+test query_xml::tests::position_function_in_predicate ... ok
+test query_xml::namespace_precedence_tests::xml_namespace_default_can_be_overridden ... ok
+test query_xml::tests::xml_prefix_is_implicitly_registered ... ok
+test query_xml::tests::nodeset_columns_are_fixed_for_long_unicode_queries ... ok
+test query_xml::tests::scalars_are_native_even_with_output_flags ... ok
+test query_xml::tests::every_node_kind_and_missing_names ... ok
+test query_xml::tests::all_output_flag_combinations_select_columns_in_order ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 40 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_plugin_query-dee91c1996076f62)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

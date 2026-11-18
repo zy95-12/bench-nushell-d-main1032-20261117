@@ -1,7 +1,6 @@
 use nu_protocol::engine::EngineState;
 
-pub(crate) fn get_engine_state() -> EngineState {
-    let engine_state = nu_cmd_lang::create_default_context();
+pub(crate) fn add_command_context(engine_state: EngineState) -> EngineState {
     #[cfg(feature = "plugin")]
     let engine_state = nu_cmd_plugin::add_plugin_command_context(engine_state);
     let engine_state = nu_command::add_shell_command_context(engine_state);
@@ -29,7 +28,7 @@ mod tests {
             }
         }
 
-        let ctx = get_engine_state();
+        let ctx = add_command_context(nu_cmd_lang::create_default_context());
         let decls = ctx.get_decls_sorted(true);
         let mut failures = Vec::new();
 
@@ -79,7 +78,7 @@ mod tests {
             }
         }
 
-        let ctx = get_engine_state();
+        let ctx = add_command_context(nu_cmd_lang::create_default_context());
         let decls = ctx.get_decls_sorted(true);
         let mut failures = Vec::new();
 
@@ -110,7 +109,7 @@ mod tests {
 
     #[test]
     fn signature_name_matches_command_name() {
-        let ctx = get_engine_state();
+        let ctx = add_command_context(nu_cmd_lang::create_default_context());
         let decls = ctx.get_decls_sorted(true);
         let mut failures = Vec::new();
 
@@ -136,7 +135,7 @@ mod tests {
 
     #[test]
     fn commands_declare_input_output_types() {
-        let ctx = get_engine_state();
+        let ctx = add_command_context(nu_cmd_lang::create_default_context());
         let decls = ctx.get_decls_sorted(true);
         let mut failures = Vec::new();
 
@@ -166,7 +165,7 @@ mod tests {
 
     #[test]
     fn no_search_term_duplicates() {
-        let ctx = get_engine_state();
+        let ctx = add_command_context(nu_cmd_lang::create_default_context());
         let decls = ctx.get_decls_sorted(true);
         let mut failures = Vec::new();
 
@@ -192,7 +191,7 @@ mod tests {
 
     #[test]
     fn description_end_period() {
-        let ctx = get_engine_state();
+        let ctx = add_command_context(nu_cmd_lang::create_default_context());
         let decls = ctx.get_decls_sorted(true);
         let mut failures = Vec::new();
 
@@ -215,7 +214,7 @@ mod tests {
 
     #[test]
     fn description_start_uppercase() {
-        let ctx = get_engine_state();
+        let ctx = add_command_context(nu_cmd_lang::create_default_context());
         let decls = ctx.get_decls_sorted(true);
         let mut failures = Vec::new();
 
@@ -237,5 +236,23 @@ mod tests {
             "Command description does not start with an uppercase letter:\n{}",
             failures.join("\n")
         );
+    }
+}
+
+#[cfg(test)]
+mod namespace_tests {
+    use super::*;
+    #[test]
+    fn every_multiword_command_has_a_parent() {
+        let engine = add_command_context(nu_cmd_lang::create_default_context());
+        for (_, name, _, _) in engine.find_commands_by_predicate(|_| true, false) {
+            if let Some(index) = name.iter().rposition(|byte| *byte == b' ') {
+                assert!(
+                    engine.find_decl(&name[..index], &[]).is_some(),
+                    "missing parent for {}",
+                    String::from_utf8_lossy(&name)
+                );
+            }
+        }
     }
 }

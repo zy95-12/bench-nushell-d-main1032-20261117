@@ -97,6 +97,12 @@ fn streaming_nested_errors_survive_ignoring_closures() {
         r#"[1] | each { [2] | each { error make {msg: 'nested failure'} } | each { 42 } } | each { 99 }"#
     );
     assert!(actual.err.contains("nested failure"), "{}", actual.err);
+    assert_eq!(
+        actual.err.matches("eval_block_with_input").count(),
+        2,
+        "{}",
+        actual.err
+    );
 }
 
 #[test]
@@ -104,4 +110,26 @@ fn streaming_default_each_keeps_nested_lists() {
     let actual = nu!("[1 2] | each {|x| [$x ($x + 10)] } | to nuon");
     assert!(actual.err.is_empty(), "{}", actual.err);
     assert_eq!(actual.out, "[[1, 11], [2, 12]]");
+}
+
+#[test]
+fn nested_each_errors_include_each_closure_level_once() {
+    for inner in ["", "--flatten"] {
+        for outer in ["", "--flatten"] {
+            let actual = nu!(format!(
+                "[[1]] | each {outer} {{|xs| $xs | each {inner} {{ error make {{msg: 'original nested failure'}} }} }}"
+            ));
+            assert!(
+                actual.err.contains("original nested failure"),
+                "{}",
+                actual.err
+            );
+            assert_eq!(
+                actual.err.matches("eval_block_with_input").count(),
+                2,
+                "inner={inner}, outer={outer}: {}",
+                actual.err
+            );
+        }
+    }
 }

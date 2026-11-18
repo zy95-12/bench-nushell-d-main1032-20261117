@@ -1,0 +1,24 @@
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-protocol)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.98s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_protocol-b0261352a038a48e)
+
+running 1 test
+test value::tests::float_equality_includes_epsilon_boundary_and_is_symmetric ... FAILED
+
+failures:
+
+---- value::tests::float_equality_includes_epsilon_boundary_and_is_symmetric stdout ----
+
+thread 'value::tests::float_equality_includes_epsilon_boundary_and_is_symmetric' panicked at crates/nu-protocol/src/value/mod.rs:4186:13:
+assertion `left == right` failed
+  left: Some(Less)
+ right: Some(Equal)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    value::tests::float_equality_includes_epsilon_boundary_and_is_symmetric
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 124 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p nu-protocol --lib`

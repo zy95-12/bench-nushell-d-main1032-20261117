@@ -1,0 +1,152 @@
+    Blocking waiting for file lock on build directory
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-protocol)
+   Compiling lsp-server v0.7.8
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-engine)
+   Compiling nu-parser v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-parser)
+   Compiling nu-color-config v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-color-config)
+   Compiling nu-table v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-table)
+   Compiling nu-cmd-base v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-cmd-base)
+   Compiling nuon v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nuon)
+   Compiling nu-cli v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-cli)
+   Compiling nu-command v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-command)
+   Compiling nu-cmd-lang v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-cmd-lang)
+   Compiling nu-std v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-std)
+   Compiling nu-lsp v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-lsp)
+error[E0061]: this function takes 3 arguments but 2 arguments were supplied
+   --> crates/nu-lsp/src/notification.rs:260:22
+    |
+260 |         let result = open(&client_connection, script);
+    |                      ^^^^---------------------------- argument #3 of type `std::option::Option<std::string::String>` is missing
+    |
+note: function defined here
+   --> crates/nu-lsp/src/lib.rs:575:19
+    |
+575 |     pub(crate) fn open(
+    |                   ^^^^
+...
+578 |         new_text: Option<String>,
+    |         ------------------------
+help: provide the argument
+    |
+260 |         let result = open(&client_connection, script, /* std::option::Option<std::string::String> */);
+    |                                                     ++++++++++++++++++++++++++++++++++++++++++++++++
+
+error[E0596]: cannot borrow `script` as mutable, as it is not declared as mutable
+   --> crates/nu-lsp/src/workspace.rs:680:9
+    |
+680 |         script.push("foo.nu");
+    |         ^^^^^^ cannot borrow as mutable
+    |
+help: consider changing this to be mutable
+    |
+675 |         let mut script = fixtures().join("lsp/workspace");
+    |             +++
+
+error[E0596]: cannot borrow `script` as mutable, as it is not declared as mutable
+   --> crates/nu-lsp/src/workspace.rs:700:9
+    |
+700 |         script.push("foo.nu");
+    |         ^^^^^^ cannot borrow as mutable
+    |
+help: consider changing this to be mutable
+    |
+688 |         let mut script = fixtures().join("lsp/workspace");
+    |             +++
+
+error[E0596]: cannot borrow `script_path` as mutable, as it is not declared as mutable
+   --> crates/nu-lsp/src/workspace.rs:737:13
+    |
+737 |         let script_path = fixtures().join("lsp/workspace");
+    |             ^^^^^^^^^^^ not mutable
+...
+749 |         script_path.push("bar.nu");
+    |         ----------- cannot borrow as mutable
+750 |         let script = path_to_uri(&script_path);
+751 |         script_path.pop();
+    |         ----------- cannot borrow as mutable
+752 |         script_path.push("foo.nu");
+    |         ----------- cannot borrow as mutable
+    |
+help: consider changing this to be mutable
+    |
+737 |         let mut script_path = fixtures().join("lsp/workspace");
+    |             +++
+
+error[E0596]: cannot borrow `script` as mutable, as it is not declared as mutable
+   --> crates/nu-lsp/src/workspace.rs:804:9
+    |
+804 |         script.push("baz.nu");
+    |         ^^^^^^ cannot borrow as mutable
+    |
+help: consider changing this to be mutable
+    |
+792 |         let mut script = fixtures().join("lsp/workspace");
+    |             +++
+
+error[E0596]: cannot borrow `script` as mutable, as it is not declared as mutable
+   --> crates/nu-lsp/src/workspace.rs:852:9
+    |
+852 |         script.push("foo.nu");
+    |         ^^^^^^ cannot borrow as mutable
+    |
+help: consider changing this to be mutable
+    |
+840 |         let mut script = fixtures().join("lsp/workspace");
+    |             +++
+
+error[E0596]: cannot borrow `script` as mutable, as it is not declared as mutable
+   --> crates/nu-lsp/src/workspace.rs:917:9
+    |
+917 |         script.push("baz.nu");
+    |         ^^^^^^ cannot borrow as mutable
+    |
+help: consider changing this to be mutable
+    |
+905 |         let mut script = fixtures().join("lsp/workspace");
+    |             +++
+
+error[E0596]: cannot borrow `script` as mutable, as it is not declared as mutable
+   --> crates/nu-lsp/src/workspace.rs:981:9
+    |
+981 |         script.push("foo.nu");
+    |         ^^^^^^ cannot borrow as mutable
+    |
+help: consider changing this to be mutable
+    |
+969 |         let mut script = fixtures().join("lsp/workspace");
+    |             +++
+
+error[E0596]: cannot borrow `script` as mutable, as it is not declared as mutable
+    --> crates/nu-lsp/src/workspace.rs:1047:9
+     |
+1047 |         script.push("foo.nu");
+     |         ^^^^^^ cannot borrow as mutable
+     |
+help: consider changing this to be mutable
+     |
+1035 |         let mut script = fixtures().join("lsp/workspace");
+     |             +++
+
+error[E0596]: cannot borrow `script_path` as mutable, as it is not declared as mutable
+    --> crates/nu-lsp/src/workspace.rs:1102:13
+     |
+1102 |         let script_path = fixtures().join("lsp/workspace");
+     |             ^^^^^^^^^^^ not mutable
+...
+1108 |         script_path.push("bar.nu");
+     |         ----------- cannot borrow as mutable
+...
+1117 |         script_path.pop();
+     |         ----------- cannot borrow as mutable
+1118 |         script_path.push("foo.nu");
+     |         ----------- cannot borrow as mutable
+     |
+help: consider changing this to be mutable
+     |
+1102 |         let mut script_path = fixtures().join("lsp/workspace");
+     |             +++
+
+Some errors have detailed explanations: E0061, E0596.
+For more information about an error, try `rustc --explain E0061`.
+error: could not compile `nu-lsp` (lib test) due to 10 previous errors
+warning: build failed, waiting for other jobs to finish...

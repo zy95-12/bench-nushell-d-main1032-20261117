@@ -1,0 +1,174 @@
+    Blocking waiting for file lock on build directory
+   Compiling serde_core v1.0.229
+   Compiling serde v1.0.229
+    Checking smallvec v1.13.2
+   Compiling num-traits v0.2.19
+    Checking parking_lot_core v0.9.10
+    Checking foldhash v0.1.5
+    Checking parking_lot v0.12.3
+    Checking zerocopy v0.7.35
+    Checking thiserror v2.0.12
+   Compiling jobserver v0.1.32
+    Checking either v1.15.0
+    Checking rayon v1.10.0
+    Checking bitflags v2.6.0
+    Checking bytes v1.10.0
+    Checking rustix v0.38.42
+    Checking hashbrown v0.15.2
+    Checking indexmap v2.10.0
+    Checking serde_json v1.0.133
+    Checking chrono v0.4.45
+   Compiling cc v1.2.16
+    Checking crossterm v0.28.1
+    Checking itertools v0.14.0
+   Compiling strum_macros v0.26.4
+    Checking rmp v0.8.14
+    Checking rmp-serde v1.3.0
+    Checking nix v0.29.0
+    Checking ref-cast v1.0.23
+    Checking thiserror v1.0.69
+    Checking buf-trait v0.4.1
+    Checking byteyarn v0.5.1
+    Checking strum v0.26.3
+    Checking terminal_size v0.4.1
+    Checking pwd v1.4.0
+    Checking nu-path v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-path)
+    Checking nu-utils v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-utils)
+    Checking nu-glob v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-glob)
+    Checking procfs-core v0.17.0
+    Checking erased-serde v0.4.5
+    Checking lru v0.12.5
+    Checking typetag v0.2.18
+    Checking miette v7.6.0
+   Compiling nu-derive-value v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-derive-value)
+    Checking procfs v0.17.0
+    Checking nu-system v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-system)
+    Checking nu-experimental v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-experimental)
+    Checking chrono-humanize v0.2.3
+    Checking getrandom v0.2.15
+    Checking nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-protocol)
+    Checking futures-sink v0.3.31
+   Compiling ppv-lite86 v0.2.20
+   Compiling rand_chacha v0.3.1
+   Compiling rand v0.8.5
+    Checking futures-channel v0.3.31
+    Checking futures-io v0.3.31
+    Checking futures-util v0.3.31
+   Compiling phf_generator v0.11.2
+    Checking http v1.2.0
+    Checking yoke v0.7.5
+    Checking zerovec v0.10.4
+   Compiling phf_codegen v0.11.2
+   Compiling ring v0.17.13
+error: the `Err`-variant returned from this function is very large
+   --> crates/nu-protocol/src/engine/state_working_set.rs:740:50
+    |
+740 |       pub fn get_constant(&self, var_id: VarId) -> Result<&Value, ParseError> {
+    |                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: crates/nu-protocol/src/errors/parse_error.rs:134:5
+    |
+134 | /     OperatorIncompatibleTypes {
+135 | |         op: &'static str,
+136 | |         lhs: Type,
+137 | |         rhs: Type,
+...   |
+145 | |         help: Option<&'static str>,
+146 | |     },
+    | |_____- the largest variant contains at least 128 bytes
+    |
+    = help: try reducing the size of `errors::parse_error::ParseError`, for example by boxing large elements or replacing it with `Box<errors::parse_error::ParseError>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#result_large_err
+    = note: `-D clippy::result-large-err` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::result_large_err)]`
+
+error: the `Err`-variant returned from this function is very large
+    --> crates/nu-protocol/src/engine/state_working_set.rs:1242:58
+     |
+1242 |       pub fn push(&mut self, path: PathBuf, span: Span) -> Result<(), ParseError> {
+     |                                                            ^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: crates/nu-protocol/src/errors/parse_error.rs:134:5
+     |
+134  | /     OperatorIncompatibleTypes {
+135  | |         op: &'static str,
+136  | |         lhs: Type,
+137  | |         rhs: Type,
+...    |
+145  | |         help: Option<&'static str>,
+146  | |     },
+     | |_____- the largest variant contains at least 128 bytes
+     |
+     = help: try reducing the size of `errors::parse_error::ParseError`, for example by boxing large elements or replacing it with `Box<errors::parse_error::ParseError>`
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#result_large_err
+
+error: the `Err`-variant returned from this function is very large
+   --> crates/nu-protocol/src/pipeline/byte_stream.rs:945:34
+    |
+945 |     fn next_string(&mut self) -> Result<Option<String>, (Vec<u8>, ShellError)> {
+    |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 152 bytes
+    |
+    = help: try reducing the size of `(std::vec::Vec<u8>, errors::shell_error::ShellError)`, for example by boxing large elements or replacing it with `Box<(std::vec::Vec<u8>, errors::shell_error::ShellError)>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#result_large_err
+
+error: the `Err`-variant returned from this function is very large
+   --> crates/nu-protocol/src/pipeline/pipeline_data.rs:204:65
+    |
+47  |     ByteStream(ByteStream, Option<PipelineMetadata>),
+    |     ------------------------------------------------ the largest variant contains at least 144 bytes
+...
+204 |     pub fn try_into_stream(self, engine_state: &EngineState) -> Result<PipelineData, PipelineData> {
+    |                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: try reducing the size of `pipeline::pipeline_data::PipelineData`, for example by boxing large elements or replacing it with `Box<pipeline::pipeline_data::PipelineData>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#result_large_err
+
+error: useless conversion to the same type: `syntax_shape::SyntaxShape`
+   --> crates/nu-protocol/src/signature.rs:342:20
+    |
+342 |             shape: shape.into(),
+    |                    ^^^^^^^^^^^^ help: consider removing `.into()`: `shape`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#useless_conversion
+    = note: `-D clippy::useless-conversion` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::useless_conversion)]`
+
+error: useless conversion to the same type: `syntax_shape::SyntaxShape`
+   --> crates/nu-protocol/src/signature.rs:362:20
+    |
+362 |             shape: shape.into(),
+    |                    ^^^^^^^^^^^^ help: consider removing `.into()`: `shape`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#useless_conversion
+
+error: useless conversion to the same type: `syntax_shape::SyntaxShape`
+   --> crates/nu-protocol/src/signature.rs:381:20
+    |
+381 |             shape: shape.into(),
+    |                    ^^^^^^^^^^^^ help: consider removing `.into()`: `shape`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#useless_conversion
+
+    Checking tinystr v0.7.6
+error: useless conversion to the same type: `syntax_shape::SyntaxShape`
+   --> crates/nu-protocol/src/signature.rs:420:23
+    |
+420 |             arg: Some(shape.into()),
+    |                       ^^^^^^^^^^^^ help: consider removing `.into()`: `shape`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#useless_conversion
+
+error: useless conversion to the same type: `syntax_shape::SyntaxShape`
+   --> crates/nu-protocol/src/signature.rs:445:23
+    |
+445 |             arg: Some(shape.into()),
+    |                       ^^^^^^^^^^^^ help: consider removing `.into()`: `shape`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#useless_conversion
+
+    Checking icu_locid v1.5.0
+    Checking socket2 v0.5.8
+    Checking icu_provider v1.5.0
+   Compiling aho-corasick v1.1.3
+error: could not compile `nu-protocol` (lib) due to 9 previous errors
+warning: build failed, waiting for other jobs to finish...

@@ -127,10 +127,7 @@ mod tests {
     fn semantic_token_internals() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("semantic_tokens");
-        script.push("internals.nu");
+        let script = fixtures().join("lsp/semantic_tokens/internals.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());

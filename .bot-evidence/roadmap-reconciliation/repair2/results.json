@@ -1,0 +1,192 @@
+{
+  "handoff_ref": "task_history:58805",
+  "prior_candidate_ref": "task_history:53127",
+  "results": [
+    {
+      "command": "cargo fmt --all",
+      "exit_code": 0,
+      "log": "fmt.log",
+      "suites": []
+    },
+    {
+      "command": "cargo fmt --all -- --check",
+      "exit_code": 0,
+      "log": "fmt-check.log",
+      "suites": []
+    },
+    {
+      "command": "cargo test -p nu-protocol value::tests",
+      "exit_code": 0,
+      "log": "value-tests.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 18,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-parser",
+      "exit_code": 0,
+      "log": "parser.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 22,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 240,
+          "failed": 0,
+          "ignored": 2
+        },
+        {
+          "status": "ok",
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-command --features sqlite --test main commands::stor::",
+      "exit_code": 0,
+      "log": "stor.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-command --test main commands::ls::",
+      "exit_code": 0,
+      "log": "ls.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 52,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-command --features sqlite --lib stor::",
+      "exit_code": 0,
+      "log": "stor-unit.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 18,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo check -p nu -p nu_plugin_query --locked",
+      "exit_code": 0,
+      "log": "policy-check.log",
+      "suites": []
+    }
+  ],
+  "changed_source_paths": [
+    "crates/nu-command/src/database/mod.rs",
+    "crates/nu-command/src/database/values/mod.rs",
+    "crates/nu-command/src/database/values/sqlite.rs",
+    "crates/nu-command/src/stor/create.rs",
+    "crates/nu-command/src/stor/insert.rs",
+    "crates/nu-command/tests/commands/ls.rs",
+    "crates/nu-command/tests/commands/stor.rs",
+    "crates/nu-parser/src/parser.rs",
+    "crates/nu-parser/tests/test_parser.rs",
+    "crates/nu-protocol/src/value/mod.rs"
+  ],
+  "source_digest_sha256": "699424f7e519cf6d6bbfdd8ffe793177d2d1cb56cf8f68d82e84a887fc5a472c",
+  "provenance": "Only the restored candidate, supplied contract documents and work produced in this trial were used. No upstream/reference implementation, later release, hidden tests or evaluator artifacts accessed.",
+  "pre_fix_regressions": [
+    {
+      "command": "cargo test -p nu-command --features sqlite --test main stor_json_and_jsonb_round_trip_nested_values",
+      "exit_code": 101,
+      "log": "stor-before.log"
+    },
+    {
+      "command": "cargo test -p nu-protocol value::tests::float_equality_includes_epsilon_boundary_and_is_symmetric",
+      "exit_code": 101,
+      "log": "float-before.log"
+    },
+    {
+      "command": "cargo test -p nu-parser --test test_parser unknown_flag_suggests_nearby_flag",
+      "exit_code": 101,
+      "log": "suggestion-before-corrected.log"
+    }
+  ],
+  "notes": [
+    "Initial suggestion-before.log used a filter matching zero tests; only the corrected run is reproduction evidence.",
+    "The inclusive float tolerance is guarded for non-finite operands to preserve prior infinity/NaN ordering; tests cover this alongside the epsilon boundary and large-magnitude symmetry.",
+    "Existing SQL conversion entry points retain their signatures and delegate using EngineState::new(); stor insert uses the new engine-aware path.",
+    "Earlier roadmap evidence remains historical; this manifest records the current scoped repair verification."
+  ]
+}

@@ -1,0 +1,16 @@
+    Blocking waiting for file lock on build directory
+   Compiling nu-plugin-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-plugin-engine)
+   Compiling nu-parser v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-parser)
+   Compiling nu-cmd-base v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-cmd-base)
+   Compiling nu-cmd-lang v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-cmd-lang)
+   Compiling nu-plugin-test-support v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-plugin-test-support)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.99s
+     Running tests/main.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/main-ea82ca4693f08389)
+
+running 3 tests
+test custom_value::test_into_int_from_u32 ... ok
+test custom_value::test_into_u32_examples ... ok
+test custom_value::plugin_custom_save_reaches_the_originating_value ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.00s
+

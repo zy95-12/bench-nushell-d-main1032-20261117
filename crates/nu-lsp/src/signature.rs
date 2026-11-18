@@ -285,10 +285,7 @@ mod tests {
     fn signature_help_on_builtins() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("hints");
-        script.push("signature.nu");
+        let script = fixtures().join("lsp/hints/signature.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -360,10 +357,7 @@ mod tests {
 ] {}"#;
         let (client_connection, _recv) = initialize_language_server(Some(config_str), None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("hints");
-        script.push("signature.nu");
+        let script = fixtures().join("lsp/hints/signature.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());

@@ -312,6 +312,31 @@ mod tests {
     };
     use nu_test_support::fs::fixtures;
 
+    fn create_position(line: u32, character: u32) -> serde_json::Value {
+        serde_json::json!({"line": line, "character": character})
+    }
+    fn create_range(
+        start_line: u32,
+        start_char: u32,
+        end_line: u32,
+        end_char: u32,
+    ) -> serde_json::Value {
+        serde_json::json!({"start": create_position(start_line, start_char), "end": create_position(end_line, end_char)})
+    }
+    fn create_symbol(
+        name: &str,
+        kind: u32,
+        uri: &Uri,
+        range: serde_json::Value,
+    ) -> serde_json::Value {
+        serde_json::json!({"name": name, "kind": kind, "location": {"uri": uri, "range": range}})
+    }
+    fn update_symbol_uri(symbols: &mut [serde_json::Value], uri: &Uri) {
+        for symbol in symbols {
+            symbol["location"]["uri"] = serde_json::json!(uri);
+        }
+    }
+
     fn send_document_symbol_request(client_connection: &Connection, uri: Uri) -> Message {
         client_connection
             .sender
@@ -354,72 +379,41 @@ mod tests {
     }
 
     #[test]
-    // for variable `$in/$it`, should not appear in symbols
-    fn document_symbol_special_variables() {
-        let (client_connection, _recv) = initialize_language_server(None, None);
-
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("symbols");
-        script.push("span.nu");
-        let script = path_to_uri(&script);
-
-        open_unchecked(&client_connection, script.clone());
-        let resp = send_document_symbol_request(&client_connection, script);
-
-        assert_json_eq!(result_from_message(resp), serde_json::json!([]));
+    fn symbol_uri_update_preserves_ranges() {
+        let uri = path_to_uri(fixtures().join("lsp/symbols/foo.nu"));
+        let other = path_to_uri(fixtures().join("lsp/symbols/span.nu"));
+        let range = create_range(1, 2, 3, 4);
+        let mut symbols = [create_symbol("name", 12, &uri, range.clone())];
+        update_symbol_uri(&mut symbols, &other);
+        assert_eq!(symbols[0]["location"]["uri"], serde_json::json!(other));
+        assert_eq!(symbols[0]["location"]["range"], range);
     }
 
-    #[test]
-    fn document_symbol_basic() {
+    #[rstest::rstest]
+    #[case("span.nu", false)]
+    #[case("foo.nu", true)]
+    fn document_symbols(#[case] file: &str, #[case] has_symbols: bool) {
         let (client_connection, _recv) = initialize_language_server(None, None);
-
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("symbols");
-        script.push("foo.nu");
-        let script = path_to_uri(&script);
-
+        let script = path_to_uri(fixtures().join("lsp/symbols").join(file));
         open_unchecked(&client_connection, script.clone());
         let resp = send_document_symbol_request(&client_connection, script.clone());
-
-        assert_json_eq!(
-            result_from_message(resp),
-            serde_json::json!([
-              {
-                "name": "def_foo",
-                "kind": 12,
-                "location": {
-                  "uri": script,
-                  "range": {
-                    "start": { "line": 5, "character": 15 },
-                    "end": { "line": 5, "character": 20 }
-                  }
-                }
-              },
-              {
-                "name": "var_foo",
-                "kind": 13,
-                "location": {
-                  "uri": script,
-                  "range": {
-                    "start": { "line": 2, "character": 4 },
-                    "end": { "line": 2, "character": 11 }
-                  }
-                }
-              }
-            ])
-        );
+        let expected = if has_symbols {
+            vec![
+                create_symbol("def_foo", 12, &script, create_range(5, 15, 5, 20)),
+                create_symbol("var_foo", 13, &script, create_range(2, 4, 2, 11)),
+            ]
+        } else {
+            // Special $in/$it variables must not appear in symbols.
+            vec![]
+        };
+        assert_json_eq!(result_from_message(resp), serde_json::json!(expected));
     }
 
     #[test]
     fn document_symbol_update() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("symbols");
-        script.push("bar.nu");
+        let script = fixtures().join("lsp/symbols/bar.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -442,19 +436,12 @@ mod tests {
 
         assert_json_eq!(
             result_from_message(resp),
-            serde_json::json!([
-              {
-                "name": "var_bar",
-                "kind": 13,
-                "location": {
-                  "uri": script,
-                  "range": {
-                    "start": { "line": 0, "character": 13 },
-                    "end": { "line": 0, "character": 20 }
-                  }
-                }
-              }
-            ])
+            serde_json::json!([create_symbol(
+                "var_bar",
+                13,
+                &script,
+                create_range(0, 13, 0, 20)
+            )])
         );
     }
 
@@ -462,16 +449,10 @@ mod tests {
     fn workspace_symbol_current() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("symbols");
-        script.push("foo.nu");
+        let script = fixtures().join("lsp/symbols/foo.nu");
         let script_foo = path_to_uri(&script);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("symbols");
-        script.push("bar.nu");
+        let script = fixtures().join("lsp/symbols/bar.nu");
         let script_bar = path_to_uri(&script);
 
         open_unchecked(&client_connection, script_foo);
@@ -481,39 +462,9 @@ mod tests {
         assert_json_eq!(
             result_from_message(resp),
             serde_json::json!([
-              {
-                "name": "def_bar",
-                "kind": 12,
-                "location": {
-                  "uri": script_bar,
-                  "range": {
-                    "start": { "line": 2, "character": 22 },
-                    "end": { "line": 2, "character": 27 }
-                  }
-                }
-              },
-              {
-                "name": "var_bar",
-                "kind": 13,
-                "location": {
-                  "uri": script_bar,
-                  "range": {
-                    "start": { "line": 0, "character": 13 },
-                    "end": { "line": 0, "character": 20 }
-                  }
-                }
-              },
-              {
-                "name": "module_bar",
-                "kind": 2,
-                "location": {
-                  "uri": script_bar,
-                  "range": {
-                    "start": { "line": 4, "character": 26 },
-                    "end": { "line": 4, "character": 27 }
-                  }
-                }
-              }
+                create_symbol("def_bar", 12, &script_bar, create_range(2, 22, 2, 27)),
+                create_symbol("var_bar", 13, &script_bar, create_range(0, 13, 0, 20)),
+                create_symbol("module_bar", 2, &script_bar, create_range(4, 26, 4, 27))
             ])
         );
     }
@@ -522,16 +473,10 @@ mod tests {
     fn workspace_symbol_other() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("symbols");
-        script.push("foo.nu");
+        let script = fixtures().join("lsp/symbols/foo.nu");
         let script_foo = path_to_uri(&script);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("symbols");
-        script.push("bar.nu");
+        let script = fixtures().join("lsp/symbols/bar.nu");
         let script_bar = path_to_uri(&script);
 
         open_unchecked(&client_connection, script_foo.clone());
@@ -541,28 +486,8 @@ mod tests {
         assert_json_eq!(
             result_from_message(resp),
             serde_json::json!([
-              {
-                "name": "def_foo",
-                "kind": 12,
-                "location": {
-                  "uri": script_foo,
-                  "range": {
-                    "start": { "line": 5, "character": 15 },
-                    "end": { "line": 5, "character": 20 }
-                  }
-                }
-              },
-              {
-                "name": "var_foo",
-                "kind": 13,
-                "location": {
-                  "uri": script_foo,
-                  "range": {
-                    "start": { "line": 2, "character": 4 },
-                    "end": { "line": 2, "character": 11 }
-                  }
-                }
-              }
+                create_symbol("def_foo", 12, &script_foo, create_range(5, 15, 5, 20)),
+                create_symbol("var_foo", 13, &script_foo, create_range(2, 4, 2, 11))
             ])
         );
     }

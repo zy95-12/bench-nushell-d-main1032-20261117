@@ -17,6 +17,16 @@ use crate as nu_protocol;
 pub enum Completion {
     Custom(crate::DeclId),
     List(Vec<String>),
+    /// Static values with presentation metadata.
+    ListWithDescriptions(Vec<CompletionItem>),
+}
+
+/// A static completion value and its optional description.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct CompletionItem {
+    pub value: String,
+    #[serde(default)]
+    pub description: Option<String>,
 }
 
 impl Completion {

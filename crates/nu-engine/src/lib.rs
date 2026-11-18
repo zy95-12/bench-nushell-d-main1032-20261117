@@ -28,4 +28,4 @@ pub use eval_ir::eval_ir_block;
 pub use glob_from::glob_from;
 
 mod namespace;
-pub use namespace::add_namespace_commands;
+pub use namespace::{Namespace, add_namespace_commands};

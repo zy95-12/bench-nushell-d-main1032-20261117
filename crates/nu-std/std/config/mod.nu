@@ -2,7 +2,7 @@
 export def dark-theme [] {
     {
         # color for nushell primitives
-        separator: white
+        separator: default
         leading_trailing_space_bg: { attr: n } # no fg, no bg, attr none effectively turns this off
         header: green_bold
         empty: blue
@@ -10,22 +10,22 @@ export def dark-theme [] {
         # The value (in this case, a bool) is piped into the closure.
         # eg) {|| if $in { 'light_cyan' } else { 'light_gray' } }
         bool: light_cyan
-        int: white
+        int: default
         filesize: cyan
-        duration: white
+        duration: default
         datetime: purple
-        range: white
-        float: white
-        string: white
-        nothing: white
-        binary: white
-        cell-path: white
+        range: default
+        float: default
+        string: default
+        nothing: default
+        binary: default
+        cell-path: default
         row_index: green_bold
-        record: white
-        list: white
-        block: white
+        record: default
+        list: default
+        block: default
         hints: dark_gray
-        search_result: { bg: red fg: white }
+        search_result: { bg: red }
         shape_binary: purple_bold
         shape_block: blue_bold
         shape_bool: light_cyan
@@ -70,7 +70,7 @@ export def dark-theme [] {
 export def light-theme [] {
     {
         # color for nushell primitives
-        separator: dark_gray
+        separator: default
         leading_trailing_space_bg: { attr: n } # no fg, no bg, attr none effectively turns this off
         header: green_bold
         empty: blue
@@ -78,22 +78,22 @@ export def light-theme [] {
         # The value (in this case, a bool) is piped into the closure.
         # eg) {|| if $in { 'dark_cyan' } else { 'dark_gray' } }
         bool: dark_cyan
-        int: dark_gray
+        int: default
         filesize: cyan_bold
-        duration: dark_gray
+        duration: default
         datetime: purple
-        range: dark_gray
-        float: dark_gray
-        string: dark_gray
-        nothing: dark_gray
-        binary: dark_gray
-        cell-path: dark_gray
+        range: default
+        float: default
+        string: default
+        nothing: default
+        binary: default
+        cell-path: default
         row_index: green_bold
-        record: dark_gray
-        list: dark_gray
-        block: dark_gray
+        record: default
+        list: default
+        block: default
         hints: dark_gray
-        search_result: { fg: white bg: red }
+        search_result: { bg: red }
         shape_binary: purple_bold
         shape_block: blue_bold
         shape_bool: light_cyan

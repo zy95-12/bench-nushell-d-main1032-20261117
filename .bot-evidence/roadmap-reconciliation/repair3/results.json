@@ -1,0 +1,198 @@
+{
+  "handoff_ref": "task_history:72454",
+  "prior_candidate_ref": "task_history:68399",
+  "results": [
+    {
+      "command": "cargo fmt --all -- --check",
+      "exit_code": 0,
+      "log": "fmt-check.log",
+      "suites": []
+    },
+    {
+      "command": "cargo build -p nu --locked",
+      "exit_code": 0,
+      "log": "build.log",
+      "suites": []
+    },
+    {
+      "command": "cargo test -p nu-parser",
+      "exit_code": 101,
+      "log": "parser.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 6,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 22,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "FAILED",
+          "passed": 240,
+          "failed": 1,
+          "ignored": 2
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu --test main eval::type_system::table_",
+      "exit_code": 0,
+      "log": "headers.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-command --test main",
+      "exit_code": 0,
+      "log": "command-main.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 2009,
+          "failed": 0,
+          "ignored": 32
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu --test main eval::",
+      "exit_code": 0,
+      "log": "eval.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 80,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-protocol --lib",
+      "exit_code": 0,
+      "log": "protocol.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 126,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo test -p nu-command --test streaming",
+      "exit_code": 0,
+      "log": "streaming.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 10,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo check -p nu --locked",
+      "exit_code": 0,
+      "log": "check-nu.log",
+      "suites": []
+    },
+    {
+      "command": "cargo check -p nu -p nu_plugin_query --locked",
+      "exit_code": 0,
+      "log": "policy-check.log",
+      "suites": []
+    },
+    {
+      "command": "cargo test -p nu-parser",
+      "exit_code": 0,
+      "log": "parser-final.log",
+      "suites": [
+        {
+          "status": "ok",
+          "passed": 6,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 22,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 241,
+          "failed": 0,
+          "ignored": 2
+        },
+        {
+          "status": "ok",
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "command": "cargo fmt --all -- --check",
+      "exit_code": 0,
+      "log": "fmt-final.log",
+      "suites": []
+    }
+  ],
+  "changed_source_paths": [
+    "crates/nu-command/src/debug/debug_.rs",
+    "crates/nu-engine/src/compile/builder.rs",
+    "crates/nu-engine/src/compile/expression.rs",
+    "crates/nu-engine/src/eval_ir.rs",
+    "crates/nu-parser/src/parser.rs",
+    "crates/nu-parser/tests/test_parser.rs",
+    "crates/nu-protocol/src/eval_base.rs",
+    "crates/nu-protocol/src/ir/display.rs",
+    "crates/nu-protocol/src/ir/mod.rs",
+    "crates/nu-protocol/src/value/mod.rs",
+    "tests/eval/type_system.rs"
+  ],
+  "source_digest": {
+    "algorithm": "SHA256 of sorted path NUL contents NUL",
+    "value": "0f62ac93dd25325d7155b762f195d1df9f5c6fac95cf1b1e0c6a298f098ee3f8"
+  },
+  "provenance": "Only supplied current checkout and work produced in this trial; no external/reference code fetched or read.",
+  "before_logs": [
+    "parser-before.log",
+    "runtime-before.log",
+    "ast-before-verified.log"
+  ],
+  "notes": [
+    "Before behavioral regressions failed for bool/int typed variables and Any non-string headers. Initial AST test compile errors are retained separately and are not reproduction evidence.",
+    "Initial positive numeric literal fixture was corrected to quoted string, since numeric literal headers already fail parsing. Extra FullCellPath test assertion removed because its inferred type is Any, which remains permitted.",
+    "Dedicated IR table-column check is needed because compiled tables use RecordInsert, whose general record-key coercion must remain unchanged. Shared CantConvert helper made public; identical shadowing debug trait helper removed.",
+    "Initial parser suite failed the extra Any cell-path assertion; parser-final.log supersedes it. Earlier reviewer fixes preserved."
+  ]
+}

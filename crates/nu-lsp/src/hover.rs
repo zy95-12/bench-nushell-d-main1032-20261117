@@ -223,10 +223,7 @@ mod hover_tests {
     fn hover_on_variable() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("hover");
-        script.push("var.nu");
+        let script = fixtures().join("lsp/hover/var.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -242,10 +239,7 @@ mod hover_tests {
     fn hover_on_cell_path() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("hover");
-        script.push("use.nu");
+        let script = fixtures().join("lsp/hover/use.nu");
         let script = path_to_uri(&script);
         open_unchecked(&client_connection, script.clone());
 
@@ -270,10 +264,7 @@ mod hover_tests {
             serde_json::json!("```\nint\n```\n---\n2")
         );
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("workspace");
-        script.push("baz.nu");
+        let script = fixtures().join("lsp/workspace/baz.nu");
         let script = path_to_uri(&script);
         open_unchecked(&client_connection, script.clone());
 
@@ -290,10 +281,7 @@ mod hover_tests {
     fn hover_on_custom_command() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("hover");
-        script.push("command.nu");
+        let script = fixtures().join("lsp/hover/command.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -314,10 +302,7 @@ mod hover_tests {
     fn hover_on_custom_in_custom() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("hover");
-        script.push("command.nu");
+        let script = fixtures().join("lsp/hover/command.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -338,10 +323,7 @@ mod hover_tests {
     fn hover_on_external_command() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("hover");
-        script.push("command.nu");
+        let script = fixtures().join("lsp/hover/command.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -364,10 +346,7 @@ mod hover_tests {
     fn hover_on_str_join() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("hover");
-        script.push("command.nu");
+        let script = fixtures().join("lsp/hover/command.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -388,10 +367,7 @@ mod hover_tests {
     fn hover_on_module() {
         let (client_connection, _recv) = initialize_language_server(None, None);
 
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("workspace");
-        script.push("foo.nu");
+        let script = fixtures().join("lsp/workspace/foo.nu");
         let script = path_to_uri(&script);
 
         open_unchecked(&client_connection, script.clone());
@@ -431,10 +407,7 @@ mod hover_tests {
 
     #[test]
     fn hover_on_use_command() {
-        let mut script = fixtures();
-        script.push("lsp");
-        script.push("hover");
-        script.push("use.nu");
+        let script = fixtures().join("lsp/hover/use.nu");
         let script_uri = path_to_uri(&script);
 
         let config = format!("use {}", script.to_str().unwrap());

@@ -184,6 +184,9 @@ pub enum Instruction {
     /// Convert a string into a glob. Used for glob interpolation and setting glob variables. If the
     /// value is already a glob, it won't be modified (`no_expand` will have no effect).
     GlobFrom { src_dst: RegId, no_expand: bool },
+    /// Validate an evaluated table column name as a string or glob.
+    /// Other record keys retain their general coercion behavior.
+    CheckTableColumn { src_dst: RegId },
     /// Push a value onto the end of a list. Used to construct list literals.
     ListPush { src_dst: RegId, item: RegId },
     /// Spread a value onto the end of a list. Used to construct list literals.
@@ -311,6 +314,7 @@ impl Instruction {
             Instruction::Call { src_dst, .. } => Some(src_dst),
             Instruction::StringAppend { src_dst, .. } => Some(src_dst),
             Instruction::GlobFrom { src_dst, .. } => Some(src_dst),
+            Instruction::CheckTableColumn { src_dst } => Some(src_dst),
             Instruction::ListPush { src_dst, .. } => Some(src_dst),
             Instruction::ListSpread { src_dst, .. } => Some(src_dst),
             Instruction::RecordInsert { src_dst, .. } => Some(src_dst),

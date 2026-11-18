@@ -1,7 +1,7 @@
 use crate::{command_prelude::*, get_full_help};
 
 #[derive(Clone)]
-struct Namespace(String);
+pub struct Namespace(pub String);
 
 impl Command for Namespace {
     fn name(&self) -> &str {
@@ -9,6 +9,9 @@ impl Command for Namespace {
     }
     fn description(&self) -> &str {
         "Show help for the subcommands in this namespace."
+    }
+    fn extra_description(&self) -> &str {
+        "Use a subcommand to perform an operation in this namespace."
     }
     fn signature(&self) -> Signature {
         Signature::build(self.name()).input_output_types(vec![(Type::Nothing, Type::String)])

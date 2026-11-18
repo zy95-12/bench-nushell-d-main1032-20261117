@@ -664,11 +664,7 @@ fn list_ignores_ansi() {
 fn list_unknown_flag() {
     let actual = nu!("ls -r");
 
-    assert!(
-        actual
-            .err
-            .contains("Available flags: --help(-h), --all(-a),")
-    );
+    assert!(actual.err.contains("Use `--help` to see available flags"));
 }
 
 #[test]
@@ -863,4 +859,28 @@ fn consistent_list_order() {
 
         assert_eq!(no_arg.out, with_arg.out);
     })
+}
+
+#[test]
+fn unknown_flags_without_close_match_point_to_help() {
+    for flag in ["--zzzzzzzzzz", "-r"] {
+        let actual = nu!(format!("ls {flag}"));
+        assert!(
+            actual.err.contains("Use `--help` to see available flags"),
+            "{flag}: {}",
+            actual.err
+        );
+        assert!(!actual.err.contains("Available flags:"), "{}", actual.err);
+    }
+}
+
+#[test]
+fn unknown_close_long_flag_still_suggests_a_match() {
+    let actual = nu!("ls --full-path");
+    assert!(
+        actual.err.contains("Did you mean: `--full-paths`?"),
+        "{}",
+        actual.err
+    );
+    assert!(!actual.err.contains("Available flags:"), "{}", actual.err);
 }

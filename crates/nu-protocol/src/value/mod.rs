@@ -246,7 +246,8 @@ impl Clone for Value {
 }
 
 impl Value {
-    fn cant_convert_to<T>(&self, typ: &str) -> Result<T, ShellError> {
+    /// Return a conversion error targeting the given type with this value's span.
+    pub fn cant_convert_to<T>(&self, typ: &str) -> Result<T, ShellError> {
         Err(ShellError::CantConvert {
             to_type: typ.into(),
             from_type: self.get_type().to_string(),
@@ -2248,9 +2249,14 @@ impl PartialOrd for Value {
         // Compare two floating point numbers. The decision interval for equality is dynamically
         // scaled as the value being compared increases in magnitude.
         fn compare_floats(val: f64, other: f64) -> Option<Ordering> {
+            // Infinite tolerances must not make distinct infinities or finite
+            // values equal; NaN retains its unordered comparison behavior.
+            if !val.is_finite() || !other.is_finite() {
+                return val.partial_cmp(&other);
+            }
             let prec = f64::EPSILON.max(val.abs().max(other.abs()) * f64::EPSILON);
 
-            if (other - val).abs() < prec {
+            if (other - val).abs() <= prec {
                 return Some(Ordering::Equal);
             }
 
@@ -4177,6 +4183,33 @@ pub fn human_time_from_now(val: &DateTime<FixedOffset>) -> HumanTime {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn float_equality_includes_epsilon_boundary_and_is_symmetric() {
+        use super::Value;
+        for (left, right) in [
+            (0.0, f64::EPSILON),
+            (1e16, 1e16 + 2.0),
+            (-1e16, -1e16 - 2.0),
+        ] {
+            let left = Value::test_float(left);
+            let right = Value::test_float(right);
+            assert_eq!(left.partial_cmp(&right), Some(std::cmp::Ordering::Equal));
+            assert_eq!(right.partial_cmp(&left), Some(std::cmp::Ordering::Equal));
+            assert_eq!(left, right);
+            assert_eq!(right, left);
+        }
+        for (left, right) in [(f64::INFINITY, 1.0), (f64::NEG_INFINITY, f64::INFINITY)] {
+            let left = Value::test_float(left);
+            let right = Value::test_float(right);
+            assert_ne!(left, right);
+            assert_eq!(
+                left.partial_cmp(&right),
+                right.partial_cmp(&left).map(std::cmp::Ordering::reverse)
+            );
+        }
+        let nan = Value::test_float(f64::NAN);
+        assert_eq!(nan.partial_cmp(&Value::test_float(0.0)), None);
+    }
     use super::{Record, Value};
     use crate::record;
 

@@ -1,0 +1,319 @@
+    Blocking waiting for file lock on build directory
+   Compiling nu-parser v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-parser)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.36s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_parser-70af017ccb2e5058)
+
+running 6 tests
+test deparse::test::test_arg_with_flag ... ok
+test deparse::test::test_escape ... ok
+test deparse::test::test_flag_arg_with_values_contains_special ... ok
+test deparse::test::test_not_extra_quote ... ok
+test deparse::test::test_quote_special ... ok
+test type_check::alternative_diagnostic_tests::type_alternatives_use_natural_conjunctions ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/test_lex.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_lex-6c1f406ba30360f4)
+
+running 22 tests
+test lex_annotations_empty ... ok
+test lex_annotations_list ... ok
+test lex_annotations_nested ... ok
+test lex_annotations_nested_unterminated ... ok
+test lex_annotations_record ... ok
+test lex_annotations_space_before_annotations ... ok
+test lex_annotations_space_within_annotations ... ok
+test lex_annotations_unterminated ... ok
+test lex_basic ... ok
+test lex_comment ... ok
+test lex_comment_with_space_in_front_of_hashtag ... ok
+test lex_comment_with_tab_in_front_of_hashtag ... ok
+test lex_comments ... ok
+test lex_comments_no_space ... ok
+test lex_empty ... ok
+test lex_incomplete_paren ... ok
+test lex_incomplete_quote ... ok
+test lex_is_incomplete ... ok
+test lex_manually ... ok
+test lex_newline ... ok
+test lex_not_comment_needs_space_in_front_of_hashtag ... ok
+test lex_parenthesis ... ok
+
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/test_parser.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_parser-8cb3af42397ca39c)
+
+running 243 tests
+test incomplete_binary_expression_retains_operator_and_relevant_spans ... ok
+test input_types::closure_in_block_position_errors_correctly ... ok
+test input_types::nested_operations_test ... ok
+test input_types::call_non_custom_types_test ... ok
+test input_types::test_type_annotations::case_02_input_output ... ok
+test input_types::else_if_errors_correctly ... ok
+test input_types::else_errors_correctly ... ok
+test input_types::test_type_annotations::case_04_input_output ... ok
+test env_shorthand_ignores_equals_inside_escaped_quotations ... ok
+test input_types::test_type_annotations::case_01_input_output ... ok
+test input_types::test_type_annotations::case_03_input_output ... ok
+test input_types::test_type_annotations::case_05_input_output ... ok
+test input_types::test_type_annotations::case_10_input_output ... ok
+test input_types::test_type_annotations::case_09_input_output ... ok
+test input_types::test_type_annotations::case_06_input_output ... ok
+test input_types::test_type_annotations::case_13_input_output ... ok
+test input_types::test_type_annotations::case_14_input_output ... ok
+test input_types::test_type_annotations::case_15_input_output ... ok
+test input_types::test_type_annotations::case_11_input_output ... ok
+test input_types::test_type_annotations::case_07_input_output ... ok
+test input_types::operations_within_blocks_test ... ok
+test input_types::test_type_annotations::case_12_input_output ... ok
+test input_types::test_type_annotations::case_08_input_output ... ok
+test input_types::test_type_annotations::case_17_input_output ... ok
+test input_types::comments_within_blocks_test ... ok
+test input_types::call_with_list_test ... ok
+test input_types::test_type_annotations::case_18_input_output ... ok
+test input_types::test_type_annotations::case_16_input_output ... ok
+test input_types::test_type_annotations::case_19_input_output ... ok
+test input_types::test_type_annotations::case_21_input_output ... ok
+test input_types::test_type_annotations::case_20_input_output ... ok
+test input_types::test_type_annotations::case_23_input_output ... ok
+test input_types::test_type_annotations::case_25_input_output ... ok
+test input_types::test_type_annotations::case_22_input_output ... ok
+test input_types::test_type_annotations::case_27_input_output ... ok
+test input_types::test_type_annotations::case_24_input_output ... ok
+test input_types::test_type_annotations::case_26_input_output ... ok
+test input_types::test_type_annotations::case_30_input_output ... ok
+test input_types::test_type_annotations::case_31_input_output ... ok
+test input_types::test_type_annotations::case_29_input_output ... ok
+test input_types::test_type_annotations::case_28_input_output ... ok
+test input_types::test_type_annotations::case_32_input_output ... ok
+test input_types::test_type_annotations::case_33_input_output ... ok
+test input_types::test_type_annotations::case_35_input_output ... ok
+test input_types::test_type_annotations::case_37_input_output ... ok
+test input_types::test_type_annotations::case_38_vardecl ... ok
+test input_types::test_type_annotations::case_34_input_output ... ok
+test input_types::test_type_annotations::case_40_vardecl ... ok
+test input_types::test_type_annotations::case_36_input_output ... ok
+test input_types::test_type_annotations::case_41_vardecl ... ok
+test input_types::test_type_annotations::case_39_vardecl ... ok
+test input_types::test_type_annotations::case_42_vardecl ... ok
+test input_types::test_type_annotations::case_43_vardecl ... ok
+test input_types::test_type_annotations::case_45_vardecl ... ok
+test multi_test_parse_number ... ignored
+test input_types::test_type_annotations::case_44_vardecl ... ok
+test input_types::test_type_annotations::case_46_vardecl ... ok
+test missing_batched_short_flag_value_has_the_flag_span ... ok
+test operator::parse_comparison_operators_with_string_and_string::case_1 ... ok
+test operator::parse_comparison_operators_with_string_and_string::case_4 ... ok
+test multi_test_parse_int ... ok
+test parse_attribute_block_check_spans ... ok
+test operator::parse_comparison_operators_with_string_and_string::case_2 ... ok
+test parse_binary_with_hex_format ... ok
+test operator::parse_comparison_operators_with_string_and_string::case_3 ... ok
+test parse_binary_with_binary_format ... ok
+test parse_binary_with_incomplete_binary_format ... ok
+test parse_binary_with_incomplete_hex_format ... ok
+test parse_attributes_check_values ... ok
+test parse_binary_with_incomplete_octal_format ... ok
+test parse_attributes_alias ... ok
+test parse_call_extra_positional ... ok
+test parse_call ... ok
+test parse_binary_with_multi_byte_char ... ok
+test parse_binary_with_octal_format ... ok
+test parse_call_missing_req_flag ... ok
+test parse_call_missing_flag_arg ... ok
+test parse_binary_with_invalid_octal_format ... ok
+test parse_attributes_external_alias ... ok
+test parse_call_missing_req_positional ... ok
+test parse_call_short_flag_batch_arg_allowed ... ok
+test parse_call_short_flag_batch_arg_disallowed ... ok
+test range::dont_mess_with_external_calls ... ok
+test range::parse_bounded_range::case_01 ... ok
+test parse_int ... ok
+test parse_call_unknown_shorthand ... ok
+test parse_filesize ... ok
+test range::parse_bounded_range::case_02 ... ok
+test parse_call_missing_short_flag_arg ... ok
+test range::parse_bounded_range::case_05 ... ok
+test parse_call_short_flag_batch_disallow_multiple_args ... ok
+test range::bad_parse_does_crash ... ok
+test range::parse_float_range::case_1 ... ok
+test range::parse_float_range::case_2 ... ok
+test range::parse_left_unbounded_range::case_1 ... ok
+test range::parse_bounded_range::case_10 ... ok
+test parse_cell_path ... ok
+test range::parse_bounded_range::case_04 ... ok
+test range::parse_bounded_range::case_03 ... ok
+test parse_int_with_underscores ... ok
+test range::parse_right_unbounded_range::case_1 ... ok
+test range::parse_float_range::case_3 ... ok
+test range::parse_bounded_range::case_06 ... ok
+test parse_cell_path_optional ... ok
+test range::parse_bounded_range::case_09 ... ok
+test range::parse_bounded_range::case_11 ... ok
+test range::type_mismatch_errors::case_09 ... ok
+test record::record_terminate_loop ... ok
+test range::type_mismatch_errors::case_07 ... ok
+test range::type_mismatch_errors::case_05 ... ok
+test record::refuse_confusing_record::case_1 ... ok
+test range::type_mismatch_errors::case_06 ... ok
+test range::type_mismatch_errors::case_02 ... ok
+test range::parse_variable_range::case_2 ... ok
+test range::parse_right_unbounded_range::case_2 ... ok
+test parse_if_in_const_expression ... ok
+test range::type_mismatch_errors::case_01 ... ok
+test test_external_call_arg_glob::case_07 ... ok
+test range::type_mismatch_errors::case_08 ... ok
+test test_external_call_arg_glob::case_08 ... ok
+test range::parse_right_unbounded_range::case_3 ... ok
+test range::parse_bounded_range::case_08 ... ok
+test test_external_call_arg_glob::case_03 ... ok
+test range::parse_left_unbounded_range::case_2 ... ok
+test range::parse_left_unbounded_range::case_3 ... ok
+test test_external_call_arg_glob::case_05 ... ok
+test test_external_call_arg_glob::case_02 ... ok
+test test_external_call_arg_raw_string::case_2 ... ok
+test range::type_mismatch_errors::case_03 ... ok
+test test_external_call_arg_glob::case_09 ... ok
+test string::parse_string ... ok
+test test_external_call_arg_glob::case_01 ... ok
+test record::refuse_confusing_record::case_2 ... ok
+test range::type_mismatch_errors::case_04 ... ok
+test test_external_call_arg_glob::case_14 ... ok
+test test_external_call_arg_glob::case_04 ... ok
+test test_external_call_arg_glob::case_10 ... ok
+test test_external_call_arg_glob::case_13 ... ok
+test range::parse_variable_range::case_1 ... ok
+test test_external_call_head_glob::case_02 ... ok
+test range::type_mismatch_errors::case_11 ... ok
+test record::parse_datetime_in_record::case_1 ... ok
+test string::parse_raw_string_as_external_argument ... ok
+test test_external_call_arg_raw_string::case_3 ... ok
+test test_external_call_arg_glob::case_06 ... ok
+test test_external_call_arg_glob::case_12 ... ok
+test range::vars_not_read_as_units ... ok
+test test_external_call_arg_glob::case_11 ... ok
+test test_external_call_head_glob::case_01 ... ok
+test record::refuse_confusing_record::case_4 ... ok
+test test_external_call_head_glob::case_04 ... ok
+test range::parse_bounded_range::case_07 ... ok
+test test_external_call_head_glob::case_05 ... ok
+test test_external_call_arg_string::case_1 ... ok
+test test_external_call_arg_string::case_4 ... ok
+test string::interpolation::parse_string_interpolation_backslash_count_reset_by_expression ... ok
+test test_external_call_arg_string::case_3 ... ok
+test test_external_call_argument_spread ... ok
+test test_external_call_head_glob::case_06 ... ok
+test test_external_call_head_string::case_1 ... ok
+test test_external_call_head_glob::case_09 ... ok
+test test_external_call_head_glob::case_03 ... ok
+test test_external_call_head_glob::case_07 ... ok
+test range::type_mismatch_errors::case_10 ... ok
+test string::interpolation::parse_string_interpolation_escaped_parenthesis ... ok
+test test_external_call_head_raw_string::case_2 ... ok
+test test_external_call_head_raw_string::case_1 ... ok
+test test_external_call_arg_interpolated_string::case_1 ... ok
+test test_external_call_arg_string::case_5 ... ok
+test test_external_call_arg_string::case_2 ... ok
+test string::interpolation::parse_string_interpolation_bare_starting_subexpr_external_arg ... ok
+test test_external_call_head_glob::case_08 ... ok
+test test_external_call_head_raw_string::case_3 ... ok
+test record::refuse_confusing_record::case_5 ... ok
+test table_variable_headers_require_string_compatible_types ... ok
+test range::parse_variable_range::case_3 ... ok
+test test_external_call_head_glob::case_11 ... ok
+test test_external_call_arg_string::case_6 ... ok
+test test_parse_any ... ignored
+test test_external_call_head_glob::case_10 ... ok
+test test_external_call_arg_interpolated_string::case_2 ... ok
+test test_external_call_head_glob::case_12 ... ok
+test test_external_call_arg_raw_string::case_1 ... ok
+test test_external_call_head_interpolated_string::case_4 ... ok
+test record::refuse_confusing_record::case_3 ... ok
+test test_external_call_head_string::case_5 ... ok
+test test_redirecting_nothing::case_07 ... ok
+test test_external_call_head_string::case_2 ... ok
+test test_redirecting_nothing::case_08 ... ok
+test string::interpolation::parse_string_interpolation_bare ... ok
+test test_external_call_head_interpolated_string::case_1 ... ok
+test test_external_call_head_string::case_6 ... ok
+test test_external_call_head_interpolated_string::case_3 ... ok
+test test_redirecting_nothing::case_15 ... ok
+test test_redirecting_nothing::case_05 ... ok
+test test_external_call_head_string::case_3 ... ok
+test test_external_call_head_interpolated_string::case_2 ... ok
+test string::interpolation::parse_string_interpolation_escaped_backslash_before_parenthesis ... ok
+test string::interpolation::parse_string_interpolation ... ok
+test test_redirecting_nothing::case_04 ... ok
+test test_redirecting_nothing::case_16 ... ok
+test test_redirecting_nothing::case_01 ... ok
+test test_redirecting_nothing::case_02 ... ok
+test test_redirecting_nothing::case_09 ... ok
+test test_external_call_head_string::case_4 ... ok
+test test_redirecting_nothing::case_06 ... ok
+test string::interpolation::parse_string_interpolation_bare_starting_subexpr ... ok
+test test_redirecting_nothing::case_03 ... ok
+test test_redirecting_nothing::case_18 ... ok
+test test_redirecting_nothing::case_12 ... ok
+test test_redirecting_nothing::case_14 ... ok
+test string::interpolation::parse_path_expression ... ok
+test test_redirecting_nothing::case_17 ... ok
+test test_redirecting_nothing::case_26 ... ok
+test test_redirecting_nothing::case_10 ... ok
+test test_redirecting_nothing::case_13 ... ok
+test test_redirecting_nothing::case_11 ... ok
+test test_redirecting_nothing::case_19 ... ok
+test test_redirecting_nothing::case_20 ... ok
+test test_redirecting_nothing::case_22 ... ok
+test test_redirecting_nothing::case_24 ... ok
+test test_redirecting_nothing::case_23 ... ok
+test test_redirecting_nothing::case_27 ... ok
+test test_redirecting_nothing::case_21 ... ok
+test test_redirection_inside_letmut_no_panic::case_1 ... ok
+test test_redirecting_nothing::case_28 ... ok
+test test_nothing_comparison_eq ... ok
+test test_redirecting_nothing::case_25 ... ok
+test test_semi_open_brace::case_3 ... ok
+test test_semi_open_brace::case_2 ... ok
+test test_semi_open_brace::case_4 ... ok
+test test_semi_open_brace::case_1 ... ok
+test test_nothing_comparison_neq ... ok
+test test_redirection_inside_letmut_no_panic::case_2 ... ok
+test string::interpolation::parse_nested_expressions ... ok
+test test_redirection_with_letmut::case_2 ... ok
+test test_redirection_with_letmut::case_1 ... ok
+test test_redirection_with_letmut::case_6 ... ok
+test unknown_flag_suggests_nearby_flag ... ok
+test test_redirection_with_letmut::case_4 ... ok
+test test_redirection_with_letmut::case_5 ... ok
+test test_redirection_with_letmut::case_3 ... ok
+test unclosed_delimiters_have_nonempty_source_spans ... ok
+
+test result: ok. 241 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/test_parser_unicode_escapes.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_parser_unicode_escapes-73228be4222a2efa)
+
+running 2 tests
+test unicode_escapes_in_strings_expected_failures ... ok
+test unicode_escapes_in_strings ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/type_system.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/type_system-695f4add50c4318c)
+
+running 7 tests
+test list_records_widen_fields_recursively ... ok
+test string_glob_compatibility_is_symmetric ... ok
+test row_condition_checks_pipeline_types ... ok
+test table_columns_never_narrow_after_mixed_rows ... ok
+test pipeline_preserves_alternative_outputs ... ok
+test row_conditions_reject_known_non_boolean_results ... ok
+test mixed_literal_types_widen ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nu_parser
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

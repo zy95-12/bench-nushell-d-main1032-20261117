@@ -45,7 +45,7 @@ fn annotated_variables_are_checked_at_runtime_when_enabled() {
         "def dynamic []: nothing -> any { 'wrong' }; mut x: int = 1; $x = dynamic; $x",
         "def dynamic []: nothing -> any { 'wrong' }; mut x: record<a: int> = {a: 1}; $x.a = dynamic; $x",
     ] {
-        let out = nu!(experimental: vec!["enforce-typed-variables".into()], command);
+        let out = nu!(experimental: vec!["enforce-runtime-annotations".into()], command);
         assert!(!out.status.success(), "{}", out.out);
         assert!(out.err.contains("cant_convert"), "{}", out.err);
         assert!(out.err.contains("int"), "{}", out.err);
@@ -62,10 +62,10 @@ fn ordinary_mode_preserves_dynamic_assignment() {
 #[test]
 fn explicit_option_disable_and_multiple_options_work() {
     let command = "def dynamic []: nothing -> any { 'wrong' }; let x: int = dynamic; $x";
-    let out = nu!(experimental: vec!["enforce-typed-variables=false".into()], command);
+    let out = nu!(experimental: vec!["enforce-runtime-annotations=false".into()], command);
     assert!(out.status.success(), "{}", out.err);
     assert_eq!(out.out, "wrong");
-    let out = nu!(experimental: vec!["reorder-cell-paths=false".into(), "enforce-typed-variables".into()], command);
+    let out = nu!(experimental: vec!["reorder-cell-paths=false".into(), "enforce-runtime-annotations".into()], command);
     assert!(out.err.contains("cant_convert"), "{}", out.err);
 }
 
@@ -78,22 +78,54 @@ fn runtime_enforcement_accepts_compatible_values_and_inferred_changes() {
         "def dynamic []: nothing -> any { [1 2] }; let x: list<int> = dynamic; $x | length",
         "let g: glob = '*.txt'; let s: string = $g; $s",
     ] {
-        let out = nu!(experimental: vec!["enforce-typed-variables".into()], command);
+        let out = nu!(experimental: vec!["enforce-runtime-annotations".into()], command);
         assert!(out.status.success(), "{command}: {}", out.err);
     }
 }
 
 #[test]
 fn runtime_enforcement_checks_list_elements_and_reports_value_span() {
-    let out = nu!(experimental: vec!["enforce-typed-variables".into()],
+    let out = nu!(experimental: vec!["enforce-runtime-annotations".into()],
         "def dynamic []: nothing -> any { [1 'bad'] }; let x: list<int> = dynamic; $x");
     assert!(out.err.contains("cant_convert"), "{}", out.err);
     assert!(out.err.contains("columns 37 to 41"), "{}", out.err);
 }
 
 #[test]
-fn variable_headers_are_converted_to_strings() {
-    let out = nu!("let h = 42; [[$h]; [7]] | columns | first");
-    assert!(out.status.success(), "{}", out.err);
-    assert_eq!(out.out, "42");
+fn table_variable_headers_reject_non_string_types() {
+    for value in ["true", "1"] {
+        let out = nu!(format!("let cols = {value}; [[$cols]; [1]]"));
+        assert!(!out.status.success(), "{value} header was accepted");
+        assert!(out.err.contains("must be a string"), "{}", out.err);
+    }
+}
+
+#[test]
+fn table_any_headers_require_runtime_strings() {
+    for value in ["1", "true", "[]"] {
+        let out = nu!(format!(
+            "def dynamic []: nothing -> any {{ {value} }}; let cols = (dynamic); [[$cols]; [1]]"
+        ));
+        assert!(!out.status.success(), "Any {value} header was accepted");
+        assert!(
+            out.err.contains("can't convert") && out.err.contains("nu::shell::cant_convert"),
+            "{}",
+            out.err
+        );
+    }
+}
+
+#[test]
+fn table_string_compatible_headers_still_work() {
+    for source in [
+        "let cols = 'name'; [[$cols]; [1]] | get name.0",
+        "def dynamic []: nothing -> any { 'name' }; let cols = (dynamic); [[$cols]; [1]] | get name.0",
+        "let cols = ('name' | into glob); [[$cols]; [1]] | get name.0",
+        "[['42']; [1]] | get '42'.0",
+        "let key = 42; {$key: 1} | get '42'",
+    ] {
+        let out = nu!(source);
+        assert!(out.status.success(), "{source}: {}", out.err);
+        assert_eq!(out.out, "1", "{source}");
+    }
 }

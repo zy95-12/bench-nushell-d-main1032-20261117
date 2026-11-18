@@ -15,12 +15,20 @@ impl Command for Which {
             .input_output_types(vec![(Type::Nothing, Type::table())])
             .allow_variants_without_examples(true)
             .rest("applications", SyntaxShape::String, "Application(s).")
-            .switch("all", "list all executables", Some('a'))
+            .switch(
+                "all",
+                "List all commands, including duplicates across PATH.",
+                Some('a'),
+            )
             .category(Category::System)
     }
 
     fn description(&self) -> &str {
-        "Finds a program file, alias or custom command."
+        "Find a program file, alias or custom command, or list available commands without arguments."
+    }
+
+    fn extra_description(&self) -> &str {
+        "Without arguments, list internal commands and executable files from PATH. By default, keep the first command for each name; use --all to include duplicates."
     }
 
     fn search_terms(&self) -> Vec<&str> {
@@ -203,12 +211,80 @@ fn which(
             .collect();
         names.sort();
         names.dedup();
-        let entries: Vec<_> = names
+        let mut entries: Vec<_> = names
             .into_iter()
             .filter_map(|name| {
                 get_entry_in_commands(engine_state, &String::from_utf8_lossy(&name), head)
             })
             .collect();
+        #[allow(deprecated)]
+        let cwd = env::current_dir_str(engine_state, stack)?;
+        let paths = env::path_str(engine_state, stack, head)?;
+        let mut seen: std::collections::HashSet<String> = entries
+            .iter()
+            .filter_map(|value| {
+                value
+                    .as_record()
+                    .ok()?
+                    .get("command")?
+                    .as_str()
+                    .ok()
+                    .map(str::to_owned)
+            })
+            .collect();
+        for directory in std::env::split_paths(&paths) {
+            let directory = if directory.is_absolute() {
+                directory
+            } else {
+                Path::new(&cwd).join(directory)
+            };
+            let Ok(files) = std::fs::read_dir(directory) else {
+                continue;
+            };
+            let mut files: Vec<_> = files.filter_map(Result::ok).collect();
+            files.sort_by_key(|file| file.file_name());
+            for file in files {
+                let path = file.path();
+                let Ok(metadata) = std::fs::metadata(&path) else {
+                    continue;
+                };
+                if !metadata.is_file() {
+                    continue;
+                }
+                #[cfg(unix)]
+                {
+                    use std::os::unix::fs::PermissionsExt;
+                    if metadata.permissions().mode() & 0o111 == 0 {
+                        continue;
+                    }
+                }
+                #[cfg(windows)]
+                {
+                    let extensions = stack
+                        .get_env_var(engine_state, "PATHEXT")
+                        .and_then(|value| value.coerce_into_string().ok())
+                        .unwrap_or_else(|| ".COM;.EXE;.BAT;.CMD".into());
+                    let Some(extension) = path.extension().and_then(|ext| ext.to_str()) else {
+                        continue;
+                    };
+                    if !extensions
+                        .split(';')
+                        .any(|ext| ext.trim_start_matches('.').eq_ignore_ascii_case(extension))
+                    {
+                        continue;
+                    }
+                }
+                let name = file.file_name().to_string_lossy().into_owned();
+                if which_args.all || seen.insert(name.clone()) {
+                    entries.push(entry(
+                        name,
+                        path.to_string_lossy(),
+                        CommandType::External,
+                        head,
+                    ));
+                }
+            }
+        }
         return Ok(entries
             .into_iter()
             .into_pipeline_data(head, engine_state.signals().clone()));

@@ -168,33 +168,22 @@ impl CustomValue for PluginCustomValueWithSource {
             .custom_value_to_base_value(self.clone().into_spanned(span))
     }
 
+    fn save(
+        &self,
+        path: Spanned<&std::path::Path>,
+        value_span: Span,
+        save_span: Span,
+    ) -> Result<(), ShellError> {
+        self.get_plugin(Some(value_span), "save custom value")?
+            .custom_value_save(
+                self.clone().into_spanned(value_span),
+                path.map(std::path::Path::to_path_buf),
+                save_span,
+            )
+            .map_err(|error| *error)
+    }
+
     fn follow_path_int(
-        &self,
-        self_span: Span,
-        index: usize,
-        path_span: Span,
-    ) -> Result<Value, ShellError> {
-        self.get_plugin(Some(self_span), "follow cell path")?
-            .custom_value_follow_path_int(
-                self.clone().into_spanned(self_span),
-                index.into_spanned(path_span),
-            )
-    }
-
-    fn follow_path_string(
-        &self,
-        self_span: Span,
-        column_name: String,
-        path_span: Span,
-    ) -> Result<Value, ShellError> {
-        self.get_plugin(Some(self_span), "follow cell path")?
-            .custom_value_follow_path_string(
-                self.clone().into_spanned(self_span),
-                column_name.into_spanned(path_span),
-            )
-    }
-
-    fn follow_path_int_with_options(
         &self,
         self_span: Span,
         index: usize,
@@ -209,7 +198,7 @@ impl CustomValue for PluginCustomValueWithSource {
             )
     }
 
-    fn follow_path_string_with_options(
+    fn follow_path_string(
         &self,
         self_span: Span,
         column: String,

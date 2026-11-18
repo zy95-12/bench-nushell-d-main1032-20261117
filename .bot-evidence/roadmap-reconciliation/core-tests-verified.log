@@ -1,0 +1,623 @@
+   Compiling nu-experimental v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-experimental)
+   Compiling nu-protocol v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-protocol)
+   Compiling nu-engine v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-engine)
+   Compiling nu-parser v0.106.0 (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/worktrees/1bf20d0eba1ece45f57217edd7b24591d88fad7ad7bb7345/crates/nu-parser)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 16.72s
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_engine-be30028ec67aba5e)
+
+running 3 tests
+test documentation::flag_order_tests::required_then_help_then_optional_preserves_group_order ... ok
+test documentation::interactive_help_tests::required_flag_marker_follows_value_type ... ok
+test documentation::tests::test_code_formatting ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_experimental-449135a47ee550f4)
+
+running 4 tests
+test options::enforce_runtime_annotations::tests::option_is_opt_in_and_can_be_parsed_and_disabled ... ok
+test options::tests::assert_description_not_empty ... ok
+test options::tests::assert_identifiers_are_unique ... ok
+test options::tests::assert_identifiers_are_valid ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_parser-41436035276da365)
+
+running 5 tests
+test deparse::test::test_arg_with_flag ... ok
+test deparse::test::test_escape ... ok
+test deparse::test::test_flag_arg_with_values_contains_special ... ok
+test deparse::test::test_not_extra_quote ... ok
+test deparse::test::test_quote_special ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/test_lex.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_lex-100825fae8102a9c)
+
+running 22 tests
+test lex_annotations_empty ... ok
+test lex_annotations_list ... ok
+test lex_annotations_nested ... ok
+test lex_annotations_nested_unterminated ... ok
+test lex_annotations_record ... ok
+test lex_annotations_space_before_annotations ... ok
+test lex_annotations_space_within_annotations ... ok
+test lex_annotations_unterminated ... ok
+test lex_basic ... ok
+test lex_comment ... ok
+test lex_comment_with_space_in_front_of_hashtag ... ok
+test lex_comment_with_tab_in_front_of_hashtag ... ok
+test lex_comments ... ok
+test lex_comments_no_space ... ok
+test lex_empty ... ok
+test lex_incomplete_paren ... ok
+test lex_incomplete_quote ... ok
+test lex_is_incomplete ... ok
+test lex_manually ... ok
+test lex_newline ... ok
+test lex_not_comment_needs_space_in_front_of_hashtag ... ok
+test lex_parenthesis ... ok
+
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/test_parser.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_parser-115402537e7ac356)
+
+running 242 tests
+test input_types::call_non_custom_types_test ... ok
+test input_types::closure_in_block_position_errors_correctly ... ok
+test env_shorthand_ignores_equals_inside_escaped_quotations ... ok
+test incomplete_binary_expression_retains_operator_and_relevant_spans ... ok
+test input_types::nested_operations_test ... ok
+test input_types::test_type_annotations::case_05_input_output ... ok
+test input_types::else_if_errors_correctly ... ok
+test input_types::test_type_annotations::case_01_input_output ... ok
+test input_types::call_with_list_test ... ok
+test input_types::else_errors_correctly ... ok
+test input_types::test_type_annotations::case_02_input_output ... ok
+test input_types::test_type_annotations::case_03_input_output ... ok
+test input_types::test_type_annotations::case_04_input_output ... ok
+test input_types::test_type_annotations::case_09_input_output ... ok
+test input_types::test_type_annotations::case_10_input_output ... ok
+test input_types::test_type_annotations::case_06_input_output ... ok
+test input_types::test_type_annotations::case_13_input_output ... ok
+test input_types::test_type_annotations::case_11_input_output ... ok
+test input_types::comments_within_blocks_test ... ok
+test input_types::test_type_annotations::case_07_input_output ... ok
+test input_types::test_type_annotations::case_12_input_output ... ok
+test input_types::test_type_annotations::case_08_input_output ... ok
+test input_types::test_type_annotations::case_14_input_output ... ok
+test input_types::test_type_annotations::case_15_input_output ... ok
+test input_types::operations_within_blocks_test ... ok
+test input_types::test_type_annotations::case_16_input_output ... ok
+test input_types::test_type_annotations::case_17_input_output ... ok
+test input_types::test_type_annotations::case_18_input_output ... ok
+test input_types::test_type_annotations::case_19_input_output ... ok
+test input_types::test_type_annotations::case_20_input_output ... ok
+test input_types::test_type_annotations::case_23_input_output ... ok
+test input_types::test_type_annotations::case_21_input_output ... ok
+test input_types::test_type_annotations::case_26_input_output ... ok
+test input_types::test_type_annotations::case_22_input_output ... ok
+test input_types::test_type_annotations::case_24_input_output ... ok
+test input_types::test_type_annotations::case_25_input_output ... ok
+test input_types::test_type_annotations::case_28_input_output ... ok
+test input_types::test_type_annotations::case_27_input_output ... ok
+test input_types::test_type_annotations::case_29_input_output ... ok
+test input_types::test_type_annotations::case_30_input_output ... ok
+test input_types::test_type_annotations::case_31_input_output ... ok
+test input_types::test_type_annotations::case_32_input_output ... ok
+test input_types::test_type_annotations::case_33_input_output ... ok
+test input_types::test_type_annotations::case_35_input_output ... ok
+test input_types::test_type_annotations::case_37_input_output ... ok
+test input_types::test_type_annotations::case_36_input_output ... ok
+test input_types::test_type_annotations::case_38_vardecl ... ok
+test input_types::test_type_annotations::case_34_input_output ... ok
+test input_types::test_type_annotations::case_39_vardecl ... ok
+test input_types::test_type_annotations::case_40_vardecl ... ok
+test input_types::test_type_annotations::case_42_vardecl ... ok
+test input_types::test_type_annotations::case_41_vardecl ... ok
+test multi_test_parse_number ... ignored
+test input_types::test_type_annotations::case_44_vardecl ... ok
+test input_types::test_type_annotations::case_43_vardecl ... ok
+test input_types::test_type_annotations::case_45_vardecl ... ok
+test missing_batched_short_flag_value_has_the_flag_span ... ok
+test operator::parse_comparison_operators_with_string_and_string::case_1 ... ok
+test operator::parse_comparison_operators_with_string_and_string::case_3 ... ok
+test operator::parse_comparison_operators_with_string_and_string::case_4 ... ok
+test operator::parse_comparison_operators_with_string_and_string::case_2 ... ok
+test input_types::test_type_annotations::case_46_vardecl ... ok
+test parse_attribute_block_check_spans ... ok
+test multi_test_parse_int ... ok
+test parse_binary_with_hex_format ... ok
+test parse_attributes_alias ... ok
+test parse_binary_with_binary_format ... ok
+test parse_binary_with_incomplete_binary_format ... ok
+test parse_attributes_check_values ... ok
+test parse_binary_with_incomplete_hex_format ... ok
+test parse_attributes_external_alias ... ok
+test parse_call_extra_positional ... ok
+test parse_binary_with_invalid_octal_format ... ok
+test parse_call ... ok
+test parse_binary_with_multi_byte_char ... ok
+test parse_call_missing_req_flag ... ok
+test parse_binary_with_incomplete_octal_format ... ok
+test parse_call_missing_short_flag_arg ... ok
+test parse_call_short_flag_batch_disallow_multiple_args ... ok
+test parse_call_missing_req_positional ... ok
+test parse_call_missing_flag_arg ... ok
+test parse_cell_path ... ok
+test parse_call_short_flag_batch_arg_allowed ... ok
+test parse_binary_with_octal_format ... ok
+test parse_int ... ok
+test parse_call_short_flag_batch_arg_disallowed ... ok
+test parse_int_with_underscores ... ok
+test parse_cell_path_optional ... ok
+test parse_filesize ... ok
+test parse_call_unknown_shorthand ... ok
+test range::dont_mess_with_external_calls ... ok
+test range::parse_bounded_range::case_02 ... ok
+test range::bad_parse_does_crash ... ok
+test range::parse_bounded_range::case_01 ... ok
+test range::parse_bounded_range::case_03 ... ok
+test range::parse_bounded_range::case_04 ... ok
+test range::parse_bounded_range::case_07 ... ok
+test range::parse_bounded_range::case_10 ... ok
+test range::parse_bounded_range::case_08 ... ok
+test range::parse_bounded_range::case_05 ... ok
+test range::parse_bounded_range::case_09 ... ok
+test range::parse_bounded_range::case_06 ... ok
+test range::parse_left_unbounded_range::case_3 ... ok
+test range::parse_right_unbounded_range::case_1 ... ok
+test range::parse_float_range::case_2 ... ok
+test range::parse_float_range::case_1 ... ok
+test parse_if_in_const_expression ... ok
+test range::parse_left_unbounded_range::case_2 ... ok
+test range::parse_left_unbounded_range::case_1 ... ok
+test range::parse_bounded_range::case_11 ... ok
+test range::parse_right_unbounded_range::case_3 ... ok
+test range::parse_right_unbounded_range::case_2 ... ok
+test range::parse_float_range::case_3 ... ok
+test range::type_mismatch_errors::case_01 ... ok
+test range::type_mismatch_errors::case_05 ... ok
+test range::type_mismatch_errors::case_06 ... ok
+test range::vars_not_read_as_units ... ok
+test range::type_mismatch_errors::case_04 ... ok
+test range::parse_variable_range::case_1 ... ok
+test range::parse_variable_range::case_2 ... ok
+test range::type_mismatch_errors::case_07 ... ok
+test range::type_mismatch_errors::case_02 ... ok
+test range::type_mismatch_errors::case_11 ... ok
+test range::type_mismatch_errors::case_10 ... ok
+test range::type_mismatch_errors::case_08 ... ok
+test range::type_mismatch_errors::case_03 ... ok
+test range::parse_variable_range::case_3 ... ok
+test record::refuse_confusing_record::case_5 ... ok
+test record::record_terminate_loop ... ok
+test record::refuse_confusing_record::case_2 ... ok
+test range::type_mismatch_errors::case_09 ... ok
+test record::refuse_confusing_record::case_1 ... ok
+test record::parse_datetime_in_record::case_1 ... ok
+test test_external_call_arg_glob::case_05 ... ok
+test string::parse_raw_string_as_external_argument ... ok
+test string::parse_string ... ok
+test record::refuse_confusing_record::case_3 ... ok
+test record::refuse_confusing_record::case_4 ... ok
+test string::interpolation::parse_string_interpolation_escaped_parenthesis ... ok
+test string::interpolation::parse_string_interpolation_backslash_count_reset_by_expression ... ok
+test string::interpolation::parse_string_interpolation_bare_starting_subexpr ... ok
+test test_external_call_arg_glob::case_09 ... ok
+test test_external_call_arg_glob::case_02 ... ok
+test test_external_call_arg_glob::case_01 ... ok
+test test_external_call_arg_glob::case_10 ... ok
+test test_external_call_arg_glob::case_04 ... ok
+test test_external_call_arg_glob::case_03 ... ok
+test test_external_call_arg_glob::case_11 ... ok
+test test_external_call_arg_glob::case_08 ... ok
+test test_external_call_arg_glob::case_14 ... ok
+test test_external_call_arg_raw_string::case_2 ... ok
+test test_external_call_arg_glob::case_13 ... ok
+test test_external_call_arg_glob::case_12 ... ok
+test test_external_call_arg_string::case_1 ... ok
+test test_external_call_arg_raw_string::case_1 ... ok
+test test_external_call_arg_string::case_4 ... ok
+test string::interpolation::parse_string_interpolation_bare_starting_subexpr_external_arg ... ok
+test test_external_call_arg_string::case_2 ... ok
+test test_external_call_arg_raw_string::case_3 ... ok
+test test_external_call_arg_glob::case_06 ... ok
+test test_external_call_arg_glob::case_07 ... ok
+test test_external_call_arg_string::case_6 ... ok
+test test_external_call_head_glob::case_04 ... ok
+test test_external_call_head_glob::case_03 ... ok
+test string::interpolation::parse_path_expression ... ok
+test test_external_call_arg_string::case_5 ... ok
+test string::interpolation::parse_string_interpolation ... ok
+test test_external_call_head_glob::case_02 ... ok
+test test_external_call_argument_spread ... ok
+test test_external_call_arg_string::case_3 ... ok
+test test_external_call_head_glob::case_01 ... ok
+test test_external_call_head_glob::case_07 ... ok
+test test_external_call_head_glob::case_05 ... ok
+test test_external_call_arg_interpolated_string::case_1 ... ok
+test test_external_call_head_glob::case_10 ... ok
+test test_external_call_head_glob::case_06 ... ok
+test test_external_call_head_glob::case_08 ... ok
+test test_external_call_head_glob::case_09 ... ok
+test string::interpolation::parse_string_interpolation_escaped_backslash_before_parenthesis ... ok
+test test_external_call_head_raw_string::case_2 ... ok
+test test_external_call_head_interpolated_string::case_4 ... ok
+test test_external_call_head_raw_string::case_3 ... ok
+test test_external_call_head_glob::case_12 ... ok
+test test_external_call_head_glob::case_11 ... ok
+test test_external_call_head_raw_string::case_1 ... ok
+test string::interpolation::parse_string_interpolation_bare ... ok
+test test_external_call_head_string::case_1 ... ok
+test test_external_call_arg_interpolated_string::case_2 ... ok
+test test_external_call_head_interpolated_string::case_1 ... ok
+test test_external_call_head_string::case_2 ... ok
+test string::interpolation::parse_nested_expressions ... ok
+test test_external_call_head_interpolated_string::case_2 ... ok
+test test_external_call_head_interpolated_string::case_3 ... ok
+test test_parse_any ... ignored
+test test_external_call_head_string::case_4 ... ok
+test test_external_call_head_string::case_5 ... ok
+test test_external_call_head_string::case_6 ... ok
+test test_external_call_head_string::case_3 ... ok
+test test_redirecting_nothing::case_02 ... ok
+test test_redirecting_nothing::case_01 ... ok
+test test_nothing_comparison_eq ... ok
+test test_nothing_comparison_neq ... ok
+test test_redirecting_nothing::case_07 ... ok
+test test_redirecting_nothing::case_03 ... ok
+test test_redirecting_nothing::case_05 ... ok
+test test_redirecting_nothing::case_04 ... ok
+test test_redirecting_nothing::case_09 ... ok
+test test_redirecting_nothing::case_08 ... ok
+test test_redirecting_nothing::case_06 ... ok
+test test_redirecting_nothing::case_10 ... ok
+test test_redirecting_nothing::case_11 ... ok
+test test_redirecting_nothing::case_12 ... ok
+test test_redirecting_nothing::case_16 ... ok
+test test_redirecting_nothing::case_13 ... ok
+test test_redirecting_nothing::case_15 ... ok
+test test_redirecting_nothing::case_14 ... ok
+test test_redirecting_nothing::case_19 ... ok
+test test_redirecting_nothing::case_17 ... ok
+test test_redirecting_nothing::case_18 ... ok
+test test_redirecting_nothing::case_22 ... ok
+test test_redirecting_nothing::case_21 ... ok
+test test_redirecting_nothing::case_23 ... ok
+test test_redirecting_nothing::case_20 ... ok
+test test_redirecting_nothing::case_26 ... ok
+test test_redirecting_nothing::case_24 ... ok
+test test_redirecting_nothing::case_25 ... ok
+test test_redirecting_nothing::case_27 ... ok
+test test_redirecting_nothing::case_28 ... ok
+test test_semi_open_brace::case_2 ... ok
+test test_semi_open_brace::case_3 ... ok
+test test_redirection_inside_letmut_no_panic::case_2 ... ok
+test test_semi_open_brace::case_4 ... ok
+test test_redirection_inside_letmut_no_panic::case_1 ... ok
+test test_redirection_with_letmut::case_1 ... ok
+test test_semi_open_brace::case_1 ... ok
+test test_redirection_with_letmut::case_3 ... ok
+test test_redirection_with_letmut::case_2 ... ok
+test test_redirection_with_letmut::case_6 ... ok
+test test_redirection_with_letmut::case_5 ... ok
+test test_redirection_with_letmut::case_4 ... ok
+test unknown_flag_suggests_nearby_flag ... ok
+test unclosed_delimiters_have_nonempty_source_spans ... ok
+
+test result: ok. 240 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/test_parser_unicode_escapes.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_parser_unicode_escapes-da59b3c7ce58eaa9)
+
+running 2 tests
+test unicode_escapes_in_strings_expected_failures ... ok
+test unicode_escapes_in_strings ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/type_system.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/type_system-1960690e8d6f5e20)
+
+running 7 tests
+test list_records_widen_fields_recursively ... ok
+test string_glob_compatibility_is_symmetric ... ok
+test row_condition_checks_pipeline_types ... ok
+test table_columns_never_narrow_after_mixed_rows ... ok
+test pipeline_preserves_alternative_outputs ... ok
+test row_conditions_reject_known_non_boolean_results ... ok
+test mixed_literal_types_widen ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/nu_protocol-b0261352a038a48e)
+
+running 123 tests
+test ast::cell_path::test::path_member_partial_ord ... ok
+test config::plugin_gc::tests::reconstruct ... ok
+test config::ansi_coloring::tests::test_use_ansi_coloring_true ... ok
+test ast::call::test::argument_span_positional ... ok
+test ast::call::test::call_arguments_span ... ok
+test config::ansi_coloring::tests::test_use_ansi_coloring_auto ... ok
+test ast::call::test::argument_span_unknown ... ok
+test ast::call::test::argument_span_named ... ok
+test config::ansi_coloring::tests::test_use_ansi_coloring_false ... ok
+test config::plugin_gc::tests::update ... ok
+test config::table::canonical_streaming_tests::canonical_defaults_and_both_setting_names ... ok
+test config::table::streaming_tests::streaming_table_settings_update_and_serialize ... ok
+test did_you_mean::tests::did_you_mean_examples ... ok
+test engine::engine_state::engine_state_tests::add_file_gives_id ... ok
+test engine::engine_state::engine_state_tests::add_file_gives_id_including_parent ... ok
+test engine::engine_state::engine_state_tests::get_plugin_config ... ok
+test engine::engine_state::engine_state_tests::list_variables ... ok
+test config::table::streaming_tests::streaming_table_settings_reject_invalid_limits ... ok
+test engine::engine_state::engine_state_tests::merge_states ... ok
+test engine::engine_state::test_cwd::pwd_is_empty_string ... ok
+test engine::engine_state::test_cwd::pwd_is_non_string_value ... ok
+test engine::engine_state::test_cwd::pwd_is_relative_path ... ok
+test engine::engine_state::test_cwd::pwd_has_trailing_slash ... ok
+test engine::engine_state::test_cwd::pwd_not_set ... ok
+test engine::engine_state::test_cwd::pwd_points_to_nonexistent_entity ... ok
+test engine::engine_state::test_cwd::pwd_points_to_root ... ok
+test engine::engine_state::test_cwd::pwd_points_to_normal_directory ... ok
+test engine::engine_state::test_cwd::pwd_points_to_broken_symlink ... ok
+test engine::engine_state::test_cwd::pwd_points_to_normal_file ... ok
+test engine::engine_state::test_cwd::pwd_points_to_symlink_to_directory ... ok
+test engine::engine_state::test_cwd::stack_pwd_is_empty_string ... ok
+test engine::engine_state::test_cwd::stack_pwd_not_set ... ok
+test engine::sequence::output_is_sequential ... ok
+test engine::engine_state::test_cwd::pwd_points_to_symlink_to_file ... ok
+test engine::stack::test::test_children_changes_override_parent ... ok
+test engine::stack::test::test_children_changes_persist_in_offspring ... ok
+test engine::engine_state::test_cwd::stack_pwd_points_to_normal_directory_with_symlink_components ... ok
+test engine::stack::test::test_children_dont_see_deleted_values ... ok
+test engine::engine_state::test_cwd::stack_pwd_points_to_normal_directory ... ok
+test engine::stack::test::test_children_see_inner_values ... ok
+test engine::stack::test::test_merging_children_back_to_parent ... ok
+test engine::variable::tests::compound_mismatch_points_to_the_bad_value ... ok
+test errors::shell_error::bridge::test_bridge_io_error_roundtrip ... ok
+test errors::shell_error::location::test_location_macro ... ok
+test pipeline::byte_stream::tests::chunks_read_binary_passthrough ... ok
+test pipeline::byte_stream::tests::chunks_read_string_clean ... ok
+test errors::shell_error::shell_error_serialize_roundtrip ... ok
+test pipeline::byte_stream::tests::chunks_read_string_split_boundary ... ok
+test pipeline::byte_stream::tests::chunks_read_string_utf8_error ... ok
+test pipeline::byte_stream::tests::chunks_read_unknown_fallback ... ok
+test pipeline::handlers::tests::test_guard_drop ... ok
+test pipeline::handlers::tests::test_multiple_handlers ... ok
+test ty::tests::subtype_relation::test_any_is_top_type ... ok
+test ty::tests::subtype_relation::test_number_supertype ... ok
+test ty::tests::subtype_relation::test_list_covariance ... ok
+test ty::tests::subtype_relation::test_reflexivity ... ok
+test value::custom_value::default_path_tests::missing_optional_paths_return_null ... ok
+test value::custom_value::predictable_options_tests::predictable_custom_cell_path_options ... ok
+test value::custom_value::save_default_tests::custom_save_requires_explicit_implementation ... ok
+test value::filesize::tests::display_auto_binary::case_1 ... ok
+test value::filesize::tests::display_auto_binary::case_2 ... ok
+test value::filesize::tests::display_auto_binary::case_3 ... ok
+test value::filesize::tests::display_auto_metric::case_1 ... ok
+test value::filesize::tests::display_auto_metric::case_2 ... ok
+test value::filesize::tests::display_auto_metric::case_3 ... ok
+test value::filesize::tests::display_unit::case_1 ... ok
+test value::filesize::tests::display_unit::case_2 ... ok
+test value::filesize::tests::display_unit::case_3 ... ok
+test value::filesize::tests::display_unit::case_4 ... ok
+test value::filesize::tests::display_unit::case_5 ... ok
+test value::from_value::tests::expected_type_default_impl ... ok
+test value::from_value::tests::from_value_vec_u8 ... ok
+test value::test_derive::bytes_from_value ... ok
+test value::test_derive::bytes_into_value ... ok
+test value::test_derive::bytes_roundtrip ... ok
+test value::test_derive::default_field_struct_from_value ... ok
+test value::test_derive::enum_from_value ... ok
+test value::test_derive::enum_incorrect_type ... ok
+test value::test_derive::enum_into_value ... ok
+test value::test_derive::enum_rename_all::from_value ... ok
+test value::test_derive::enum_rename_all::into_value ... ok
+test value::test_derive::enum_roundtrip ... ok
+test value::test_derive::enum_type_name_attr ... ok
+test value::test_derive::enum_unknown_variant ... ok
+test value::test_derive::missing_options ... ok
+test value::test_derive::named_fields_struct_incorrect_type ... ok
+test value::test_derive::named_fields_struct_from_value ... ok
+test value::test_derive::named_fields_struct_missing_value ... ok
+test value::test_derive::named_fields_struct_into_value ... ok
+test value::test_derive::named_fields_struct_rename_all::from_value ... ok
+test value::test_derive::named_fields_struct_rename_all::into_value ... ok
+test value::test_derive::renamed_field_struct_from_value ... ok
+test value::test_derive::renamed_field_struct_into_value ... ok
+test value::test_derive::named_fields_struct_roundtrip ... ok
+test value::test_derive::renamed_field_struct_roundtrip ... ok
+test value::test_derive::renamed_variant_enum_from_value ... ok
+test value::test_derive::renamed_variant_enum_into_value ... ok
+test value::test_derive::renamed_variant_enum_roundtrip ... ok
+test value::test_derive::struct_type_name_attr ... ok
+test value::test_derive::unit_struct_from_value ... ok
+test value::test_derive::unit_struct_into_value ... ok
+test value::test_derive::unit_struct_roundtrip ... ok
+test value::test_derive::unnamed_fields_struct_from_value ... ok
+test value::test_derive::unnamed_fields_struct_incorrect_type ... ok
+test value::test_derive::unnamed_fields_struct_into_value ... ok
+test value::test_derive::unnamed_fields_struct_missing_value ... ok
+test value::test_derive::unnamed_fields_struct_roundtrip ... ok
+test value::tests::at_cell_path::test_lists_with_data_at_cell_path ... ok
+test value::tests::at_cell_path::test_mixed_with_data_at_cell_path ... ok
+test value::tests::at_cell_path::test_nested_insert_data_at_cell_path ... ok
+test value::tests::at_cell_path::test_nested_upsert_data_at_cell_path ... ok
+test value::tests::at_cell_path::test_record_with_data_at_cell_path ... ok
+test value::tests::get_type::test_list ... ok
+test value::tests::is_empty::test_list ... ok
+test value::tests::into_string::test_datetime ... ok
+test value::tests::is_empty::test_record ... ok
+test value::tests::into_string::test_negative_year_datetime ... ok
+test value::tests::is_empty::test_string ... ok
+test value::tests::is_subtype::test_list ... ok
+test value::tests::is_subtype::test_record ... ok
+test value::tests::is_subtype::test_table ... ok
+test value::tests::test_env_as_bool ... ok
+test engine::sequence::output_is_unique_even_under_contention ... ok
+
+test result: ok. 123 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/into_config.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/into_config-326b5fc04c69ce34)
+
+running 10 tests
+test config_unsupported_key_reverted ... ignored, Figure out how to make test_bins::nu_repl() continue execution after shell errors
+test config_unsupported_type_reverted ... ignored, Figure out how to make test_bins::nu_repl() continue execution after shell errors
+test config_unsupported_value_reverted ... ignored, Figure out how to make test_bins::nu_repl() continue execution after errors
+test config_is_mutable ... ok
+test config_affected_when_mutated ... ok
+test config_preserved_after_do ... ok
+test config_add_unsupported_value ... ok
+test config_affected_when_deep_mutated ... ok
+test config_add_unsupported_type ... ok
+test config_add_unsupported_key ... ok
+
+test result: ok. 7 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests/mod.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/mod-ab89c40cfe0ef967)
+
+running 17 tests
+test pipeline::byte_stream::test_empty_slice_exclusive ... ok
+test pipeline::byte_stream::test_empty_slice_inclusive ... ok
+test pipeline::byte_stream::test_invalid_range_exclusive ... ok
+test pipeline::byte_stream::test_invalid_range_inclusive ... ok
+test pipeline::byte_stream::test_max_end_inclusive ... ok
+test pipeline::byte_stream::test_max_end_exclusive ... ok
+test pipeline::byte_stream::test_negative_end_exclusive ... ok
+test pipeline::byte_stream::test_negative_end_inclusive ... ok
+test pipeline::byte_stream::test_negative_start_and_end_exclusive ... ok
+test pipeline::byte_stream::test_negative_start_and_end_inclusive ... ok
+test pipeline::byte_stream::test_negative_start_exclusive ... ok
+test pipeline::byte_stream::test_negative_start_inclusive ... ok
+test pipeline::byte_stream::test_out_of_bounds_exclusive ... ok
+test pipeline::byte_stream::test_out_of_bounds_inclusive ... ok
+test pipeline::byte_stream::test_simple_positive_slice_exclusive ... ok
+test pipeline::byte_stream::test_simple_positive_slice_exclusive_streaming ... ok
+test pipeline::byte_stream::test_simple_positive_slice_inclusive ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/test_config.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_config-c54fc48d310d1183)
+
+running 7 tests
+test filesize_mib ... ok
+test plugins ... ok
+test filesize_format_binary ... ok
+test filesize_format_decimal ... ok
+test filesize_mb ... ok
+test narratable_errors ... ok
+test fancy_default_errors ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests/test_pipeline_data.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_pipeline_data-6c948db99a454b1c)
+
+running 5 tests
+test constructors_keep_streams_lazy_and_metadata_intact ... ok
+test constructors_preserve_stream_interrupt_sources ... ok
+test constructors_preserve_values_and_metadata ... ok
+test test_convert_pipeline_data_to_value ... ok
+test stream_into_conversions_preserve_lazy_streams_without_metadata ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/test_signature.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_signature-0385215a0f2045c4)
+
+running 7 tests
+test test_signature ... ok
+test completion_metadata_belongs_to_signature_arguments ... ok
+test test_signature_chained ... ok
+test test_signature_same_name - should panic ... ok
+test test_signature_same_short - should panic ... ok
+test test_signature_round_trip ... ok
+test nu_constant_reports_lsp_mode ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/test_value.rs (/home/cdy/zhangyi/bot-benchmark/runs/nushell-D-main1032-20261117/bot-D/computer/cargo-target/debug/deps/test_value-d6df1b6c1edb260d)
+
+running 6 tests
+test float_equality_is_symmetric_at_scaled_epsilon_boundary ... ok
+test test_comparison_nothing ... ok
+test negated_prefix_and_suffix_are_string_only ... ok
+test test_duration_to_string::case_2 ... ok
+test test_duration_to_string::case_1 ... ok
+test test_case_insensitive_env_var ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nu_engine
+
+running 4 tests
+test crates/nu-engine/src/closure_eval.rs - closure_eval::ClosureEval (line 31) - compile ... ok
+test crates/nu-engine/src/closure_eval.rs - closure_eval::ClosureEval (line 46) - compile ... ok
+test crates/nu-engine/src/closure_eval.rs - closure_eval::ClosureEvalOnce (line 169) - compile ... ok
+test crates/nu-engine/src/closure_eval.rs - closure_eval::ClosureEvalOnce (line 184) - compile ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nu_experimental
+
+running 1 test
+test crates/nu-experimental/src/lib.rs - (line 16) ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nu_parser
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nu_protocol
+
+running 45 tests
+test crates/nu-protocol/src/errors/labeled_error.rs - errors::labeled_error::LabeledError::new (line 42) ... ok
+test crates/nu-protocol/src/ast/unit.rs - ast::unit::Unit::as_str (line 107) ... ok
+test crates/nu-protocol/src/errors/labeled_error.rs - errors::labeled_error::LabeledError::with_code (line 83) ... ok
+test crates/nu-protocol/src/errors/labeled_error.rs - errors::labeled_error::LabeledError::from_diagnostic (line 145) ... ok
+test crates/nu-protocol/src/errors/labeled_error.rs - errors::labeled_error::LabeledError::with_help (line 113) ... ok
+test crates/nu-protocol/src/engine/stack.rs - engine::stack::Stack::stdout_file (line 732) ... ok
+test crates/nu-protocol/src/errors/shell_error/io.rs - errors::shell_error::io::IoError (line 44) ... ok
+test crates/nu-protocol/src/errors/labeled_error.rs - errors::labeled_error::LabeledError::with_label (line 62) ... ok
+test crates/nu-protocol/src/errors/shell_error/io.rs - errors::shell_error::io::ErrorKind::Std (line 157) ... ok
+test crates/nu-protocol/src/errors/labeled_error.rs - errors::labeled_error::LabeledError::with_inner (line 128) ... ok
+test crates/nu-protocol/src/errors/labeled_error.rs - errors::labeled_error::LabeledError::with_url (line 98) ... ok
+test crates/nu-protocol/src/errors/shell_error/io.rs - errors::shell_error::io::IoError (line 56) ... ok
+test crates/nu-protocol/src/errors/shell_error/io.rs - errors::shell_error::io::IoError (line 67) ... ok
+test crates/nu-protocol/src/value/record.rs - value::record::Record::retain_mut (line 227) ... ok
+test crates/nu-protocol/src/value/mod.rs - value::Value::coerce_into_binary (line 644) ... ok
+test crates/nu-protocol/src/value/record.rs - value::record::Record::retain (line 201) ... ok
+test crates/nu-protocol/src/value/mod.rs - value::Value::coerce_string (line 442) ... ok
+test crates/nu-protocol/src/value/record.rs - value::record::Record::sort_cols (line 347) ... ok
+test crates/nu-protocol/src/value/record.rs - value::record::Record::drain (line 319) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::FilesizeFormatter::precision (line 732) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::FilesizeFormatter (line 624) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::FilesizeFormatter::locale (line 769) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::FilesizeFormatter::unit (line 676) ... ok
+test crates/nu-protocol/src/syntax_shape.rs - syntax_shape::SyntaxShape::to_type (line 132) ... ok
+test crates/nu-protocol/src/errors/shell_error/io.rs - errors::shell_error::io::IoErrorExt::not_found_as (line 578) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::FilesizeFormatter::format (line 789) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::Filesize::largest_metric_unit (line 82) ... ok
+test crates/nu-protocol/src/value/from_value.rs - value::from_value::FromValue (line 92) ... ok
+test crates/nu-protocol/src/value/mod.rs - value::Value::coerce_float (line 291) ... ok
+test crates/nu-protocol/src/value/mod.rs - value::Value::coerce_str (line 383) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::FilesizeFormatter::show_unit (line 705) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::FilesizeUnitFormat::as_str (line 534) ... ok
+test crates/nu-protocol/src/value/into_value.rs - value::into_value::IntoValue (line 37) ... ok
+test crates/nu-protocol/src/value/record.rs - value::record::Record::deserialize (line 390) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::FilesizeUnit::as_str (line 416) ... ok
+test crates/nu-protocol/src/errors/shell_error/io.rs - errors::shell_error::io::IoError::new_internal_with_path (line 336) ... ok
+test crates/nu-protocol/src/value/record.rs - value::record::Record::truncate (line 271) ... ok
+test crates/nu-protocol/src/value/into_value.rs - value::into_value::IntoValue (line 63) ... ok
+test crates/nu-protocol/src/pipeline/list_stream.rs - pipeline::list_stream::ListStream::modify (line 97) ... ok
+test crates/nu-protocol/src/value/from_value.rs - value::from_value::FromValue (line 61) ... ok
+test crates/nu-protocol/src/value/mod.rs - value::Value::coerce_into_string (line 477) ... ok
+test crates/nu-protocol/src/errors/shell_error/io.rs - errors::shell_error::io::IoError::new_internal (line 305) ... ok
+test crates/nu-protocol/src/value/mod.rs - value::Value::coerce_binary (line 621) ... ok
+test crates/nu-protocol/src/value/filesize.rs - value::filesize::Filesize::largest_binary_unit (line 116) ... ok
+test crates/nu-protocol/src/span.rs - span::IntoSpanned::into_spanned (line 79) ... ok
+
+test result: ok. 45 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+

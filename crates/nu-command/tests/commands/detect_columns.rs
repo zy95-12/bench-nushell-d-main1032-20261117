@@ -96,13 +96,13 @@ drwxr-xr-x  4 root root 4.0K Mar 20 08:18 ~(char nl)
 }
 
 #[test]
-fn streaming_duplicate_headers_are_unique() {
+fn duplicate_headers_return_catchable_error() {
     for flags in ["", "--guess"] {
         let actual = nu!(format!(
-            r#""a  a  a_2\n1  2  3" | detect columns {flags} | get 0 | columns | to nuon"#
+            r#"try {{ "a  a  a_2\n1  2  3" | detect columns {flags}; "missed" }} catch {{ |err| $err.msg }}"#
         ));
         assert!(actual.err.is_empty(), "{}", actual.err);
-        assert_eq!(actual.out, r#"[a, "a_3", "a_2"]"#);
+        assert!(actual.out.contains("Duplicate column"), "{}", actual.out);
     }
 }
 
